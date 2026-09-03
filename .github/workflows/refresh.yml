@@ -5,6 +5,11 @@ on:
     # Hourly. GitHub cron is UTC and can run a few minutes late under load.
     - cron: "0 * * * *"
   workflow_dispatch:        # lets you trigger a run by hand from the Actions tab
+    inputs:
+      force_deploy:
+        description: "Redeploy even if postings did not change"
+        type: boolean
+        default: false
 
 # Prevent overlapping runs: a slow scrape must not race a new one.
 concurrency:
@@ -66,7 +71,7 @@ jobs:
           git push
 
       - name: Deploy to Vercel
-        if: steps.diff.outputs.changed == 'true'
+        if: steps.diff.outputs.changed == 'true' || inputs.force_deploy
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           # Identify the existing project, otherwise the CLI would create a
