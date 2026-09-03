@@ -1,0 +1,86 @@
+name: Refresh Toronto internships
+
+on:
+  schedule:
+    # Hourly. GitHub cron is UTC and can run a few minutes late under load.
+    - cron: "0 * * * *"
+  workflow_dispatch:        # lets you trigger a run by hand from the Actions tab
+
+# Prevent overlapping runs: a slow scrape must not race a new one.
+concurrency:
+  group: refresh
+  cancel-in-progress: false
+
+permissions:
+  contents: write           # needed to commit the refreshed snapshot
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install --quiet requests
+
+      - name: Scrape and verify postings
+        id: scrape
+        run: |
+          python scrape.py
+          cp live_jobs.json site/live_jobs.json
+
+      - name: Detect whether postings actually changed
+        id: diff
+        run: |
+          # Compare content only. fetched_at always changes, so diffing the
+          # raw file would report a change on every single run.
+          if git diff --quiet -- site/live_jobs.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            BEFORE=$(git show HEAD:site/live_jobs.json 2>/dev/null \
+              | python -c "import sys,json;d=json.load(sys.stdin);print(sorted((j['url'],j['title'],j.get('posted','')) for j in d['jobs']))" 2>/dev/null || echo "none")
+            AFTER=$(python -c "import json;d=json.load(open('site/live_jobs.json'));print(sorted((j['url'],j['title'],j.get('posted','')) for j in d['jobs']))")
+            if [ "$BEFORE" = "$AFTER" ]; then
+              echo "changed=false" >> "$GITHUB_OUTPUT"
+            else
+              echo "changed=true" >> "$GITHUB_OUTPUT"
+            fi
+          fi
+          python -c "import json;d=json.load(open('site/live_jobs.json'));print('postings:',len(d['jobs']))"
+
+      - name: Commit refreshed snapshot
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name  "internship-tracker-bot"
+          git config user.email "actions@github.com"
+          git add site/live_jobs.json live_jobs.json
+          COUNT=$(python -c "import json;print(len(json.load(open('site/live_jobs.json'))['jobs']))")
+          git commit -m "Refresh postings: $COUNT verified live"
+          git push
+
+      - name: Deploy to Vercel
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "::error::VERCEL_TOKEN secret is not set - cannot deploy"
+            exit 1
+          fi
+          npx --yes vercel@58.4.4 deploy site --prod --yes --token "$VERCEL_TOKEN"
+
+      - name: Report
+        run: |
+          if [ "${{ steps.diff.outputs.changed }}" = "true" ]; then
+            echo "### Postings changed - site redeployed" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "### No change - deploy skipped" >> "$GITHUB_STEP_SUMMARY"
+          fi
+          python -c "import json;d=json.load(open('site/live_jobs.json'));print('| Company | Track | Role |');print('|---|---|---|');[print('|',j['company'],'|', '/'.join(j.get('cats') or ['-']),'|',j['title'][:60],'|') for j in d['jobs']]" >> "$GITHUB_STEP_SUMMARY"

@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.vercel/
+node_modules/
+refresh.log
+live_jobs.prev.json
+schedule_state.json
