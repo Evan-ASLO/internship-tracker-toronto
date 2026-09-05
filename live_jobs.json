@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-04T10:13:00.875985+00:00",
+  "fetched_at": "2026-09-05T05:05:28.533580+00:00",
   "categories": [
     "Finance",
     "Marketing",
@@ -7,6 +7,32 @@
     "Consulting"
   ],
   "jobs": [
+    {
+      "company": "bmo",
+      "title": "Actuarial Analyst, Corporate Actuary, Winter 2027 (Co-op/Internship) - 4 months",
+      "loc": "Toronto, ON, CAN",
+      "geo": "Toronto",
+      "cats": [
+        "Finance"
+      ],
+      "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Toronto-ON-CAN/Actuarial-Analyst--Corporate-Actuary--Winter-2027--Co-op-Internship----4-months_R260024356-2",
+      "posted": "Posted Today",
+      "src": "workday",
+      "content": ""
+    },
+    {
+      "company": "bmo",
+      "title": "Actuarial Analyst, Pricing (Co-op/Internship) - 4 months",
+      "loc": "Toronto, ON, CAN",
+      "geo": "Toronto",
+      "cats": [
+        "Finance"
+      ],
+      "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Toronto-ON-CAN/Actuarial-Analyst--Pricing--Co-op-Internship----4-months_R260014092",
+      "posted": "Posted Today",
+      "src": "workday",
+      "content": ""
+    },
     {
       "company": "bmo",
       "title": "Private Wealth Analyst, Summer 2027 (Co-op/Internship) - 4 months",
