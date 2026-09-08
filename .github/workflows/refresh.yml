@@ -2,12 +2,12 @@ name: Refresh Toronto internships
 
 on:
   schedule:
-    # Hourly. GitHub cron is UTC and can run a few minutes late under load.
+    # Hourly. GitHub cron is UTC and can run late (or be dropped) under load.
     - cron: "0 * * * *"
-  workflow_dispatch:        # lets you trigger a run by hand from the Actions tab
+  workflow_dispatch:
     inputs:
       force_deploy:
-        description: "Redeploy even if postings did not change"
+        description: "Redeploy even if the live site is already current"
         type: boolean
         default: false
 
@@ -36,39 +36,44 @@ jobs:
         run: pip install --quiet -r requirements.txt
 
       - name: Scrape and verify postings
-        id: scrape
         run: |
           python scrape.py
           cp live_jobs.json site/live_jobs.json
 
-      - name: Detect whether postings actually changed
+      - name: Detect drift against the LIVE SITE
         id: diff
+        env:
+          SITE_URL: https://internship-tracker-gamma-five.vercel.app
         run: |
-          # Compare content only. fetched_at always changes, so diffing the
-          # raw file would report a change on every single run.
-          if git diff --quiet -- site/live_jobs.json; then
+          # Compare against what is actually DEPLOYED, not against git HEAD.
+          # Comparing to HEAD meant a failed deploy still committed the data,
+          # so the next run saw "no change" and skipped deploying forever -
+          # the site could stay stale permanently. The live site is the only
+          # honest source of truth for "does this need publishing".
+          KEY='import sys,json;d=json.load(sys.stdin);print(sorted((j["url"],j["title"],j.get("posted","")) for j in d["jobs"]))'
+
+          LIVE=$(curl -fsS --max-time 30 "$SITE_URL/live_jobs.json" 2>/dev/null | python -c "$KEY" 2>/dev/null || echo "UNREACHABLE")
+          LOCAL=$(python -c "$KEY" < site/live_jobs.json)
+
+          if [ "$LIVE" = "UNREACHABLE" ]; then
+            echo "Could not read the live site - deploying to be safe"
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          elif [ "$LIVE" = "$LOCAL" ]; then
+            echo "Live site already matches - nothing to publish"
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
-            BEFORE=$(git show HEAD:site/live_jobs.json 2>/dev/null \
-              | python -c "import sys,json;d=json.load(sys.stdin);print(sorted((j['url'],j['title'],j.get('posted','')) for j in d['jobs']))" 2>/dev/null || echo "none")
-            AFTER=$(python -c "import json;d=json.load(open('site/live_jobs.json'));print(sorted((j['url'],j['title'],j.get('posted','')) for j in d['jobs']))")
-            if [ "$BEFORE" = "$AFTER" ]; then
-              echo "changed=false" >> "$GITHUB_OUTPUT"
-            else
-              echo "changed=true" >> "$GITHUB_OUTPUT"
-            fi
+            echo "Live site is out of sync - deploy needed"
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+          # Whether the repo snapshot needs committing is tracked separately
+          # from whether the site needs deploying.
+          if git diff --quiet -- site/live_jobs.json live_jobs.json; then
+            echo "commit=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "commit=true" >> "$GITHUB_OUTPUT"
           fi
           python -c "import json;d=json.load(open('site/live_jobs.json'));print('postings:',len(d['jobs']))"
-
-      - name: Commit refreshed snapshot
-        if: steps.diff.outputs.changed == 'true'
-        run: |
-          git config user.name  "internship-tracker-bot"
-          git config user.email "actions@github.com"
-          git add site/live_jobs.json live_jobs.json
-          COUNT=$(python -c "import json;print(len(json.load(open('site/live_jobs.json'))['jobs']))")
-          git commit -m "Refresh postings: $COUNT verified live"
-          git push
 
       - name: Deploy to Vercel
         if: steps.diff.outputs.changed == 'true' || inputs.force_deploy
@@ -85,11 +90,24 @@ jobs:
           fi
           npx --yes vercel@58.4.4 deploy site --prod --yes --token "$VERCEL_TOKEN"
 
+      # Commit only AFTER a successful deploy, so a deploy failure can never
+      # leave the repo looking up-to-date while the live site is stale.
+      - name: Commit refreshed snapshot
+        if: success() && steps.diff.outputs.commit == 'true'
+        run: |
+          git config user.name  "internship-tracker-bot"
+          git config user.email "actions@github.com"
+          git add site/live_jobs.json live_jobs.json
+          COUNT=$(python -c "import json;print(len(json.load(open('site/live_jobs.json'))['jobs']))")
+          git commit -m "Refresh postings: $COUNT verified live"
+          git push
+
       - name: Report
+        if: always()
         run: |
           if [ "${{ steps.diff.outputs.changed }}" = "true" ]; then
-            echo "### Postings changed - site redeployed" >> "$GITHUB_STEP_SUMMARY"
+            echo "### Site was out of sync - deploy attempted" >> "$GITHUB_STEP_SUMMARY"
           else
-            echo "### No change - deploy skipped" >> "$GITHUB_STEP_SUMMARY"
+            echo "### Live site already current - deploy skipped" >> "$GITHUB_STEP_SUMMARY"
           fi
           python -c "import json;d=json.load(open('site/live_jobs.json'));print('| Company | Track | Role |');print('|---|---|---|');[print('|',j['company'],'|', '/'.join(j.get('cats') or ['-']),'|',j['title'][:60],'|') for j in d['jobs']]" >> "$GITHUB_STEP_SUMMARY"
