@@ -114,7 +114,9 @@ WORKDAY = [
     ("telus", "TELUS_Careers", "wd3"), ("loblaw", "LCLCareers", "wd3"),
     ("rogers", "rogers-jobs", "wd3"), ("omers", "External", "wd3"),
     ("pwc", "Global_Experienced_Careers", "wd3"),
-    ("accenture", "AccentureCareers", "wd3"),
+    # Accenture is on wd103, not wd3 - wd3 returns HTTP 422 and silently
+    # contributed nothing. Confirmed from accenture.com/ca-en/careers.
+    ("accenture", "AccentureCareers", "wd103"),
     ("deloittecanada", "External", "wd3"), ("kpmg", "External", "wd3"),
     ("cpp", "CPPIB_Careers", "wd3"), ("otpp", "External", "wd3"),
     ("cibc", "search", "wd1"), ("sunlife", "Experienced-Jobs", "wd1"),
@@ -198,9 +200,77 @@ def from_amazon(_):
     return out
 
 
+# SuccessFactors (SAP) powers most of the big Canadian banks/telecoms. It has
+# no public JSON API, but its search page renders server-side, so the job rows
+# are parseable. Discovered by fingerprinting each employer's careers page.
+#   (label, base, extra query params)
+SUCCESSFACTORS = [
+    ("scotiabank", "https://jobs.scotiabank.com", {}),
+    ("rogers",     "https://jobs.rogers.com",     {}),
+    ("deloitte",   "https://careers.deloitte.ca", {}),
+]
+
+SF_ROW = re.compile(r'href="(/(?:[A-Za-z0-9_\-]+/)?job/[^"]+)"[^>]*>\s*([^<]{6,140}?)\s*<', re.I)
+
+
+def _unescape(s):
+    for a, b in (("&amp;", "&"), ("&#39;", "'"), ("&quot;", '"'),
+                 ("&lt;", "<"), ("&gt;", ">"), ("&nbsp;", " ")):
+        s = s.replace(a, b)
+    return " ".join(s.split())
+
+
+# Employer titles carry invisible junk (zero-width spaces, soft hyphens, BOMs).
+# It breaks console output on Windows and renders as stray gaps on the site.
+INVISIBLE = dict.fromkeys(map(ord, "\u200b\u200c\u200d\u200e\u200f\ufeff\u00ad\u2060"), None)
+
+
+def clean_text(s):
+    if not s:
+        return ""
+    s = str(s).translate(INVISIBLE)
+    s = s.replace("\u2013", "-").replace("\u2014", "-").replace("\u2019", "'")
+    return " ".join(s.split())
+
+
+def from_successfactors(spec):
+    label, base, extra = spec
+    out, seen = [], set()
+    for term in ("intern", "co-op", "student"):
+        for start in (0, 25, 50):
+            params = {"q": term, "locationsearch": "Toronto", "startrow": start}
+            params.update(extra)
+            try:
+                r = g(f"{base}/search/", params=params)
+            except Exception:
+                return out
+            if r.status_code != 200:
+                return out
+            rows = SF_ROW.findall(r.text)
+            if not rows:
+                break
+            new = 0
+            for href, title in rows:
+                url = base + href
+                if url in seen:
+                    continue
+                seen.add(url); new += 1
+                title = _unescape(title)
+                # The listing page does not expose a machine-readable location
+                # or date; the slug carries the city, which is enough to place
+                # it. Date is left empty rather than invented.
+                loc = "Toronto, ON" if "/job/toronto" in href.lower() else ""
+                out.append(dict(company=label, src="successfactors", title=title,
+                                loc=loc, url=url, posted="", content=""))
+            if new == 0:
+                break
+    return out
+
+
 TASKS = ([(from_greenhouse, t) for t in GREENHOUSE]
          + [(from_ashby, t) for t in ASHBY]
          + [(from_workday, s) for s in WORKDAY]
+         + [(from_successfactors, s) for s in SUCCESSFACTORS]
          + [(from_amazon, "amazon")])
 
 
@@ -232,6 +302,12 @@ def main():
             except Exception:
                 pass
     print(f"pulled {len(raw)} raw postings in {time.time()-t0:.0f}s")
+
+    # Normalize before any filtering: invisible characters would otherwise
+    # break regex word boundaries and leak into the published JSON.
+    for r in raw:
+        r["title"] = clean_text(r.get("title"))
+        r["loc"] = clean_text(r.get("loc"))
 
     # filter: intern + Toronto area. Category is TAGGED, not required -
     # dropping uncategorized rows would hide real postings from the user.
@@ -278,7 +354,13 @@ def main():
 
     print("\n=== SHIPPING ===")
     for r in out:
-        print(f"[{r['geo']:<7}] {r['company']:<14} | {'/'.join(r['cats']):<30} | {r['title'][:52]}")
+        line = f"[{r['geo']:<7}] {r['company']:<14} | {'/'.join(r['cats']):<30} | {r['title'][:52]}"
+        # Never let a console encoding issue abort the run before the JSON
+        # snapshot is written - reporting must not outrank the actual output.
+        try:
+            print(line)
+        except UnicodeEncodeError:
+            print(line.encode("ascii", "replace").decode("ascii"))
 
     with open("live_jobs.json", "w", encoding="utf-8") as fh:
         json.dump({"fetched_at": datetime.now(timezone.utc).isoformat(),
