@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-17T13:58:49.726545+00:00",
+  "fetched_at": "2026-09-17T17:57:36.731686+00:00",
   "categories": [
     "Finance",
     "Marketing",
@@ -7,6 +7,19 @@
     "Consulting"
   ],
   "jobs": [
+    {
+      "company": "bmo",
+      "title": "BMO Capital Markets New Grad 2027: Global Markets Corporate Banking, Analyst",
+      "loc": "Toronto, ON, CAN",
+      "geo": "Toronto",
+      "cats": [
+        "Finance"
+      ],
+      "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Toronto-ON-CAN/BMO-Capital-Markets-New-Grad-2027--Global-Markets-Corporate-Banking--Analyst_R260021188-1",
+      "posted": "Posted Today",
+      "src": "workday",
+      "content": ""
+    },
     {
       "company": "bmo",
       "title": "Structured Solutions and Nonlinear ETFs Intern, Winter 2027 (Co-op/Internship) - 4 months",
@@ -49,19 +62,6 @@
       "geo": "Toronto",
       "cats": [],
       "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Toronto-ON-CAN/Quantitative-Developer--Alpha-Research-Team----GAM--Summer-2027--Co-op-Internship----12-months_R260026715-3",
-      "posted": "Posted Yesterday",
-      "src": "workday",
-      "content": ""
-    },
-    {
-      "company": "bmo",
-      "title": "BMO Capital Markets New Grad 2027: Global Markets Corporate Banking, Analyst",
-      "loc": "Toronto, ON, CAN",
-      "geo": "Toronto",
-      "cats": [
-        "Finance"
-      ],
-      "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Toronto-ON-CAN/BMO-Capital-Markets-New-Grad-2027--Global-Markets-Corporate-Banking--Analyst_R260021188-1",
       "posted": "Posted Yesterday",
       "src": "workday",
       "content": ""
@@ -465,56 +465,12 @@
     },
     {
       "company": "d2l",
-      "title": "Business Insights & Analytics Coordinator - Winter 2027 Co-op",
-      "loc": "Kitchener, Ontario",
-      "geo": "Ontario",
-      "cats": [],
-      "url": "https://www.d2l.com/careers/jobs/?job_id=8188363&gh_jid=8188363",
-      "posted": "2026-09-09T10:40:04-04:00",
-      "src": "greenhouse",
-      "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;D2L is a cloud company that is modernizing education and building the Future of Work. The old models of teaching and learning are in the midst of the largest transformation in history, and D2L is at the heart of that fundamental shift.&amp;nbsp;&lt;/p&gt; &lt;p&gt;New models of teaching and learning enable a personalized, student-centric experien"
-    },
-    {
-      "company": "d2l",
-      "title": "Global Events Coordinator - Winter 2027 Co-op",
-      "loc": "Kitchener, ON",
-      "geo": "Ontario",
-      "cats": [],
-      "url": "https://www.d2l.com/careers/jobs/?job_id=8180472&gh_jid=8180472",
-      "posted": "2026-09-09T10:45:11-04:00",
-      "src": "greenhouse",
-      "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;D2L is a cloud company that is modernizing education and building the Future of Work. The old models of teaching and learning are in the midst of the largest transformation in history, and D2L is at the heart of that fundamental shift.&amp;nbsp;&lt;/p&gt; &lt;p&gt;New models of teaching and learning enable a personalized, student-centric experien"
-    },
-    {
-      "company": "d2l",
-      "title": "Infrastructure Coordinator, Winter 2027 Co-op",
-      "loc": "Kitchener, Ontario",
-      "geo": "Ontario",
-      "cats": [],
-      "url": "https://www.d2l.com/careers/jobs/?job_id=8188350&gh_jid=8188350",
-      "posted": "2026-09-09T10:44:53-04:00",
-      "src": "greenhouse",
-      "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;D2L is a cloud company that is modernizing education and building the Future of Work. The old models of teaching and learning are in the midst of the largest transformation in history, and D2L is at the heart of that fundamental shift.&amp;nbsp;&lt;/p&gt; &lt;p&gt;New models of teaching and learning enable a personalized, student-centric experien"
-    },
-    {
-      "company": "d2l",
       "title": "Knowledge Specialist - Winter 2027 Co-op",
       "loc": "Kitchener, Ontario",
       "geo": "Ontario",
       "cats": [],
       "url": "https://www.d2l.com/careers/jobs/?job_id=8174536&gh_jid=8174536",
       "posted": "2026-09-09T10:41:50-04:00",
-      "src": "greenhouse",
-      "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;D2L is a cloud company that is modernizing education and building the Future of Work. The old models of teaching and learning are in the midst of the largest transformation in history, and D2L is at the heart of that fundamental shift.&amp;nbsp;&lt;/p&gt; &lt;p&gt;New models of teaching and learning enable a personalized, student-centric experien"
-    },
-    {
-      "company": "d2l",
-      "title": "Product Support Analyst - Winter 2027 Co-op",
-      "loc": "Kitchener, Ontario",
-      "geo": "Ontario",
-      "cats": [],
-      "url": "https://www.d2l.com/careers/jobs/?job_id=8174669&gh_jid=8174669",
-      "posted": "2026-09-09T10:43:26-04:00",
       "src": "greenhouse",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;D2L is a cloud company that is modernizing education and building the Future of Work. The old models of teaching and learning are in the midst of the largest transformation in history, and D2L is at the heart of that fundamental shift.&amp;nbsp;&lt;/p&gt; &lt;p&gt;New models of teaching and learning enable a personalized, student-centric experien"
     },
@@ -528,19 +484,6 @@
       ],
       "url": "https://www.d2l.com/careers/jobs/?job_id=8205179&gh_jid=8205179",
       "posted": "2026-09-15T16:53:43-04:00",
-      "src": "greenhouse",
-      "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;D2L is a cloud company that is modernizing education and building the Future of Work. The old models of teaching and learning are in the midst of the largest transformation in history, and D2L is at the heart of that fundamental shift.&amp;nbsp;&lt;/p&gt; &lt;p&gt;New models of teaching and learning enable a personalized, student-centric experien"
-    },
-    {
-      "company": "d2l",
-      "title": "Revenue Marketing Coordinator - Winter 2027 Co-op",
-      "loc": "Kitchener, ON",
-      "geo": "Ontario",
-      "cats": [
-        "Marketing"
-      ],
-      "url": "https://www.d2l.com/careers/jobs/?job_id=8180595&gh_jid=8180595",
-      "posted": "2026-09-09T10:45:32-04:00",
       "src": "greenhouse",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;D2L is a cloud company that is modernizing education and building the Future of Work. The old models of teaching and learning are in the midst of the largest transformation in history, and D2L is at the heart of that fundamental shift.&amp;nbsp;&lt;/p&gt; &lt;p&gt;New models of teaching and learning enable a personalized, student-centric experien"
     },
@@ -565,39 +508,6 @@
       "posted": "2024-10-02T10:07:58-04:00",
       "src": "greenhouse",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;D2L is a cloud company that is modernizing education and building the Future of Work. The old models of teaching and learning are in the midst of the largest transformation in history, and D2L is at the heart of that fundamental shift.&amp;nbsp;&lt;/p&gt; &lt;p&gt;New models of teaching and learning enable a personalized, student-centric experien"
-    },
-    {
-      "company": "d2l",
-      "title": "User Experience Researcher - Winter 2027 Co-op",
-      "loc": "Kitchener, ON or Winnipeg, MB",
-      "geo": "Ontario",
-      "cats": [],
-      "url": "https://www.d2l.com/careers/jobs/?job_id=8180678&gh_jid=8180678",
-      "posted": "2026-09-09T10:43:47-04:00",
-      "src": "greenhouse",
-      "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;D2L is a cloud company that is modernizing education and building the Future of Work. The old models of teaching and learning are in the midst of the largest transformation in history, and D2L is at the heart of that fundamental shift.&amp;nbsp;&lt;/p&gt; &lt;p&gt;New models of teaching and learning enable a personalized, student-centric experien"
-    },
-    {
-      "company": "d2l",
-      "title": "Web Experience Coordinator - Winter 2027 Co-op",
-      "loc": "Kitchener, ON",
-      "geo": "Ontario",
-      "cats": [],
-      "url": "https://www.d2l.com/careers/jobs/?job_id=8189560&gh_jid=8189560",
-      "posted": "2026-09-09T15:52:04-04:00",
-      "src": "greenhouse",
-      "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;p&gt;D2L is a cloud company that is modernizing education and building the Future of Work. The old models of teaching and learning are in the midst of the largest transformation in history, and D2L is at the heart of that fundamental shift.&amp;nbsp;&lt;/p&gt; &lt;p&gt;New models of teaching and learning enable a personalized, student-centric experien"
-    },
-    {
-      "company": "lyft",
-      "title": "Data Engineer Intern (Summer 2027)",
-      "loc": "Toronto, Canada",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://app.careerpuck.com/job-board/lyft/job/8797376002?gh_jid=8797376002",
-      "posted": "2026-09-11T12:48:58-04:00",
-      "src": "greenhouse",
-      "content": "&lt;p&gt;At Lyft, our purpose is to serve and connect. We aim to achieve this by cultivating a work environment where all team members belong and have the opportunity to thrive.&lt;/p&gt; &lt;p&gt;Interns work side-by-side with top engineers in the industry while having autonomy from the get-go. They contribute to user-facing products and are able to see their work go live quickly. Lyft fosters a "
     },
     {
       "company": "lyft",
@@ -1010,19 +920,6 @@
     },
     {
       "company": "scotiabank",
-      "title": "Velocity - Treasury Internship/Co-op - Winter 2027",
-      "loc": "Toronto, ON",
-      "geo": "Toronto",
-      "cats": [
-        "Finance"
-      ],
-      "url": "https://jobs.scotiabank.com/job/Toronto-Velocity-Treasury-InternshipCo-op-Winter-2027-ON/605467017/",
-      "posted": "",
-      "src": "successfactors",
-      "content": ""
-    },
-    {
-      "company": "scotiabank",
       "title": "Velocity - Business Analyst Internship/Co-Op - Winter 2027",
       "loc": "Toronto, ON",
       "geo": "Toronto",
@@ -1155,6 +1052,19 @@
       "geo": "Toronto",
       "cats": [],
       "url": "https://jobs.scotiabank.com/job/Toronto-Velocity-Data-Scientist-InternshipCo-Op-%E2%80%AFWinter-2027-ON/605881417/",
+      "posted": "",
+      "src": "successfactors",
+      "content": ""
+    },
+    {
+      "company": "scotiabank",
+      "title": "Velocity - Treasury Internship/Co-op - Winter 2027",
+      "loc": "Toronto, ON",
+      "geo": "Toronto",
+      "cats": [
+        "Finance"
+      ],
+      "url": "https://jobs.scotiabank.com/job/Toronto-Velocity-Treasury-InternshipCo-op-Winter-2027-ON/605467017/",
       "posted": "",
       "src": "successfactors",
       "content": ""
