@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-22T10:38:28.654601+00:00",
+  "fetched_at": "2026-09-22T15:17:38.643771+00:00",
   "categories": [
     "Finance",
     "Marketing",
@@ -40,17 +40,6 @@
         "Finance"
       ],
       "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Toronto-ON-CAN/Private-Wealth-Analyst--Summer-2027--Co-op-Internship----4-months_R260025470",
-      "posted": "Posted Yesterday",
-      "src": "workday",
-      "content": ""
-    },
-    {
-      "company": "bmo",
-      "title": "Environmental Health & Safety Coordinator, Winter 2027 (Co-op/Internship) - 4 Months",
-      "loc": "Toronto, ON, CAN",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Toronto-ON-CAN/Environmental-Health---Safety-Coordinator--Winter-2027--Co-op-Internship----4-Months_R260024877-2",
       "posted": "Posted Yesterday",
       "src": "workday",
       "content": ""
@@ -472,6 +461,19 @@
     },
     {
       "company": "scotiabank",
+      "title": "GTB - Portfolio Optimization Internship/Co-Op - Winter 2027",
+      "loc": "Toronto, ON",
+      "geo": "Toronto",
+      "cats": [
+        "Finance"
+      ],
+      "url": "https://jobs.scotiabank.com/job/Toronto-GTB-Portfolio-Optimization-InternshipCo-Op-Winter-2027-ON/605834217/",
+      "posted": "",
+      "src": "successfactors",
+      "content": ""
+    },
+    {
+      "company": "scotiabank",
       "title": "Canadian Banking - Strategy and Projects Internship/Co-op - Winter 2027",
       "loc": "Toronto, ON",
       "geo": "Toronto",
@@ -507,19 +509,6 @@
         "Marketing"
       ],
       "url": "https://jobs.scotiabank.com/job/Toronto-Canadian-Banking-Marketing-&amp;-Communications-InternshipCo-op-Winter-2027-ON/605499217/",
-      "posted": "",
-      "src": "successfactors",
-      "content": ""
-    },
-    {
-      "company": "scotiabank",
-      "title": "GTB - Portfolio Optimization Internship/Co-Op - Winter 2027",
-      "loc": "Toronto, ON",
-      "geo": "Toronto",
-      "cats": [
-        "Finance"
-      ],
-      "url": "https://jobs.scotiabank.com/job/Toronto-GTB-Portfolio-Optimization-InternshipCo-Op-Winter-2027-ON/605834217/",
       "posted": "",
       "src": "successfactors",
       "content": ""
@@ -1024,17 +1013,6 @@
       "geo": "Toronto",
       "cats": [],
       "url": "https://td.wd3.myworkdayjobs.com/en-US/TD_Bank_Careers/job/Toronto-Ontario/Shareholder-Reporting-Intern---Co-Op-Winter-2027_R_1503103",
-      "posted": "Posted 14 Days Ago",
-      "src": "workday",
-      "content": ""
-    },
-    {
-      "company": "td",
-      "title": "Global Compensation Intern / Co-Op Winter 2027",
-      "loc": "Toronto, Ontario",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://td.wd3.myworkdayjobs.com/en-US/TD_Bank_Careers/job/Toronto-Ontario/Global-Compensation-Intern---Co-Op-Winter-2027_R_1503101",
       "posted": "Posted 14 Days Ago",
       "src": "workday",
       "content": ""
