@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-22T22:34:13.888710+00:00",
+  "fetched_at": "2026-09-23T01:05:24.414341+00:00",
   "categories": [
     "Finance",
     "Marketing",
@@ -487,14 +487,14 @@
     },
     {
       "company": "scotiabank",
-      "title": "Canadian Banking - Strategy and Projects Internship/Co-op - Winter 2027",
+      "title": "Canadian Banking - Marketing & Communications Internship/Co-op - Winter 2027",
       "loc": "Toronto, ON",
       "geo": "Toronto",
       "cats": [
         "Finance",
-        "Consulting"
+        "Marketing"
       ],
-      "url": "https://jobs.scotiabank.com/job/Toronto-Canadian-Banking-Strategy-and-Projects-InternshipCo-op-Winter-2027-ON/605495617/",
+      "url": "https://jobs.scotiabank.com/job/Toronto-Canadian-Banking-Marketing-&amp;-Communications-InternshipCo-op-Winter-2027-ON/605499217/",
       "posted": "",
       "src": "successfactors",
       "content": ""
@@ -514,14 +514,14 @@
     },
     {
       "company": "scotiabank",
-      "title": "Canadian Banking - Marketing & Communications Internship/Co-op - Winter 2027",
+      "title": "Canadian Banking - Strategy and Projects Internship/Co-op - Winter 2027",
       "loc": "Toronto, ON",
       "geo": "Toronto",
       "cats": [
         "Finance",
-        "Marketing"
+        "Consulting"
       ],
-      "url": "https://jobs.scotiabank.com/job/Toronto-Canadian-Banking-Marketing-&amp;-Communications-InternshipCo-op-Winter-2027-ON/605499217/",
+      "url": "https://jobs.scotiabank.com/job/Toronto-Canadian-Banking-Strategy-and-Projects-InternshipCo-op-Winter-2027-ON/605495617/",
       "posted": "",
       "src": "successfactors",
       "content": ""
@@ -623,19 +623,6 @@
     },
     {
       "company": "scotiabank",
-      "title": "Canadian Banking - Technology & Analysis Internship/Co-op - Winter 2027",
-      "loc": "Toronto, ON",
-      "geo": "Toronto",
-      "cats": [
-        "Finance"
-      ],
-      "url": "https://jobs.scotiabank.com/job/Toronto-Canadian-Banking-Technology-&amp;-Analysis-InternshipCo-op-Winter-2027-ON/605559617/",
-      "posted": "",
-      "src": "successfactors",
-      "content": ""
-    },
-    {
-      "company": "scotiabank",
       "title": "Canadian Banking - Administration & Support Internship/Co-op - Winter 2027",
       "loc": "Toronto, ON",
       "geo": "Toronto",
@@ -649,13 +636,13 @@
     },
     {
       "company": "scotiabank",
-      "title": "GTB - Business Deposits Portfolio Management Internship/Co-op - Winter 2027",
+      "title": "Canadian Banking - Technology & Analysis Internship/Co-op - Winter 2027",
       "loc": "Toronto, ON",
       "geo": "Toronto",
       "cats": [
         "Finance"
       ],
-      "url": "https://jobs.scotiabank.com/job/Toronto-GTB-Business-Deposits-Portfolio-Management-InternshipCo-op-Winter-2027-ON/605838817/",
+      "url": "https://jobs.scotiabank.com/job/Toronto-Canadian-Banking-Technology-&amp;-Analysis-InternshipCo-op-Winter-2027-ON/605559617/",
       "posted": "",
       "src": "successfactors",
       "content": ""
@@ -669,6 +656,19 @@
         "Finance"
       ],
       "url": "https://jobs.scotiabank.com/job/Toronto-Velocity-Treasury-InternshipCo-op-Winter-2027-ON/605467017/",
+      "posted": "",
+      "src": "successfactors",
+      "content": ""
+    },
+    {
+      "company": "scotiabank",
+      "title": "GTB - Business Deposits Portfolio Management Internship/Co-op - Winter 2027",
+      "loc": "Toronto, ON",
+      "geo": "Toronto",
+      "cats": [
+        "Finance"
+      ],
+      "url": "https://jobs.scotiabank.com/job/Toronto-GTB-Business-Deposits-Portfolio-Management-InternshipCo-op-Winter-2027-ON/605838817/",
       "posted": "",
       "src": "successfactors",
       "content": ""
@@ -749,28 +749,6 @@
     },
     {
       "company": "scotiabank",
-      "title": "Velocity - AI Engineer Internship/Co-Op - Winter 2027",
-      "loc": "Toronto, ON",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://jobs.scotiabank.com/job/Toronto-Velocity-AI-Engineer-InternshipCo-Op-Winter-2027-ON/605878117/",
-      "posted": "",
-      "src": "successfactors",
-      "content": ""
-    },
-    {
-      "company": "scotiabank",
-      "title": "Velocity - Corporate Security Internship/Co-op - Winter 2027",
-      "loc": "Toronto, ON",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://jobs.scotiabank.com/job/Toronto-Velocity-Corporate-Security-InternshipCo-op-Winter-2027-ON/605881917/",
-      "posted": "",
-      "src": "successfactors",
-      "content": ""
-    },
-    {
-      "company": "scotiabank",
       "title": "Velocity - Cloud Engineer Internship/Co-Op - Winter 2027",
       "loc": "Toronto, ON",
       "geo": "Toronto",
@@ -793,17 +771,6 @@
     },
     {
       "company": "scotiabank",
-      "title": "Velocity - Data Scientist Internship/Co-Op - Winter 2027",
-      "loc": "Toronto, ON",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://jobs.scotiabank.com/job/Toronto-Velocity-Data-Scientist-InternshipCo-Op-%E2%80%AFWinter-2027-ON/605881417/",
-      "posted": "",
-      "src": "successfactors",
-      "content": ""
-    },
-    {
-      "company": "scotiabank",
       "title": "Velocity - Data Engineer Internship/Co-Op - Winter 2027",
       "loc": "Toronto, ON",
       "geo": "Toronto",
@@ -815,11 +782,22 @@
     },
     {
       "company": "scotiabank",
-      "title": "Velocity - DevOps Engineer- Capital Markets Internship/Co-op 12-16 Months - Winter 2027",
+      "title": "Velocity - AI Engineer Internship/Co-Op - Winter 2027",
       "loc": "Toronto, ON",
       "geo": "Toronto",
       "cats": [],
-      "url": "https://jobs.scotiabank.com/job/Toronto-Velocity-DevOps-Engineer-Capital-Markets-InternshipCo-op-12-16-Months-Winter-2027-ON/605884417/",
+      "url": "https://jobs.scotiabank.com/job/Toronto-Velocity-AI-Engineer-InternshipCo-Op-Winter-2027-ON/605878117/",
+      "posted": "",
+      "src": "successfactors",
+      "content": ""
+    },
+    {
+      "company": "scotiabank",
+      "title": "Velocity - Corporate Security Internship/Co-op - Winter 2027",
+      "loc": "Toronto, ON",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://jobs.scotiabank.com/job/Toronto-Velocity-Corporate-Security-InternshipCo-op-Winter-2027-ON/605881917/",
       "posted": "",
       "src": "successfactors",
       "content": ""
@@ -831,6 +809,28 @@
       "geo": "Toronto",
       "cats": [],
       "url": "https://jobs.scotiabank.com/job/Toronto-Velocity-Software-Engineer-InternshipCo-Op-Winter-2027-ON/605885017/",
+      "posted": "",
+      "src": "successfactors",
+      "content": ""
+    },
+    {
+      "company": "scotiabank",
+      "title": "Velocity - Data Scientist Internship/Co-Op - Winter 2027",
+      "loc": "Toronto, ON",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://jobs.scotiabank.com/job/Toronto-Velocity-Data-Scientist-InternshipCo-Op-%E2%80%AFWinter-2027-ON/605881417/",
+      "posted": "",
+      "src": "successfactors",
+      "content": ""
+    },
+    {
+      "company": "scotiabank",
+      "title": "Velocity - DevOps Engineer- Capital Markets Internship/Co-op 12-16 Months - Winter 2027",
+      "loc": "Toronto, ON",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://jobs.scotiabank.com/job/Toronto-Velocity-DevOps-Engineer-Capital-Markets-InternshipCo-op-12-16-Months-Winter-2027-ON/605884417/",
       "posted": "",
       "src": "successfactors",
       "content": ""
@@ -933,19 +933,6 @@
     },
     {
       "company": "scotiabank",
-      "title": "ASPIRE Commercial Banking - National Office - Winter 2027 Co-op / Internship - Toronto",
-      "loc": "Toronto, ON",
-      "geo": "Toronto",
-      "cats": [
-        "Finance"
-      ],
-      "url": "https://jobs.scotiabank.com/job/Toronto-ASPIRE-Commercial-Banking-National-Office-Winter-2027-Co-op-Internship-Toronto-ON/605919217/",
-      "posted": "",
-      "src": "successfactors",
-      "content": ""
-    },
-    {
-      "company": "scotiabank",
       "title": "ASPIRE Commercial Banking - Roynat Capital, M&A - Winter 2027 Co-op / Internship - Toronto",
       "loc": "Toronto, ON",
       "geo": "Toronto",
@@ -953,6 +940,19 @@
         "Finance"
       ],
       "url": "https://jobs.scotiabank.com/job/Toronto-ASPIRE-Commercial-Banking-Roynat-Capital%2C-M&amp;A-Winter-2027-Co-op-Internship-Toronto-ON/605918317/",
+      "posted": "",
+      "src": "successfactors",
+      "content": ""
+    },
+    {
+      "company": "scotiabank",
+      "title": "ASPIRE Commercial Banking - National Office - Winter 2027 Co-op / Internship - Toronto",
+      "loc": "Toronto, ON",
+      "geo": "Toronto",
+      "cats": [
+        "Finance"
+      ],
+      "url": "https://jobs.scotiabank.com/job/Toronto-ASPIRE-Commercial-Banking-National-Office-Winter-2027-Co-op-Internship-Toronto-ON/605919217/",
       "posted": "",
       "src": "successfactors",
       "content": ""
