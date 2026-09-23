@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-23T18:05:22.565836+00:00",
+  "fetched_at": "2026-09-23T21:54:31.597434+00:00",
   "categories": [
     "Finance",
     "Marketing",
@@ -202,6 +202,17 @@
       ],
       "url": "https://cibc.wd3.myworkdayjobs.com/en-US/search/job/Toronto-ON/Business-Analyst--Controllership---Winter-2027-Co-Op-_2618748-2",
       "posted": "Posted 8 Days Ago",
+      "src": "workday",
+      "content": ""
+    },
+    {
+      "company": "cibc",
+      "title": "Quality Assurance Analyst-Co-op Winter 2027",
+      "loc": "Toronto, ON",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://cibc.wd3.myworkdayjobs.com/en-US/search/job/Toronto-ON/Quality-Assurance-Analyst-Co-op-Winter-2027_2619573-1",
+      "posted": "Posted Today",
       "src": "workday",
       "content": ""
     },
@@ -472,19 +483,6 @@
     },
     {
       "company": "scotiabank",
-      "title": "GTB - Portfolio Optimization Internship/Co-Op - Winter 2027",
-      "loc": "Toronto, ON",
-      "geo": "Toronto",
-      "cats": [
-        "Finance"
-      ],
-      "url": "https://jobs.scotiabank.com/job/Toronto-GTB-Portfolio-Optimization-InternshipCo-Op-Winter-2027-ON/605834217/",
-      "posted": "",
-      "src": "successfactors",
-      "content": ""
-    },
-    {
-      "company": "scotiabank",
       "title": "Canadian Banking - Marketing & Communications Internship/Co-op - Winter 2027",
       "loc": "Toronto, ON",
       "geo": "Toronto",
@@ -520,6 +518,19 @@
         "Consulting"
       ],
       "url": "https://jobs.scotiabank.com/job/Toronto-Canadian-Banking-Strategy-and-Projects-InternshipCo-op-Winter-2027-ON/605495617/",
+      "posted": "",
+      "src": "successfactors",
+      "content": ""
+    },
+    {
+      "company": "scotiabank",
+      "title": "GTB - Portfolio Optimization Internship/Co-Op - Winter 2027",
+      "loc": "Toronto, ON",
+      "geo": "Toronto",
+      "cats": [
+        "Finance"
+      ],
+      "url": "https://jobs.scotiabank.com/job/Toronto-GTB-Portfolio-Optimization-InternshipCo-Op-Winter-2027-ON/605834217/",
       "posted": "",
       "src": "successfactors",
       "content": ""
@@ -710,17 +721,6 @@
     },
     {
       "company": "scotiabank",
-      "title": "Velocity - Global Risk Management (GRM) Internship/Co-op - Winter 2027",
-      "loc": "Toronto, ON",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://jobs.scotiabank.com/job/Toronto-Velocity-Global-Risk-Management-%28GRM%29-InternshipCo-op-Winter-2027-ON/605466717/",
-      "posted": "",
-      "src": "successfactors",
-      "content": ""
-    },
-    {
-      "company": "scotiabank",
       "title": "Velocity - Business Analyst Internship/Co-Op - Winter 2027",
       "loc": "Toronto, ON",
       "geo": "Toronto",
@@ -866,6 +866,17 @@
         "Consulting"
       ],
       "url": "https://jobs.scotiabank.com/job/Toronto-GBM-Trade-Floor-Technology-Consultant-InternshipCo-op-Summer-2027-%2812-16-Months%29-ON/605898017/",
+      "posted": "",
+      "src": "successfactors",
+      "content": ""
+    },
+    {
+      "company": "scotiabank",
+      "title": "Velocity - Global Risk Management (GRM) Internship/Co-op - Winter 2027",
+      "loc": "Toronto, ON",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://jobs.scotiabank.com/job/Toronto-Velocity-Global-Risk-Management-%28GRM%29-InternshipCo-op-Winter-2027-ON/605466717/",
       "posted": "",
       "src": "successfactors",
       "content": ""
@@ -1519,6 +1530,17 @@
       "cats": [],
       "url": "https://td.wd3.myworkdayjobs.com/en-US/TD_Bank_Careers/job/Toronto-Ontario/AI2-Applied-Machine-Learning-Scientist-Co-op--WINTER-2027-_R_1506697-1",
       "posted": "Posted 15 Days Ago",
+      "src": "workday",
+      "content": ""
+    },
+    {
+      "company": "td",
+      "title": "TD Insurance, Articling Student",
+      "loc": "Toronto, Ontario",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://td.wd3.myworkdayjobs.com/en-US/TD_Bank_Careers/job/Toronto-Ontario/TD-Insurance--Articling-Student_R_1510019",
+      "posted": "Posted Today",
       "src": "workday",
       "content": ""
     },
