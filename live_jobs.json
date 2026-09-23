@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-23T07:01:48.154402+00:00",
+  "fetched_at": "2026-09-23T13:09:20.347733+00:00",
   "categories": [
     "Finance",
     "Marketing",
@@ -472,6 +472,19 @@
     },
     {
       "company": "scotiabank",
+      "title": "GTB - Portfolio Optimization Internship/Co-Op - Winter 2027",
+      "loc": "Toronto, ON",
+      "geo": "Toronto",
+      "cats": [
+        "Finance"
+      ],
+      "url": "https://jobs.scotiabank.com/job/Toronto-GTB-Portfolio-Optimization-InternshipCo-Op-Winter-2027-ON/605834217/",
+      "posted": "",
+      "src": "successfactors",
+      "content": ""
+    },
+    {
+      "company": "scotiabank",
       "title": "Canadian Banking - Marketing & Communications Internship/Co-op - Winter 2027",
       "loc": "Toronto, ON",
       "geo": "Toronto",
@@ -507,19 +520,6 @@
         "Consulting"
       ],
       "url": "https://jobs.scotiabank.com/job/Toronto-Canadian-Banking-Strategy-and-Projects-InternshipCo-op-Winter-2027-ON/605495617/",
-      "posted": "",
-      "src": "successfactors",
-      "content": ""
-    },
-    {
-      "company": "scotiabank",
-      "title": "GTB - Portfolio Optimization Internship/Co-Op - Winter 2027",
-      "loc": "Toronto, ON",
-      "geo": "Toronto",
-      "cats": [
-        "Finance"
-      ],
-      "url": "https://jobs.scotiabank.com/job/Toronto-GTB-Portfolio-Optimization-InternshipCo-Op-Winter-2027-ON/605834217/",
       "posted": "",
       "src": "successfactors",
       "content": ""
