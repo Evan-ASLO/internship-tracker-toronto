@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-24T10:48:10.830306+00:00",
+  "fetched_at": "2026-09-24T15:37:01.251591+00:00",
   "categories": [
     "Finance",
     "Marketing",
@@ -7,6 +7,19 @@
     "Consulting"
   ],
   "jobs": [
+    {
+      "company": "bmo",
+      "title": "Private Wealth Administrative Assistant - Peterborough, Winter 2027 (Co-op/Internship) - 4 months",
+      "loc": "Peterborough, ON, CAN",
+      "geo": "Ontario",
+      "cats": [
+        "Finance"
+      ],
+      "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Peterborough-ON-CAN/Private-Wealth-Administrative-Assistant---Peterborough--Winter-2027--Co-op-Internship----4-months_R260027343-2",
+      "posted": "Posted Today",
+      "src": "workday",
+      "content": ""
+    },
     {
       "company": "bmo",
       "title": "UX/UI Designer, Winter 2027 (Co-op/Internship)- 8 months",
@@ -483,6 +496,19 @@
     },
     {
       "company": "scotiabank",
+      "title": "GTB - Portfolio Optimization Internship/Co-Op - Winter 2027",
+      "loc": "Toronto, ON",
+      "geo": "Toronto",
+      "cats": [
+        "Finance"
+      ],
+      "url": "https://jobs.scotiabank.com/job/Toronto-GTB-Portfolio-Optimization-InternshipCo-Op-Winter-2027-ON/605834217/",
+      "posted": "",
+      "src": "successfactors",
+      "content": ""
+    },
+    {
+      "company": "scotiabank",
       "title": "Canadian Banking - Marketing & Communications Internship/Co-op - Winter 2027",
       "loc": "Toronto, ON",
       "geo": "Toronto",
@@ -518,19 +544,6 @@
         "Consulting"
       ],
       "url": "https://jobs.scotiabank.com/job/Toronto-Canadian-Banking-Strategy-and-Projects-InternshipCo-op-Winter-2027-ON/605495617/",
-      "posted": "",
-      "src": "successfactors",
-      "content": ""
-    },
-    {
-      "company": "scotiabank",
-      "title": "GTB - Portfolio Optimization Internship/Co-Op - Winter 2027",
-      "loc": "Toronto, ON",
-      "geo": "Toronto",
-      "cats": [
-        "Finance"
-      ],
-      "url": "https://jobs.scotiabank.com/job/Toronto-GTB-Portfolio-Optimization-InternshipCo-Op-Winter-2027-ON/605834217/",
       "posted": "",
       "src": "successfactors",
       "content": ""
@@ -704,17 +717,6 @@
         "Finance"
       ],
       "url": "https://jobs.scotiabank.com/job/Toronto-GBM-GCM-Banking-InternshipCo-op-Winter-2027-ON/605898417/",
-      "posted": "",
-      "src": "successfactors",
-      "content": ""
-    },
-    {
-      "company": "scotiabank",
-      "title": "Canadian Banking - UX/Product Design Internship/Co-op - Winter 2027",
-      "loc": "Toronto, ON",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://jobs.scotiabank.com/job/Toronto-Canadian-Banking-UXProduct-Design-InternshipCo-op-Winter-2027-ON/605559117/",
       "posted": "",
       "src": "successfactors",
       "content": ""
@@ -901,6 +903,17 @@
       "geo": "Toronto",
       "cats": [],
       "url": "https://jobs.scotiabank.com/job/Toronto-Canada&amp;apos;s-Top-Students-%28CTS%29-2026%E2%80%AFPresented-by-Scotiabank-ON/606163717/",
+      "posted": "",
+      "src": "successfactors",
+      "content": ""
+    },
+    {
+      "company": "scotiabank",
+      "title": "Canadian Banking - UX/Product Design Internship/Co-op - Winter 2027",
+      "loc": "Toronto, ON",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://jobs.scotiabank.com/job/Toronto-Canadian-Banking-UXProduct-Design-InternshipCo-op-Winter-2027-ON/605559117/",
       "posted": "",
       "src": "successfactors",
       "content": ""
