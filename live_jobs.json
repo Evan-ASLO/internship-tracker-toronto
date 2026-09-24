@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-24T15:37:01.251591+00:00",
+  "fetched_at": "2026-09-24T19:38:21.206874+00:00",
   "categories": [
     "Finance",
     "Marketing",
@@ -7,6 +7,30 @@
     "Consulting"
   ],
   "jobs": [
+    {
+      "company": "bmo",
+      "title": "Actuarial Analyst, Winter 2027 (Co-op/Internship) - 4 months",
+      "loc": "Toronto, ON, CAN",
+      "geo": "Toronto",
+      "cats": [
+        "Finance"
+      ],
+      "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Toronto-ON-CAN/Actuarial-Analyst--Winter-2027--Co-op-Internship----4-months_R260027054",
+      "posted": "Posted Today",
+      "src": "workday",
+      "content": ""
+    },
+    {
+      "company": "bmo",
+      "title": "AI Engineer, Winter 2027 (Co-op/Internship) - 8 months",
+      "loc": "Toronto, ON, CAN",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Toronto-ON-CAN/AI-Engineer--Winter-2027--Co-op-Internship----8-months_R260027622-1",
+      "posted": "Posted Today",
+      "src": "workday",
+      "content": ""
+    },
     {
       "company": "bmo",
       "title": "Private Wealth Administrative Assistant - Peterborough, Winter 2027 (Co-op/Internship) - 4 months",
@@ -17,17 +41,6 @@
       ],
       "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Peterborough-ON-CAN/Private-Wealth-Administrative-Assistant---Peterborough--Winter-2027--Co-op-Internship----4-months_R260027343-2",
       "posted": "Posted Today",
-      "src": "workday",
-      "content": ""
-    },
-    {
-      "company": "bmo",
-      "title": "UX/UI Designer, Winter 2027 (Co-op/Internship)- 8 months",
-      "loc": "Toronto, ON, CAN",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Toronto-ON-CAN/UX-UI-Designer--Winter-2027--Co-op-Internship---8-months_R260026951-1",
-      "posted": "Posted 2 Days Ago",
       "src": "workday",
       "content": ""
     },
@@ -277,6 +290,17 @@
     },
     {
       "company": "lyft",
+      "title": "Content Design Intern (Summer 2027)",
+      "loc": "Toronto, Canada",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://app.careerpuck.com/job-board/lyft/job/8817900002?gh_jid=8817900002",
+      "posted": "2026-09-24T15:18:38-04:00",
+      "src": "greenhouse",
+      "content": "&lt;p&gt;At Lyft, our purpose is to serve and connect. We aim to achieve this by cultivating a work environment where all team members belong and have the opportunity to thrive.&lt;/p&gt; &lt;p&gt;Content Systems is the heart of Lyft&#39;s language ecosystem. The team is made up of two distinct disciplines, Content Design and Learning Experience Design, who create and own language across Lyft&#39;"
+    },
+    {
+      "company": "lyft",
       "title": "Data Engineer Intern (Summer 2027)",
       "loc": "Toronto, Canada",
       "geo": "Toronto",
@@ -496,6 +520,19 @@
     },
     {
       "company": "scotiabank",
+      "title": "Wealth Management - Finance Internship-Co-op - Winter 2027",
+      "loc": "Toronto, ON",
+      "geo": "Toronto",
+      "cats": [
+        "Finance"
+      ],
+      "url": "https://jobs.scotiabank.com/job/Toronto-Wealth-Management-Finance-Internship-Co-op-Winter-2027-ON/605996517/",
+      "posted": "",
+      "src": "successfactors",
+      "content": ""
+    },
+    {
+      "company": "scotiabank",
       "title": "GTB - Portfolio Optimization Internship/Co-Op - Winter 2027",
       "loc": "Toronto, ON",
       "geo": "Toronto",
@@ -572,20 +609,6 @@
     },
     {
       "company": "scotiabank",
-      "title": "Wealth Management - Strategy & Projects Internship-Co-op - Winter 2027",
-      "loc": "Toronto, ON",
-      "geo": "Toronto",
-      "cats": [
-        "Finance",
-        "Consulting"
-      ],
-      "url": "https://jobs.scotiabank.com/job/Toronto-Wealth-Management-Strategy-&amp;-Projects-Internship-Co-op-Winter-2027-ON/605911217/",
-      "posted": "",
-      "src": "successfactors",
-      "content": ""
-    },
-    {
-      "company": "scotiabank",
       "title": "Velocity - Real Estate, Asset Management & Special Projects Internship/Co-op - Winter 2027",
       "loc": "Toronto, ON",
       "geo": "Toronto",
@@ -606,6 +629,20 @@
         "Marketing"
       ],
       "url": "https://jobs.scotiabank.com/job/Toronto-Velocity-Marketing-InternshipCo-op-Winter-2027-ON/605467317/",
+      "posted": "",
+      "src": "successfactors",
+      "content": ""
+    },
+    {
+      "company": "scotiabank",
+      "title": "Wealth Management - Strategy & Projects Internship-Co-op - Winter 2027",
+      "loc": "Toronto, ON",
+      "geo": "Toronto",
+      "cats": [
+        "Finance",
+        "Consulting"
+      ],
+      "url": "https://jobs.scotiabank.com/job/Toronto-Wealth-Management-Strategy-&amp;-Projects-Internship-Co-op-Winter-2027-ON/605911217/",
       "posted": "",
       "src": "successfactors",
       "content": ""
@@ -634,6 +671,17 @@
     },
     {
       "company": "scotiabank",
+      "title": "Velocity - Real Estate, Workplace Experience Coordinator Internship/Co-op - Winter 2027",
+      "loc": "Toronto, ON",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://jobs.scotiabank.com/job/Toronto-Velocity-Real-Estate%2C-Workplace-Experience-Coordinator-InternshipCo-op-Winter-2027-ON/606437217/",
+      "posted": "",
+      "src": "successfactors",
+      "content": ""
+    },
+    {
+      "company": "scotiabank",
       "title": "Wealth Management - Valuation Analyst Intern (12-Month Role)",
       "loc": "Toronto, ON",
       "geo": "Toronto",
@@ -652,6 +700,19 @@
       "geo": "Toronto",
       "cats": [],
       "url": "https://jobs.scotiabank.com/job/Toronto-GTB-Employee-Experience-InternshipCo-op-Winter-2027-ON/605829217/",
+      "posted": "",
+      "src": "successfactors",
+      "content": ""
+    },
+    {
+      "company": "scotiabank",
+      "title": "Wealth Management - ScotiaMcLeod Internship-Co-op - Winter 2027",
+      "loc": "Toronto, ON",
+      "geo": "Toronto",
+      "cats": [
+        "Finance"
+      ],
+      "url": "https://jobs.scotiabank.com/job/Toronto-Wealth-Management-ScotiaMcLeod-Internship-Co-op-Winter-2027-ON/605911517/",
       "posted": "",
       "src": "successfactors",
       "content": ""
@@ -704,19 +765,6 @@
         "Finance"
       ],
       "url": "https://jobs.scotiabank.com/job/Toronto-Velocity-Treasury-InternshipCo-op-Winter-2027-ON/605467017/",
-      "posted": "",
-      "src": "successfactors",
-      "content": ""
-    },
-    {
-      "company": "scotiabank",
-      "title": "GBM - GCM Banking Internship/Co-op - Winter 2027",
-      "loc": "Toronto, ON",
-      "geo": "Toronto",
-      "cats": [
-        "Finance"
-      ],
-      "url": "https://jobs.scotiabank.com/job/Toronto-GBM-GCM-Banking-InternshipCo-op-Winter-2027-ON/605898417/",
       "posted": "",
       "src": "successfactors",
       "content": ""
@@ -898,11 +946,13 @@
     },
     {
       "company": "scotiabank",
-      "title": "Canada's Top Students (CTS) 2026 Presented by Scotiabank",
+      "title": "GBM - GCM Banking Internship/Co-op - Winter 2027",
       "loc": "Toronto, ON",
       "geo": "Toronto",
-      "cats": [],
-      "url": "https://jobs.scotiabank.com/job/Toronto-Canada&amp;apos;s-Top-Students-%28CTS%29-2026%E2%80%AFPresented-by-Scotiabank-ON/606163717/",
+      "cats": [
+        "Finance"
+      ],
+      "url": "https://jobs.scotiabank.com/job/Toronto-GBM-GCM-Banking-InternshipCo-op-Winter-2027-ON/605898417/",
       "posted": "",
       "src": "successfactors",
       "content": ""
@@ -931,6 +981,17 @@
     },
     {
       "company": "scotiabank",
+      "title": "Canada's Top Students (CTS) 2026 Presented by Scotiabank",
+      "loc": "Toronto, ON",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://jobs.scotiabank.com/job/Toronto-Canada&amp;apos;s-Top-Students-%28CTS%29-2026%E2%80%AFPresented-by-Scotiabank-ON/606163717/",
+      "posted": "",
+      "src": "successfactors",
+      "content": ""
+    },
+    {
+      "company": "scotiabank",
       "title": "Wealth Management Tax Administration Internship-Co-op (Toronto) - Winter 2027",
       "loc": "Toronto, ON",
       "geo": "Toronto",
@@ -949,6 +1010,19 @@
       "geo": "Toronto",
       "cats": [],
       "url": "https://jobs.scotiabank.com/job/Toronto-GTB-Canadian-Deposits-Product-InternshipCo-op-Winter-2027-ON/605863617/",
+      "posted": "",
+      "src": "successfactors",
+      "content": ""
+    },
+    {
+      "company": "scotiabank",
+      "title": "Wealth Management - Data Analytics Internship-Co-op - Winter 2027",
+      "loc": "Toronto, ON",
+      "geo": "Toronto",
+      "cats": [
+        "Finance"
+      ],
+      "url": "https://jobs.scotiabank.com/job/Toronto-Wealth-Management-Data-Analytics-Internship-Co-op-Winter-2027-ON/606000117/",
       "posted": "",
       "src": "successfactors",
       "content": ""
@@ -1018,28 +1092,6 @@
       "posted": "",
       "src": "successfactors",
       "content": ""
-    },
-    {
-      "company": "stripe",
-      "title": "Software Engineer, Intern (Summer or Winter)",
-      "loc": "Toronto",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://stripe.com/jobs/search?gh_jid=8130805",
-      "posted": "2026-08-31T19:21:48-04:00",
-      "src": "greenhouse",
-      "content": "&lt;h2&gt;&lt;strong&gt;Who we are&lt;/strong&gt;&lt;/h2&gt; &lt;h3&gt;&lt;strong&gt;About Stripe&lt;/strong&gt;&lt;/h3&gt; &lt;p&gt;Stripe is a technology company focused on improving the conditions for economic growth and prosperity. We build programmable financial infrastructure, rethinking from first principles how financial services should work, to make it easier and cheaper for any business "
-    },
-    {
-      "company": "stripe",
-      "title": "Software Engineer, New Grad",
-      "loc": "Toronto",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://stripe.com/jobs/search?gh_jid=8157838",
-      "posted": "2026-08-31T19:16:04-04:00",
-      "src": "greenhouse",
-      "content": "&lt;h2&gt;&lt;strong&gt;Who we are&lt;/strong&gt;&lt;/h2&gt; &lt;h3&gt;&lt;strong&gt;About Stripe&lt;/strong&gt;&lt;/h3&gt; &lt;p&gt;Stripe is a technology company focused on improving the conditions for economic growth and prosperity. We build programmable financial infrastructure, rethinking from first principles how financial services should work, to make it easier and cheaper for any business "
     },
     {
       "company": "td",
