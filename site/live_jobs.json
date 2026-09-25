@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-25T12:27:03.635902+00:00",
+  "fetched_at": "2026-09-25T17:39:22.228662+00:00",
   "categories": [
     "Finance",
     "Marketing",
@@ -196,6 +196,17 @@
     },
     {
       "company": "cibc",
+      "title": "Quality Assurance Analyst-Co-op Winter 2027",
+      "loc": "Toronto, ON",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://cibc.wd3.myworkdayjobs.com/en-US/search/job/Toronto-ON/Quality-Assurance-Analyst-Co-op-Winter-2027_2619573-1",
+      "posted": "Posted 2 Days Ago",
+      "src": "workday",
+      "content": ""
+    },
+    {
+      "company": "cibc",
       "title": "Risk Analytics Co-op Winter 2027",
       "loc": "Toronto, ON",
       "geo": "Toronto",
@@ -228,17 +239,6 @@
       ],
       "url": "https://cibc.wd3.myworkdayjobs.com/en-US/search/job/Toronto-ON/Business-Analyst--Controllership---Winter-2027-Co-Op-_2618748-2",
       "posted": "Posted 10 Days Ago",
-      "src": "workday",
-      "content": ""
-    },
-    {
-      "company": "cibc",
-      "title": "Quality Assurance Analyst-Co-op Winter 2027",
-      "loc": "Toronto, ON",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://cibc.wd3.myworkdayjobs.com/en-US/search/job/Toronto-ON/Quality-Assurance-Analyst-Co-op-Winter-2027_2619573-1",
-      "posted": "Posted 2 Days Ago",
       "src": "workday",
       "content": ""
     },
@@ -946,17 +946,6 @@
     },
     {
       "company": "scotiabank",
-      "title": "GTB - Change & Payments Modernization Internship/Co-Op - Winter 2027",
-      "loc": "Toronto, ON",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://jobs.scotiabank.com/job/Toronto-GTB-Change-&amp;-Payments-Modernization-InternshipCo-Op-Winter-2027-ON/605841817/",
-      "posted": "",
-      "src": "successfactors",
-      "content": ""
-    },
-    {
-      "company": "scotiabank",
       "title": "GBM - GCM Banking Internship/Co-op - Winter 2027",
       "loc": "Toronto, ON",
       "geo": "Toronto",
@@ -975,6 +964,17 @@
       "geo": "Toronto",
       "cats": [],
       "url": "https://jobs.scotiabank.com/job/Toronto-Canadian-Banking-UXProduct-Design-InternshipCo-op-Winter-2027-ON/605559117/",
+      "posted": "",
+      "src": "successfactors",
+      "content": ""
+    },
+    {
+      "company": "scotiabank",
+      "title": "GTB - Change & Payments Modernization Internship/Co-Op - Winter 2027",
+      "loc": "Toronto, ON",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://jobs.scotiabank.com/job/Toronto-GTB-Change-&amp;-Payments-Modernization-InternshipCo-Op-Winter-2027-ON/605841817/",
       "posted": "",
       "src": "successfactors",
       "content": ""
