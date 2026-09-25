@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-25T20:54:26.251445+00:00",
+  "fetched_at": "2026-09-25T23:43:40.043087+00:00",
   "categories": [
     "Finance",
     "Marketing",
@@ -682,6 +682,17 @@
     },
     {
       "company": "scotiabank",
+      "title": "Velocity - Real Estate, Global Workplace Governance Internship/Co-op - Winter 2027",
+      "loc": "Toronto, ON",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://jobs.scotiabank.com/job/Toronto-Velocity-Real-Estate%2C-Global-Workplace-Governance-InternshipCo-op-Winter-2027-ON/606496117/",
+      "posted": "",
+      "src": "successfactors",
+      "content": ""
+    },
+    {
+      "company": "scotiabank",
       "title": "Wealth Management - Valuation Analyst Intern (12-Month Role)",
       "loc": "Toronto, ON",
       "geo": "Toronto",
@@ -739,19 +750,6 @@
         "Finance"
       ],
       "url": "https://jobs.scotiabank.com/job/Toronto-Canadian-Banking-Technology-&amp;-Analysis-InternshipCo-op-Winter-2027-ON/605559617/",
-      "posted": "",
-      "src": "successfactors",
-      "content": ""
-    },
-    {
-      "company": "scotiabank",
-      "title": "GTB - Business Deposits Portfolio Management Internship/Co-op - Winter 2027",
-      "loc": "Toronto, ON",
-      "geo": "Toronto",
-      "cats": [
-        "Finance"
-      ],
-      "url": "https://jobs.scotiabank.com/job/Toronto-GTB-Business-Deposits-Portfolio-Management-InternshipCo-op-Winter-2027-ON/605838817/",
       "posted": "",
       "src": "successfactors",
       "content": ""
@@ -933,17 +931,6 @@
     },
     {
       "company": "scotiabank",
-      "title": "Velocity - Real Estate, Global Workplace Governance Internship/Co-op - Winter 2027",
-      "loc": "Toronto, ON",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://jobs.scotiabank.com/job/Toronto-Velocity-Real-Estate%2C-Global-Workplace-Governance-InternshipCo-op-Winter-2027-ON/606496117/",
-      "posted": "",
-      "src": "successfactors",
-      "content": ""
-    },
-    {
-      "company": "scotiabank",
       "title": "GBM - Trade Floor Technology Consultant Internship/Co-op - Summer 2027",
       "loc": "Toronto, ON",
       "geo": "Toronto",
@@ -1010,6 +997,19 @@
         "Finance"
       ],
       "url": "https://jobs.scotiabank.com/job/Toronto-Wealth-Management-Tax-Administration-Internship-Co-op-%28Toronto%29-Winter-2027-ON/605915817/",
+      "posted": "",
+      "src": "successfactors",
+      "content": ""
+    },
+    {
+      "company": "scotiabank",
+      "title": "GTB - Business Deposits Portfolio Management Internship/Co-op - Winter 2027",
+      "loc": "Toronto, ON",
+      "geo": "Toronto",
+      "cats": [
+        "Finance"
+      ],
+      "url": "https://jobs.scotiabank.com/job/Toronto-GTB-Business-Deposits-Portfolio-Management-InternshipCo-op-Winter-2027-ON/605838817/",
       "posted": "",
       "src": "successfactors",
       "content": ""
