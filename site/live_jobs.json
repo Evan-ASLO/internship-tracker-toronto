@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-27T14:26:12.311105+00:00",
+  "fetched_at": "2026-09-27T18:47:34.054318+00:00",
   "categories": [
     "Finance",
     "Marketing",
@@ -611,6 +611,19 @@
     },
     {
       "company": "scotiabank",
+      "title": "Wealth Management Tax Administration Internship-Co-op (Toronto) - Winter 2027",
+      "loc": "Toronto, ON",
+      "geo": "Toronto",
+      "cats": [
+        "Finance"
+      ],
+      "url": "https://jobs.scotiabank.com/job/Toronto-Wealth-Management-Tax-Administration-Internship-Co-op-%28Toronto%29-Winter-2027-ON/605915817/",
+      "posted": "",
+      "src": "successfactors",
+      "content": ""
+    },
+    {
+      "company": "scotiabank",
       "title": "Velocity - Corporate Security Internship/Co-op - Winter 2027",
       "loc": "Toronto, ON",
       "geo": "Toronto",
@@ -686,19 +699,6 @@
         "Consulting"
       ],
       "url": "https://jobs.scotiabank.com/job/Toronto-GBM-Trade-Floor-Technology-Consultant-InternshipCo-op-Summer-2027-ON/605897917/",
-      "posted": "",
-      "src": "successfactors",
-      "content": ""
-    },
-    {
-      "company": "scotiabank",
-      "title": "Wealth Management Tax Administration Internship-Co-op (Toronto) - Winter 2027",
-      "loc": "Toronto, ON",
-      "geo": "Toronto",
-      "cats": [
-        "Finance"
-      ],
-      "url": "https://jobs.scotiabank.com/job/Toronto-Wealth-Management-Tax-Administration-Internship-Co-op-%28Toronto%29-Winter-2027-ON/605915817/",
       "posted": "",
       "src": "successfactors",
       "content": ""
