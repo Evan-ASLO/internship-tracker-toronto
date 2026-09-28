@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-28T14:45:33.771443+00:00",
+  "fetched_at": "2026-09-28T20:57:06.588523+00:00",
   "categories": [
     "Finance",
     "Marketing",
@@ -164,18 +164,7 @@
       "geo": "Toronto",
       "cats": [],
       "url": "https://cibc.wd3.myworkdayjobs.com/en-US/search/job/Toronto-ON/First-Nations--Inuit--or-Mtis-Students---Winter-2027-Co-op-and-Internship-Opportunities_2616392-1",
-      "posted": "Posted 30+ Days Ago",
-      "src": "workday",
-      "content": ""
-    },
-    {
-      "company": "cibc",
-      "title": "Quality Assurance Analyst-Co-op Winter 2027",
-      "loc": "Toronto, ON",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://cibc.wd3.myworkdayjobs.com/en-US/search/job/Toronto-ON/Quality-Assurance-Analyst-Co-op-Winter-2027_2619573-1",
-      "posted": "Posted 5 Days Ago",
+      "posted": "Posted Today",
       "src": "workday",
       "content": ""
     },
@@ -213,6 +202,17 @@
       ],
       "url": "https://cibc.wd3.myworkdayjobs.com/en-US/search/job/Toronto-ON/Business-Analyst--Controllership---Winter-2027-Co-Op-_2618748-2",
       "posted": "Posted 13 Days Ago",
+      "src": "workday",
+      "content": ""
+    },
+    {
+      "company": "cibc",
+      "title": "Quality Assurance Analyst-Co-op Winter 2027",
+      "loc": "Toronto, ON",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://cibc.wd3.myworkdayjobs.com/en-US/search/job/Toronto-ON/Quality-Assurance-Analyst-Co-op-Winter-2027_2619573-1",
+      "posted": "Posted 5 Days Ago",
       "src": "workday",
       "content": ""
     },
@@ -613,6 +613,17 @@
     },
     {
       "company": "scotiabank",
+      "title": "Velocity - DevOps Engineer- Capital Markets Internship/Co-op 12-16 Months - Winter 2027",
+      "loc": "Toronto, ON",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://jobs.scotiabank.com/job/Toronto-Velocity-DevOps-Engineer-Capital-Markets-InternshipCo-op-12-16-Months-Winter-2027-ON/605884417/",
+      "posted": "",
+      "src": "successfactors",
+      "content": ""
+    },
+    {
+      "company": "scotiabank",
       "title": "Velocity - Data Engineer Internship/Co-Op - Winter 2027",
       "loc": "Toronto, ON",
       "geo": "Toronto",
@@ -629,17 +640,6 @@
       "geo": "Toronto",
       "cats": [],
       "url": "https://jobs.scotiabank.com/job/Toronto-Velocity-Software-Engineer-InternshipCo-Op-Winter-2027-ON/605885017/",
-      "posted": "",
-      "src": "successfactors",
-      "content": ""
-    },
-    {
-      "company": "scotiabank",
-      "title": "Velocity - DevOps Engineer- Capital Markets Internship/Co-op 12-16 Months - Winter 2027",
-      "loc": "Toronto, ON",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://jobs.scotiabank.com/job/Toronto-Velocity-DevOps-Engineer-Capital-Markets-InternshipCo-op-12-16-Months-Winter-2027-ON/605884417/",
       "posted": "",
       "src": "successfactors",
       "content": ""
