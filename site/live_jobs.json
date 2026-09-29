@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-29T13:35:16.672102+00:00",
+  "fetched_at": "2026-09-29T19:00:32.290957+00:00",
   "categories": [
     "Finance",
     "Marketing",
@@ -183,17 +183,6 @@
     },
     {
       "company": "cibc",
-      "title": "Quality Assurance Analyst-Co-op Winter 2027",
-      "loc": "Toronto, ON",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://cibc.wd3.myworkdayjobs.com/en-US/search/job/Toronto-ON/Quality-Assurance-Analyst-Co-op-Winter-2027_2619573-1",
-      "posted": "Posted 6 Days Ago",
-      "src": "workday",
-      "content": ""
-    },
-    {
-      "company": "cibc",
       "title": "Consultant AML- (Winter 2027 Co-Op)",
       "loc": "Toronto, ON",
       "geo": "Toronto",
@@ -202,6 +191,17 @@
       ],
       "url": "https://cibc.wd3.myworkdayjobs.com/en-US/search/job/Toronto-ON/Consultant-AML---Winter-2027-Co-Op-_2618764-2",
       "posted": "Posted 4 Days Ago",
+      "src": "workday",
+      "content": ""
+    },
+    {
+      "company": "cibc",
+      "title": "Quality Assurance Analyst-Co-op Winter 2027",
+      "loc": "Toronto, ON",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://cibc.wd3.myworkdayjobs.com/en-US/search/job/Toronto-ON/Quality-Assurance-Analyst-Co-op-Winter-2027_2619573-1",
+      "posted": "Posted 6 Days Ago",
       "src": "workday",
       "content": ""
     },
@@ -578,11 +578,13 @@
     },
     {
       "company": "scotiabank",
-      "title": "Velocity - Blockchain Engineer Internship/Co-Op - Winter 2027",
+      "title": "Wealth Management Tax Administration Internship-Co-op (Toronto) - Winter 2027",
       "loc": "Toronto, ON",
       "geo": "Toronto",
-      "cats": [],
-      "url": "https://jobs.scotiabank.com/job/Toronto-Velocity-Blockchain-Engineer-InternshipCo-Op-Winter-2027-ON/605902717/",
+      "cats": [
+        "Finance"
+      ],
+      "url": "https://jobs.scotiabank.com/job/Toronto-Wealth-Management-Tax-Administration-Internship-Co-op-%28Toronto%29-Winter-2027-ON/605915817/",
       "posted": "",
       "src": "successfactors",
       "content": ""
@@ -594,6 +596,17 @@
       "geo": "Toronto",
       "cats": [],
       "url": "https://jobs.scotiabank.com/job/Toronto-Velocity-Software-Engineer-InternshipCo-Op-Winter-2027-ON/605885017/",
+      "posted": "",
+      "src": "successfactors",
+      "content": ""
+    },
+    {
+      "company": "scotiabank",
+      "title": "Velocity - Blockchain Engineer Internship/Co-Op - Winter 2027",
+      "loc": "Toronto, ON",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://jobs.scotiabank.com/job/Toronto-Velocity-Blockchain-Engineer-InternshipCo-Op-Winter-2027-ON/605902717/",
       "posted": "",
       "src": "successfactors",
       "content": ""
@@ -686,19 +699,6 @@
         "Consulting"
       ],
       "url": "https://jobs.scotiabank.com/job/Toronto-GBM-Trade-Floor-Technology-Consultant-InternshipCo-op-Summer-2027-ON/605897917/",
-      "posted": "",
-      "src": "successfactors",
-      "content": ""
-    },
-    {
-      "company": "scotiabank",
-      "title": "Wealth Management Tax Administration Internship-Co-op (Toronto) - Winter 2027",
-      "loc": "Toronto, ON",
-      "geo": "Toronto",
-      "cats": [
-        "Finance"
-      ],
-      "url": "https://jobs.scotiabank.com/job/Toronto-Wealth-Management-Tax-Administration-Internship-Co-op-%28Toronto%29-Winter-2027-ON/605915817/",
       "posted": "",
       "src": "successfactors",
       "content": ""
@@ -905,17 +905,6 @@
       "geo": "Toronto",
       "cats": [],
       "url": "https://td.wd3.myworkdayjobs.com/en-US/TD_Bank_Careers/job/Toronto-Ontario/Strategic-Insights-and-Business-Optimization-Intern---Co-Op--Winter-2027-_R_1506557",
-      "posted": "Posted 3 Days Ago",
-      "src": "workday",
-      "content": ""
-    },
-    {
-      "company": "td",
-      "title": "TD Insurance Private Client Advice Intern/Co-op (Winter 2027)",
-      "loc": "Toronto, Ontario",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://td.wd3.myworkdayjobs.com/en-US/TD_Bank_Careers/job/Toronto-Ontario/TD-Insurance-Private-Client-Advice-Intern-Co-op---Winter-2027-_R_1505161-1",
       "posted": "Posted 3 Days Ago",
       "src": "workday",
       "content": ""
