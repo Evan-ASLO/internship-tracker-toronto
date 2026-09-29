@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-29T00:47:44.087374+00:00",
+  "fetched_at": "2026-09-29T06:26:04.394136+00:00",
   "categories": [
     "Finance",
     "Marketing",
@@ -170,12 +170,12 @@
     },
     {
       "company": "cibc",
-      "title": "Risk Analytics Co-op Winter 2027",
+      "title": "Quality Assurance Analyst-Co-op Winter 2027",
       "loc": "Toronto, ON",
       "geo": "Toronto",
       "cats": [],
-      "url": "https://cibc.wd3.myworkdayjobs.com/en-US/search/job/Toronto-ON/Risk-Analytics-Co-op-Winter-2027_2618885-1",
-      "posted": "Posted 7 Days Ago",
+      "url": "https://cibc.wd3.myworkdayjobs.com/en-US/search/job/Toronto-ON/Quality-Assurance-Analyst-Co-op-Winter-2027_2619573-1",
+      "posted": "Posted 5 Days Ago",
       "src": "workday",
       "content": ""
     },
@@ -189,30 +189,6 @@
       ],
       "url": "https://cibc.wd3.myworkdayjobs.com/en-US/search/job/Toronto-ON/Consultant-AML---Winter-2027-Co-Op-_2618764-2",
       "posted": "Posted 3 Days Ago",
-      "src": "workday",
-      "content": ""
-    },
-    {
-      "company": "cibc",
-      "title": "Business Analyst, Controllership- (Winter 2027 Co-Op)",
-      "loc": "Toronto, ON",
-      "geo": "Toronto",
-      "cats": [
-        "Business Operations"
-      ],
-      "url": "https://cibc.wd3.myworkdayjobs.com/en-US/search/job/Toronto-ON/Business-Analyst--Controllership---Winter-2027-Co-Op-_2618748-2",
-      "posted": "Posted 13 Days Ago",
-      "src": "workday",
-      "content": ""
-    },
-    {
-      "company": "cibc",
-      "title": "Quality Assurance Analyst-Co-op Winter 2027",
-      "loc": "Toronto, ON",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://cibc.wd3.myworkdayjobs.com/en-US/search/job/Toronto-ON/Quality-Assurance-Analyst-Co-op-Winter-2027_2619573-1",
-      "posted": "Posted 5 Days Ago",
       "src": "workday",
       "content": ""
     },
@@ -589,11 +565,13 @@
     },
     {
       "company": "scotiabank",
-      "title": "Velocity - Blockchain Engineer Internship/Co-Op - Winter 2027",
+      "title": "Wealth Management Tax Administration Internship-Co-op (Toronto) - Winter 2027",
       "loc": "Toronto, ON",
       "geo": "Toronto",
-      "cats": [],
-      "url": "https://jobs.scotiabank.com/job/Toronto-Velocity-Blockchain-Engineer-InternshipCo-Op-Winter-2027-ON/605902717/",
+      "cats": [
+        "Finance"
+      ],
+      "url": "https://jobs.scotiabank.com/job/Toronto-Wealth-Management-Tax-Administration-Internship-Co-op-%28Toronto%29-Winter-2027-ON/605915817/",
       "posted": "",
       "src": "successfactors",
       "content": ""
@@ -605,6 +583,17 @@
       "geo": "Toronto",
       "cats": [],
       "url": "https://jobs.scotiabank.com/job/Toronto-Velocity-Software-Engineer-InternshipCo-Op-Winter-2027-ON/605885017/",
+      "posted": "",
+      "src": "successfactors",
+      "content": ""
+    },
+    {
+      "company": "scotiabank",
+      "title": "Velocity - Blockchain Engineer Internship/Co-Op - Winter 2027",
+      "loc": "Toronto, ON",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://jobs.scotiabank.com/job/Toronto-Velocity-Blockchain-Engineer-InternshipCo-Op-Winter-2027-ON/605902717/",
       "posted": "",
       "src": "successfactors",
       "content": ""
@@ -697,19 +686,6 @@
         "Consulting"
       ],
       "url": "https://jobs.scotiabank.com/job/Toronto-GBM-Trade-Floor-Technology-Consultant-InternshipCo-op-Summer-2027-ON/605897917/",
-      "posted": "",
-      "src": "successfactors",
-      "content": ""
-    },
-    {
-      "company": "scotiabank",
-      "title": "Wealth Management Tax Administration Internship-Co-op (Toronto) - Winter 2027",
-      "loc": "Toronto, ON",
-      "geo": "Toronto",
-      "cats": [
-        "Finance"
-      ],
-      "url": "https://jobs.scotiabank.com/job/Toronto-Wealth-Management-Tax-Administration-Internship-Co-op-%28Toronto%29-Winter-2027-ON/605915817/",
       "posted": "",
       "src": "successfactors",
       "content": ""
