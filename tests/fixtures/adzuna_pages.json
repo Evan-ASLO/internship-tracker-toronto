@@ -102,7 +102,7 @@
       ]
     },
     "new-grad": {
-      "count": 1,
+      "count": 2,
       "results": [
         {
           "id": "adz-5",
@@ -112,6 +112,15 @@
           "redirect_url": "https://www.adzuna.ca/details/adz-5",
           "created": "2026-10-01T08:00:00Z",
           "description": "New graduate role"
+        },
+        {
+          "id": "adz-8",
+          "title": "Experienced Operations Analyst",
+          "company": {"display_name": "Noise Co"},
+          "location": {"display_name": "Toronto, Ontario"},
+          "redirect_url": "https://www.adzuna.ca/details/adz-8",
+          "created": "2026-10-01T05:00:00Z",
+          "description": "Description mentions new graduates but title is not entry-level"
         }
       ]
     }

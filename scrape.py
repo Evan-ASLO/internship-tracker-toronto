@@ -37,7 +37,11 @@ ADZUNA_REFRESH_INTERVAL_HOURS = 2
 ADZUNA_GRACE_HOURS = 6
 ADZUNA_WHERE = "Toronto"
 ADZUNA_DISTANCE_KM = 100
-ADZUNA_QUERY_NAMES = ("internship", "intern", "coop", "student", "new-grad")
+ADZUNA_QUERY_NAMES = (
+    "internship-p1", "internship-p2",
+    "coop-p1", "coop-p2",
+    "new-grad-p1",
+)
 
 COVERAGE = {}
 COVERAGE_LOCK = Lock()
@@ -84,6 +88,7 @@ INTERN_RE = re.compile(
 SENIOR_RE = re.compile(r"\b(senior|sr\.?|manager|director|principal|lead|vp"
                        r"|head\s+of|associate\s+partner|executive)\b", re.I)
 EXPLICIT_RE = re.compile(r"\b(intern|internship|co-?op)\b", re.I)
+NEW_GRAD_TITLE_RE = re.compile(r"\bnew\s*grad(?:uate)?\b", re.I)
 
 
 def is_internship(title):
@@ -531,11 +536,26 @@ def from_amazon(_):
 
 def adzuna_queries():
     return [
-        {"name": "internship", "params": {"title_only": "internship"}},
-        {"name": "intern", "params": {"title_only": "intern"}},
-        {"name": "coop", "params": {"what_or": "co-op coop"}},
-        {"name": "student", "params": {"title_only": "student"}},
-        {"name": "new-grad", "params": {"what_phrase": "new grad"}},
+        {
+            "name": "internship-p1", "page": 1, "last_page": False,
+            "params": {"title_only": "internship"},
+        },
+        {
+            "name": "internship-p2", "page": 2, "last_page": True,
+            "params": {"title_only": "internship"},
+        },
+        {
+            "name": "coop-p1", "page": 1, "last_page": False,
+            "params": {"what_or": "co-op coop"},
+        },
+        {
+            "name": "coop-p2", "page": 2, "last_page": True,
+            "params": {"what_or": "co-op coop"},
+        },
+        {
+            "name": "new-grad-p1", "page": 1, "last_page": True,
+            "params": {"what_phrase": "new grad"},
+        },
     ]
 
 
@@ -680,7 +700,7 @@ def from_adzuna(_, now=None):
     request_budget = {"remaining": ADZUNA_REQUESTS_PER_ACTIVE_RUN}
 
     for query in adzuna_queries():
-        url = "https://api.adzuna.com/v1/api/jobs/ca/search/1"
+        url = f"https://api.adzuna.com/v1/api/jobs/ca/search/{query['page']}"
         params = {
             "app_id": app_id,
             "app_key": app_key,
@@ -692,8 +712,9 @@ def from_adzuna(_, now=None):
             **query["params"],
         }
         query_metric = {
-            "name": query["name"], "total": None, "returned": 0,
-            "kept": 0, "capped": False, "status": "success",
+            "name": query["name"], "page": query["page"],
+            "total": None, "returned": 0,
+            "kept": 0, "rejected": 0, "capped": False, "status": "success",
         }
         try:
             response = g(url, params=params, request_budget=request_budget)
@@ -727,7 +748,8 @@ def from_adzuna(_, now=None):
         returned += len(results)
         query_metric["returned"] = len(results)
         query_metric["capped"] = (
-            total > ADZUNA_RESULTS_PER_PAGE
+            query["last_page"]
+            and total > query["page"] * ADZUNA_RESULTS_PER_PAGE
             and len(results) >= ADZUNA_RESULTS_PER_PAGE
         )
         if query_metric["capped"]:
@@ -741,6 +763,11 @@ def from_adzuna(_, now=None):
             identity = str(external_id)
             if identity in seen:
                 continue
+            title = clean_text(
+                re.sub("<[^>]+>", " ", str(result.get("title") or "")))
+            if query["name"] == "new-grad-p1" and not NEW_GRAD_TITLE_RE.search(title):
+                query_metric["rejected"] += 1
+                continue
             seen.add(identity)
             query_metric["kept"] += 1
             company = clean_text(
@@ -749,8 +776,6 @@ def from_adzuna(_, now=None):
             location = clean_text(
                 (result.get("location") or {}).get("display_name")
             )
-            title = clean_text(
-                re.sub("<[^>]+>", " ", str(result.get("title") or "")))
             description = clean_text(
                 re.sub("<[^>]+>", " ", str(result.get("description") or "")))
             out.append(with_coverage(
@@ -964,6 +989,75 @@ def verify(rec):
     return rec, True, "200"
 
 
+DIRECT_JOB_SOURCES = {
+    "workday", "greenhouse", "successfactors", "ashby", "amazon"
+}
+
+
+def _listing_text(value):
+    text = clean_text(value).casefold()
+    text = text.replace("co-op", "coop").replace("co op", "coop")
+    return " ".join(re.findall(r"[a-z0-9]+", text))
+
+
+def _listing_location(value):
+    text = _listing_text(value)
+    tokens = [
+        "on" if token == "ontario" else token
+        for token in text.split()
+        if token not in {"can", "canada"}
+    ]
+    return " ".join(tokens)
+
+
+def same_listing(left, right):
+    if _listing_text(left.get("company")) != _listing_text(right.get("company")):
+        return False
+    if _listing_text(left.get("title")) != _listing_text(right.get("title")):
+        return False
+    left_location = _listing_location(left.get("loc"))
+    right_location = _listing_location(right.get("loc"))
+    return not left_location or not right_location or left_location == right_location
+
+
+def dedupe_candidates(candidates):
+    seen_identity = set()
+    unique = []
+    unique_counts = {}
+    direct_records = []
+    direct_overlap_counts = {}
+    ordered = sorted(
+        enumerate(candidates),
+        key=lambda item: (item[1].get("src") == "adzuna", item[0]),
+    )
+    for _, record in ordered:
+        if record.get("external_id"):
+            identity = ("external", record["src"], record["external_id"])
+        elif record.get("url"):
+            identity = ("url", record["src"], record["url"])
+        else:
+            identity = (
+                "fallback", record["src"], record["company"],
+                record["title"].strip().lower(), record["loc"].strip().lower(),
+            )
+        if identity in seen_identity:
+            continue
+        seen_identity.add(identity)
+
+        key = record.get("_coverage_key")
+        if record.get("src") == "adzuna" and any(
+            same_listing(record, direct) for direct in direct_records
+        ):
+            direct_overlap_counts[key] = direct_overlap_counts.get(key, 0) + 1
+            continue
+
+        unique.append(record)
+        unique_counts[key] = unique_counts.get(key, 0) + 1
+        if record.get("src") in DIRECT_JOB_SOURCES:
+            direct_records.append(record)
+    return unique, unique_counts, direct_overlap_counts
+
+
 def _metric(value):
     return "-" if value is None else str(value)
 
@@ -999,7 +1093,9 @@ def print_coverage_report(filtered_counts, unique_counts, live_counts):
         for query in entry.get("queries") or []:
             detail = (
                 f"{key}/{query.get('name')}: total={_metric(query.get('total'))}, "
+                f"page={query.get('page', '-')}, "
                 f"returned={query.get('returned', 0)}, kept={query.get('kept', 0)}, "
+                f"rejected={query.get('rejected', 0)}, "
                 f"capped={str(bool(query.get('capped'))).lower()}, "
                 f"status={query.get('status', 'success')}"
             )
@@ -1015,6 +1111,13 @@ def print_coverage_report(filtered_counts, unique_counts, live_counts):
             )
             source_details.append(state_detail)
             print(f"   SOURCE STATE {state_detail}")
+        if entry.get("direct_overlap"):
+            overlap_detail = (
+                f"{key}: omitted {entry['direct_overlap']} aggregate row(s) "
+                "in favor of matching direct ATS records"
+            )
+            source_details.append(overlap_detail)
+            print(f"   SOURCE DEDUPE {overlap_detail}")
         if entry.get("fallback_terms"):
             warning = (
                 f"{key}: no usable target-location facet for "
@@ -1130,23 +1233,15 @@ def main():
         key = r.get("_coverage_key")
         filtered_counts[key] = filtered_counts.get(key, 0) + 1
 
-    # Dedupe by source identity. Workday returns the same req multiple times
-    # across the intern/co-op/student search terms, while two distinct reqs can
-    # legitimately share a title and location.
-    seen, uniq = set(), []
-    unique_counts = {}
-    for r in cand:
-        if r.get("external_id"):
-            k = ("external", r["src"], r["external_id"])
-        elif r.get("url"):
-            k = ("url", r["src"], r["url"])
-        else:
-            k = ("fallback", r["src"], r["company"],
-                 r["title"].strip().lower(), r["loc"].strip().lower())
-        if k in seen: continue
-        seen.add(k); uniq.append(r)
-        key = r.get("_coverage_key")
-        unique_counts[key] = unique_counts.get(key, 0) + 1
+    # Dedupe by source identity, then prefer direct ATS records when an Adzuna
+    # aggregate row matches the same normalized company/title/location.
+    uniq, unique_counts, direct_overlap_counts = dedupe_candidates(cand)
+    adzuna_key = coverage_key("adzuna", "ca/Toronto")
+    if direct_overlap_counts.get(adzuna_key):
+        set_coverage(
+            adzuna_key,
+            direct_overlap=direct_overlap_counts[adzuna_key],
+        )
     print(f"{len(uniq)} unique Toronto-area internships (before liveness check)")
 
     # verify every URL is still live

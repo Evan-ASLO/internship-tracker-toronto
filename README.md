@@ -97,10 +97,18 @@ passes them only to the scrape step. If either value is missing, the adapter
 makes no request and reports `skipped` in source coverage.
 
 The adapter uses the official Canada endpoint
-`/v1/api/jobs/ca/search/1`, centered on Toronto with a 100 km radius. Every
-second hour runs all five targeted 50-result queries: `internship`, `intern`,
-`co-op/coop`, `student`, and the exact phrase `new grad`. The noisy standalone
-term `graduate` is never queried.
+`/v1/api/jobs/ca/search/{page}`, centered on Toronto with a 100 km radius.
+Every second hour uses the five-request budget for high-signal depth:
+
+1. `title_only=internship`, page 1
+2. `title_only=internship`, page 2
+3. `what_or=co-op coop`, page 1
+4. `what_or=co-op coop`, page 2
+5. `what_phrase=new grad`, page 1
+
+The redundant `intern` query and noisy broad `student` query are intentionally
+excluded. New-grad results must also contain `new grad` or `new graduate` in
+the title; a description-only mention is rejected.
 
 On the alternating hour, the scraper carries the prior successful Adzuna slice
 from the checked-in baseline and still applies normal deduplication and URL

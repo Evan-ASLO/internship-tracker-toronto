@@ -55,24 +55,9 @@ def build_report(records, coverage, baseline_jobs=None):
         job for job in baseline_jobs
         if isinstance(job, dict) and job.get("src") != "adzuna"
     ]
-    baseline_urls = {scrape.clean_text(job.get("url")) for job in baseline_non_adzuna}
-    baseline_company_titles = {
-        (
-            scrape.clean_text(job.get("company")).casefold(),
-            scrape.clean_text(job.get("title")).casefold(),
-        )
-        for job in baseline_non_adzuna
-    }
     overlap = []
     for record in unique:
-        key = (
-            scrape.clean_text(record.get("company")).casefold(),
-            scrape.clean_text(record.get("title")).casefold(),
-        )
-        if (
-            scrape.clean_text(record.get("url")) in baseline_urls
-            or key in baseline_company_titles
-        ):
+        if any(scrape.same_listing(record, job) for job in baseline_non_adzuna):
             overlap.append(record)
     title_lengths = [len(record["title"]) for record in unique]
     return {
@@ -147,7 +132,9 @@ def write_summary(report):
         for query in report["queries"]:
             summary.write(
                 f"- `{query['name']}`: total={query['total']}, "
+                f"page={query.get('page', '-')}, "
                 f"returned={query['returned']}, kept={query['kept']}, "
+                f"rejected={query.get('rejected', 0)}, "
                 f"capped={str(query['capped']).lower()}, "
                 f"status={query['status']}\n"
             )
