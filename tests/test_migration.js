@@ -154,6 +154,27 @@ test("malformed legacy rows are isolated instead of blanking the board", () => {
   assert.deepEqual(result.jobs[0].cats, ["Finance"]);
 });
 
+test("legacy Adzuna rows preserve the source marker for attribution", () => {
+  const result = migration.normalizeLegacyJobs(
+    [
+      {
+        company: "Example",
+        title: "Finance Intern",
+        loc: "Toronto, Ontario",
+        geo: "Toronto",
+        cats: ["Finance"],
+        url: "https://www.adzuna.ca/details/123",
+        posted: "2026-10-01T12:00:00Z",
+        src: "adzuna",
+      },
+    ],
+    () => []
+  );
+
+  assert.equal(result.jobs.length, 1);
+  assert.equal(result.jobs[0].src, "adzuna");
+});
+
 test("future-version state is backed up and never overwritten by the next write", () => {
   const raw = JSON.stringify({
     schemaVersion: 2,

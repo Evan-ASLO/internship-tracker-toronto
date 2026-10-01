@@ -108,8 +108,15 @@ consume quota.
 published listings to carry linked **Jobs by Adzuna** logo attribution
 (minimum 116 × 23 px). They also state that ongoing commercial, government, or
 academic use beyond a 14-day evaluation may require written consent or a
-licence. Do not enable the secrets until both user-facing sites implement the
-required attribution and the intended use is confirmed with Adzuna.
+licence. The legacy Vercel cards, details, and tracker now render the bundled
+official developer-portal asset at `site/assets/adzuna-logo.png`, with both the
+**Jobs by** text and logo linked to `https://www.adzuna.ca/`, whenever
+`src === "adzuna"`.
+
+The Cloudflare v1 marker is exactly `source === "adzuna"`. Do not enable the
+secrets until the Cloudflare jobs list, job detail, saved-job, and application
+surfaces also render the same linked minimum-size attribution and the intended
+use is confirmed with Adzuna.
 
 ## Moving browser data
 

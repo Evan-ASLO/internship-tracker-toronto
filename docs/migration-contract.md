@@ -196,3 +196,39 @@ internship_tracker_user_state_recovery_v1
 The Profile view surfaces the failure and recovery key. Separately, malformed
 rows in `live_jobs.json` are skipped per row; valid rows continue to render and
 the board displays a warning with the number skipped.
+
+## Adzuna source attribution contract
+
+Adzuna legacy feed rows use:
+
+```json
+{
+  "src": "adzuna",
+  "external_id": "<Adzuna result id>"
+}
+```
+
+Normalization preserves the exact Cloudflare v1 marker:
+
+```json
+{
+  "source": "adzuna",
+  "externalId": "<Adzuna result id>"
+}
+```
+
+Every UI surface that displays such a job must render linked **Jobs by Adzuna**
+attribution at least 116 × 23 px, with the Adzuna word represented by the
+official logo image and linked to the relevant local domain
+(`https://www.adzuna.ca/` for this Canada feed). This includes browse cards,
+job details, saved jobs, and application/tracker rows.
+
+The Vercel app uses the official developer-portal PNG bundled at
+`site/assets/adzuna-logo.png`, downloaded from the first-party developer portal
+at `https://developer.adzuna.com/images/adzuna_logo.png`. The **Jobs by** text
+and the logo are separate links to `https://www.adzuna.ca/`. The Cloudflare UI
+must implement the same conditional behavior using
+`job.source === "adzuna"` before the repository secrets are enabled. The
+browser saved/application export schema remains unchanged and intentionally
+carries URL/company/title migration references, not provider presentation
+metadata.

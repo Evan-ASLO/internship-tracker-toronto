@@ -71,6 +71,7 @@ class AdzunaSourceTests(unittest.TestCase):
             "adz-1", "adz-2", "adz-3", "adz-4", "adz-5"
         ])
         self.assertEqual(jobs[0]["src"], "adzuna")
+        self.assertTrue(all(job["src"] == "adzuna" for job in jobs))
         self.assertEqual(jobs[0]["title"], "Finance Intern")
         self.assertEqual(jobs[0]["company"], "Alpha Bank")
         self.assertEqual(jobs[0]["loc"], "Toronto, Ontario")
@@ -169,6 +170,22 @@ class AdzunaSourceTests(unittest.TestCase):
             normalized["id"],
             hashlib.sha256(b"adzuna\nadz-1").hexdigest(),
         )
+
+    def test_legacy_ui_contains_compliant_source_marker_attribution(self):
+        html = Path("site/index.html").read_text(encoding="utf-8")
+        logo = Path("site/assets/adzuna-logo.png")
+
+        self.assertIn("j.src!=='adzuna'", html)
+        self.assertIn('class="adzuna-jobs-link"', html)
+        self.assertIn('class="adzuna-logo-link"', html)
+        self.assertGreaterEqual(html.count('href="https://www.adzuna.ca/"'), 2)
+        self.assertIn('aria-label="Jobs by Adzuna"', html)
+        self.assertIn('src="assets/adzuna-logo.png"', html)
+        self.assertIn('alt="Adzuna"', html)
+        self.assertIn("min-width: 116px", html)
+        self.assertIn("min-height: 23px", html)
+        self.assertTrue(logo.is_file())
+        self.assertGreater(logo.stat().st_size, 1_000)
 
 
 if __name__ == "__main__":

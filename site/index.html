@@ -181,6 +181,12 @@ a { color: inherit; }
 .row.fresh svg { color: var(--cp-success); }
 .row.stale { color: var(--cp-warning); font-weight: 600; }
 .row.stale svg { color: var(--cp-warning); }
+.adzuna-attribution { min-width: 116px; min-height: 23px; width: max-content;
+  display: inline-flex; align-items: center; gap: 6px; margin-bottom: 8px;
+  color: var(--cp-text-muted); font-size: 11px; font-weight: 700; }
+.adzuna-attribution a { color: inherit; text-decoration: none; }
+.adzuna-attribution a:hover { color: var(--cp-accent); }
+.adzuna-attribution img { width: 87px; height: 23px; object-fit: contain; display: block; }
 .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 14px; }
 .tag { font-size: 11.5px; font-weight: 600; padding: 4px 10px; border-radius: 999px;
   background: var(--cp-surface-soft); color: var(--cp-text-muted); }
@@ -208,7 +214,7 @@ a { color: inherit; }
 .col-body { display: flex; flex-direction: column; gap: 9px; padding: 4px; border-radius: 12px;
   min-height: 90px; border: 1.5px dashed transparent; }
 .col-body.over { border-color: var(--cp-accent); background: var(--cp-accent-soft); }
-.tcard { display: flex; align-items: center; gap: 11px; padding: 11px 12px; background: var(--cp-surface);
+.tcard { display: flex; flex-wrap: wrap; align-items: center; gap: 11px; padding: 11px 12px; background: var(--cp-surface);
   border: 1px solid var(--cp-border); border-radius: 12px; cursor: grab;
   box-shadow: 0 0 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.14); }
 .tcard.dragging { opacity: .4; }
@@ -217,6 +223,7 @@ a { color: inherit; }
 .tcard .c { font-size: 11.5px; color: var(--cp-text-soft); margin-top: 1px; text-transform: capitalize; }
 .tcard .rm { margin-left: auto; background: none; border: none; cursor: pointer;
   color: var(--cp-text-soft); opacity: 0; padding: 2px; }
+.tcard .adzuna-attribution { flex-basis: 100%; margin: 0 0 0 45px; }
 .tcard:hover .rm { opacity: 1; }
 .tcard .rm:hover { color: var(--cp-danger); }
 .stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 18px; }
@@ -643,6 +650,14 @@ warn:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="curren
 const esc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const mono = co => String(co).replace(/[^A-Za-z ]/g,'').split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase();
 const tint = co => 't'+((String(co).charCodeAt(0)+String(co).length)%3===0?1:(String(co).length%2?2:0));
+function sourceAttribution(j){
+  if(j.src!=='adzuna') return `<div class="row">${I.case}<span>Source: ${esc(j.src)}</span></div>`;
+  return `<span class="adzuna-attribution" role="group" aria-label="Jobs by Adzuna">
+    <a class="adzuna-jobs-link" href="https://www.adzuna.ca/" target="_blank"
+      rel="noopener noreferrer">Jobs by</a>
+    <a class="adzuna-logo-link" href="https://www.adzuna.ca/" target="_blank"
+      rel="noopener noreferrer"><img src="assets/adzuna-logo.png" alt="Adzuna"/></a></span>`;
+}
 
 /* ═════════ nav ═════════ */
 const NAV=[{k:'internships',label:'Internships',icon:I.grid},
@@ -677,7 +692,7 @@ function card(j,i){
     <div class="row ${stale?'stale':(p.days!==null&&p.days<7?'fresh':'')}">
       ${stale?I.warn:I.clock}<span>${j.sample?'No date — sample':esc(p.label)}${stale?' · may be closed':''}</span></div>
     <div class="row">${I.pin}<span>${esc(j.loc)}</span></div>
-    <div class="row">${I.case}<span>Source: ${esc(j.src)}</span></div>
+    ${sourceAttribution(j)}
     <div class="tags">
       ${j.sample?'':'<span class="tag ok">'+I.check+' Verified live</span>'}
       ${j.cats.map(c=>`<span class="tag hl">${esc(c)}</span>`).join('')}
@@ -703,7 +718,7 @@ function modal(){
     ${stale?`<div class="banner warn">${I.warn}<div><b>Stale posting.</b> Published ${p.exact||''} — ${p.label.toLowerCase()}. Still returns HTTP 200 but may no longer accept applicants.</div></div>`:''}
     <div class="row">${I.clock}<span>${j.sample?'No date':esc(p.label)}${p.exact?' ('+p.exact+')':''}</span></div>
     <div class="row">${I.pin}<span>${esc(j.loc)}</span></div>
-    <div class="row">${I.case}<span>Source ATS: ${esc(j.src)}</span></div>
+    ${sourceAttribution(j)}
     <div class="tags">${j.cats.map(c=>`<span class="tag hl">${esc(c)}</span>`).join('')||'<span class="tag">Uncategorized</span>'}</div>
     ${j.url?`<div class="urlbar">${I.ext}<span>${esc(j.url)}</span></div>`:''}
     <div class="card-foot" style="margin-top:16px">
@@ -817,7 +832,8 @@ function viewTracker(){
       <div class="tcard" draggable="true" data-card="${esc(id)}">
         <div class="logo ${tint(j.company)}">${mono(j.company)}</div>
         <div><div class="t">${esc(j.title)}</div><div class="c">${esc(j.company)}</div></div>
-        <button class="rm" data-untrack="${esc(id)}">${I.trash}</button></div>`;}).join('')}
+        <button class="rm" data-untrack="${esc(id)}">${I.trash}</button>
+        ${j.src==='adzuna'?sourceAttribution(j):''}</div>`;}).join('')}
     </div></div>`).join('')}</div>`;
 }
 
