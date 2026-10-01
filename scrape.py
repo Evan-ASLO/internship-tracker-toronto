@@ -32,13 +32,17 @@ SUCCESSFACTORS_MAX_PAGES = 100
 VERIFY_RETRIES = 3
 VERIFY_RETRY_BASE_SECONDS = 0.5
 ADZUNA_RESULTS_PER_PAGE = 50
-ADZUNA_MAX_PAGES = 2
-ADZUNA_WHAT_OR = "intern internship co-op coop student graduate"
+ADZUNA_REQUESTS_PER_RUN = 3
 ADZUNA_WHERE = "Toronto"
 ADZUNA_DISTANCE_KM = 100
+ADZUNA_QUERY_NAMES = ("internship", "intern", "coop", "student", "new-grad")
 
 COVERAGE = {}
 COVERAGE_LOCK = Lock()
+
+
+class SourceRequestBudgetExceeded(RuntimeError):
+    pass
 
 # ---------------- categories (extensible: add a key + its regex) -------------
 # Word-boundary patterns, not substrings. Substring matching produced false
@@ -116,10 +120,14 @@ def categorize(title):
     return [c for c, rx in CATEGORIES.items() if rx.search(t)]
 
 
-def g(url, **kw):
+def g(url, request_budget=None, **kw):
     last_response = None
     last_error = None
     for attempt in range(SOURCE_RETRIES):
+        if request_budget is not None:
+            if request_budget["remaining"] <= 0:
+                raise SourceRequestBudgetExceeded("request budget exhausted")
+            request_budget["remaining"] -= 1
         try:
             with SOURCE_REQUESTS:
                 response = requests.get(url, timeout=TIMEOUT, headers=UA, **kw)
@@ -519,6 +527,26 @@ def from_amazon(_):
     return out
 
 
+def adzuna_queries_for_time(moment=None):
+    moment = moment or datetime.now(timezone.utc)
+    if moment.tzinfo is None:
+        moment = moment.replace(tzinfo=timezone.utc)
+    hour_slot = int(moment.timestamp() // 3600)
+    new_grad_phrase = "new graduate" if hour_slot % 2 == 0 else "new grad"
+    catalog = [
+        {"name": "internship", "params": {"title_only": "internship"}},
+        {"name": "intern", "params": {"title_only": "intern"}},
+        {"name": "coop", "params": {"what_or": "co-op coop"}},
+        {"name": "student", "params": {"title_only": "student"}},
+        {"name": "new-grad", "params": {"what_phrase": new_grad_phrase}},
+    ]
+    start = hour_slot % len(catalog)
+    return [
+        catalog[(start + offset) % len(catalog)]
+        for offset in range(ADZUNA_REQUESTS_PER_RUN)
+    ]
+
+
 def from_adzuna(_):
     key = coverage_key("adzuna", "ca/Toronto")
     app_id = os.environ.get("ADZUNA_APP_ID", "").strip()
@@ -532,54 +560,67 @@ def from_adzuna(_):
             errors=[], complete=True)
         return []
 
-    out, seen, page_signatures = [], set(), set()
-    pages = returned = repeated_terms = 0
-    query_total = None
+    out, seen = [], set()
+    pages = returned = 0
+    query_total = 0
     capped_terms = 0
     errors = []
-    exhausted = False
+    query_metrics = []
+    request_budget = {"remaining": ADZUNA_REQUESTS_PER_RUN}
 
-    for page in range(1, ADZUNA_MAX_PAGES + 1):
-        url = f"https://api.adzuna.com/v1/api/jobs/ca/search/{page}"
+    for query in adzuna_queries_for_time():
+        url = "https://api.adzuna.com/v1/api/jobs/ca/search/1"
         params = {
             "app_id": app_id,
             "app_key": app_key,
             "results_per_page": ADZUNA_RESULTS_PER_PAGE,
-            "what_or": ADZUNA_WHAT_OR,
             "where": ADZUNA_WHERE,
             "distance": ADZUNA_DISTANCE_KM,
             "sort_by": "date",
             "content-type": "application/json",
+            **query["params"],
+        }
+        query_metric = {
+            "name": query["name"], "total": None, "returned": 0,
+            "kept": 0, "capped": False, "status": "success",
         }
         try:
-            response = g(url, params=params)
+            response = g(url, params=params, request_budget=request_budget)
             pages += 1
             if response.status_code != 200:
-                errors.append(f"page{page}:HTTP {response.status_code}")
-                break
+                message = f"{query['name']}:HTTP {response.status_code}"
+                errors.append(message)
+                query_metric["status"] = message
+                query_metrics.append(query_metric)
+                continue
             data = response.json()
             if not isinstance(data, dict):
                 raise ValueError("non-object response")
         except Exception as exc:
-            errors.append(f"page{page}:{type(exc).__name__}")
-            break
+            message = f"{query['name']}:{type(exc).__name__}"
+            errors.append(message)
+            query_metric["status"] = message
+            query_metrics.append(query_metric)
+            continue
 
-        if query_total is None:
-            query_total = int(data.get("count") or 0)
+        total = int(data.get("count") or 0)
+        query_total += total
+        query_metric["total"] = total
         results = data.get("results") or []
         if not isinstance(results, list):
-            errors.append(f"page{page}:invalid results")
-            break
+            message = f"{query['name']}:invalid results"
+            errors.append(message)
+            query_metric["status"] = message
+            query_metrics.append(query_metric)
+            continue
         returned += len(results)
-        if not results:
-            exhausted = True
-            break
-
-        page_ids = tuple(str(result.get("id") or "") for result in results)
-        if page_ids in page_signatures:
-            repeated_terms += 1
-            break
-        page_signatures.add(page_ids)
+        query_metric["returned"] = len(results)
+        query_metric["capped"] = (
+            total > ADZUNA_RESULTS_PER_PAGE
+            and len(results) >= ADZUNA_RESULTS_PER_PAGE
+        )
+        if query_metric["capped"]:
+            capped_terms += 1
 
         for result in results:
             external_id = source_id(result, "id")
@@ -590,6 +631,7 @@ def from_adzuna(_):
             if identity in seen:
                 continue
             seen.add(identity)
+            query_metric["kept"] += 1
             company = clean_text(
                 (result.get("company") or {}).get("display_name")
             ) or "Undisclosed employer"
@@ -612,23 +654,15 @@ def from_adzuna(_):
                     content=description[:600],
                 ),
                 key))
-
-        if len(results) < ADZUNA_RESULTS_PER_PAGE or (
-            query_total and page * ADZUNA_RESULTS_PER_PAGE >= query_total
-        ):
-            exhausted = True
-            break
-
-    if not exhausted and not errors and query_total and (
-        query_total > ADZUNA_MAX_PAGES * ADZUNA_RESULTS_PER_PAGE
-    ):
-        capped_terms = 1
+        query_metrics.append(query_metric)
     set_coverage(
         key, source="adzuna", target="ca/Toronto",
         query_total=query_total, selected_total=query_total,
-        pages=pages, returned=returned, records=len(out),
+        pages=pages,
+        request_attempts=ADZUNA_REQUESTS_PER_RUN - request_budget["remaining"],
+        returned=returned, records=len(out),
         location_mode="where+distance", fallback_terms=0,
-        capped_terms=capped_terms, repeated_terms=repeated_terms,
+        capped_terms=capped_terms, repeated_terms=0, queries=query_metrics,
         errors=errors, complete=not capped_terms and not errors)
     return out
 
@@ -784,7 +818,7 @@ def print_coverage_report(filtered_counts, unique_counts, live_counts):
           "pages returned filtered unique live mode status")
     with COVERAGE_LOCK:
         entries = [(key, dict(value)) for key, value in COVERAGE.items()]
-    summary_rows, warnings = [], []
+    summary_rows, warnings, query_details = [], [], []
     for key, entry in sorted(entries):
         filtered = filtered_counts.get(key, 0)
         unique = unique_counts.get(key, 0)
@@ -806,6 +840,15 @@ def print_coverage_report(filtered_counts, unique_counts, live_counts):
             entry.get("pages", 0), entry.get("returned", 0),
             filtered, unique, live, mode, status,
         ))
+        for query in entry.get("queries") or []:
+            detail = (
+                f"{key}/{query.get('name')}: total={_metric(query.get('total'))}, "
+                f"returned={query.get('returned', 0)}, kept={query.get('kept', 0)}, "
+                f"capped={str(bool(query.get('capped'))).lower()}, "
+                f"status={query.get('status', 'success')}"
+            )
+            query_details.append(detail)
+            print(f"   QUERY {detail}")
         if entry.get("fallback_terms"):
             warning = (
                 f"{key}: no usable target-location facet for "
@@ -845,6 +888,10 @@ def print_coverage_report(filtered_counts, unique_counts, live_counts):
                     summary.write("\n**Coverage warnings**\n\n")
                     for warning in warnings:
                         summary.write(f"- {warning}\n")
+                if query_details:
+                    summary.write("\n**Per-query coverage**\n\n")
+                    for detail in query_details:
+                        summary.write(f"- {detail}\n")
         except OSError as exc:
             print(f"COVERAGE WARNING could not write GITHUB_STEP_SUMMARY: {exc}")
 

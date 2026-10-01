@@ -97,12 +97,24 @@ passes them only to the scrape step. If either value is missing, the adapter
 makes no request and reports `skipped` in source coverage.
 
 The adapter uses the official Canada endpoint
-`/v1/api/jobs/ca/search/{page}`, one combined internship/co-op/student/new-grad
-query centered on Toronto with a 100 km radius, and at most two 50-result
-pages. Normal operation is therefore at most 48 requests/day, 336/week, and
-1,440 per 30-day month, below Adzuna's published default limits of 25/minute,
-250/day, 1,000/week, and 2,500/month. Retries on transient failures also
-consume quota.
+`/v1/api/jobs/ca/search/1`, centered on Toronto with a 100 km radius. Each
+hour selects a deterministic rolling window of three targeted 50-result
+queries from: `internship`, `intern`, `co-op/coop`, `student`, and `new-grad`.
+The new-grad phrase alternates between `new grad` and `new graduate`; the
+adapter never searches for noisy `graduate` by itself. Every query family runs
+multiple times in each five-hour window.
+
+Normal operation is exactly 72 requests/day, 504/week, and 2,160 per 30-day
+month, below Adzuna's published default limits of 25/minute, 250/day,
+1,000/week, and 2,500/month. Transient retries consume the same hard
+three-request hourly budget and may displace a later query, but cannot increase
+the hourly total. Per-query totals, returned rows, kept rows, caps, and errors
+appear in source coverage telemetry.
+
+Before changing query allocation, manually dispatch *Refresh Toronto
+internships* with `adzuna_dry_run=true`. That runs only the Adzuna adapter,
+skips the refresh/publish/deploy/commit job, and uploads a seven-day sanitized
+coverage JSON artifact.
 
 [Adzuna's terms](https://developer.adzuna.com/docs/terms_of_service) require
 published listings to carry linked **Jobs by Adzuna** logo attribution

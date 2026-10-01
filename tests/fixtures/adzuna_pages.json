@@ -1,63 +1,73 @@
 {
-  "count": 7,
-  "pages": {
-    "1": [
-      {
-        "id": "adz-1",
-        "title": "<strong>Finance Intern</strong>",
-        "company": {"display_name": "Alpha Bank"},
-        "location": {"display_name": "Toronto, Ontario"},
-        "redirect_url": "https://www.adzuna.ca/details/adz-1",
-        "created": "2026-10-01T12:00:00Z",
-        "description": "Finance internship"
-      },
-      {
-        "id": "adz-2",
-        "title": "Marketing Co-op",
-        "company": {"display_name": "Beta Co"},
-        "location": {"display_name": "Markham, Ontario"},
-        "redirect_url": "https://www.adzuna.ca/details/adz-2",
-        "created": "2026-10-01T11:00:00Z",
-        "description": "Marketing co-op"
-      },
-      {
-        "id": "adz-3",
-        "title": "Student Analyst",
-        "company": {"display_name": "West Co"},
-        "location": {"display_name": "Vancouver, British Columbia"},
-        "redirect_url": "https://www.adzuna.ca/details/adz-3",
-        "created": "2026-10-01T10:00:00Z",
-        "description": "Outside target geography"
-      }
-    ],
-    "2": [
-      {
-        "id": "adz-2",
-        "title": "Marketing Co-op",
-        "company": {"display_name": "Beta Co"},
-        "location": {"display_name": "Markham, Ontario"},
-        "redirect_url": "https://www.adzuna.ca/details/adz-2",
-        "created": "2026-10-01T11:00:00Z",
-        "description": "Duplicate across pages"
-      },
-      {
-        "id": "adz-4",
-        "title": "Business Student",
-        "company": {"display_name": "Gamma Co"},
-        "location": {"display_name": "Mississauga, Ontario"},
-        "redirect_url": "https://www.adzuna.ca/details/adz-4",
-        "created": "2026-10-01T09:00:00Z",
-        "description": "Student role"
-      },
-      {
-        "id": "adz-5",
-        "title": "New Graduate Analyst",
-        "company": {"display_name": "Delta Co"},
-        "location": {"display_name": "Toronto, Ontario"},
-        "redirect_url": "https://www.adzuna.ca/details/adz-5",
-        "created": "2026-10-01T08:00:00Z",
-        "description": "New grad role"
-      }
-    ]
+  "queries": {
+    "internship": {
+      "count": 75,
+      "results": [
+        {
+          "id": "adz-1",
+          "title": "<strong>Finance Internship</strong>",
+          "company": {"display_name": "Alpha Bank"},
+          "location": {"display_name": "Toronto, Ontario"},
+          "redirect_url": "https://www.adzuna.ca/details/adz-1",
+          "created": "2026-10-01T12:00:00Z",
+          "description": "Finance internship"
+        },
+        {
+          "id": "adz-2",
+          "title": "Marketing Internship",
+          "company": {"display_name": "Beta Co"},
+          "location": {"display_name": "Markham, Ontario"},
+          "redirect_url": "https://www.adzuna.ca/details/adz-2",
+          "created": "2026-10-01T11:00:00Z",
+          "description": "Marketing internship"
+        },
+        {
+          "id": "adz-3",
+          "title": "Student Analyst",
+          "company": {"display_name": "West Co"},
+          "location": {"display_name": "Vancouver, British Columbia"},
+          "redirect_url": "https://www.adzuna.ca/details/adz-3",
+          "created": "2026-10-01T10:00:00Z",
+          "description": "Outside target geography"
+        }
+      ]
+    },
+    "coop": {
+      "count": 3,
+      "results": [
+        {
+          "id": "adz-2",
+          "title": "Marketing Co-op",
+          "company": {"display_name": "Beta Co"},
+          "location": {"display_name": "Markham, Ontario"},
+          "redirect_url": "https://www.adzuna.ca/details/adz-2",
+          "created": "2026-10-01T11:00:00Z",
+          "description": "Duplicate across targeted queries"
+        },
+        {
+          "id": "adz-4",
+          "title": "Business Co-op",
+          "company": {"display_name": "Gamma Co"},
+          "location": {"display_name": "Mississauga, Ontario"},
+          "redirect_url": "https://www.adzuna.ca/details/adz-4",
+          "created": "2026-10-01T09:00:00Z",
+          "description": "Co-op role"
+        }
+      ]
+    },
+    "new-grad": {
+      "count": 2,
+      "results": [
+        {
+          "id": "adz-5",
+          "title": "New Graduate Analyst",
+          "company": {"display_name": "Delta Co"},
+          "location": {"display_name": "Toronto, Ontario"},
+          "redirect_url": "https://www.adzuna.ca/details/adz-5",
+          "created": "2026-10-01T08:00:00Z",
+          "description": "New graduate role"
+        }
+      ]
+    }
   }
 }

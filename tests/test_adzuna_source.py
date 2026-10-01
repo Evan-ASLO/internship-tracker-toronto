@@ -1,11 +1,14 @@
 import hashlib
 import json
 import os
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 import unittest
 from unittest.mock import patch
 
+import requests
 import scrape
+from adzuna_dry_run import build_report
 from publish_snapshot import normalize_job
 
 
@@ -42,16 +45,31 @@ class AdzunaSourceTests(unittest.TestCase):
         self.assertEqual(coverage["status"], "skipped")
         self.assertEqual(coverage["pages"], 0)
 
-    def test_paginated_canada_search_dedupes_and_preserves_fields(self):
+    @staticmethod
+    def fixed_queries():
+        return [
+            {"name": "internship", "params": {"title_only": "internship"}},
+            {"name": "coop", "params": {"what_or": "co-op coop"}},
+            {"name": "new-grad", "params": {"what_phrase": "new graduate"}},
+        ]
+
+    def test_targeted_queries_dedupe_and_preserve_fields(self):
         calls = []
 
         def fake_get(url, **kwargs):
             calls.append((url, kwargs["params"]))
-            page = url.rsplit("/", 1)[-1]
+            params = kwargs["params"]
+            if params.get("title_only") == "internship":
+                name = "internship"
+            elif params.get("what_or") == "co-op coop":
+                name = "coop"
+            else:
+                name = "new-grad"
+            fixture = FIXTURE["queries"][name]
             return FakeResponse(
                 json_value={
-                    "count": FIXTURE["count"],
-                    "results": FIXTURE["pages"][page],
+                    "count": fixture["count"],
+                    "results": fixture["results"],
                 }
             )
 
@@ -62,7 +80,9 @@ class AdzunaSourceTests(unittest.TestCase):
                 clear=False,
             ),
             patch.object(scrape, "ADZUNA_RESULTS_PER_PAGE", 3),
-            patch.object(scrape, "ADZUNA_MAX_PAGES", 2),
+            patch.object(
+                scrape, "adzuna_queries_for_time", return_value=self.fixed_queries()
+            ),
             patch.object(scrape, "g", side_effect=fake_get),
         ):
             jobs = scrape.from_adzuna(None)
@@ -72,27 +92,28 @@ class AdzunaSourceTests(unittest.TestCase):
         ])
         self.assertEqual(jobs[0]["src"], "adzuna")
         self.assertTrue(all(job["src"] == "adzuna" for job in jobs))
-        self.assertEqual(jobs[0]["title"], "Finance Intern")
+        self.assertEqual(jobs[0]["title"], "Finance Internship")
         self.assertEqual(jobs[0]["company"], "Alpha Bank")
         self.assertEqual(jobs[0]["loc"], "Toronto, Ontario")
         self.assertEqual(jobs[0]["posted"], "2026-10-01T12:00:00Z")
-        self.assertEqual(len(calls), 2)
+        self.assertEqual(len(calls), 3)
         self.assertTrue(all("/jobs/ca/search/" in url for url, _ in calls))
+        self.assertTrue(all(url.endswith("/1") for url, _ in calls))
         self.assertTrue(all(params["where"] == "Toronto" for _, params in calls))
         self.assertTrue(all(params["distance"] == 100 for _, params in calls))
-        self.assertTrue(all("intern" in params["what_or"] for _, params in calls))
-        self.assertTrue(all("co-op" in params["what_or"] for _, params in calls))
-        self.assertTrue(all("student" in params["what_or"] for _, params in calls))
-        self.assertTrue(all("graduate" in params["what_or"] for _, params in calls))
         self.assertTrue(all(params["app_id"] == "test-id" for _, params in calls))
         self.assertTrue(all(params["app_key"] == "test-key" for _, params in calls))
 
         coverage = scrape.COVERAGE[scrape.coverage_key("adzuna", "ca/Toronto")]
-        self.assertEqual(coverage["query_total"], 7)
-        self.assertEqual(coverage["pages"], 2)
+        self.assertEqual(coverage["query_total"], 80)
+        self.assertEqual(coverage["pages"], 3)
         self.assertEqual(coverage["returned"], 6)
         self.assertEqual(coverage["records"], 5)
         self.assertEqual(coverage["capped_terms"], 1)
+        self.assertEqual(
+            [query["name"] for query in coverage["queries"]],
+            ["internship", "coop", "new-grad"],
+        )
         self.assertFalse(coverage["complete"])
 
     def test_gta_and_internship_filters_keep_only_target_roles(self):
@@ -103,19 +124,16 @@ class AdzunaSourceTests(unittest.TestCase):
                 clear=False,
             ),
             patch.object(scrape, "ADZUNA_RESULTS_PER_PAGE", 3),
-            patch.object(scrape, "ADZUNA_MAX_PAGES", 2),
+            patch.object(
+                scrape, "adzuna_queries_for_time", return_value=self.fixed_queries()
+            ),
             patch.object(
                 scrape,
                 "g",
                 side_effect=[
-                    FakeResponse(json_value={
-                        "count": FIXTURE["count"],
-                        "results": FIXTURE["pages"]["1"],
-                    }),
-                    FakeResponse(json_value={
-                        "count": FIXTURE["count"],
-                        "results": FIXTURE["pages"]["2"],
-                    }),
+                    FakeResponse(json_value=FIXTURE["queries"]["internship"]),
+                    FakeResponse(json_value=FIXTURE["queries"]["coop"]),
+                    FakeResponse(json_value=FIXTURE["queries"]["new-grad"]),
                 ],
             ),
         ):
@@ -140,13 +158,98 @@ class AdzunaSourceTests(unittest.TestCase):
                 "g",
                 return_value=FakeResponse(status_code=429, json_value={}),
             ),
+            patch.object(
+                scrape, "adzuna_queries_for_time", return_value=self.fixed_queries()
+            ),
         ):
             jobs = scrape.from_adzuna(None)
 
         self.assertEqual(jobs, [])
         coverage = scrape.COVERAGE[scrape.coverage_key("adzuna", "ca/Toronto")]
-        self.assertEqual(coverage["errors"], ["page1:HTTP 429"])
+        self.assertEqual(len(coverage["errors"]), 3)
+        self.assertTrue(all("HTTP 429" in error for error in coverage["errors"]))
         self.assertFalse(coverage["complete"])
+
+    def test_rotation_is_deterministic_and_covers_every_query(self):
+        start = datetime(2026, 10, 1, 0, tzinfo=timezone.utc)
+        first = scrape.adzuna_queries_for_time(start)
+        self.assertEqual(first, scrape.adzuna_queries_for_time(start))
+        self.assertEqual(len(first), scrape.ADZUNA_REQUESTS_PER_RUN)
+
+        names = set()
+        new_grad_phrases = set()
+        for offset in range(10):
+            queries = scrape.adzuna_queries_for_time(start + timedelta(hours=offset))
+            self.assertEqual(len(queries), 3)
+            names.update(query["name"] for query in queries)
+            for query in queries:
+                if query["name"] == "new-grad":
+                    new_grad_phrases.add(query["params"]["what_phrase"])
+
+        self.assertEqual(names, set(scrape.ADZUNA_QUERY_NAMES))
+        self.assertEqual(new_grad_phrases, {"new grad", "new graduate"})
+
+    def test_normal_request_budget_stays_inside_official_limits(self):
+        hourly = scrape.ADZUNA_REQUESTS_PER_RUN
+        self.assertEqual(hourly, 3)
+        self.assertLessEqual(hourly * 24, 250)
+        self.assertLessEqual(hourly * 24 * 7, 1000)
+        self.assertLessEqual(hourly * 24 * 30, 2500)
+
+    def test_request_budget_caps_transient_retries(self):
+        budget = {"remaining": scrape.ADZUNA_REQUESTS_PER_RUN}
+        with (
+            patch.object(
+                scrape.requests,
+                "get",
+                side_effect=requests.exceptions.SSLError("tls"),
+            ) as get,
+            patch.object(scrape.time, "sleep"),
+        ):
+            with self.assertRaises(requests.exceptions.SSLError):
+                scrape.g(
+                    "https://api.adzuna.com/v1/api/jobs/ca/search/1",
+                    request_budget=budget,
+                )
+
+        self.assertEqual(get.call_count, 3)
+        self.assertEqual(budget["remaining"], 0)
+
+    def test_dry_run_report_contains_per_query_relevance(self):
+        coverage = {
+            "complete": False,
+            "query_total": 80,
+            "pages": 3,
+            "returned": 6,
+            "records": 5,
+            "capped_terms": 1,
+            "errors": [],
+            "queries": [
+                {
+                    "name": "internship", "total": 75, "returned": 3,
+                    "kept": 3, "capped": True, "status": "success",
+                }
+            ],
+        }
+        records = []
+        for fixture in FIXTURE["queries"].values():
+            for result in fixture["results"]:
+                records.append({
+                    "external_id": result["id"],
+                    "src": "adzuna",
+                    "company": result["company"]["display_name"],
+                    "title": result["title"].replace("<strong>", "").replace("</strong>", ""),
+                    "loc": result["location"]["display_name"],
+                    "url": result["redirect_url"],
+                    "posted": result["created"],
+                    "content": result["description"],
+                })
+
+        report = build_report(records, coverage)
+
+        self.assertEqual(report["requests"], 3)
+        self.assertEqual(report["productUnique"], 4)
+        self.assertEqual(report["queries"][0]["name"], "internship")
 
     def test_external_id_produces_stable_cloudflare_id(self):
         legacy = {

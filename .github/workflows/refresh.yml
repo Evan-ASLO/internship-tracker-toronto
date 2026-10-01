@@ -14,6 +14,10 @@ on:
         description: "Allow a verified catalog drop greater than 25% after manual review"
         type: boolean
         default: false
+      adzuna_dry_run:
+        description: "Run only the Adzuna source and upload a sanitized coverage artifact"
+        type: boolean
+        default: false
 
 # Prevent overlapping runs: a slow scrape must not race a new one.
 concurrency:
@@ -24,7 +28,37 @@ permissions:
   contents: write           # needed to commit the refreshed snapshot
 
 jobs:
+  adzuna-dry-run:
+    if: inputs.adzuna_dry_run == true
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install --quiet -r requirements.txt
+
+      - name: Run sanitized Adzuna coverage check
+        env:
+          ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+        run: python adzuna_dry_run.py --output "${{ runner.temp }}/adzuna-dry-run.json"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: adzuna-dry-run-${{ github.run_id }}
+          path: ${{ runner.temp }}/adzuna-dry-run.json
+          retention-days: 7
+
   refresh:
+    if: inputs.adzuna_dry_run != true
     runs-on: ubuntu-latest
     timeout-minutes: 25
 
