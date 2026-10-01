@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-01T19:26:59.480066+00:00",
+  "fetched_at": "2026-10-01T19:55:50.329471+00:00",
   "categories": [
     "Finance",
     "Marketing",
@@ -7,6 +7,44 @@
     "Consulting"
   ],
   "jobs": [
+    {
+      "company": "GAO Group",
+      "title": "Email Marketing Intern The GAO Group (USA & Canada)",
+      "loc": "North York, Toronto",
+      "geo": "Toronto",
+      "cats": [
+        "Marketing"
+      ],
+      "url": "https://www.adzuna.ca/details/5906010074?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-01T13:25:58Z",
+      "src": "adzuna",
+      "external_id": "5906010074",
+      "content": "Remote Digital Marketing Campaign Analytics Get hands-on with real email campaigns audience segmentation, A/B testing, and performance analytics with an international tech company. Full JD below Work Mode: Remote About the Role The GAO Group is looking for a creative and enthusiastic Email Marketing Intern to support the planning, execution, and optimization of email marketing campaigns. This inte"
+    },
+    {
+      "company": "GAO Group",
+      "title": "Virtual AI Technical Writing Intern",
+      "loc": "North York, Toronto",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://www.adzuna.ca/details/5906010067?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-01T13:25:58Z",
+      "src": "adzuna",
+      "external_id": "5906010067",
+      "content": "Remote Global Team GAO Group (USA & Canada) Turn your writing skills into real-world AI-powered tech content. Apply now! Are you passionate about tech and love writing? Join and gain hands-on experience creating impactful technical content in a global, high-tech environment. Write and edit technical documents (manuals, guides, datasheets) Use AI tools for research & content creation Simplify compl"
+    },
+    {
+      "company": "Molson Coors",
+      "title": "Brewery Ops Intern - Technical Services",
+      "loc": "Toronto, Ontario",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://www.adzuna.ca/details/5905981139?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-01T13:11:18Z",
+      "src": "adzuna",
+      "external_id": "5905981139",
+      "content": "Requisition ID: 40023 Cheers to creating an incredible tomorrow! At Molson Coors, we tackle big challenges and defy the status quo. With a proud legacy of excellence, an incredible portfolio of beer, seltzers, spirits, and non-alcohol brands, and a bold vision for our future we're on the path to transforming the beverage industry. That requires remarkable individuals who are curious, tenacious, an"
+    },
     {
       "company": "bmo",
       "title": "AI Engineer, Winter 2027 (Co-op/Internship) - 8 months",
