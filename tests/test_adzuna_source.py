@@ -332,11 +332,31 @@ class AdzunaSourceTests(unittest.TestCase):
                     "content": result["description"],
                 })
 
-        report = build_report(records, coverage)
+        baseline = [
+            {
+                "src": "workday",
+                "company": "Alpha Bank",
+                "title": "Finance Internship",
+                "url": "https://employer.example/alpha",
+            },
+            {
+                "src": "greenhouse",
+                "company": "Existing Co",
+                "title": "Existing Internship",
+                "url": "https://employer.example/existing",
+            },
+            self.baseline_row("old-adzuna"),
+        ]
+        report = build_report(records, coverage, baseline)
 
         self.assertEqual(report["requests"], 5)
         self.assertEqual(report["productUnique"], 6)
         self.assertEqual(report["queries"][0]["name"], "internship")
+        self.assertEqual(report["baselineNonAdzuna"], 2)
+        self.assertEqual(report["overlapWithBaseline"], 1)
+        self.assertEqual(report["projectedSnapshotTotal"], 8)
+        self.assertEqual(report["projectedDistinctTotal"], 7)
+        self.assertTrue(report["sampleJobs"])
 
     def test_off_hour_reuses_prior_slice_without_network_or_duplicates(self):
         now = self.moment_with_parity(1)

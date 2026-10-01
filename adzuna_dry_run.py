@@ -13,7 +13,7 @@ import sys
 import scrape
 
 
-def build_report(records, coverage):
+def build_report(records, coverage, baseline_jobs=None):
     filtered = []
     for source in records:
         record = dict(source)
@@ -50,6 +50,31 @@ def build_report(records, coverage):
     categories = Counter()
     for record in unique:
         categories.update(record.get("cats") or ["Uncategorized"])
+    baseline_jobs = baseline_jobs or []
+    baseline_non_adzuna = [
+        job for job in baseline_jobs
+        if isinstance(job, dict) and job.get("src") != "adzuna"
+    ]
+    baseline_urls = {scrape.clean_text(job.get("url")) for job in baseline_non_adzuna}
+    baseline_company_titles = {
+        (
+            scrape.clean_text(job.get("company")).casefold(),
+            scrape.clean_text(job.get("title")).casefold(),
+        )
+        for job in baseline_non_adzuna
+    }
+    overlap = []
+    for record in unique:
+        key = (
+            scrape.clean_text(record.get("company")).casefold(),
+            scrape.clean_text(record.get("title")).casefold(),
+        )
+        if (
+            scrape.clean_text(record.get("url")) in baseline_urls
+            or key in baseline_company_titles
+        ):
+            overlap.append(record)
+    title_lengths = [len(record["title"]) for record in unique]
     return {
         "generatedAt": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
         "source": "adzuna",
@@ -69,6 +94,31 @@ def build_report(records, coverage):
         "queries": coverage.get("queries", []),
         "companies": dict(Counter(record["company"] for record in unique)),
         "categories": dict(categories),
+        "baselineNonAdzuna": len(baseline_non_adzuna),
+        "overlapWithBaseline": len(overlap),
+        "projectedSnapshotTotal": len(baseline_non_adzuna) + len(unique),
+        "projectedDistinctTotal": (
+            len(baseline_non_adzuna) + len(unique) - len(overlap)
+        ),
+        "titleStats": {
+            "count": len(title_lengths),
+            "averageLength": (
+                round(sum(title_lengths) / len(title_lengths), 1)
+                if title_lengths else 0
+            ),
+            "maxLength": max(title_lengths, default=0),
+        },
+        "sampleJobs": [
+            {
+                "company": record["company"],
+                "title": record["title"],
+                "location": record["loc"],
+            }
+            for record in sorted(
+                unique,
+                key=lambda item: (item["company"].casefold(), item["title"].casefold()),
+            )[:12]
+        ],
     }
 
 
@@ -88,6 +138,9 @@ def write_summary(report):
             ("Product unique", "productUnique"),
             ("Capped queries", "cappedQueries"),
             ("Reused prior rows", "reused"),
+            ("Baseline non-Adzuna", "baselineNonAdzuna"),
+            ("Baseline overlap", "overlapWithBaseline"),
+            ("Projected snapshot total", "projectedSnapshotTotal"),
         ):
             summary.write(f"| {label} | {report[key]} |\n")
         summary.write("\n**Per-query allocation**\n\n")
@@ -112,7 +165,15 @@ def main(argv=None):
     scrape.reset_coverage()
     records = scrape.from_adzuna(None)
     coverage = scrape.COVERAGE[scrape.coverage_key("adzuna", "ca/Toronto")]
-    report = build_report(records, coverage)
+    baseline_jobs = []
+    baseline_path = os.environ.get("ADZUNA_BASELINE_PATH", "live_jobs.json")
+    try:
+        baseline_jobs = json.loads(
+            Path(baseline_path).read_text(encoding="utf-8")
+        ).get("jobs", [])
+    except (OSError, json.JSONDecodeError, AttributeError):
+        pass
+    report = build_report(records, coverage, baseline_jobs)
     payload = json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True)
     if args.output:
         args.output.write_text(payload + "\n", encoding="utf-8")
