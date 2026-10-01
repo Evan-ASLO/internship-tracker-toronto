@@ -232,3 +232,28 @@ must implement the same conditional behavior using
 browser saved/application export schema remains unchanged and intentionally
 carries URL/company/title migration references, not provider presentation
 metadata.
+
+The legacy snapshot may also include non-wire source freshness metadata:
+
+```json
+{
+  "source_state": {
+    "adzuna": {
+      "status": "fresh",
+      "refreshed_at": "2026-10-01T20:00:00+00:00",
+      "age_seconds": 0,
+      "requests": 5,
+      "reused": 0
+    }
+  }
+}
+```
+
+`publish_snapshot.py` intentionally ignores this top-level metadata, so the
+approved Cloudflare v1 envelope and normalized job schema do not change. The
+scraper uses it to keep the last successful Adzuna slice stable across
+alternating no-query hours and partial failures. Status values include `fresh`,
+`reused-off-hour`, `reused-partial`, `reused-missing-credentials`, `skipped`,
+and `expired`. The original `refreshed_at` is never advanced by reuse. An
+expired source is rejected by catalog guard unless a manual
+`allow_catalog_drop` override is supplied.

@@ -1,6 +1,11 @@
+from contextlib import redirect_stderr, redirect_stdout
+import io
+import json
+from pathlib import Path
+import tempfile
 import unittest
 
-from catalog_guard import CatalogDropError, assess_catalog_drop
+from catalog_guard import CatalogDropError, assess_catalog_drop, main
 
 
 class CatalogDropGuardTests(unittest.TestCase):
@@ -32,6 +37,26 @@ class CatalogDropGuardTests(unittest.TestCase):
 
         self.assertFalse(assessment.suspicious)
         self.assertEqual(assessment.baseline_count, 0)
+
+    def test_expired_adzuna_source_requires_manual_override(self):
+        snapshot = {
+            "fetched_at": "2026-10-01T20:00:00Z",
+            "jobs": [],
+            "source_state": {"adzuna": {"status": "expired"}},
+        }
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / "snapshot.json"
+            path.write_text(json.dumps(snapshot), encoding="utf-8")
+            with redirect_stderr(io.StringIO()):
+                blocked = main(["--current", str(path)])
+            with redirect_stdout(io.StringIO()):
+                allowed = main([
+                    "--current", str(path),
+                    "--allow-drop",
+                ])
+
+        self.assertEqual(blocked, 1)
+        self.assertEqual(allowed, 0)
 
 
 if __name__ == "__main__":

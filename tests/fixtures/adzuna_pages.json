@@ -32,8 +32,31 @@
         }
       ]
     },
+    "intern": {
+      "count": 2,
+      "results": [
+        {
+          "id": "adz-1",
+          "title": "Finance Intern",
+          "company": {"display_name": "Alpha Bank"},
+          "location": {"display_name": "Toronto, Ontario"},
+          "redirect_url": "https://www.adzuna.ca/details/adz-1",
+          "created": "2026-10-01T12:00:00Z",
+          "description": "Duplicate across targeted queries"
+        },
+        {
+          "id": "adz-6",
+          "title": "Operations Intern",
+          "company": {"display_name": "Epsilon Co"},
+          "location": {"display_name": "Toronto, Ontario"},
+          "redirect_url": "https://www.adzuna.ca/details/adz-6",
+          "created": "2026-10-01T07:00:00Z",
+          "description": "Operations internship"
+        }
+      ]
+    },
     "coop": {
-      "count": 3,
+      "count": 2,
       "results": [
         {
           "id": "adz-2",
@@ -55,8 +78,31 @@
         }
       ]
     },
-    "new-grad": {
+    "student": {
       "count": 2,
+      "results": [
+        {
+          "id": "adz-3",
+          "title": "Student Analyst",
+          "company": {"display_name": "West Co"},
+          "location": {"display_name": "Vancouver, British Columbia"},
+          "redirect_url": "https://www.adzuna.ca/details/adz-3",
+          "created": "2026-10-01T10:00:00Z",
+          "description": "Duplicate outside target geography"
+        },
+        {
+          "id": "adz-7",
+          "title": "Student Program Coordinator",
+          "company": {"display_name": "Zeta Co"},
+          "location": {"display_name": "North York, Toronto"},
+          "redirect_url": "https://www.adzuna.ca/details/adz-7",
+          "created": "2026-10-01T06:00:00Z",
+          "description": "Student role"
+        }
+      ]
+    },
+    "new-grad": {
+      "count": 1,
       "results": [
         {
           "id": "adz-5",

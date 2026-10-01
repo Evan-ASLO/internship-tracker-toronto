@@ -32,7 +32,9 @@ SUCCESSFACTORS_MAX_PAGES = 100
 VERIFY_RETRIES = 3
 VERIFY_RETRY_BASE_SECONDS = 0.5
 ADZUNA_RESULTS_PER_PAGE = 50
-ADZUNA_REQUESTS_PER_RUN = 3
+ADZUNA_REQUESTS_PER_ACTIVE_RUN = 5
+ADZUNA_REFRESH_INTERVAL_HOURS = 2
+ADZUNA_GRACE_HOURS = 6
 ADZUNA_WHERE = "Toronto"
 ADZUNA_DISTANCE_KM = 100
 ADZUNA_QUERY_NAMES = ("internship", "intern", "coop", "student", "new-grad")
@@ -527,31 +529,107 @@ def from_amazon(_):
     return out
 
 
-def adzuna_queries_for_time(moment=None):
-    moment = moment or datetime.now(timezone.utc)
-    if moment.tzinfo is None:
-        moment = moment.replace(tzinfo=timezone.utc)
-    hour_slot = int(moment.timestamp() // 3600)
-    new_grad_phrase = "new graduate" if hour_slot % 2 == 0 else "new grad"
-    catalog = [
+def adzuna_queries():
+    return [
         {"name": "internship", "params": {"title_only": "internship"}},
         {"name": "intern", "params": {"title_only": "intern"}},
         {"name": "coop", "params": {"what_or": "co-op coop"}},
         {"name": "student", "params": {"title_only": "student"}},
-        {"name": "new-grad", "params": {"what_phrase": new_grad_phrase}},
-    ]
-    start = hour_slot % len(catalog)
-    return [
-        catalog[(start + offset) % len(catalog)]
-        for offset in range(ADZUNA_REQUESTS_PER_RUN)
+        {"name": "new-grad", "params": {"what_phrase": "new grad"}},
     ]
 
 
-def from_adzuna(_):
+def _parse_timestamp(value):
+    if not value:
+        return None
+    candidate = str(value)
+    if candidate.endswith("Z"):
+        candidate = candidate[:-1] + "+00:00"
+    try:
+        parsed = datetime.fromisoformat(candidate)
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
+
+
+def load_adzuna_baseline(now=None):
+    now = now or datetime.now(timezone.utc)
+    baseline_path = os.environ.get("ADZUNA_BASELINE_PATH", "live_jobs.json")
+    try:
+        with open(baseline_path, encoding="utf-8") as handle:
+            snapshot = json.load(handle)
+    except (OSError, json.JSONDecodeError):
+        return {"rows": [], "refreshed_at": None, "age_hours": None}
+
+    rows = [
+        dict(job) for job in (snapshot.get("jobs") or [])
+        if isinstance(job, dict) and job.get("src") == "adzuna"
+    ]
+    state = ((snapshot.get("source_state") or {}).get("adzuna") or {})
+    refreshed_at = _parse_timestamp(
+        state.get("refreshed_at")
+        or (snapshot.get("fetched_at") if rows else None)
+    )
+    age_hours = None
+    if refreshed_at:
+        age_hours = max(0.0, (now - refreshed_at).total_seconds() / 3600)
+    return {
+        "rows": rows,
+        "refreshed_at": refreshed_at,
+        "age_hours": age_hours,
+    }
+
+
+def _truthy_env(name):
+    return os.environ.get(name, "").strip().lower() in {"1", "true", "yes", "on"}
+
+
+def _adzuna_carried_rows(rows, key):
+    return [with_coverage(dict(row), key) for row in rows]
+
+
+def from_adzuna(_, now=None):
     key = coverage_key("adzuna", "ca/Toronto")
+    now = now or datetime.now(timezone.utc)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    now = now.astimezone(timezone.utc)
+    baseline = load_adzuna_baseline(now)
+    baseline_fresh = (
+        bool(baseline["rows"])
+        and baseline["age_hours"] is not None
+        and baseline["age_hours"] <= ADZUNA_GRACE_HOURS
+    )
     app_id = os.environ.get("ADZUNA_APP_ID", "").strip()
     app_key = os.environ.get("ADZUNA_APP_KEY", "").strip()
     if not app_id or not app_key:
+        if baseline_fresh:
+            rows = _adzuna_carried_rows(baseline["rows"], key)
+            set_coverage(
+                key, source="adzuna", target="ca/Toronto",
+                status="reused-missing-credentials", pages=0,
+                request_attempts=0, returned=len(rows), records=len(rows),
+                reused=len(rows), query_total=None, selected_total=None,
+                location_mode="carry-forward", fallback_terms=0,
+                capped_terms=0, repeated_terms=0, errors=[],
+                source_refreshed_at=baseline["refreshed_at"].isoformat(),
+                source_age_hours=baseline["age_hours"], complete=False)
+            return rows
+        if baseline["rows"]:
+            set_coverage(
+                key, source="adzuna", target="ca/Toronto", status="expired",
+                pages=0, request_attempts=0, returned=0, records=0, reused=0,
+                query_total=None, selected_total=None,
+                location_mode="carry-forward", fallback_terms=0,
+                capped_terms=0, repeated_terms=0,
+                errors=["credentials unavailable after baseline grace"],
+                source_refreshed_at=(
+                    baseline["refreshed_at"].isoformat()
+                    if baseline["refreshed_at"] else None),
+                source_age_hours=baseline["age_hours"], complete=False)
+            return []
         set_coverage(
             key, source="adzuna", target="ca/Toronto", status="skipped",
             pages=0, returned=0, records=0, query_total=None,
@@ -560,15 +638,48 @@ def from_adzuna(_):
             errors=[], complete=True)
         return []
 
+    force_refresh = _truthy_env("ADZUNA_FORCE_REFRESH")
+    hour_slot = int(now.timestamp() // 3600)
+    refresh_due = (
+        force_refresh
+        or not baseline["rows"]
+        or baseline["refreshed_at"] is None
+        or hour_slot % ADZUNA_REFRESH_INTERVAL_HOURS == 0
+    )
+    if not refresh_due:
+        if baseline_fresh:
+            rows = _adzuna_carried_rows(baseline["rows"], key)
+            set_coverage(
+                key, source="adzuna", target="ca/Toronto",
+                status="reused-off-hour", pages=0, request_attempts=0,
+                returned=len(rows), records=len(rows), reused=len(rows),
+                query_total=None, selected_total=None,
+                location_mode="carry-forward", fallback_terms=0,
+                capped_terms=0, repeated_terms=0, errors=[],
+                source_refreshed_at=baseline["refreshed_at"].isoformat(),
+                source_age_hours=baseline["age_hours"], complete=True)
+            return rows
+        set_coverage(
+            key, source="adzuna", target="ca/Toronto", status="expired",
+            pages=0, request_attempts=0, returned=0, records=0, reused=0,
+            query_total=None, selected_total=None,
+            location_mode="carry-forward", fallback_terms=0,
+            capped_terms=0, repeated_terms=0,
+            errors=["baseline grace expired"], source_refreshed_at=(
+                baseline["refreshed_at"].isoformat()
+                if baseline["refreshed_at"] else None),
+            source_age_hours=baseline["age_hours"], complete=False)
+        return []
+
     out, seen = [], set()
     pages = returned = 0
     query_total = 0
     capped_terms = 0
     errors = []
     query_metrics = []
-    request_budget = {"remaining": ADZUNA_REQUESTS_PER_RUN}
+    request_budget = {"remaining": ADZUNA_REQUESTS_PER_ACTIVE_RUN}
 
-    for query in adzuna_queries_for_time():
+    for query in adzuna_queries():
         url = "https://api.adzuna.com/v1/api/jobs/ca/search/1"
         params = {
             "app_id": app_id,
@@ -655,16 +766,61 @@ def from_adzuna(_):
                 ),
                 key))
         query_metrics.append(query_metric)
+
+    active_success = (
+        not errors
+        and len(query_metrics) == len(ADZUNA_QUERY_NAMES)
+        and all(query["status"] == "success" for query in query_metrics)
+    )
+    request_attempts = (
+        max(
+            pages,
+            ADZUNA_REQUESTS_PER_ACTIVE_RUN - request_budget["remaining"],
+        )
+    )
+    if active_success:
+        refreshed_at = now.isoformat()
+        set_coverage(
+            key, source="adzuna", target="ca/Toronto", status="fresh",
+            query_total=query_total, selected_total=query_total,
+            pages=pages, request_attempts=request_attempts,
+            returned=returned, records=len(out), reused=0,
+            location_mode="where+distance", fallback_terms=0,
+            capped_terms=capped_terms, repeated_terms=0, queries=query_metrics,
+            errors=[], source_refreshed_at=refreshed_at,
+            source_age_hours=0.0, complete=not capped_terms)
+        return out
+
+    if baseline_fresh:
+        rows = _adzuna_carried_rows(baseline["rows"], key)
+        set_coverage(
+            key, source="adzuna", target="ca/Toronto",
+            status="reused-partial", query_total=query_total,
+            selected_total=query_total, pages=pages,
+            request_attempts=request_attempts, returned=returned,
+            records=len(rows), reused=len(rows),
+            partial_records=len(out), location_mode="carry-forward",
+            fallback_terms=0, capped_terms=capped_terms, repeated_terms=0,
+            queries=query_metrics, errors=errors,
+            source_refreshed_at=baseline["refreshed_at"].isoformat(),
+            source_age_hours=baseline["age_hours"], complete=False)
+        return rows
+
     set_coverage(
-        key, source="adzuna", target="ca/Toronto",
+        key, source="adzuna", target="ca/Toronto", status="expired",
         query_total=query_total, selected_total=query_total,
         pages=pages,
-        request_attempts=ADZUNA_REQUESTS_PER_RUN - request_budget["remaining"],
-        returned=returned, records=len(out),
-        location_mode="where+distance", fallback_terms=0,
+        request_attempts=request_attempts,
+        returned=returned, records=0, reused=0,
+        partial_records=len(out), location_mode="carry-forward",
+        fallback_terms=0,
         capped_terms=capped_terms, repeated_terms=0, queries=query_metrics,
-        errors=errors, complete=not capped_terms and not errors)
-    return out
+        errors=errors or ["baseline unavailable or grace expired"],
+        source_refreshed_at=(
+            baseline["refreshed_at"].isoformat()
+            if baseline["refreshed_at"] else None),
+        source_age_hours=baseline["age_hours"], complete=False)
+    return []
 
 
 # SuccessFactors (SAP) powers most of the big Canadian banks/telecoms. It has
@@ -818,7 +974,7 @@ def print_coverage_report(filtered_counts, unique_counts, live_counts):
           "pages returned filtered unique live mode status")
     with COVERAGE_LOCK:
         entries = [(key, dict(value)) for key, value in COVERAGE.items()]
-    summary_rows, warnings, query_details = [], [], []
+    summary_rows, warnings, query_details, source_details = [], [], [], []
     for key, entry in sorted(entries):
         filtered = filtered_counts.get(key, 0)
         unique = unique_counts.get(key, 0)
@@ -849,6 +1005,16 @@ def print_coverage_report(filtered_counts, unique_counts, live_counts):
             )
             query_details.append(detail)
             print(f"   QUERY {detail}")
+        if entry.get("source_age_hours") is not None or entry.get("reused"):
+            source_age = entry.get("source_age_hours")
+            state_detail = (
+                f"{key}: status={status}, age_hours="
+                f"{_metric(round(source_age, 2) if source_age is not None else None)}, "
+                f"reused={entry.get('reused', 0)}, "
+                f"refreshed_at={entry.get('source_refreshed_at') or '-'}"
+            )
+            source_details.append(state_detail)
+            print(f"   SOURCE STATE {state_detail}")
         if entry.get("fallback_terms"):
             warning = (
                 f"{key}: no usable target-location facet for "
@@ -892,8 +1058,33 @@ def print_coverage_report(filtered_counts, unique_counts, live_counts):
                     summary.write("\n**Per-query coverage**\n\n")
                     for detail in query_details:
                         summary.write(f"- {detail}\n")
+                if source_details:
+                    summary.write("\n**Source freshness**\n\n")
+                    for detail in source_details:
+                        summary.write(f"- {detail}\n")
         except OSError as exc:
             print(f"COVERAGE WARNING could not write GITHUB_STEP_SUMMARY: {exc}")
+
+
+def source_state_payload():
+    key = coverage_key("adzuna", "ca/Toronto")
+    with COVERAGE_LOCK:
+        entry = dict(COVERAGE.get(key) or {})
+    if not entry:
+        return {}
+    age_hours = entry.get("source_age_hours")
+    return {
+        "adzuna": {
+            "status": entry.get("status"),
+            "refreshed_at": entry.get("source_refreshed_at"),
+            "age_seconds": (
+                round(float(age_hours) * 3600)
+                if age_hours is not None else None
+            ),
+            "requests": entry.get("request_attempts", 0),
+            "reused": entry.get("reused", 0),
+        }
+    }
 
 
 def main():
@@ -994,10 +1185,16 @@ def main():
         except UnicodeEncodeError:
             print(line.encode("ascii", "replace").decode("ascii"))
 
+    payload = {
+        "fetched_at": datetime.now(timezone.utc).isoformat(),
+        "categories": list(CATEGORIES.keys()),
+        "jobs": out,
+    }
+    source_state = source_state_payload()
+    if source_state:
+        payload["source_state"] = source_state
     with open("live_jobs.json", "w", encoding="utf-8") as fh:
-        json.dump({"fetched_at": datetime.now(timezone.utc).isoformat(),
-                   "categories": list(CATEGORIES.keys()),
-                   "jobs": out}, fh, indent=2)
+        json.dump(payload, fh, indent=2)
     print(f"\nWrote live_jobs.json with {len(out)} VERIFIED postings")
 
 

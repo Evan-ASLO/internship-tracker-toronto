@@ -96,7 +96,17 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     try:
-        current_count = normalized_count(load_snapshot(args.current))
+        current_snapshot = load_snapshot(args.current)
+        adzuna_state = (
+            (current_snapshot.get("source_state") or {}).get("adzuna") or {}
+        )
+        adzuna_expired = adzuna_state.get("status") == "expired"
+        if adzuna_expired and not args.allow_drop:
+            raise CatalogDropError(
+                "Adzuna source grace expired; manual review and "
+                "allow_catalog_drop are required"
+            )
+        current_count = normalized_count(current_snapshot)
         baseline_counts = [
             normalized_count(load_snapshot(path))
             for path in args.baseline
@@ -120,6 +130,8 @@ def main(argv: list[str] | None = None) -> int:
     )
     if assessment.overridden:
         print(f"::warning::{message}; manual override accepted")
+    elif adzuna_expired:
+        print(f"::warning::{message}; expired Adzuna source override accepted")
     else:
         print(message)
     return 0

@@ -37,6 +37,14 @@ class RefreshWorkflowTests(unittest.TestCase):
 
         self.assertIn("ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}", scoped)
         self.assertIn("ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}", scoped)
+        self.assertIn(
+            "ADZUNA_BASELINE_PATH: ${{ runner.temp }}/checked-in-live_jobs.json",
+            scoped,
+        )
+        self.assertIn(
+            "ADZUNA_FORCE_REFRESH: ${{ inputs.force_adzuna_refresh }}",
+            scoped,
+        )
         self.assertIn("- name: Run sanitized Adzuna coverage check", WORKFLOW)
         self.assertIn("python adzuna_dry_run.py", WORKFLOW)
 
@@ -45,6 +53,8 @@ class RefreshWorkflowTests(unittest.TestCase):
         self.assertIn("if: inputs.adzuna_dry_run == true", WORKFLOW)
         self.assertIn("if: inputs.adzuna_dry_run != true", WORKFLOW)
         self.assertIn("actions/upload-artifact@v4", WORKFLOW)
+        self.assertIn("force_adzuna_refresh:", WORKFLOW)
+        self.assertIn('ADZUNA_FORCE_REFRESH: "true"', WORKFLOW)
 
 
 if __name__ == "__main__":

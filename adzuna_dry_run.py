@@ -55,6 +55,9 @@ def build_report(records, coverage):
         "source": "adzuna",
         "status": coverage.get("status")
         or ("complete" if coverage.get("complete") else "incomplete"),
+        "sourceRefreshedAt": coverage.get("source_refreshed_at"),
+        "sourceAgeHours": coverage.get("source_age_hours"),
+        "reused": coverage.get("reused", 0),
         "queryTotal": coverage.get("query_total"),
         "requests": coverage.get("request_attempts", coverage.get("pages", 0)),
         "returned": coverage.get("returned", 0),
@@ -84,6 +87,7 @@ def write_summary(report):
             ("Product filtered", "productFiltered"),
             ("Product unique", "productUnique"),
             ("Capped queries", "cappedQueries"),
+            ("Reused prior rows", "reused"),
         ):
             summary.write(f"| {label} | {report[key]} |\n")
         summary.write("\n**Per-query allocation**\n\n")

@@ -18,6 +18,10 @@ on:
         description: "Run only the Adzuna source and upload a sanitized coverage artifact"
         type: boolean
         default: false
+      force_adzuna_refresh:
+        description: "Force all Adzuna query families during this refresh"
+        type: boolean
+        default: false
 
 # Prevent overlapping runs: a slow scrape must not race a new one.
 concurrency:
@@ -49,6 +53,8 @@ jobs:
         env:
           ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
           ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+          ADZUNA_BASELINE_PATH: live_jobs.json
+          ADZUNA_FORCE_REFRESH: "true"
         run: python adzuna_dry_run.py --output "${{ runner.temp }}/adzuna-dry-run.json"
 
       - uses: actions/upload-artifact@v4
@@ -80,6 +86,8 @@ jobs:
         env:
           ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
           ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+          ADZUNA_BASELINE_PATH: ${{ runner.temp }}/checked-in-live_jobs.json
+          ADZUNA_FORCE_REFRESH: ${{ inputs.force_adzuna_refresh }}
         run: |
           python scrape.py
           cp live_jobs.json site/live_jobs.json
