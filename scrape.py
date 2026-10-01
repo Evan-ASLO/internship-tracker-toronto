@@ -10,14 +10,30 @@ Rules:
      Finance, Consulting.
 """
 
-import json, re, time
+import json, os, re, time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
+from threading import Lock, Semaphore
 import requests
 
 TIMEOUT = 20
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
                     "(KHTML, like Gecko) Chrome/124.0 Safari/537.36"}
+SEARCH_TERMS = ("intern", "co-op", "student")
+WORKDAY_PAGE_SIZE = 20
+WORKDAY_MAX_PAGES = 100
+WORKDAY_RETRIES = 3
+WORKDAY_RETRY_BASE_SECONDS = 0.5
+SOURCE_RETRIES = 3
+SOURCE_RETRY_BASE_SECONDS = 0.5
+SOURCE_REQUESTS = Semaphore(8)
+SUCCESSFACTORS_PAGE_SIZE = 25
+SUCCESSFACTORS_MAX_PAGES = 100
+VERIFY_RETRIES = 3
+VERIFY_RETRY_BASE_SECONDS = 0.5
+
+COVERAGE = {}
+COVERAGE_LOCK = Lock()
 
 # ---------------- categories (extensible: add a key + its regex) -------------
 # Word-boundary patterns, not substrings. Substring matching produced false
@@ -73,6 +89,11 @@ GTA = ("mississauga", "brampton", "markham", "vaughan", "richmond hill",
        "ajax", "pickering", "whitby", "oshawa", "milton", "gta", "concord")
 ONTARIO = ("waterloo", "kitchener", "ottawa", "hamilton", "guelph", "ontario",
            ", on", "(on)", "windsor", "barrie")
+FACET_LOCATION_TERMS = TORONTO + GTA + tuple(
+    term for term in ONTARIO if term not in ("ontario", ", on", "(on)")
+)
+CANADIAN_LOCATION_RE = re.compile(
+    r"(?:\bontario\b|,\s*on(?:\b|,)|\bcanada\b|,\s*can(?:\b|,))", re.I)
 
 
 def geo(loc):
@@ -91,7 +112,55 @@ def categorize(title):
 
 
 def g(url, **kw):
-    return requests.get(url, timeout=TIMEOUT, headers=UA, **kw)
+    last_response = None
+    last_error = None
+    for attempt in range(SOURCE_RETRIES):
+        try:
+            with SOURCE_REQUESTS:
+                response = requests.get(url, timeout=TIMEOUT, headers=UA, **kw)
+            if response.status_code != 429 and response.status_code < 500:
+                return response
+            last_response = response
+        except requests.RequestException as exc:
+            last_error = exc
+        if attempt + 1 < SOURCE_RETRIES:
+            time.sleep(SOURCE_RETRY_BASE_SECONDS * (2 ** attempt))
+    if last_response is not None:
+        return last_response
+    if last_error:
+        raise last_error
+    raise RuntimeError("Source request failed")
+
+
+def reset_coverage():
+    with COVERAGE_LOCK:
+        COVERAGE.clear()
+
+
+def set_coverage(key, **values):
+    with COVERAGE_LOCK:
+        current = COVERAGE.setdefault(key, {})
+        current.update(values)
+
+
+def coverage_key(source, target):
+    return f"{source}:{target}"
+
+
+def with_coverage(record, key):
+    record["_coverage_key"] = key
+    return record
+
+
+def target_location_descriptor(descriptor):
+    text = clean_text(descriptor).lower()
+    if not text or not any(term in text for term in FACET_LOCATION_TERMS):
+        return False
+    if CANADIAN_LOCATION_RE.search(text):
+        return True
+    normalized = re.sub(r"[^a-z]+", " ", text).strip()
+    return normalized in {re.sub(r"[^a-z]+", " ", term).strip()
+                          for term in FACET_LOCATION_TERMS}
 
 
 def source_id(record, *keys):
@@ -132,85 +201,316 @@ WORKDAY = [
 
 
 def from_greenhouse(tok):
-    r = g(f"https://boards-api.greenhouse.io/v1/boards/{tok}/jobs?content=true")
-    if r.status_code != 200: return []
-    out = []
-    for j in r.json().get("jobs", []):
-        out.append(dict(company=tok, src="greenhouse", title=j.get("title", ""),
-                        loc=(j.get("location") or {}).get("name", ""),
-                        url=j.get("absolute_url", ""),
-                        external_id=source_id(j, "id"),
-                        posted=j.get("first_published") or j.get("updated_at", ""),
-                        content=re.sub("<[^>]+>", " ", j.get("content", "") or "")[:600]))
-    return out
+    key = coverage_key("greenhouse", tok)
+    try:
+        r = g(f"https://boards-api.greenhouse.io/v1/boards/{tok}/jobs?content=true")
+        if r.status_code != 200:
+            set_coverage(key, source="greenhouse", target=tok, pages=1,
+                         returned=0, query_total=0, complete=False,
+                         errors=[f"HTTP {r.status_code}"])
+            return []
+        jobs = r.json().get("jobs", [])
+        out = []
+        for j in jobs:
+            out.append(with_coverage(
+                dict(company=tok, src="greenhouse", title=j.get("title", ""),
+                     loc=(j.get("location") or {}).get("name", ""),
+                     url=j.get("absolute_url", ""),
+                     external_id=source_id(j, "id"),
+                     posted=j.get("first_published") or j.get("updated_at", ""),
+                     content=re.sub("<[^>]+>", " ", j.get("content", "") or "")[:600]),
+                key))
+        set_coverage(key, source="greenhouse", target=tok, pages=1,
+                     returned=len(out), query_total=len(jobs), selected_total=len(jobs),
+                     location_mode="provider", fallback_terms=0, capped_terms=0,
+                     errors=[], complete=True)
+        return out
+    except Exception as exc:
+        set_coverage(key, source="greenhouse", target=tok, pages=0,
+                     returned=0, query_total=0, complete=False,
+                     errors=[type(exc).__name__])
+        return []
 
 
 def from_ashby(tok):
-    r = g(f"https://api.ashbyhq.com/posting-api/job-board/{tok}")
-    if r.status_code != 200: return []
-    d = r.json()
-    if not isinstance(d, dict): return []
-    return [dict(company=tok, src="ashby", title=j.get("title", ""),
-                 loc=j.get("location", "") or "", url=j.get("jobUrl", ""),
-                 external_id=source_id(j, "id"),
-                 posted=j.get("publishedAt", "") or "",
-                 content=re.sub("<[^>]+>", " ", j.get("descriptionHtml", "") or "")[:600])
-            for j in d.get("jobs", [])]
+    key = coverage_key("ashby", tok)
+    try:
+        r = g(f"https://api.ashbyhq.com/posting-api/job-board/{tok}")
+        if r.status_code != 200:
+            set_coverage(key, source="ashby", target=tok, pages=1,
+                         returned=0, query_total=0, complete=False,
+                         errors=[f"HTTP {r.status_code}"])
+            return []
+        d = r.json()
+        if not isinstance(d, dict):
+            raise ValueError("non-object response")
+        jobs = d.get("jobs", [])
+        out = [
+            with_coverage(
+                dict(company=tok, src="ashby", title=j.get("title", ""),
+                     loc=j.get("location", "") or "", url=j.get("jobUrl", ""),
+                     external_id=source_id(j, "id"),
+                     posted=j.get("publishedAt", "") or "",
+                     content=re.sub("<[^>]+>", " ",
+                                    j.get("descriptionHtml", "") or "")[:600]),
+                key)
+            for j in jobs
+        ]
+        set_coverage(key, source="ashby", target=tok, pages=1,
+                     returned=len(out), query_total=len(jobs), selected_total=len(jobs),
+                     location_mode="provider", fallback_terms=0, capped_terms=0,
+                     errors=[], complete=True)
+        return out
+    except Exception as exc:
+        set_coverage(key, source="ashby", target=tok, pages=0,
+                     returned=0, query_total=0, complete=False,
+                     errors=[type(exc).__name__])
+        return []
+
+
+def _iter_workday_facets(facets, inside_location_group=False):
+    for facet in facets or []:
+        if not isinstance(facet, dict):
+            continue
+        parameter = str(facet.get("facetParameter") or "")
+        inside = inside_location_group or parameter.casefold() == "locationmaingroup"
+        yield facet, inside_location_group
+        nested = [
+            value for value in (facet.get("values") or [])
+            if isinstance(value, dict) and value.get("facetParameter")
+        ]
+        yield from _iter_workday_facets(nested, inside)
+
+
+def workday_location_filter(facets):
+    candidates = []
+    for facet, inside_location_group in _iter_workday_facets(facets):
+        parameter = str(facet.get("facetParameter") or "")
+        parameter_key = parameter.casefold()
+        if parameter_key not in {"locations", "location", "city"}:
+            continue
+        matches = [
+            value for value in (facet.get("values") or [])
+            if isinstance(value, dict)
+            and value.get("id")
+            and target_location_descriptor(value.get("descriptor"))
+        ]
+        if not matches:
+            continue
+        priority = (
+            0 if inside_location_group and parameter_key == "locations"
+            else 1 if parameter_key == "locations"
+            else 2
+        )
+        candidates.append((priority, -len(matches), parameter, matches))
+    if not candidates:
+        return None
+    _, _, parameter, matches = min(candidates, key=lambda item: (item[0], item[1]))
+    return {
+        "parameter": parameter,
+        "ids": [str(value["id"]) for value in matches],
+        "descriptors": [clean_text(value.get("descriptor")) for value in matches],
+    }
+
+
+def _workday_json(url, term, offset, applied_facets):
+    payload = {
+        "appliedFacets": applied_facets,
+        "limit": WORKDAY_PAGE_SIZE,
+        "offset": offset,
+        "searchText": term,
+    }
+    last_error = None
+    for attempt in range(WORKDAY_RETRIES):
+        try:
+            with SOURCE_REQUESTS:
+                response = requests.post(
+                    url,
+                    timeout=TIMEOUT,
+                    headers={**UA, "Content-Type": "application/json"},
+                    json=payload,
+                )
+            if response.status_code == 200:
+                data = response.json()
+                if not isinstance(data, dict):
+                    raise ValueError("non-object response")
+                return data
+            if response.status_code != 429 and response.status_code < 500:
+                raise RuntimeError(f"HTTP {response.status_code}")
+            last_error = RuntimeError(f"HTTP {response.status_code}")
+        except requests.RequestException as exc:
+            last_error = exc
+        if attempt + 1 < WORKDAY_RETRIES:
+            time.sleep(WORKDAY_RETRY_BASE_SECONDS * (2 ** attempt))
+    if last_error:
+        raise last_error
+    raise RuntimeError("Workday request failed")
+
+
+def workday_external_id(tenant, external_path):
+    final_segment = str(external_path or "").rstrip("/").rsplit("/", 1)[-1]
+    match = re.search(
+        r"_((?:JR|REQ|R)[A-Za-z0-9_-]+|\d{6,}(?:-\d+)?)$",
+        final_segment,
+        re.I,
+    )
+    return f"{tenant}:{match.group(1)}" if match else None
 
 
 def from_workday(spec):
     tenant, site, host = spec
+    target = f"{tenant}.{host}/{site}"
+    key = coverage_key("workday", target)
     url = f"https://{tenant}.{host}.myworkdayjobs.com/wday/cxs/{tenant}/{site}/jobs"
-    out = []
-    for term in ("intern", "co-op", "student"):
-        for offset in (0, 20, 40):
+    out, seen = [], set()
+    metrics = {
+        "source": "workday", "target": target, "facet_requests": 0,
+        "query_total": 0, "selected_total": 0, "pages": 0, "returned": 0,
+        "facet_terms": 0, "fallback_terms": 0, "capped_terms": 0,
+        "repeated_terms": 0, "facet_values": 0, "facet_parameters": set(),
+        "errors": [],
+    }
+
+    for term in SEARCH_TERMS:
+        try:
+            discovery = _workday_json(url, term, 0, {})
+            metrics["facet_requests"] += 1
+        except Exception as exc:
+            metrics["errors"].append(
+                f"{term}:{type(exc).__name__}({clean_text(exc)[:80]})")
+            continue
+
+        metrics["query_total"] += int(discovery.get("total") or 0)
+        location_filter = workday_location_filter(discovery.get("facets"))
+        if location_filter:
+            applied_facets = {
+                location_filter["parameter"]: location_filter["ids"]
+            }
+            metrics["facet_terms"] += 1
+            metrics["facet_values"] += len(location_filter["ids"])
+            metrics["facet_parameters"].add(location_filter["parameter"])
+            first_page = None
+        else:
+            applied_facets = {}
+            metrics["fallback_terms"] += 1
+            first_page = discovery
+
+        offset = 0
+        term_pages = 0
+        selected_total_recorded = False
+        page_signatures = set()
+        exhausted = False
+        while term_pages < WORKDAY_MAX_PAGES:
             try:
-                r = requests.post(url, timeout=TIMEOUT,
-                                  headers={**UA, "Content-Type": "application/json"},
-                                  json={"appliedFacets": {}, "limit": 20,
-                                        "offset": offset, "searchText": term})
-            except Exception:
-                return out
-            if r.status_code != 200:
-                return out
-            try:
-                posts = r.json().get("jobPostings")
-            except Exception:
-                return out
+                if first_page is not None and offset == 0:
+                    data = first_page
+                else:
+                    data = _workday_json(url, term, offset, applied_facets)
+            except Exception as exc:
+                metrics["errors"].append(
+                    f"{term}@{offset}:{type(exc).__name__}"
+                    f"({clean_text(exc)[:80]})")
+                break
+
+            term_pages += 1
+            metrics["pages"] += 1
+            total = int(data.get("total") or 0)
+            if not selected_total_recorded:
+                metrics["selected_total"] += total
+                selected_total_recorded = True
+            posts = data.get("jobPostings") or []
+            metrics["returned"] += len(posts)
             if not posts:
+                exhausted = True
                 break
-            for j in posts:
-                out.append(dict(company=tenant, src=f"workday",
-                                title=j.get("title", ""),
-                                loc=j.get("locationsText", "") or "",
-                                url=f"https://{tenant}.{host}.myworkdayjobs.com/en-US/{site}"
-                                    + (j.get("externalPath", "") or ""),
-                                # Workday requisition IDs are tenant-scoped, so
-                                # URL identity is safer across all employers.
-                                external_id=None,
-                                posted=j.get("postedOn", "") or "",
-                                content=""))
-            if len(posts) < 20:
+
+            signature = tuple(
+                (job.get("externalPath"), job.get("title"), job.get("locationsText"))
+                for job in posts
+            )
+            if signature in page_signatures:
+                metrics["repeated_terms"] += 1
                 break
+            page_signatures.add(signature)
+
+            for job in posts:
+                path = job.get("externalPath", "") or ""
+                if not path:
+                    continue
+                identity = path
+                if identity in seen:
+                    continue
+                seen.add(identity)
+                location = clean_text(job.get("locationsText"))
+                if location_filter and not geo(location):
+                    location = (
+                        f"{location or 'Multiple locations'} "
+                        "(approved Ontario location)"
+                    )
+                out.append(with_coverage(
+                    dict(company=tenant, src="workday",
+                         title=job.get("title", ""),
+                         loc=location,
+                         url=f"https://{tenant}.{host}.myworkdayjobs.com/en-US/{site}"
+                             + path,
+                         external_id=workday_external_id(tenant, path),
+                         posted=job.get("postedOn", "") or "",
+                         content=""),
+                    key))
+
+            if len(posts) < WORKDAY_PAGE_SIZE or (
+                total and offset + len(posts) >= total
+            ):
+                exhausted = True
+                break
+            offset += WORKDAY_PAGE_SIZE
+
+        if not exhausted and term_pages >= WORKDAY_MAX_PAGES:
+            metrics["capped_terms"] += 1
+
+    metrics["records"] = len(out)
+    metrics["facet_parameters"] = ",".join(sorted(metrics["facet_parameters"])) or "-"
+    metrics["complete"] = not metrics["capped_terms"] and not metrics["errors"]
+    set_coverage(key, **metrics)
     return out
 
 
 def from_amazon(_):
-    out = []
+    key = coverage_key("amazon", "amazon")
+    out, pages, returned, errors = [], 0, 0, []
     for q in ("intern finance", "intern marketing", "intern operations", "intern business"):
         for off in (0, 100):
-            r = g("https://www.amazon.jobs/en/search.json?radius=100km"
-                  f"&offset={off}&result_limit=100&sort=recent&base_query={q.replace(' ','%20')}"
-                  "&loc_query=Toronto%2C%20Ontario%2C%20Canada&country=CAN")
-            if r.status_code != 200: break
-            hits = r.json().get("jobs", [])
-            out += [dict(company="amazon", src="amazon", title=j.get("title", ""),
+            try:
+                r = g("https://www.amazon.jobs/en/search.json?radius=100km"
+                      f"&offset={off}&result_limit=100&sort=recent&base_query={q.replace(' ','%20')}"
+                      "&loc_query=Toronto%2C%20Ontario%2C%20Canada&country=CAN")
+                pages += 1
+                if r.status_code != 200:
+                    errors.append(f"{q}:HTTP {r.status_code}")
+                    break
+                hits = r.json().get("jobs", [])
+            except Exception as exc:
+                errors.append(f"{q}:{type(exc).__name__}")
+                break
+            returned += len(hits)
+            out += [
+                with_coverage(
+                    dict(company="amazon", src="amazon", title=j.get("title", ""),
                          loc=j.get("location", "") or "",
                          url="https://amazon.jobs" + (j.get("job_path", "") or ""),
                          external_id=source_id(j, "id_icims", "id", "job_id"),
                          posted=j.get("posted_date", "") or "",
-                         content=(j.get("description_short") or "")[:600]) for j in hits]
-            if len(hits) < 100: break
+                         content=(j.get("description_short") or "")[:600]),
+                    key)
+                for j in hits
+            ]
+            if len(hits) < 100:
+                break
+    set_coverage(key, source="amazon", target="amazon", pages=pages,
+                 returned=returned, records=len(out), query_total=None,
+                 selected_total=None, location_mode="provider",
+                 fallback_terms=0, capped_terms=0, errors=errors,
+                 complete=not errors)
     return out
 
 
@@ -249,20 +549,38 @@ def clean_text(s):
 
 def from_successfactors(spec):
     label, base, extra = spec
+    key = coverage_key("successfactors", label)
     out, seen = [], set()
-    for term in ("intern", "co-op", "student"):
-        for start in (0, 25, 50):
+    pages = returned = repeated_terms = capped_terms = 0
+    errors = []
+    for term in SEARCH_TERMS:
+        start = 0
+        exhausted = False
+        page_signatures = set()
+        term_pages = 0
+        while term_pages < SUCCESSFACTORS_MAX_PAGES:
             params = {"q": term, "locationsearch": "Toronto", "startrow": start}
             params.update(extra)
             try:
                 r = g(f"{base}/search/", params=params)
-            except Exception:
-                return out
-            if r.status_code != 200:
-                return out
-            rows = SF_ROW.findall(r.text)
-            if not rows:
+            except Exception as exc:
+                errors.append(f"{term}@{start}:{type(exc).__name__}")
                 break
+            pages += 1
+            term_pages += 1
+            if r.status_code != 200:
+                errors.append(f"{term}@{start}:HTTP {r.status_code}")
+                break
+            rows = SF_ROW.findall(r.text)
+            returned += len(rows)
+            if not rows:
+                exhausted = True
+                break
+            signature = tuple(href for href, _ in rows)
+            if signature in page_signatures:
+                repeated_terms += 1
+                break
+            page_signatures.add(signature)
             new = 0
             for href, title in rows:
                 url = base + href
@@ -274,26 +592,57 @@ def from_successfactors(spec):
                 # or date; the slug carries the city, which is enough to place
                 # it. Date is left empty rather than invented.
                 loc = "Toronto, ON" if "/job/toronto" in href.lower() else ""
-                out.append(dict(company=label, src="successfactors", title=title,
-                                loc=loc, url=url, posted="", content=""))
+                out.append(with_coverage(
+                    dict(company=label, src="successfactors", title=title,
+                         loc=loc, url=url, posted="", content=""),
+                    key))
             if new == 0:
+                repeated_terms += 1
                 break
+            start += SUCCESSFACTORS_PAGE_SIZE
+        if not exhausted and term_pages >= SUCCESSFACTORS_MAX_PAGES:
+            capped_terms += 1
+    set_coverage(
+        key, source="successfactors", target=label, query_total=None,
+        selected_total=None, pages=pages, returned=returned, records=len(out),
+        location_mode="query", fallback_terms=0, capped_terms=capped_terms,
+        repeated_terms=repeated_terms, errors=errors,
+        complete=not capped_terms and not errors)
     return out
 
 
-TASKS = ([(from_greenhouse, t) for t in GREENHOUSE]
-         + [(from_ashby, t) for t in ASHBY]
-         + [(from_workday, s) for s in WORKDAY]
-         + [(from_successfactors, s) for s in SUCCESSFACTORS]
-         + [(from_amazon, "amazon")])
+TASKS = (
+    [(from_greenhouse, target, coverage_key("greenhouse", target))
+     for target in GREENHOUSE]
+    + [(from_ashby, target, coverage_key("ashby", target))
+       for target in ASHBY]
+    + [(from_workday, spec,
+        coverage_key("workday", f"{spec[0]}.{spec[2]}/{spec[1]}"))
+       for spec in WORKDAY]
+    + [(from_successfactors, spec, coverage_key("successfactors", spec[0]))
+       for spec in SUCCESSFACTORS]
+    + [(from_amazon, "amazon", coverage_key("amazon", "amazon"))]
+)
 
 
 def verify(rec):
     """Re-fetch the posting URL. Only keep it if the req is still open."""
-    try:
-        r = requests.get(rec["url"], timeout=25, headers=UA, allow_redirects=True)
-    except Exception as e:
-        return rec, False, f"error {type(e).__name__}"
+    last_error = None
+    r = None
+    for attempt in range(VERIFY_RETRIES):
+        try:
+            with SOURCE_REQUESTS:
+                r = requests.get(
+                    rec["url"], timeout=25, headers=UA, allow_redirects=True)
+            if r.status_code != 429 and r.status_code < 500:
+                break
+            last_error = f"HTTP {r.status_code}"
+        except requests.RequestException as exc:
+            last_error = f"error {type(exc).__name__}"
+        if attempt + 1 < VERIFY_RETRIES:
+            time.sleep(VERIFY_RETRY_BASE_SECONDS * (2 ** attempt))
+    if r is None:
+        return rec, False, last_error or "error RequestException"
     if r.status_code != 200:
         return rec, False, f"HTTP {r.status_code}"
     low = r.text.lower()
@@ -305,16 +654,97 @@ def verify(rec):
     return rec, True, "200"
 
 
+def _metric(value):
+    return "-" if value is None else str(value)
+
+
+def print_coverage_report(filtered_counts, unique_counts, live_counts):
+    print("\n=== SOURCE COVERAGE ===")
+    print("source         target                           totals(raw/selected) "
+          "pages returned filtered unique live mode status")
+    with COVERAGE_LOCK:
+        entries = [(key, dict(value)) for key, value in COVERAGE.items()]
+    summary_rows, warnings = [], []
+    for key, entry in sorted(entries):
+        filtered = filtered_counts.get(key, 0)
+        unique = unique_counts.get(key, 0)
+        live = live_counts.get(key, 0)
+        status = "complete" if entry.get("complete", True) else "incomplete"
+        mode = entry.get("facet_parameters") or entry.get("location_mode") or "-"
+        print(
+            f"{entry.get('source', '-'):<14} {entry.get('target', '-')[:32]:<32} "
+            f"{_metric(entry.get('query_total')):>7}/"
+            f"{_metric(entry.get('selected_total')):<8} "
+            f"{entry.get('pages', 0):>5} {entry.get('returned', 0):>8} "
+            f"{filtered:>8} {unique:>6} {live:>4} "
+            f"{mode[:16]:<16} {status}"
+        )
+        summary_rows.append((
+            entry.get("source", "-"), entry.get("target", "-"),
+            f"{_metric(entry.get('query_total'))}/{_metric(entry.get('selected_total'))}",
+            entry.get("pages", 0), entry.get("returned", 0),
+            filtered, unique, live, mode, status,
+        ))
+        if entry.get("fallback_terms"):
+            warning = (
+                f"{key}: no usable target-location facet for "
+                f"{entry['fallback_terms']} term(s); nationwide fallback was "
+                "paginated and may hit the safety cap"
+            )
+            warnings.append(warning)
+            print(f"   COVERAGE WARNING {warning}")
+        if entry.get("capped_terms"):
+            warning = (
+                f"{key}: safety cap reached for {entry['capped_terms']} "
+                "term(s); coverage is incomplete"
+            )
+            warnings.append(warning)
+            print(f"   COVERAGE WARNING {warning}")
+        if entry.get("errors"):
+            warning = f"{key}: request errors {','.join(entry['errors'])}"
+            warnings.append(warning)
+            print(f"   COVERAGE WARNING {warning}")
+
+    summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
+    if summary_path:
+        try:
+            with open(summary_path, "a", encoding="utf-8") as summary:
+                summary.write("\n### Source coverage\n\n")
+                summary.write(
+                    "| Source | Target | Query totals raw/selected | Pages | "
+                    "Returned | Filtered | Unique | Live | Mode | Status |\n"
+                )
+                summary.write("|---|---|---:|---:|---:|---:|---:|---:|---|---|\n")
+                for row in summary_rows:
+                    summary.write(
+                        "| " + " | ".join(str(value).replace("|", "\\|")
+                                         for value in row) + " |\n"
+                    )
+                if warnings:
+                    summary.write("\n**Coverage warnings**\n\n")
+                    for warning in warnings:
+                        summary.write(f"- {warning}\n")
+        except OSError as exc:
+            print(f"COVERAGE WARNING could not write GITHUB_STEP_SUMMARY: {exc}")
+
+
 def main():
     t0 = time.time()
+    reset_coverage()
     raw = []
     with ThreadPoolExecutor(max_workers=20) as ex:
-        futs = {ex.submit(fn, tok): tok for fn, tok in TASKS}
+        futs = {ex.submit(fn, token): key for fn, token, key in TASKS}
         for f in as_completed(futs):
             try:
                 raw.extend(f.result() or [])
-            except Exception:
-                pass
+            except Exception as exc:
+                key = futs[f]
+                source, _, target = key.partition(":")
+                set_coverage(
+                    key, source=source, target=target, pages=0, returned=0,
+                    query_total=None, selected_total=None, complete=False,
+                    errors=[type(exc).__name__])
+                print(f"COVERAGE WARNING {key}: task failed with {type(exc).__name__}")
     print(f"pulled {len(raw)} raw postings in {time.time()-t0:.0f}s")
 
     # Normalize before any filtering: invisible characters would otherwise
@@ -326,6 +756,7 @@ def main():
     # filter: intern + Toronto area. Category is TAGGED, not required -
     # dropping uncategorized rows would hide real postings from the user.
     cand = []
+    filtered_counts = {}
     for r in raw:
         if not r["title"] or not r["url"]:
             continue
@@ -337,11 +768,14 @@ def main():
         r["geo"] = gt
         r["cats"] = categorize(r["title"])
         cand.append(r)
+        key = r.get("_coverage_key")
+        filtered_counts[key] = filtered_counts.get(key, 0) + 1
 
     # Dedupe by source identity. Workday returns the same req multiple times
     # across the intern/co-op/student search terms, while two distinct reqs can
     # legitimately share a title and location.
     seen, uniq = set(), []
+    unique_counts = {}
     for r in cand:
         if r.get("external_id"):
             k = ("external", r["src"], r["external_id"])
@@ -352,6 +786,8 @@ def main():
                  r["title"].strip().lower(), r["loc"].strip().lower())
         if k in seen: continue
         seen.add(k); uniq.append(r)
+        key = r.get("_coverage_key")
+        unique_counts[key] = unique_counts.get(key, 0) + 1
     print(f"{len(uniq)} unique Toronto-area internships (before liveness check)")
 
     # verify every URL is still live
@@ -362,6 +798,12 @@ def main():
     print(f"VERIFIED LIVE: {len(live)}   DROPPED (closed/unreachable): {len(dropped)}")
     for rec, why in dropped:
         print(f"   drop [{why}] {rec['company']} - {rec['title'][:50]}")
+
+    live_counts = {}
+    for rec, _ in live:
+        key = rec.get("_coverage_key")
+        live_counts[key] = live_counts.get(key, 0) + 1
+    print_coverage_report(filtered_counts, unique_counts, live_counts)
 
     out = []
     for rec, _ in live:

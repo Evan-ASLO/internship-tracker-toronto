@@ -1,0 +1,34 @@
+{
+  "spec": ["fixture", "Jobs", "wd3"],
+  "term": "intern",
+  "nationwideTotal": 1427,
+  "filteredTotal": 81,
+  "facet": {
+    "facetParameter": "locationMainGroup",
+    "values": [
+      {
+        "facetParameter": "locations",
+        "descriptor": "Locations",
+        "values": [
+          {
+            "descriptor": "Toronto, Ontario",
+            "id": "toronto-id",
+            "count": 81
+          },
+          {
+            "descriptor": "Burlington, Vermont",
+            "id": "vermont-id",
+            "count": 9
+          }
+        ]
+      }
+    ]
+  },
+  "lateOffset": 60,
+  "lateJob": {
+    "title": "Finance Intern Found After Offset 60",
+    "locationsText": "3 Locations",
+    "externalPath": "/job/Toronto/Finance-Intern_R999999",
+    "postedOn": "Posted Today"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "spec": ["fixture", "https://jobs.example.com", {}],
+  "term": "intern",
+  "lateStart": 75,
+  "lateHref": "/job/Toronto-Finance-Intern/999999/",
+  "lateTitle": "Finance Intern Found After Start Row 75"
+}

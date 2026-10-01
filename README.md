@@ -11,7 +11,9 @@ Every hour, GitHub Actions runs the pipeline:
 
 1. **Pull** — reads postings directly from employer applicant-tracking systems
    (Greenhouse, Ashby, Workday, SuccessFactors, and native employer APIs). Nothing is
-   scraped from a job aggregator and nothing is invented.
+   scraped from a job aggregator and nothing is invented. Workday queries use
+   tenant-issued Toronto/GTA/Ontario location facets and paginate to exhaustion;
+   SuccessFactors pagination continues until empty or repeated results.
 2. **Filter** — keeps internship/co-op titles in the Toronto area, rejecting
    senior roles that merely contain a keyword like "campus".
 3. **Verify** — re-fetches every posting URL and requires a live response.
@@ -33,6 +35,14 @@ Every hour, GitHub Actions runs the pipeline:
 The board never pads itself with invented listings. In the off-season a small
 number is the market, not a gap in coverage. Anything older than 45 days is
 flagged as stale rather than quietly presented as fresh.
+
+Every scrape prints a **SOURCE COVERAGE** table with provider query totals,
+pages, returned rows, product-filtered rows, unique rows, and verified-live
+rows. Missing location facets, request errors, repeated pages, and safety-cap
+truncation are reported explicitly so source coverage cannot silently degrade.
+Workday collection and posting verification retry bounded transient TLS,
+rate-limit, and server failures rather than treating one network error as a
+closed job.
 
 ## Layout
 
