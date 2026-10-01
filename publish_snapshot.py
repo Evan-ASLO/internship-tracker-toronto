@@ -23,6 +23,17 @@ MAX_JOBS = 1000
 MAX_BODY_BYTES = 2 * 1024 * 1024
 REQUEST_TIMEOUT_SECONDS = 30
 SOURCE_NAME = "internship-tracker-toronto"
+MAX_EXTERNAL_ID_LENGTH = 240
+MAX_SOURCE_LENGTH = 80
+MAX_COMPANY_LENGTH = 200
+MAX_TITLE_LENGTH = 240
+MAX_LOCATION_LENGTH = 240
+MAX_REGION_LENGTH = 120
+MAX_CATEGORIES = 24
+MAX_CATEGORY_LENGTH = 80
+MAX_URL_LENGTH = 2048
+MAX_POSTED_TEXT_LENGTH = 240
+MAX_DESCRIPTION_LENGTH = 12000
 
 
 class SnapshotError(ValueError):
@@ -37,6 +48,16 @@ def clean_text(value: Any) -> str:
     if value is None:
         return ""
     return " ".join(str(value).split())
+
+
+def truncate_display(value: str, limit: int) -> str:
+    return value if len(value) <= limit else value[:limit]
+
+
+def require_identity_length(field: str, value: str, limit: int) -> str:
+    if len(value) > limit:
+        raise SnapshotError(f"{field} is {len(value)} characters; limit is {limit}")
+    return value
 
 
 def canonicalize_url(value: Any) -> str:
@@ -159,65 +180,85 @@ def _generated_at(value: Any) -> str:
 
 def normalize_job(job: Mapping[str, Any]) -> dict[str, Any]:
     source = _normalized_identity_text(job.get("source") or job.get("src"))
-    company = clean_text(job.get("company"))
-    title = clean_text(job.get("title"))
-    location = clean_text(job.get("location") or job.get("loc"))
+    company_identity = clean_text(job.get("company"))
+    title_identity = clean_text(job.get("title"))
+    location_identity = clean_text(job.get("location") or job.get("loc"))
     region = clean_text(job.get("region") or job.get("geo"))
     canonical_url = canonicalize_url(job.get("url"))
 
     if not source:
         raise SnapshotError("Job is missing source/src")
-    if not company:
+    if not company_identity:
         raise SnapshotError("Job is missing company")
-    if not title:
+    if not title_identity:
         raise SnapshotError("Job is missing title")
+    require_identity_length("source", source, MAX_SOURCE_LENGTH)
+    if canonical_url:
+        require_identity_length("url", canonical_url, MAX_URL_LENGTH)
 
     external_id = _explicit_external_id(job)
     if not external_id:
         external_id = _reliable_url_external_id(source, canonical_url)
+    if external_id:
+        require_identity_length("externalId", external_id, MAX_EXTERNAL_ID_LENGTH)
 
     raw_categories = job.get("categories")
     if raw_categories is None:
         raw_categories = job.get("cats", [])
     if not isinstance(raw_categories, list):
-        raise SnapshotError(f"Job categories must be a list: {title!r}")
-    categories = sorted(
+        raise SnapshotError(f"Job categories must be a list: {title_identity!r}")
+    full_categories = sorted(
         {clean_text(category) for category in raw_categories if clean_text(category)},
         key=str.casefold,
     )
+    categories = []
+    for category in full_categories:
+        normalized_category = truncate_display(category, MAX_CATEGORY_LENGTH)
+        if normalized_category not in categories:
+            categories.append(normalized_category)
+        if len(categories) == MAX_CATEGORIES:
+            break
 
-    posted_text = clean_text(job.get("postedText") or job.get("posted")) or None
+    posted_text_identity = clean_text(job.get("postedText") or job.get("posted")) or None
     posted_at = clean_text(job.get("postedAt")) or None
     if posted_at:
         posted_at = _absolute_posted_at(posted_at)
         if not posted_at:
-            raise SnapshotError(f"Invalid postedAt value for {title!r}")
-    elif posted_text:
-        posted_at = _absolute_posted_at(posted_text)
+            raise SnapshotError(f"Invalid postedAt value for {title_identity!r}")
+    elif posted_text_identity:
+        posted_at = _absolute_posted_at(posted_text_identity)
 
-    description = clean_text(job.get("description") or job.get("content")) or None
+    description_identity = clean_text(job.get("description") or job.get("content")) or None
     normalized_id = stable_job_id(
         source=source,
         external_id=external_id,
         canonical_url=canonical_url,
-        company=company,
-        title=title,
-        location=location,
+        company=company_identity,
+        title=title_identity,
+        location=location_identity,
     )
 
     return {
         "id": normalized_id,
         "externalId": external_id,
         "source": source,
-        "company": company,
-        "title": title,
-        "location": location,
-        "region": region,
+        "company": truncate_display(company_identity, MAX_COMPANY_LENGTH),
+        "title": truncate_display(title_identity, MAX_TITLE_LENGTH),
+        "location": truncate_display(location_identity, MAX_LOCATION_LENGTH),
+        "region": truncate_display(region, MAX_REGION_LENGTH),
         "categories": categories,
         "url": canonical_url,
         "postedAt": posted_at,
-        "postedText": posted_text,
-        "description": description,
+        "postedText": (
+            truncate_display(posted_text_identity, MAX_POSTED_TEXT_LENGTH)
+            if posted_text_identity
+            else None
+        ),
+        "description": (
+            truncate_display(description_identity, MAX_DESCRIPTION_LENGTH)
+            if description_identity
+            else None
+        ),
     }
 
 

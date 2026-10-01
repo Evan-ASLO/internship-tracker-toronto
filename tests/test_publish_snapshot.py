@@ -7,7 +7,19 @@ import requests
 
 from publish_snapshot import (
     MAX_BODY_BYTES,
+    MAX_CATEGORIES,
+    MAX_CATEGORY_LENGTH,
+    MAX_COMPANY_LENGTH,
+    MAX_DESCRIPTION_LENGTH,
+    MAX_EXTERNAL_ID_LENGTH,
+    MAX_LOCATION_LENGTH,
+    MAX_POSTED_TEXT_LENGTH,
+    MAX_REGION_LENGTH,
+    MAX_SOURCE_LENGTH,
+    MAX_TITLE_LENGTH,
+    MAX_URL_LENGTH,
     PublishError,
+    SnapshotError,
     build_envelope,
     canonical_json_bytes,
     ingest_signature,
@@ -95,6 +107,73 @@ class SnapshotNormalizationTests(unittest.TestCase):
         self.assertEqual(len(envelope["jobs"]), len(source["jobs"]))
         self.assertEqual(len({job["id"] for job in envelope["jobs"]}), len(source["jobs"]))
         self.assertLessEqual(len(raw_body), MAX_BODY_BYTES)
+
+    def test_display_fields_are_capped_without_changing_fallback_identity(self):
+        company = "C" * (MAX_COMPANY_LENGTH + 25)
+        title = "T" * (MAX_TITLE_LENGTH + 25)
+        location = "L" * (MAX_LOCATION_LENGTH + 25)
+        categories = [
+            f"{index:02d}-" + ("X" * MAX_CATEGORY_LENGTH)
+            for index in range(MAX_CATEGORIES + 6)
+        ]
+
+        job = normalize_job(
+            {
+                "src": "custom",
+                "company": company,
+                "title": title,
+                "loc": location,
+                "geo": "R" * (MAX_REGION_LENGTH + 5),
+                "cats": categories,
+                "url": "",
+                "posted": "P" * (MAX_POSTED_TEXT_LENGTH + 5),
+                "content": "D" * (MAX_DESCRIPTION_LENGTH + 5),
+            }
+        )
+
+        identity = "\n".join(
+            ("custom", company.casefold(), title.casefold(), location.casefold())
+        )
+        self.assertEqual(job["id"], hashlib.sha256(identity.encode()).hexdigest())
+        self.assertEqual(len(job["company"]), MAX_COMPANY_LENGTH)
+        self.assertEqual(len(job["title"]), MAX_TITLE_LENGTH)
+        self.assertEqual(len(job["location"]), MAX_LOCATION_LENGTH)
+        self.assertEqual(len(job["region"]), MAX_REGION_LENGTH)
+        self.assertEqual(len(job["categories"]), MAX_CATEGORIES)
+        self.assertTrue(
+            all(len(category) <= MAX_CATEGORY_LENGTH for category in job["categories"])
+        )
+        self.assertEqual(len(job["postedText"]), MAX_POSTED_TEXT_LENGTH)
+        self.assertEqual(len(job["description"]), MAX_DESCRIPTION_LENGTH)
+
+    def test_identity_critical_fields_are_rejected_instead_of_truncated(self):
+        base = {
+            "src": "custom",
+            "company": "Example",
+            "title": "Intern",
+            "loc": "Toronto",
+            "geo": "Toronto",
+            "cats": [],
+            "url": "https://example.com/jobs/1",
+            "posted": "",
+            "content": "",
+        }
+        cases = {
+            "source": {**base, "src": "s" * (MAX_SOURCE_LENGTH + 1)},
+            "externalId": {
+                **base,
+                "external_id": "e" * (MAX_EXTERNAL_ID_LENGTH + 1),
+            },
+            "url": {
+                **base,
+                "url": "https://example.com/" + ("u" * MAX_URL_LENGTH),
+            },
+        }
+
+        for field, candidate in cases.items():
+            with self.subTest(field=field):
+                with self.assertRaisesRegex(SnapshotError, field):
+                    normalize_job(candidate)
 
 
 class SnapshotDeterminismTests(unittest.TestCase):

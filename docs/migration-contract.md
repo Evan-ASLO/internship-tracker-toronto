@@ -51,6 +51,26 @@ All IDs and hashes are full 64-character lowercase hexadecimal strings.
 Relative provider dates such as `Posted Today` remain in `postedText`;
 `postedAt` is populated only for parseable absolute timestamps.
 
+Cloudflare v1 field caps are enforced before publication:
+
+| Field | Cap | Normalizer behavior |
+|---|---:|---|
+| `externalId` | 240 | Reject; identity-critical and never truncated |
+| `source` | 80 | Reject; identity-critical and never truncated |
+| `company` | 200 | Truncate display value after identity calculation |
+| `title` | 240 | Truncate display value after identity calculation |
+| `location` | 240 | Truncate display value after identity calculation |
+| `region` | 120 | Truncate display value |
+| `categories` | 24 | Sort/dedupe, then keep the first 24 |
+| each category | 80 | Truncate display value |
+| `url` | 2048 | Reject; identity-critical and never truncated |
+| `postedText` | 240 | Parse `postedAt` first, then truncate display value |
+| `description` | 12000 | Truncate display value |
+
+When URL and external ID are absent, the fallback ID is calculated from the
+full normalized source/company/title/location values before display-field
+truncation, so truncation cannot collapse fallback identities.
+
 The request includes:
 
 ```text
