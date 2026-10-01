@@ -7,6 +7,7 @@
 
   const SCHEMA_VERSION = 1;
   const STORAGE_KEY = "internship_tracker_user_state_v1";
+  const BACKUP_KEY = "internship_tracker_user_state_recovery_v1";
   const SOURCE = "internship-tracker-toronto";
   const STATUSES = new Set(["applied", "interview", "offer", "rejected"]);
 
@@ -57,6 +58,63 @@
     return `meta:${ref.company.toLowerCase()}\n${ref.title.toLowerCase()}`;
   }
 
+  function normalizeLegacyJob(value, classify) {
+    if (!value || typeof value !== "object" || Array.isArray(value)) {
+      throw new Error("Legacy job row must be an object");
+    }
+
+    const title = clean(value.title);
+    const company = clean(value.company);
+    const source = clean(value.src);
+    if (!title || !company || !source) {
+      throw new Error("Legacy job row is missing title, company, or source");
+    }
+    if (value.cats != null && !Array.isArray(value.cats)) {
+      throw new Error("Legacy job categories must be an array");
+    }
+
+    const ref = normalizeReference({ url: value.url, company, title });
+    if (!ref.url) throw new Error("Legacy live job needs an absolute URL");
+    const suppliedCategories = (value.cats || []).map(clean).filter(Boolean);
+    const inferredCategories =
+      suppliedCategories.length || typeof classify !== "function" ? [] : classify(title);
+    const categories = [...new Set(
+      (suppliedCategories.length ? suppliedCategories : inferredCategories)
+        .map(clean)
+        .filter(Boolean)
+    )];
+
+    return {
+      id: referenceKey(ref),
+      title,
+      company,
+      loc: clean(value.loc),
+      geo: clean(value.geo),
+      cats: categories,
+      url: ref.url,
+      posted: clean(value.posted) || null,
+      src: source,
+      sample: false,
+    };
+  }
+
+  function normalizeLegacyJobs(values, classify) {
+    if (!Array.isArray(values)) throw new Error("Legacy jobs must be an array");
+    const jobs = [];
+    const dropped = [];
+    values.forEach((value, index) => {
+      try {
+        jobs.push(normalizeLegacyJob(value, classify));
+      } catch (error) {
+        dropped.push({
+          index,
+          error: error instanceof Error ? error.message : String(error),
+        });
+      }
+    });
+    return { jobs, dropped };
+  }
+
   function dedupeReferences(values) {
     const refs = new Map();
     (Array.isArray(values) ? values : []).forEach((value) => {
@@ -94,19 +152,46 @@
   }
 
   function readState(storage) {
+    let raw = null;
     try {
-      const raw = storage.getItem(STORAGE_KEY);
-      if (!raw) return { state: emptyState(), error: null };
-      return { state: normalizeState(JSON.parse(raw)), error: null };
+      raw = storage.getItem(STORAGE_KEY);
+      if (!raw) {
+        return { state: emptyState(), error: null, raw: null, writeBlocked: false };
+      }
+      return {
+        state: normalizeState(JSON.parse(raw)),
+        error: null,
+        raw,
+        writeBlocked: false,
+      };
     } catch (error) {
       return {
         state: emptyState(),
         error: error instanceof Error ? error.message : String(error),
+        raw,
+        writeBlocked: true,
       };
     }
   }
 
+  function backupRawState(storage, raw) {
+    if (raw == null) return null;
+    if (storage.getItem(BACKUP_KEY) == null) storage.setItem(BACKUP_KEY, raw);
+    return BACKUP_KEY;
+  }
+
   function writeState(storage, value) {
+    const existing = readState(storage);
+    if (existing.writeBlocked) {
+      let backupMessage = "";
+      try {
+        const backupKey = backupRawState(storage, existing.raw);
+        if (backupKey) backupMessage = ` Raw data was preserved in ${backupKey}.`;
+      } catch (error) {
+        backupMessage = " Raw data could not be copied, so the original was left untouched.";
+      }
+      throw new Error(`Stored migration state cannot be updated safely.${backupMessage}`);
+    }
     const state = normalizeState(value);
     storage.setItem(STORAGE_KEY, JSON.stringify(state));
     return state;
@@ -128,15 +213,19 @@
   return {
     SCHEMA_VERSION,
     STORAGE_KEY,
+    BACKUP_KEY,
     SOURCE,
     STATUSES: [...STATUSES],
     canonicalUrl,
     normalizeReference,
     referenceFromJob,
     referenceKey,
+    normalizeLegacyJob,
+    normalizeLegacyJobs,
     normalizeState,
     emptyState,
     readState,
+    backupRawState,
     writeState,
     createExport,
   };

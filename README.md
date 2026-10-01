@@ -18,10 +18,14 @@ Every hour, GitHub Actions runs the pipeline:
    Closed requisitions are dropped before they reach the site.
 4. **Compare** — checks posting content against the live Vercel site, not git
    HEAD, so a failed deploy cannot make later runs incorrectly look current.
-5. **Dual publish** — HMAC-signs and sends a normalized snapshot to the
-   Cloudflare ingest endpoint, then updates the existing Vercel production
-   project when live drift is detected or `force_deploy` is requested.
-6. **Commit** — records the refreshed snapshots only after every required
+5. **Protect** — refuses a verified catalog drop greater than 25% compared
+   with the higher of the checked-in and live-site baselines unless a manual
+   run explicitly approves the seasonal change.
+6. **Dual publish** — when the `CLOUDFLARE_DUAL_PUBLISH` Actions variable is
+   `true`, HMAC-signs and sends a normalized snapshot to Cloudflare. The
+   existing Vercel production project remains the default publication path and
+   updates when live drift is detected or `force_deploy` is requested.
+7. **Commit** — records the refreshed snapshots only after every required
    publication succeeds.
 
 ## Why the numbers can look low
@@ -36,6 +40,8 @@ flagged as stale rather than quietly presented as fresh.
 |---|---|
 | `scrape.py` | Pull + filter + liveness verification |
 | `publish_snapshot.py` | Deterministic normalization, hashing, signing, and Cloudflare ingest |
+| `catalog_guard.py` | Normalized-count drop protection with explicit override |
+| `publication_gate.py` | Required Cloudflare/Vercel outcome validation |
 | `site/index.html` | The single-file app (landing, board, tracker) |
 | `site/migration.js` | Versioned saved/application persistence and export |
 | `site/live_jobs.json` | Current verified snapshot — the only data source |
@@ -63,6 +69,10 @@ internships* → *Run workflow*.
 | `CLOUDFLARE_JOBS_INGEST_URL` | Full HTTPS URL for `/api/internal/jobs/snapshot`. |
 | `CLOUDFLARE_JOBS_INGEST_SECRET` | Shared HMAC-SHA256 secret for snapshot authentication. |
 
+Cloudflare publication is disabled unless the repository Actions variable
+`CLOUDFLARE_DUAL_PUBLISH` is exactly `true`. A manual run may set
+`allow_catalog_drop` only after reviewing a legitimate drop greater than 25%.
+
 To add or change a track, edit `CATEGORIES` in `scrape.py` and the matching
 array in `site/index.html`.
 
@@ -73,3 +83,6 @@ saved jobs and application statuses persist under
 `internship_tracker_user_state_v1` and can be downloaded as versioned JSON.
 The export excludes filters, onboarding flags, and other browser settings. See
 [`docs/migration-contract.md`](docs/migration-contract.md) for the exact schema.
+If stored migration data is malformed or from a future schema version, writes
+pause and the raw value is preserved under
+`internship_tracker_user_state_recovery_v1` rather than being overwritten.

@@ -4,6 +4,15 @@ const fs = require("node:fs");
 
 const migration = require("../site/migration.js");
 
+function memoryStorage(initial = {}) {
+  const values = new Map(Object.entries(initial));
+  return {
+    values,
+    getItem: (key) => values.get(key) ?? null,
+    setItem: (key, value) => values.set(key, value),
+  };
+}
+
 test("legacy export is URL-first, versioned, and contains only migration state", () => {
   const state = {
     schemaVersion: 1,
@@ -65,11 +74,7 @@ test("legacy export is URL-first, versioned, and contains only migration state",
 });
 
 test("state persists under one versioned key and round-trips", () => {
-  const values = new Map();
-  const storage = {
-    getItem: (key) => values.get(key) ?? null,
-    setItem: (key, value) => values.set(key, value),
-  };
+  const storage = memoryStorage();
   const state = {
     savedJobs: [{ url: "https://example.com/jobs/1", company: "A", title: "Intern" }],
     applications: [
@@ -85,9 +90,10 @@ test("state persists under one versioned key and round-trips", () => {
   migration.writeState(storage, state);
   const loaded = migration.readState(storage);
 
-  assert.equal(values.size, 1);
-  assert.equal(values.has("internship_tracker_user_state_v1"), true);
+  assert.equal(storage.values.size, 1);
+  assert.equal(storage.values.has("internship_tracker_user_state_v1"), true);
   assert.equal(loaded.error, null);
+  assert.equal(loaded.writeBlocked, false);
   assert.deepEqual(loaded.state, migration.normalizeState(state));
 });
 
@@ -119,4 +125,67 @@ test("every current live job has a unique URL-first browser key", () => {
 
   assert.equal(new Set(keys).size, snapshot.jobs.length);
   assert.equal(keys.some((key) => /^L\d+$/.test(key)), false);
+});
+
+test("malformed legacy rows are isolated instead of blanking the board", () => {
+  const good = {
+    company: "Example",
+    title: "Finance Intern",
+    loc: "Toronto",
+    geo: "Toronto",
+    cats: [],
+    url: "https://example.com/jobs/1",
+    posted: "Posted Today",
+    src: "greenhouse",
+  };
+  const result = migration.normalizeLegacyJobs(
+    [
+      good,
+      { ...good, url: "/relative/jobs/2" },
+      { ...good, cats: "Finance" },
+      null,
+    ],
+    () => ["Finance"]
+  );
+
+  assert.equal(result.jobs.length, 1);
+  assert.equal(result.dropped.length, 3);
+  assert.equal(result.jobs[0].title, "Finance Intern");
+  assert.deepEqual(result.jobs[0].cats, ["Finance"]);
+});
+
+test("future-version state is backed up and never overwritten by the next write", () => {
+  const raw = JSON.stringify({
+    schemaVersion: 2,
+    savedJobs: [{ url: "https://example.com/future", company: "A", title: "Future" }],
+  });
+  const storage = memoryStorage({ [migration.STORAGE_KEY]: raw });
+
+  const loaded = migration.readState(storage);
+  assert.equal(loaded.writeBlocked, true);
+  assert.match(loaded.error, /Unsupported migration state schemaVersion/);
+  assert.throws(
+    () => migration.writeState(storage, migration.emptyState()),
+    /cannot be updated safely/
+  );
+  assert.equal(storage.getItem(migration.STORAGE_KEY), raw);
+  assert.equal(storage.getItem(migration.BACKUP_KEY), raw);
+});
+
+test("malformed stored JSON is preserved before writes are refused", () => {
+  const raw = '{"schemaVersion":1,"savedJobs":[';
+  const storage = memoryStorage({ [migration.STORAGE_KEY]: raw });
+
+  const loaded = migration.readState(storage);
+  assert.equal(loaded.writeBlocked, true);
+  assert.throws(
+    () =>
+      migration.writeState(storage, {
+        savedJobs: [{ url: "https://example.com/new", company: "N", title: "New" }],
+        applications: [],
+      }),
+    /cannot be updated safely/
+  );
+  assert.equal(storage.getItem(migration.STORAGE_KEY), raw);
+  assert.equal(storage.getItem(migration.BACKUP_KEY), raw);
 });

@@ -10,6 +10,10 @@ on:
         description: "Redeploy even if the live site is already current"
         type: boolean
         default: false
+      allow_catalog_drop:
+        description: "Allow a verified catalog drop greater than 25% after manual review"
+        type: boolean
+        default: false
 
 # Prevent overlapping runs: a slow scrape must not race a new one.
 concurrency:
@@ -35,6 +39,9 @@ jobs:
       - name: Install dependencies
         run: pip install --quiet -r requirements.txt
 
+      - name: Capture checked-in catalog baseline
+        run: git show HEAD:live_jobs.json > "$RUNNER_TEMP/checked-in-live_jobs.json"
+
       - name: Scrape and verify postings
         run: |
           python scrape.py
@@ -51,8 +58,15 @@ jobs:
           # the site could stay stale permanently. The live site is the only
           # honest source of truth for "does this need publishing".
           KEY='import sys,json;d=json.load(sys.stdin);print(sorted((j["url"],j["title"],j.get("posted","")) for j in d["jobs"]))'
+          LIVE_FILE="$RUNNER_TEMP/live-site-live_jobs.json"
 
-          LIVE=$(curl -fsS --max-time 30 "$SITE_URL/live_jobs.json" 2>/dev/null | python -c "$KEY" 2>/dev/null || echo "UNREACHABLE")
+          if curl -fsS --max-time 30 "$SITE_URL/live_jobs.json" -o "$LIVE_FILE" 2>/dev/null \
+             && LIVE=$(python -c "$KEY" < "$LIVE_FILE" 2>/dev/null); then
+            :
+          else
+            LIVE="UNREACHABLE"
+            rm -f "$LIVE_FILE"
+          fi
           LOCAL=$(python -c "$KEY" < site/live_jobs.json)
 
           if [ "$LIVE" = "UNREACHABLE" ]; then
@@ -75,8 +89,21 @@ jobs:
           fi
           python -c "import json;d=json.load(open('site/live_jobs.json'));print('postings:',len(d['jobs']))"
 
+      - name: Protect against suspicious catalog drops
+        id: catalog_guard
+        run: |
+          args=(--current live_jobs.json --baseline "$RUNNER_TEMP/checked-in-live_jobs.json")
+          if [ -f "$RUNNER_TEMP/live-site-live_jobs.json" ]; then
+            args+=(--baseline "$RUNNER_TEMP/live-site-live_jobs.json")
+          fi
+          if [ "${{ inputs.allow_catalog_drop }}" = "true" ]; then
+            args+=(--allow-drop)
+          fi
+          python catalog_guard.py "${args[@]}"
+
       - name: Publish normalized snapshot to Cloudflare
         id: cloudflare
+        if: vars.CLOUDFLARE_DUAL_PUBLISH == 'true'
         continue-on-error: true
         env:
           CLOUDFLARE_JOBS_INGEST_URL: ${{ secrets.CLOUDFLARE_JOBS_INGEST_URL }}
@@ -85,7 +112,7 @@ jobs:
 
       - name: Deploy to Vercel
         id: vercel
-        if: always() && (steps.diff.outputs.changed == 'true' || inputs.force_deploy)
+        if: always() && steps.catalog_guard.outcome == 'success' && (steps.diff.outputs.changed == 'true' || inputs.force_deploy)
         continue-on-error: true
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
@@ -107,22 +134,18 @@ jobs:
       - name: Require successful dual publication
         if: always()
         env:
+          CATALOG_GUARD_OUTCOME: ${{ steps.catalog_guard.outcome }}
+          CLOUDFLARE_ENABLED: ${{ vars.CLOUDFLARE_DUAL_PUBLISH == 'true' }}
           CLOUDFLARE_OUTCOME: ${{ steps.cloudflare.outcome }}
           VERCEL_OUTCOME: ${{ steps.vercel.outcome }}
           NEEDS_VERCEL: ${{ steps.diff.outputs.changed == 'true' || inputs.force_deploy }}
         run: |
-          failed=false
-          if [ "$CLOUDFLARE_OUTCOME" != "success" ]; then
-            echo "::error::Cloudflare snapshot publication failed"
-            failed=true
-          fi
-          if [ "$NEEDS_VERCEL" = "true" ] && [ "$VERCEL_OUTCOME" != "success" ]; then
-            echo "::error::Vercel production deployment failed"
-            failed=true
-          fi
-          if [ "$failed" = "true" ]; then
-            exit 1
-          fi
+          python publication_gate.py \
+            --catalog-guard-outcome "$CATALOG_GUARD_OUTCOME" \
+            --cloudflare-enabled "$CLOUDFLARE_ENABLED" \
+            --cloudflare-outcome "$CLOUDFLARE_OUTCOME" \
+            --needs-vercel "$NEEDS_VERCEL" \
+            --vercel-outcome "$VERCEL_OUTCOME"
 
       # Commit only AFTER successful publication, so a failed ingest/deploy can
       # never leave the repo looking current while either destination is stale.
@@ -139,11 +162,15 @@ jobs:
       - name: Report
         if: always()
         run: |
-          if [ "${{ steps.diff.outputs.changed }}" = "true" ]; then
+          if [ "${{ steps.catalog_guard.outcome }}" != "success" ]; then
+            echo "### Publication blocked by catalog drop protection" >> "$GITHUB_STEP_SUMMARY"
+          elif [ "${{ steps.diff.outputs.changed }}" = "true" ]; then
             echo "### Site was out of sync - deploy attempted" >> "$GITHUB_STEP_SUMMARY"
           else
             echo "### Live site already current - deploy skipped" >> "$GITHUB_STEP_SUMMARY"
           fi
+          echo "- Catalog guard: ${{ steps.catalog_guard.outcome }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Cloudflare dual publish enabled: ${{ vars.CLOUDFLARE_DUAL_PUBLISH == 'true' }}" >> "$GITHUB_STEP_SUMMARY"
           echo "- Cloudflare ingest: ${{ steps.cloudflare.outcome }}" >> "$GITHUB_STEP_SUMMARY"
           echo "- Vercel deploy: ${{ steps.vercel.outcome }}" >> "$GITHUB_STEP_SUMMARY"
           python -c "import json;d=json.load(open('site/live_jobs.json'));print('| Company | Track | Role |');print('|---|---|---|');[print('|',j['company'],'|', '/'.join(j.get('cats') or ['-']),'|',j['title'][:60],'|') for j in d['jobs']]" >> "$GITHUB_STEP_SUMMARY"

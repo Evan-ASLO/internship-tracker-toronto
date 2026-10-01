@@ -102,21 +102,45 @@ def _explicit_external_id(job: Mapping[str, Any]) -> str | None:
     return None
 
 
+def _greenhouse_url_external_id(canonical_url: str) -> str | None:
+    if not canonical_url:
+        return None
+
+    parsed = urlsplit(canonical_url)
+    query = parse_qs(parsed.query)
+    for key in ("gh_jid", "job_id"):
+        values = query.get(key) or []
+        if values and re.fullmatch(r"\d+", values[0]):
+            return values[0]
+
+    match = re.search(r"/jobs/(\d+)(?:/|$)", parsed.path)
+    return match.group(1) if match else None
+
+
 def _reliable_url_external_id(source: str, canonical_url: str) -> str | None:
     if not canonical_url:
         return None
 
     parsed = urlsplit(canonical_url)
     if source == "greenhouse":
-        query = parse_qs(parsed.query)
-        for key in ("gh_jid", "job_id"):
-            values = query.get(key) or []
-            if values and re.fullmatch(r"\d+", values[0]):
-                return values[0]
+        return _greenhouse_url_external_id(canonical_url)
 
-        match = re.search(r"/jobs/(\d+)(?:/|$)", parsed.path)
+    if source == "workday" and parsed.hostname:
+        host_parts = parsed.hostname.lower().split(".")
+        final_segment = parsed.path.rstrip("/").rsplit("/", 1)[-1]
+        match = re.search(
+            r"_((?:JR|REQ|R)[A-Za-z0-9_-]+|\d{6,}(?:-\d+)?)$",
+            final_segment,
+            re.I,
+        )
+        if len(host_parts) > 1 and match:
+            tenant = host_parts[0]
+            return f"{tenant}:{match.group(1)}"
+
+    if source == "successfactors" and parsed.hostname:
+        match = re.search(r"/(\d+)/?$", parsed.path)
         if match:
-            return match.group(1)
+            return f"{parsed.hostname.lower()}:{match.group(1)}"
 
     if source == "amazon":
         match = re.search(r"/jobs/(\d+)(?:/|$)", parsed.path)
@@ -196,9 +220,22 @@ def normalize_job(job: Mapping[str, Any]) -> dict[str, Any]:
     if canonical_url:
         require_identity_length("url", canonical_url, MAX_URL_LENGTH)
 
-    external_id = _explicit_external_id(job)
-    if not external_id:
-        external_id = _reliable_url_external_id(source, canonical_url)
+    explicit_external_id = _explicit_external_id(job)
+    url_external_id = _reliable_url_external_id(source, canonical_url)
+    if (
+        source == "greenhouse"
+        and explicit_external_id
+        and url_external_id
+        and explicit_external_id != url_external_id
+    ):
+        raise SnapshotError(
+            f"Greenhouse externalId {explicit_external_id!r} does not match "
+            f"URL job ID {url_external_id!r}"
+        )
+    if source in {"workday", "successfactors"} and url_external_id:
+        external_id = url_external_id
+    else:
+        external_id = explicit_external_id or url_external_id
     if external_id:
         require_identity_length("externalId", external_id, MAX_EXTERNAL_ID_LENGTH)
 

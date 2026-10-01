@@ -47,6 +47,19 @@ Identity rules:
 3. Only when no URL exists, the fallback input is normalized
    source/company/title/location.
 
+Provider identity details:
+
+- Greenhouse API IDs are used directly. When a URL also exposes `gh_jid` or a
+  `/jobs/<id>` path, normalization fails if it disagrees with the API ID.
+- Workday title-bearing URLs are parsed for their terminal requisition token
+  and namespaced by tenant, for example `bmo:R260026123-1`.
+- SuccessFactors terminal numeric requisitions are namespaced by host, for
+  example `jobs.scotiabank.com:605898317`.
+- Unrecognized Workday/SuccessFactors URL shapes still fall back to the full
+  canonical URL. Those records can orphan saved/application references if the
+  provider later edits the title-bearing URL. Tenant/host migrations can also
+  create a new identity and require reconciliation.
+
 All IDs and hashes are full 64-character lowercase hexadecimal strings.
 Relative provider dates such as `Posted Today` remain in `postedText`;
 `postedAt` is populated only for parseable absolute timestamps.
@@ -92,17 +105,24 @@ inputs are never logged.
 
 The hourly/manual workflow preserves this order:
 
-1. Scrape and verify every posting URL.
-2. Compare the new snapshot with the live Vercel site and separately detect
+1. Capture the checked-in snapshot as a prior baseline.
+2. Scrape and verify every posting URL.
+3. Compare the new snapshot with the live Vercel site and separately detect
    whether git snapshots changed.
-3. Attempt the Cloudflare ingest.
-4. Attempt the existing Vercel production deployment when live drift exists or
-   `force_deploy` is set, even if the new ingest failed.
-5. Fail the publication gate if either required destination failed.
-6. Commit and push refreshed snapshots only after that gate succeeds.
+4. Compare normalized counts against the higher of the checked-in and live
+   baselines. A drop greater than 25% blocks both publication paths unless a
+   manually dispatched run sets `allow_catalog_drop`.
+5. Attempt Cloudflare ingest only when the repository Actions variable
+   `CLOUDFLARE_DUAL_PUBLISH` is exactly `true`.
+6. Attempt the existing Vercel production deployment when live drift exists or
+   `force_deploy` is set, even if an enabled Cloudflare ingest failed.
+7. Fail the publication gate if the catalog guard, enabled Cloudflare ingest,
+   or required Vercel deployment failed.
+8. Commit and push refreshed snapshots only after that gate succeeds.
 
 This retains the live-site comparison and force-deploy path and does not remove
-or cut over the Vercel deployment.
+or cut over the Vercel deployment. With Cloudflare disabled, its skipped step
+is non-failing and the prior Vercel deploy/commit behavior remains active.
 
 ## Browser persistence and export
 
@@ -163,3 +183,16 @@ The receiving app maps statuses as follows:
 
 The export does not read or include `it_onboarded_v1`,
 `it_seen_landing_v1`, filters, or presentation state.
+
+If the primary value is malformed or has a future `schemaVersion`, the site
+does not write an empty replacement. Automatic writes pause, the original
+primary value remains untouched, and a raw copy is stored (when browser storage
+permits) under:
+
+```text
+internship_tracker_user_state_recovery_v1
+```
+
+The Profile view surfaces the failure and recovery key. Separately, malformed
+rows in `live_jobs.json` are skipped per row; valid rows continue to render and
+the board displays a warning with the number skipped.

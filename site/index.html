@@ -499,8 +499,8 @@ const S = {
   showSample:false, hideStale:false, open:null, detail:null,
   animate:true, _sig:'',
   saved:new Set(), track:{applied:[],interview:[],offer:[],rejected:[]},
-  userRefs:new Map(), storageError:null,
-  live:[], fetchedAt:null, loadError:null
+  userRefs:new Map(), storageError:null, storageWriteBlocked:false, storageBackupKey:null,
+  live:[], fetchedAt:null, loadError:null, loadWarning:null
 };
 let JOBS = [];
 
@@ -534,14 +534,11 @@ async function load(){
     if(!r.ok) throw new Error('HTTP '+r.status);
     const d = await r.json();
     S.fetchedAt = d.fetched_at;
-    S.live = (d.jobs||[]).map(j=>{
-      const normalized = {
-        title:j.title, company:j.company, loc:j.loc, geo:j.geo,
-        cats:(j.cats&&j.cats.length)?j.cats:classify(j.title),
-        url:j.url, posted:j.posted, src:j.src, sample:false
-      };
-      return {...normalized, id:MIGRATION.referenceKey(normalized)};
-    });
+    const normalized=MIGRATION.normalizeLegacyJobs(d.jobs,classify);
+    S.live=normalized.jobs;
+    S.loadWarning=normalized.dropped.length
+      ? `${normalized.dropped.length} malformed job row${normalized.dropped.length===1?' was':'s were'} skipped`
+      : null;
   } catch(e){ S.loadError = e.message; S.live = []; }
   rebuild(); render();
   // The landing is the front door. The wizard now fires after the portal,
@@ -574,6 +571,11 @@ function userState(){
 function hydrateUserState(){
   const loaded=MIGRATION.readState(localStorage);
   S.storageError=loaded.error;
+  S.storageWriteBlocked=loaded.writeBlocked;
+  if(loaded.writeBlocked&&loaded.raw!=null){
+    try{S.storageBackupKey=MIGRATION.backupRawState(localStorage,loaded.raw);}
+    catch(e){S.storageError+=`; backup failed: ${e instanceof Error?e.message:String(e)}`;}
+  }
   loaded.state.savedJobs.forEach(ref=>{
     const id=MIGRATION.referenceKey(ref);S.userRefs.set(id,ref);S.saved.add(id);
   });
@@ -586,9 +588,10 @@ function hydrateUserState(){
 function persistUserState(){
   try{
     MIGRATION.writeState(localStorage,userState());
-    S.storageError=null;
+    S.storageError=null;S.storageWriteBlocked=false;
   }catch(e){
     S.storageError=e instanceof Error?e.message:String(e);
+    S.storageWriteBlocked=true;
     toast('Could not save browser data');
   }
 }
@@ -750,6 +753,7 @@ function viewInternships(){
       <span>Show sample data</span><div class="switch"></div></div>
   </div>
   ${S.loadError?`<div class="banner warn">${I.warn}<div><b>Could not load live_jobs.json</b> (${esc(S.loadError)}). Nothing is shown rather than showing invented data.</div></div>`:''}
+  ${S.loadWarning?`<div class="banner warn">${I.warn}<div><b>Some feed rows were ignored.</b> ${esc(S.loadWarning)}; valid postings remain available.</div></div>`:''}
   <div class="banner"><span>🔒</span><div><b>Verified-only board.</b> Every non-sample posting was pulled from a live ATS API
     and its URL re-fetched for HTTP 200 at <b>${S.fetchedAt?new Date(S.fetchedAt).toLocaleString():'—'}</b>.
     Posted dates are the ATS's own values, never estimated.</div></div>
@@ -786,7 +790,9 @@ const COLS=[{k:'applied',name:'Applied',c:'var(--cp-text-soft)'},{k:'interview',
 function viewProfile(){
   const state=userState(), saved=state.savedJobs.length, apps=state.applications.length;
   return `${S.storageError?`<div class="banner warn">${I.warn}<div><b>Browser storage is unavailable.</b>
-    Your current session still works, but refresh persistence may fail: ${esc(S.storageError)}</div></div>`:''}
+    ${S.storageWriteBlocked?'Automatic writes are paused so unreadable stored data cannot be overwritten. ':''}
+    ${S.storageBackupKey?`The raw value was copied to <code>${esc(S.storageBackupKey)}</code>. `:''}
+    ${esc(S.storageError)}</div></div>`:''}
     <div class="empty">${I.user}<h3>Export / Move my data</h3>
       <p>Download a versioned JSON file containing only your <b>${saved}</b> saved job${saved===1?'':'s'}
         and <b>${apps}</b> application${apps===1?'':'s'}. It excludes filters, onboarding choices and other browser settings.</p>

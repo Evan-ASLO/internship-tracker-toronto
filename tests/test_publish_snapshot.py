@@ -77,7 +77,7 @@ class SnapshotNormalizationTests(unittest.TestCase):
     def test_uses_canonical_url_when_external_id_is_unavailable(self):
         job = normalize_job(
             {
-                "src": "workday",
+                "src": "custom",
                 "company": "BMO",
                 "title": "Finance Intern",
                 "loc": "Toronto",
@@ -90,13 +90,115 @@ class SnapshotNormalizationTests(unittest.TestCase):
         )
 
         canonical_url = "https://bmo.wd3.myworkdayjobs.com/job?a=1&id=2"
-        expected_id = hashlib.sha256(f"workday\n{canonical_url}".encode()).hexdigest()
+        expected_id = hashlib.sha256(f"custom\n{canonical_url}".encode()).hexdigest()
         self.assertEqual(job["id"], expected_id)
         self.assertIsNone(job["externalId"])
         self.assertEqual(job["url"], canonical_url)
         self.assertIsNone(job["postedAt"])
         self.assertEqual(job["postedText"], "Posted Today")
         self.assertIsNone(job["description"])
+
+    def test_workday_id_uses_tenant_scoped_requisition_not_title_slug(self):
+        base = {
+            "src": "workday",
+            "company": "BMO",
+            "title": "Finance Intern",
+            "loc": "Toronto",
+            "geo": "Toronto",
+            "cats": ["Finance"],
+            "posted": "Posted Today",
+            "content": "",
+        }
+        first = normalize_job(
+            {
+                **base,
+                "external_id": "R260026123-1",
+                "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Toronto/Old-Title_R260026123-1",
+            }
+        )
+        edited = normalize_job(
+            {
+                **base,
+                "title": "Renamed Finance Internship",
+                "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Toronto/New-Title_R260026123-1",
+            }
+        )
+
+        self.assertEqual(first["externalId"], "bmo:R260026123-1")
+        self.assertEqual(first["id"], edited["id"])
+        self.assertEqual(
+            first["id"],
+            hashlib.sha256(b"workday\nbmo:R260026123-1").hexdigest(),
+        )
+
+    def test_successfactors_id_uses_host_scoped_numeric_requisition(self):
+        base = {
+            "src": "successfactors",
+            "company": "scotiabank",
+            "title": "Finance Intern",
+            "loc": "Toronto",
+            "geo": "Toronto",
+            "cats": ["Finance"],
+            "posted": "",
+            "content": "",
+        }
+        first = normalize_job(
+            {
+                **base,
+                "url": "https://jobs.scotiabank.com/job/Toronto-Old-Title/605898317/",
+            }
+        )
+        edited = normalize_job(
+            {
+                **base,
+                "title": "Renamed Finance Internship",
+                "url": "https://jobs.scotiabank.com/job/Toronto-New-Title/605898317/",
+            }
+        )
+
+        self.assertEqual(
+            first["externalId"],
+            "jobs.scotiabank.com:605898317",
+        )
+        self.assertEqual(first["id"], edited["id"])
+
+    def test_workday_numeric_requisition_is_tenant_scoped(self):
+        job = normalize_job(
+            {
+                "src": "workday",
+                "company": "cibc",
+                "title": "Risk Analytics Co-op",
+                "loc": "Toronto",
+                "geo": "Toronto",
+                "cats": ["Finance"],
+                "url": "https://cibc.wd3.myworkdayjobs.com/en-US/search/job/Toronto/Risk-Analytics-Co-op_2618885-1",
+                "posted": "Posted Today",
+                "content": "",
+            }
+        )
+
+        self.assertEqual(job["externalId"], "cibc:2618885-1")
+        self.assertEqual(
+            job["id"],
+            hashlib.sha256(b"workday\ncibc:2618885-1").hexdigest(),
+        )
+
+    def test_greenhouse_api_id_must_match_url_id(self):
+        with self.assertRaisesRegex(SnapshotError, "does not match URL job ID"):
+            normalize_job(
+                {
+                    "src": "greenhouse",
+                    "external_id": "123",
+                    "company": "Example",
+                    "title": "Finance Intern",
+                    "loc": "Toronto",
+                    "geo": "Toronto",
+                    "cats": ["Finance"],
+                    "url": "https://boards.greenhouse.io/example/jobs/456",
+                    "posted": "",
+                    "content": "",
+                }
+            )
 
     def test_current_snapshot_normalizes_every_job_with_unique_ids(self):
         with open("live_jobs.json", encoding="utf-8") as fh:
