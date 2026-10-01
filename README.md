@@ -10,8 +10,8 @@ business tracks: **Marketing, Business Operations, Finance, Consulting**.
 Every hour, GitHub Actions runs the pipeline:
 
 1. **Pull** — reads postings directly from employer applicant-tracking systems
-   (Greenhouse, Ashby, Workday, SuccessFactors, and native employer APIs). Nothing is
-   scraped from a job aggregator and nothing is invented. Workday queries use
+   (Greenhouse, Ashby, Workday, SuccessFactors, optional Adzuna, and native
+   employer APIs). Nothing is invented. Workday queries use
    tenant-issued Toronto/GTA/Ontario location facets and paginate to exhaustion;
    SuccessFactors pagination continues until empty or repeated results.
 2. **Filter** — keeps internship/co-op titles in the Toronto area, rejecting
@@ -78,6 +78,8 @@ internships* → *Run workflow*.
 | `VERCEL_PROJECT_ID` | Pins deployment to the existing production project. |
 | `CLOUDFLARE_JOBS_INGEST_URL` | Full HTTPS URL for `/api/internal/jobs/snapshot`. |
 | `CLOUDFLARE_JOBS_INGEST_SECRET` | Shared HMAC-SHA256 secret for snapshot authentication. |
+| `ADZUNA_APP_ID` | Optional Adzuna developer application ID. The adapter is skipped when either Adzuna secret is absent. |
+| `ADZUNA_APP_KEY` | Optional Adzuna developer application key. Never exposed to the browser or logs. |
 
 Cloudflare publication is disabled unless the repository Actions variable
 `CLOUDFLARE_DUAL_PUBLISH` is exactly `true`. A manual run may set
@@ -85,6 +87,29 @@ Cloudflare publication is disabled unless the repository Actions variable
 
 To add or change a track, edit `CATEGORIES` in `scrape.py` and the matching
 array in `site/index.html`.
+
+### Optional Adzuna source
+
+Register at [developer.adzuna.com](https://developer.adzuna.com/signup) to
+receive the official `app_id` and `app_key`, then add them as the encrypted
+repository secrets `ADZUNA_APP_ID` and `ADZUNA_APP_KEY`. The hourly workflow
+passes them only to the scrape step. If either value is missing, the adapter
+makes no request and reports `skipped` in source coverage.
+
+The adapter uses the official Canada endpoint
+`/v1/api/jobs/ca/search/{page}`, one combined internship/co-op/student/new-grad
+query centered on Toronto with a 100 km radius, and at most two 50-result
+pages. Normal operation is therefore at most 48 requests/day, 336/week, and
+1,440 per 30-day month, below Adzuna's published default limits of 25/minute,
+250/day, 1,000/week, and 2,500/month. Retries on transient failures also
+consume quota.
+
+[Adzuna's terms](https://developer.adzuna.com/docs/terms_of_service) require
+published listings to carry linked **Jobs by Adzuna** logo attribution
+(minimum 116 × 23 px). They also state that ongoing commercial, government, or
+academic use beyond a 14-day evaluation may require written consent or a
+licence. Do not enable the secrets until both user-facing sites implement the
+required attribution and the intended use is confirmed with Adzuna.
 
 ## Moving browser data
 

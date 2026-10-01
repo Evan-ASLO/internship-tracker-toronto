@@ -31,6 +31,11 @@ SUCCESSFACTORS_PAGE_SIZE = 25
 SUCCESSFACTORS_MAX_PAGES = 100
 VERIFY_RETRIES = 3
 VERIFY_RETRY_BASE_SECONDS = 0.5
+ADZUNA_RESULTS_PER_PAGE = 50
+ADZUNA_MAX_PAGES = 2
+ADZUNA_WHAT_OR = "intern internship co-op coop student graduate"
+ADZUNA_WHERE = "Toronto"
+ADZUNA_DISTANCE_KM = 100
 
 COVERAGE = {}
 COVERAGE_LOCK = Lock()
@@ -514,6 +519,120 @@ def from_amazon(_):
     return out
 
 
+def from_adzuna(_):
+    key = coverage_key("adzuna", "ca/Toronto")
+    app_id = os.environ.get("ADZUNA_APP_ID", "").strip()
+    app_key = os.environ.get("ADZUNA_APP_KEY", "").strip()
+    if not app_id or not app_key:
+        set_coverage(
+            key, source="adzuna", target="ca/Toronto", status="skipped",
+            pages=0, returned=0, records=0, query_total=None,
+            selected_total=None, location_mode="where+distance",
+            fallback_terms=0, capped_terms=0, repeated_terms=0,
+            errors=[], complete=True)
+        return []
+
+    out, seen, page_signatures = [], set(), set()
+    pages = returned = repeated_terms = 0
+    query_total = None
+    capped_terms = 0
+    errors = []
+    exhausted = False
+
+    for page in range(1, ADZUNA_MAX_PAGES + 1):
+        url = f"https://api.adzuna.com/v1/api/jobs/ca/search/{page}"
+        params = {
+            "app_id": app_id,
+            "app_key": app_key,
+            "results_per_page": ADZUNA_RESULTS_PER_PAGE,
+            "what_or": ADZUNA_WHAT_OR,
+            "where": ADZUNA_WHERE,
+            "distance": ADZUNA_DISTANCE_KM,
+            "sort_by": "date",
+            "content-type": "application/json",
+        }
+        try:
+            response = g(url, params=params)
+            pages += 1
+            if response.status_code != 200:
+                errors.append(f"page{page}:HTTP {response.status_code}")
+                break
+            data = response.json()
+            if not isinstance(data, dict):
+                raise ValueError("non-object response")
+        except Exception as exc:
+            errors.append(f"page{page}:{type(exc).__name__}")
+            break
+
+        if query_total is None:
+            query_total = int(data.get("count") or 0)
+        results = data.get("results") or []
+        if not isinstance(results, list):
+            errors.append(f"page{page}:invalid results")
+            break
+        returned += len(results)
+        if not results:
+            exhausted = True
+            break
+
+        page_ids = tuple(str(result.get("id") or "") for result in results)
+        if page_ids in page_signatures:
+            repeated_terms += 1
+            break
+        page_signatures.add(page_ids)
+
+        for result in results:
+            external_id = source_id(result, "id")
+            redirect_url = clean_text(result.get("redirect_url"))
+            if not external_id or not redirect_url:
+                continue
+            identity = str(external_id)
+            if identity in seen:
+                continue
+            seen.add(identity)
+            company = clean_text(
+                (result.get("company") or {}).get("display_name")
+            ) or "Undisclosed employer"
+            location = clean_text(
+                (result.get("location") or {}).get("display_name")
+            )
+            title = clean_text(
+                re.sub("<[^>]+>", " ", str(result.get("title") or "")))
+            description = clean_text(
+                re.sub("<[^>]+>", " ", str(result.get("description") or "")))
+            out.append(with_coverage(
+                dict(
+                    company=company,
+                    src="adzuna",
+                    title=title,
+                    loc=location,
+                    url=redirect_url,
+                    external_id=identity,
+                    posted=result.get("created", "") or "",
+                    content=description[:600],
+                ),
+                key))
+
+        if len(results) < ADZUNA_RESULTS_PER_PAGE or (
+            query_total and page * ADZUNA_RESULTS_PER_PAGE >= query_total
+        ):
+            exhausted = True
+            break
+
+    if not exhausted and not errors and query_total and (
+        query_total > ADZUNA_MAX_PAGES * ADZUNA_RESULTS_PER_PAGE
+    ):
+        capped_terms = 1
+    set_coverage(
+        key, source="adzuna", target="ca/Toronto",
+        query_total=query_total, selected_total=query_total,
+        pages=pages, returned=returned, records=len(out),
+        location_mode="where+distance", fallback_terms=0,
+        capped_terms=capped_terms, repeated_terms=repeated_terms,
+        errors=errors, complete=not capped_terms and not errors)
+    return out
+
+
 # SuccessFactors (SAP) powers most of the big Canadian banks/telecoms. It has
 # no public JSON API, but its search page renders server-side, so the job rows
 # are parseable. Discovered by fingerprinting each employer's careers page.
@@ -622,6 +741,7 @@ TASKS = (
     + [(from_successfactors, spec, coverage_key("successfactors", spec[0]))
        for spec in SUCCESSFACTORS]
     + [(from_amazon, "amazon", coverage_key("amazon", "amazon"))]
+    + [(from_adzuna, "adzuna", coverage_key("adzuna", "ca/Toronto"))]
 )
 
 
@@ -669,7 +789,8 @@ def print_coverage_report(filtered_counts, unique_counts, live_counts):
         filtered = filtered_counts.get(key, 0)
         unique = unique_counts.get(key, 0)
         live = live_counts.get(key, 0)
-        status = "complete" if entry.get("complete", True) else "incomplete"
+        status = entry.get("status") or (
+            "complete" if entry.get("complete", True) else "incomplete")
         mode = entry.get("facet_parameters") or entry.get("location_mode") or "-"
         print(
             f"{entry.get('source', '-'):<14} {entry.get('target', '-')[:32]:<32} "

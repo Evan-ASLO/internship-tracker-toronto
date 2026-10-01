@@ -30,6 +30,14 @@ class RefreshWorkflowTests(unittest.TestCase):
         self.assertIn("VERCEL_ORG_ID", WORKFLOW)
         self.assertIn("VERCEL_PROJECT_ID", WORKFLOW)
 
+    def test_adzuna_secrets_are_scoped_to_scrape_step(self):
+        scrape_step = WORKFLOW.index("- name: Scrape and verify postings")
+        drift_step = WORKFLOW.index("- name: Detect drift against the LIVE SITE")
+        scoped = WORKFLOW[scrape_step:drift_step]
+
+        self.assertIn("ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}", scoped)
+        self.assertIn("ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}", scoped)
+
 
 if __name__ == "__main__":
     unittest.main()

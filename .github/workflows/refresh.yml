@@ -43,6 +43,9 @@ jobs:
         run: git show HEAD:live_jobs.json > "$RUNNER_TEMP/checked-in-live_jobs.json"
 
       - name: Scrape and verify postings
+        env:
+          ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
         run: |
           python scrape.py
           cp live_jobs.json site/live_jobs.json
