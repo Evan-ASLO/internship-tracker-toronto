@@ -1,0 +1,145 @@
+# Cloudflare dual-publish migration contract
+
+## Normalized snapshot ingestion
+
+`publish_snapshot.py` reads the verified `live_jobs.json` only after the scraper
+has completed its per-URL liveness checks. It POSTs compact UTF-8 JSON to the
+full URL stored in `CLOUDFLARE_JOBS_INGEST_URL`:
+
+```json
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-01T16:00:00Z",
+  "snapshotHash": "64 lowercase hex characters",
+  "jobs": []
+}
+```
+
+`jobs` is sorted by `id`. `snapshotHash` is lowercase SHA-256 over the
+canonical jobs-array JSON only: keys sorted, compact separators, UTF-8. It does
+not include `generatedAt`, so identical job content has an identical hash.
+
+Each normalized job has exactly:
+
+```json
+{
+  "id": "64 lowercase hex characters",
+  "externalId": "provider ID or null",
+  "source": "greenhouse",
+  "company": "d2l",
+  "title": "Finance Intern",
+  "location": "Toronto, ON",
+  "region": "Toronto",
+  "categories": ["Finance"],
+  "url": "https://example.com/jobs/123",
+  "postedAt": "2026-09-30T14:00:00Z",
+  "postedText": "2026-09-30T10:00:00-04:00",
+  "description": "Provider-supplied description snippet or null"
+}
+```
+
+Identity rules:
+
+1. When a reliable provider external ID exists, `id` is
+   `sha256(source + "\n" + externalId)`.
+2. Otherwise, when a canonical URL exists, `id` is
+   `sha256(source + "\n" + canonicalUrl)`.
+3. Only when no URL exists, the fallback input is normalized
+   source/company/title/location.
+
+All IDs and hashes are full 64-character lowercase hexadecimal strings.
+Relative provider dates such as `Posted Today` remain in `postedText`;
+`postedAt` is populated only for parseable absolute timestamps.
+
+The request includes:
+
+```text
+X-Ingest-Timestamp: <Unix epoch seconds>
+X-Ingest-Signature: <lowercase hex HMAC-SHA256>
+```
+
+The signature input is exactly:
+
+```text
+${timestamp}.${rawBody}
+```
+
+using `CLOUDFLARE_JOBS_INGEST_SECRET`. The publisher rejects more than 1,000
+jobs or a body larger than 2 MiB before making a request. Secrets and signature
+inputs are never logged.
+
+## Workflow ordering
+
+The hourly/manual workflow preserves this order:
+
+1. Scrape and verify every posting URL.
+2. Compare the new snapshot with the live Vercel site and separately detect
+   whether git snapshots changed.
+3. Attempt the Cloudflare ingest.
+4. Attempt the existing Vercel production deployment when live drift exists or
+   `force_deploy` is set, even if the new ingest failed.
+5. Fail the publication gate if either required destination failed.
+6. Commit and push refreshed snapshots only after that gate succeeds.
+
+This retains the live-site comparison and force-deploy path and does not remove
+or cut over the Vercel deployment.
+
+## Browser persistence and export
+
+Before this migration, saved jobs and tracker columns existed only in memory;
+there were no saved/application localStorage keys. From this release onward,
+the old site stores only migration-relevant state in:
+
+```text
+internship_tracker_user_state_v1
+```
+
+The stored value is:
+
+```json
+{
+  "schemaVersion": 1,
+  "savedJobs": [
+    {
+      "url": "https://example.com/jobs/123",
+      "company": "Example Co",
+      "title": "Finance Intern"
+    }
+  ],
+  "applications": [
+    {
+      "url": "https://example.com/jobs/456",
+      "company": "Example Co",
+      "title": "Operations Intern",
+      "status": "interview"
+    }
+  ]
+}
+```
+
+The **Export / Move my data** action downloads:
+
+```json
+{
+  "schemaVersion": 1,
+  "exportedAt": "2026-10-01T16:00:00.000Z",
+  "source": "internship-tracker-toronto",
+  "savedJobs": [],
+  "applications": []
+}
+```
+
+Each `savedJobs` entry has `url`, `company`, and `title`. Each `applications`
+entry has those fields plus one of `applied`, `interview`, `offer`, or
+`rejected`. URL is the primary match key; company/title are fallback metadata.
+The receiving app maps statuses as follows:
+
+| Legacy export | New app |
+|---|---|
+| `applied` | `APPLIED` |
+| `interview` | `INTERVIEWING` |
+| `offer` | `OFFER` |
+| `rejected` | `REJECTED` |
+
+The export does not read or include `it_onboarded_v1`,
+`it_seen_landing_v1`, filters, or presentation state.

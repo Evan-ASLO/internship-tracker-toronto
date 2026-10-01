@@ -450,7 +450,11 @@ body.landing-open { overflow:hidden; }
 <div id="landingHost"></div>
 <div id="portalRing"></div>
 
+<script src="migration.js"></script>
 <script>
+const MIGRATION = window.InternshipTrackerMigration;
+if(!MIGRATION) throw new Error('Migration bridge failed to load');
+
 /* ═════════ EXTEND HERE ═════════
    Add a track by appending one entry. The rubric selector, filtering,
    counts and classifier all read from this single array.            */
@@ -495,6 +499,7 @@ const S = {
   showSample:false, hideStale:false, open:null, detail:null,
   animate:true, _sig:'',
   saved:new Set(), track:{applied:[],interview:[],offer:[],rejected:[]},
+  userRefs:new Map(), storageError:null,
   live:[], fetchedAt:null, loadError:null
 };
 let JOBS = [];
@@ -529,11 +534,14 @@ async function load(){
     if(!r.ok) throw new Error('HTTP '+r.status);
     const d = await r.json();
     S.fetchedAt = d.fetched_at;
-    S.live = (d.jobs||[]).map((j,i)=>({
-      id:'L'+i, title:j.title, company:j.company, loc:j.loc, geo:j.geo,
-      cats:(j.cats&&j.cats.length)?j.cats:classify(j.title),
-      url:j.url, posted:j.posted, src:j.src, sample:false
-    }));
+    S.live = (d.jobs||[]).map(j=>{
+      const normalized = {
+        title:j.title, company:j.company, loc:j.loc, geo:j.geo,
+        cats:(j.cats&&j.cats.length)?j.cats:classify(j.title),
+        url:j.url, posted:j.posted, src:j.src, sample:false
+      };
+      return {...normalized, id:MIGRATION.referenceKey(normalized)};
+    });
   } catch(e){ S.loadError = e.message; S.live = []; }
   rebuild(); render();
   // The landing is the front door. The wizard now fires after the portal,
@@ -543,6 +551,60 @@ async function load(){
 function rebuild(){ JOBS = S.live.concat(S.showSample ? SAMPLE : []); }
 const job = id => JOBS.find(j=>j.id===id);
 const tracked = () => new Set(Object.values(S.track).flat());
+
+function rememberJob(j){
+  const ref=MIGRATION.referenceFromJob(j);
+  if(ref) S.userRefs.set(MIGRATION.referenceKey(ref),ref);
+}
+function refForKey(id){
+  if(S.userRefs.has(id)) return S.userRefs.get(id);
+  const j=job(id), ref=MIGRATION.referenceFromJob(j);
+  if(ref) S.userRefs.set(id,ref);
+  return ref;
+}
+function userState(){
+  return {
+    schemaVersion:MIGRATION.SCHEMA_VERSION,
+    savedJobs:[...S.saved].map(refForKey).filter(Boolean),
+    applications:COLS.flatMap(c=>S.track[c.k].map(id=>{
+      const ref=refForKey(id); return ref?{...ref,status:c.k}:null;
+    }).filter(Boolean))
+  };
+}
+function hydrateUserState(){
+  const loaded=MIGRATION.readState(localStorage);
+  S.storageError=loaded.error;
+  loaded.state.savedJobs.forEach(ref=>{
+    const id=MIGRATION.referenceKey(ref);S.userRefs.set(id,ref);S.saved.add(id);
+  });
+  loaded.state.applications.forEach(entry=>{
+    const id=MIGRATION.referenceKey(entry);S.userRefs.set(id,{
+      url:entry.url,company:entry.company,title:entry.title
+    });S.track[entry.status].push(id);
+  });
+}
+function persistUserState(){
+  try{
+    MIGRATION.writeState(localStorage,userState());
+    S.storageError=null;
+  }catch(e){
+    S.storageError=e instanceof Error?e.message:String(e);
+    toast('Could not save browser data');
+  }
+}
+function exportUserState(){
+  try{
+    const payload=MIGRATION.createExport(userState(),new Date());
+    const blob=new Blob([JSON.stringify(payload,null,2)+'\n'],{type:'application/json'});
+    const href=URL.createObjectURL(blob), a=document.createElement('a');
+    a.href=href;a.download=`internship-tracker-data-${payload.exportedAt.slice(0,10)}.json`;
+    document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(href),0);
+    toast('Migration file downloaded');
+  }catch(e){
+    toast('Could not export browser data');
+  }
+}
 
 /* ═════════ filtering ═════════ */
 function results(){
@@ -604,9 +666,9 @@ function card(j,i){
   const stale = p.days!==null && p.days>STALE_DAYS;
   const isSaved=S.saved.has(j.id), isTracked=tracked().has(j.id);
   const anim = S.animate ? ` anim" style="animation-delay:${Math.min((i||0)*45,420)}ms` : '';
-  return `<article class="card ${j.sample?'sample':''}${anim}" data-detail="${j.id}">
+  return `<article class="card ${j.sample?'sample':''}${anim}" data-detail="${esc(j.id)}">
     ${j.sample?'<span class="stamp">SAMPLE · NOT A REAL POSTING</span>':''}
-    <button class="bookmark ${isSaved?'on':''}" data-save="${j.id}">${I.book}</button>
+    <button class="bookmark ${isSaved?'on':''}" data-save="${esc(j.id)}">${I.book}</button>
     <div class="card-head"><div class="logo ${tint(j.company)}">${mono(j.company)}</div>
       <div><h3>${esc(j.title)}</h3><div class="co">${esc(j.company)}</div></div></div>
     <div class="row ${stale?'stale':(p.days!==null&&p.days<7?'fresh':'')}">
@@ -619,10 +681,10 @@ function card(j,i){
       ${j.cats.length?'':'<span class="tag">Uncategorized</span>'}
     </div>
     <div class="card-foot">
-      <button class="btn ${isTracked?'done':''}" data-track="${j.id}" ${isTracked?'disabled':''}>${isTracked?'In tracker':'+ Track'}</button>
+      <button class="btn ${isTracked?'done':''}" data-track="${esc(j.id)}" ${isTracked?'disabled':''}>${isTracked?'In tracker':'+ Track'}</button>
       ${j.sample
         ? '<button class="btn" disabled>No link — sample</button>'
-        : `<a class="btn primary" href="${esc(j.url)}" target="_blank" rel="noopener noreferrer" data-apply="${j.id}">Apply ${I.ext}</a>`}
+        : `<a class="btn primary" href="${esc(j.url)}" target="_blank" rel="noopener noreferrer" data-apply="${esc(j.id)}">Apply ${I.ext}</a>`}
     </div></article>`;
 }
 
@@ -642,9 +704,9 @@ function modal(){
     <div class="tags">${j.cats.map(c=>`<span class="tag hl">${esc(c)}</span>`).join('')||'<span class="tag">Uncategorized</span>'}</div>
     ${j.url?`<div class="urlbar">${I.ext}<span>${esc(j.url)}</span></div>`:''}
     <div class="card-foot" style="margin-top:16px">
-      <button class="btn" data-save="${j.id}">${S.saved.has(j.id)?'Saved ✓':'Save'}</button>
-      <button class="btn ${isTracked?'done':''}" data-track="${j.id}" ${isTracked?'disabled':''}>${isTracked?'In tracker':'+ Track'}</button>
-      ${j.url?`<a class="btn primary" href="${esc(j.url)}" target="_blank" rel="noopener noreferrer" data-apply="${j.id}">Open & apply ${I.ext}</a>`:'<button class="btn" disabled>No link</button>'}
+      <button class="btn" data-save="${esc(j.id)}">${S.saved.has(j.id)?'Saved ✓':'Save'}</button>
+      <button class="btn ${isTracked?'done':''}" data-track="${esc(j.id)}" ${isTracked?'disabled':''}>${isTracked?'In tracker':'+ Track'}</button>
+      ${j.url?`<a class="btn primary" href="${esc(j.url)}" target="_blank" rel="noopener noreferrer" data-apply="${esc(j.id)}">Open & apply ${I.ext}</a>`:'<button class="btn" disabled>No link</button>'}
     </div></div></div>`;
 }
 
@@ -721,6 +783,17 @@ function viewSaved(){
 
 const COLS=[{k:'applied',name:'Applied',c:'var(--cp-text-soft)'},{k:'interview',name:'Interview',c:'var(--cp-warning)'},
 {k:'offer',name:'Offer',c:'var(--cp-success)'},{k:'rejected',name:'Rejected',c:'var(--cp-danger)'}];
+function viewProfile(){
+  const state=userState(), saved=state.savedJobs.length, apps=state.applications.length;
+  return `${S.storageError?`<div class="banner warn">${I.warn}<div><b>Browser storage is unavailable.</b>
+    Your current session still works, but refresh persistence may fail: ${esc(S.storageError)}</div></div>`:''}
+    <div class="empty">${I.user}<h3>Export / Move my data</h3>
+      <p>Download a versioned JSON file containing only your <b>${saved}</b> saved job${saved===1?'':'s'}
+        and <b>${apps}</b> application${apps===1?'':'s'}. It excludes filters, onboarding choices and other browser settings.</p>
+      <p style="margin-top:14px"><button class="btn primary" style="display:inline-flex;flex:0" data-export>
+        Export / Move my data</button></p>
+    </div>`;
+}
 function viewTracker(){
   const all=tracked();
   const rate=all.size?Math.round((S.track.interview.length+S.track.offer.length)/all.size*100):0;
@@ -734,17 +807,17 @@ function viewTracker(){
   <div class="board">${COLS.map(c=>`<div class="col">
     <div class="col-head"><span class="cdot" style="background:${c.c}"></span>${c.name}
       <span class="count">${S.track[c.k].length}</span></div>
-    <div class="col-body" data-col="${c.k}">${S.track[c.k].map(id=>{const j=job(id);return !j?'':`
-      <div class="tcard" draggable="true" data-card="${id}">
+    <div class="col-body" data-col="${c.k}">${S.track[c.k].map(id=>{const j=job(id)||S.userRefs.get(id);return !j?'':`
+      <div class="tcard" draggable="true" data-card="${esc(id)}">
         <div class="logo ${tint(j.company)}">${mono(j.company)}</div>
         <div><div class="t">${esc(j.title)}</div><div class="c">${esc(j.company)}</div></div>
-        <button class="rm" data-untrack="${id}">${I.trash}</button></div>`;}).join('')}
+        <button class="rm" data-untrack="${esc(id)}">${I.trash}</button></div>`;}).join('')}
     </div></div>`).join('')}</div>`;
 }
 
 const TITLES={internships:['Internships','Toronto business internships — verified live only'],
 saved:['Saved Jobs','Roles you bookmarked'],tracker:['Job Tracker','Applied → Interview → Offer'],
-profile:['Profile','Your student profile']};
+profile:['Profile','Export saved jobs and application progress']};
 
 function render(){
   renderNav();
@@ -759,7 +832,7 @@ function render(){
   document.getElementById('viewSub').textContent=s;
   const el=document.getElementById('scroll');
   el.innerHTML=(S.view==='internships'?viewInternships():S.view==='saved'?viewSaved():
-    S.view==='tracker'?viewTracker():`<div class="empty">${I.user}<h3>Profile</h3><p>Set your program and target term.</p></div>`)+modal();
+    S.view==='tracker'?viewTracker():viewProfile())+modal();
   if(S.view==='tracker') wireDnD();
 }
 
@@ -781,17 +854,24 @@ document.addEventListener('click', e=>{
   if(hit('[data-clearall]')){S.cats.clear();Object.values(S.f).forEach(x=>x.clear());
     S.q='';S.hideStale=false;S.open=null;toast('Filters cleared');return render();}
   if((el=hit('[data-save]'))){const id=el.dataset.save;
-    S.saved.has(id)?(S.saved.delete(id),toast('Removed')):(S.saved.add(id),toast('Saved'));return render();}
+    if(S.saved.has(id)){S.saved.delete(id);toast('Removed');}
+    else{S.saved.add(id);rememberJob(job(id));toast('Saved');}
+    persistUserState();return render();}
   if((el=hit('[data-track]'))){const id=el.dataset.track;
-    if(!tracked().has(id)){S.track.applied.unshift(id);toast('Added to Applied');}return render();}
+    if(!tracked().has(id)){S.track.applied.unshift(id);rememberJob(job(id));
+      persistUserState();toast('Added to Applied');}return render();}
   if((el=hit('[data-untrack]'))){const id=el.dataset.untrack;
-    COLS.forEach(c=>S.track[c.k]=S.track[c.k].filter(x=>x!==id));toast('Removed');return render();}
+    COLS.forEach(c=>S.track[c.k]=S.track[c.k].filter(x=>x!==id));
+    persistUserState();toast('Removed');return render();}
+  if(hit('[data-export]')){exportUserState();return;}
 
   /* APPLY: real anchor -> opens in the OS default browser. No preventDefault,
      and the re-render is deferred so the DOM swap can't cancel navigation. */
   if((el=hit('[data-apply]'))){
     const id=el.dataset.apply, j=job(id);
-    if(j && !j.sample && !tracked().has(id)) S.track.applied.unshift(id);
+    if(j && !j.sample && !tracked().has(id)){
+      S.track.applied.unshift(id);rememberJob(j);persistUserState();
+    }
     S.detail=null;
     toast('Opening '+j.company+' → filed under Applied');
     setTimeout(render,0);
@@ -820,7 +900,8 @@ function wireDnD(){
     col.addEventListener('drop',ev=>{ev.preventDefault();col.classList.remove('over');
       if(!drag)return;const to=col.dataset.col;
       COLS.forEach(c=>S.track[c.k]=S.track[c.k].filter(x=>x!==drag));
-      S.track[to].unshift(drag);toast('Moved to '+COLS.find(c=>c.k===to).name);drag=null;render();});});
+      S.track[to].unshift(drag);persistUserState();
+      toast('Moved to '+COLS.find(c=>c.k===to).name);drag=null;render();});});
 }
 /* ═══════════════ first-visit onboarding ═══════════════ */
 const OB_KEY = 'it_onboarded_v1';
@@ -1178,7 +1259,7 @@ document.addEventListener('click', e=>{
   if(e.target.closest('[data-enter]')) enterPortal(e);
 });
 
-render(); load();
+hydrateUserState(); render(); load();
 </script>
 </body>
 </html>

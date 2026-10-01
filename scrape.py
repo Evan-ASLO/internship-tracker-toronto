@@ -94,6 +94,14 @@ def g(url, **kw):
     return requests.get(url, timeout=TIMEOUT, headers=UA, **kw)
 
 
+def source_id(record, *keys):
+    for key in keys:
+        value = record.get(key)
+        if value not in (None, ""):
+            return str(value)
+    return None
+
+
 # ---------------- sources -----------------------------------------------
 GREENHOUSE = """
 shopify faire ada league ritual flipp geotab stripe datadog coinbase roblox
@@ -131,6 +139,7 @@ def from_greenhouse(tok):
         out.append(dict(company=tok, src="greenhouse", title=j.get("title", ""),
                         loc=(j.get("location") or {}).get("name", ""),
                         url=j.get("absolute_url", ""),
+                        external_id=source_id(j, "id"),
                         posted=j.get("first_published") or j.get("updated_at", ""),
                         content=re.sub("<[^>]+>", " ", j.get("content", "") or "")[:600]))
     return out
@@ -143,6 +152,7 @@ def from_ashby(tok):
     if not isinstance(d, dict): return []
     return [dict(company=tok, src="ashby", title=j.get("title", ""),
                  loc=j.get("location", "") or "", url=j.get("jobUrl", ""),
+                 external_id=source_id(j, "id"),
                  posted=j.get("publishedAt", "") or "",
                  content=re.sub("<[^>]+>", " ", j.get("descriptionHtml", "") or "")[:600])
             for j in d.get("jobs", [])]
@@ -175,6 +185,9 @@ def from_workday(spec):
                                 loc=j.get("locationsText", "") or "",
                                 url=f"https://{tenant}.{host}.myworkdayjobs.com/en-US/{site}"
                                     + (j.get("externalPath", "") or ""),
+                                # Workday requisition IDs are tenant-scoped, so
+                                # URL identity is safer across all employers.
+                                external_id=None,
                                 posted=j.get("postedOn", "") or "",
                                 content=""))
             if len(posts) < 20:
@@ -194,6 +207,7 @@ def from_amazon(_):
             out += [dict(company="amazon", src="amazon", title=j.get("title", ""),
                          loc=j.get("location", "") or "",
                          url="https://amazon.jobs" + (j.get("job_path", "") or ""),
+                         external_id=source_id(j, "id_icims", "id", "job_id"),
                          posted=j.get("posted_date", "") or "",
                          content=(j.get("description_short") or "")[:600]) for j in hits]
             if len(hits) < 100: break
@@ -324,11 +338,18 @@ def main():
         r["cats"] = categorize(r["title"])
         cand.append(r)
 
-    # dedupe on (company, title, location) - Workday returns the same req
-    # multiple times across the intern/co-op/student search terms
+    # Dedupe by source identity. Workday returns the same req multiple times
+    # across the intern/co-op/student search terms, while two distinct reqs can
+    # legitimately share a title and location.
     seen, uniq = set(), []
     for r in cand:
-        k = (r["company"], r["title"].strip().lower(), r["loc"].strip().lower())
+        if r.get("external_id"):
+            k = ("external", r["src"], r["external_id"])
+        elif r.get("url"):
+            k = ("url", r["src"], r["url"])
+        else:
+            k = ("fallback", r["src"], r["company"],
+                 r["title"].strip().lower(), r["loc"].strip().lower())
         if k in seen: continue
         seen.add(k); uniq.append(r)
     print(f"{len(uniq)} unique Toronto-area internships (before liveness check)")
@@ -348,9 +369,10 @@ def main():
             "company": rec["company"], "title": rec["title"], "loc": rec["loc"],
             "geo": rec["geo"], "cats": rec["cats"], "url": rec["url"],
             "posted": rec["posted"], "src": rec["src"],
+            "external_id": rec.get("external_id"),
             "content": " ".join((rec.get("content") or "").split())[:400],
         })
-    out.sort(key=lambda r: r["company"])
+    out.sort(key=lambda r: (r["company"], r["title"], r["url"]))
 
     print("\n=== SHIPPING ===")
     for r in out:
@@ -369,4 +391,5 @@ def main():
     print(f"\nWrote live_jobs.json with {len(out)} VERIFIED postings")
 
 
-main()
+if __name__ == "__main__":
+    main()

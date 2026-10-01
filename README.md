@@ -10,15 +10,19 @@ business tracks: **Marketing, Business Operations, Finance, Consulting**.
 Every hour, GitHub Actions runs the pipeline:
 
 1. **Pull** — reads postings directly from employer applicant-tracking systems
-   (Greenhouse, Lever, Ashby, Workday, and native employer APIs). Nothing is
+   (Greenhouse, Ashby, Workday, SuccessFactors, and native employer APIs). Nothing is
    scraped from a job aggregator and nothing is invented.
 2. **Filter** — keeps internship/co-op titles in the Toronto area, rejecting
    senior roles that merely contain a keyword like "campus".
 3. **Verify** — re-fetches every posting URL and requires a live response.
    Closed requisitions are dropped before they reach the site.
-4. **Publish** — commits the snapshot and redeploys, but *only when the
-   postings actually changed*. `fetched_at` changes every run, so the workflow
-   compares posting content rather than the raw file.
+4. **Compare** — checks posting content against the live Vercel site, not git
+   HEAD, so a failed deploy cannot make later runs incorrectly look current.
+5. **Dual publish** — HMAC-signs and sends a normalized snapshot to the
+   Cloudflare ingest endpoint, then updates the existing Vercel production
+   project when live drift is detected or `force_deploy` is requested.
+6. **Commit** — records the refreshed snapshots only after every required
+   publication succeeds.
 
 ## Why the numbers can look low
 
@@ -31,15 +35,19 @@ flagged as stale rather than quietly presented as fresh.
 | Path | Purpose |
 |---|---|
 | `scrape.py` | Pull + filter + liveness verification |
+| `publish_snapshot.py` | Deterministic normalization, hashing, signing, and Cloudflare ingest |
 | `site/index.html` | The single-file app (landing, board, tracker) |
+| `site/migration.js` | Versioned saved/application persistence and export |
 | `site/live_jobs.json` | Current verified snapshot — the only data source |
 | `.github/workflows/refresh.yml` | Hourly automation |
+| `docs/migration-contract.md` | Exact ingestion and browser export contracts |
 
 ## Running it by hand
 
 ```bash
 pip install requests
 python scrape.py          # writes live_jobs.json
+python publish_snapshot.py --dry-run
 ```
 
 Trigger the automation manually from the **Actions** tab → *Refresh Toronto
@@ -50,6 +58,18 @@ internships* → *Run workflow*.
 | Secret | Purpose |
 |---|---|
 | `VERCEL_TOKEN` | Deploys the site. Without it the workflow fails loudly rather than silently serving stale data. |
+| `VERCEL_ORG_ID` | Pins deployment to the existing Vercel account. |
+| `VERCEL_PROJECT_ID` | Pins deployment to the existing production project. |
+| `CLOUDFLARE_JOBS_INGEST_URL` | Full HTTPS URL for `/api/internal/jobs/snapshot`. |
+| `CLOUDFLARE_JOBS_INGEST_SECRET` | Shared HMAC-SHA256 secret for snapshot authentication. |
 
 To add or change a track, edit `CATEGORIES` in `scrape.py` and the matching
 array in `site/index.html`.
+
+## Moving browser data
+
+The Profile view includes **Export / Move my data**. From this release onward,
+saved jobs and application statuses persist under
+`internship_tracker_user_state_v1` and can be downloaded as versioned JSON.
+The export excludes filters, onboarding flags, and other browser settings. See
+[`docs/migration-contract.md`](docs/migration-contract.md) for the exact schema.

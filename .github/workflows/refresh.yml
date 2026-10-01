@@ -75,8 +75,18 @@ jobs:
           fi
           python -c "import json;d=json.load(open('site/live_jobs.json'));print('postings:',len(d['jobs']))"
 
+      - name: Publish normalized snapshot to Cloudflare
+        id: cloudflare
+        continue-on-error: true
+        env:
+          CLOUDFLARE_JOBS_INGEST_URL: ${{ secrets.CLOUDFLARE_JOBS_INGEST_URL }}
+          CLOUDFLARE_JOBS_INGEST_SECRET: ${{ secrets.CLOUDFLARE_JOBS_INGEST_SECRET }}
+        run: python publish_snapshot.py
+
       - name: Deploy to Vercel
-        if: steps.diff.outputs.changed == 'true' || inputs.force_deploy
+        id: vercel
+        if: always() && (steps.diff.outputs.changed == 'true' || inputs.force_deploy)
+        continue-on-error: true
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           # Identify the existing project, otherwise the CLI would create a
@@ -90,8 +100,32 @@ jobs:
           fi
           npx --yes vercel@58.4.4 deploy site --prod --yes --token "$VERCEL_TOKEN"
 
-      # Commit only AFTER a successful deploy, so a deploy failure can never
-      # leave the repo looking up-to-date while the live site is stale.
+      # Attempt both publishers before failing the run. This keeps the current
+      # Vercel site refreshable if the new ingest is temporarily unavailable,
+      # while the gate still prevents a snapshot commit unless every required
+      # publication succeeded.
+      - name: Require successful dual publication
+        if: always()
+        env:
+          CLOUDFLARE_OUTCOME: ${{ steps.cloudflare.outcome }}
+          VERCEL_OUTCOME: ${{ steps.vercel.outcome }}
+          NEEDS_VERCEL: ${{ steps.diff.outputs.changed == 'true' || inputs.force_deploy }}
+        run: |
+          failed=false
+          if [ "$CLOUDFLARE_OUTCOME" != "success" ]; then
+            echo "::error::Cloudflare snapshot publication failed"
+            failed=true
+          fi
+          if [ "$NEEDS_VERCEL" = "true" ] && [ "$VERCEL_OUTCOME" != "success" ]; then
+            echo "::error::Vercel production deployment failed"
+            failed=true
+          fi
+          if [ "$failed" = "true" ]; then
+            exit 1
+          fi
+
+      # Commit only AFTER successful publication, so a failed ingest/deploy can
+      # never leave the repo looking current while either destination is stale.
       - name: Commit refreshed snapshot
         if: success() && steps.diff.outputs.commit == 'true'
         run: |
@@ -110,4 +144,6 @@ jobs:
           else
             echo "### Live site already current - deploy skipped" >> "$GITHUB_STEP_SUMMARY"
           fi
+          echo "- Cloudflare ingest: ${{ steps.cloudflare.outcome }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Vercel deploy: ${{ steps.vercel.outcome }}" >> "$GITHUB_STEP_SUMMARY"
           python -c "import json;d=json.load(open('site/live_jobs.json'));print('| Company | Track | Role |');print('|---|---|---|');[print('|',j['company'],'|', '/'.join(j.get('cats') or ['-']),'|',j['title'][:60],'|') for j in d['jobs']]" >> "$GITHUB_STEP_SUMMARY"
