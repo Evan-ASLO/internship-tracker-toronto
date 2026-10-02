@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-02T01:54:37.068710+00:00",
+  "fetched_at": "2026-10-02T14:20:33.631259+00:00",
   "categories": [
     "Finance",
     "Marketing",
@@ -34,6 +34,18 @@
       "content": "Job Details: Job Description: Altera Toronto's research and development facility employs some of the city's most accomplished technologists and we offer among the best compensation packages in the industry. Altera is a company of bold and curious inventors and problem solvers who create some of the most astounding technology advancements and experiences in the world. Do you love to solve technical"
     },
     {
+      "company": "Archmill House",
+      "title": "Business Administration Intern",
+      "loc": "Ancaster, Hamilton region",
+      "geo": "GTA",
+      "cats": [],
+      "url": "https://www.adzuna.ca/details/5908015155?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-02T08:19:21Z",
+      "src": "adzuna",
+      "external_id": "5908015155",
+      "content": "Job Description Job Description For over 40 years, Archmill House Inc. has been a trusted leader in the creation of high-end millwork and premium store fixtures across North America. Our legacy is built on delivering exceptional craftsmanship, innovative solutions, and unwavering commitment to quality. This dedication has allowed us to become a preferred partner for a wide range of commercial and "
+    },
+    {
       "company": "Bank of Montreal",
       "title": "Business Analyst, Winter 2027 (Co-op/Internship) - 8 month",
       "loc": "Toronto, Ontario",
@@ -59,19 +71,7 @@
       "posted": "2026-09-30T04:37:05Z",
       "src": "adzuna",
       "external_id": "5903647602",
-      "content": "Application Deadline: 10/01/2026 Address: 250 Yonge Street Job Family Group: Real Estate Supports the planning, development, implementation, and ongoing delivery of Corporate Real Estate (CRE) Project Management Office (PMO) initiatives and programs to support a consistent and exceptional employee experience. Delivers specific operational processes as part of ongoing operational management of the"
-    },
-    {
-      "company": "BinSentry",
-      "title": "Recruitment Coordinator Intern",
-      "loc": "Kitchener, Waterloo region",
-      "geo": "Ontario",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5899446146?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-09-26T04:51:45Z",
-      "src": "adzuna",
-      "external_id": "5899446146",
-      "content": "About BinSentry BinSentry is an extremely fast-growing ag-tech company started in KW, Ontario, Canada. BinSentry is focused on providing solutions for the agriculture supply chain that help increase efficiency, reduce costs, and enhance profitability. As a leader in the use of artificial intelligence, BinSentry offers technology solutions that pair best-in-class optical sensors with user-friendly"
+      "content": "Application Deadline: 10/01/2026 Address: 250 Yonge Street Job Family Group: Real Estate Supports the planning, development, implementation, and ongoing delivery of Corporate Real Estate (CRE) Project Management Office (PMO) initiatives and programs to support a consistent and exceptional employee experience. Delivers specific operational processes as part of ongoing operational management of the "
     },
     {
       "company": "Birdseye Solutions",
@@ -98,16 +98,18 @@
       "content": "COMPANY OVERVIEW: Birdseye's mission is to help make the world a safer place! We are the leader in AI-driven Remote Facility Supervision solutions for the Trucking and Logistics Industry. Our Maximum Telepresence Approach\u2122 delivers cutting-edge, data-driven security and operational insights that create a safer working environment for millions of people every year. We provide end-to-end, cutting-ed"
     },
     {
-      "company": "Birdseye Solutions",
-      "title": "Software Development Intern (Part-Time)",
-      "loc": "Etobicoke, Toronto",
+      "company": "CGI",
+      "title": "Winter 2027: Operations Analyst Co-op (12 months)",
+      "loc": "Toronto, Ontario",
       "geo": "Toronto",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5900457929?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-09-27T04:58:24Z",
+      "cats": [
+        "Business Operations"
+      ],
+      "url": "https://www.adzuna.ca/details/5907687812?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-02T04:32:52Z",
       "src": "adzuna",
-      "external_id": "5900457929",
-      "content": "COMPANY OVERVIEW: Birdseye's mission is to help make the world a safer place! We are the leader in AI-driven Remote Facility Supervision solutions for the Trucking and Logistics Industry. Our Maximum Telepresence Approach\u2122 delivers cutting-edge, data-driven security and operational insights that create a safer working environment for millions of people every year. We provide end-to-end, cutting-ed"
+      "external_id": "5907687812",
+      "content": "Position Description: Start Date: January 2027 Work Term Length: 12 months Application Deadline: October 9th, 2026 CGI is Canada's largest independent information technology services firm, and after 50 years, we're still growing. We are looking for a highly motivated Sales Operations Analyst Co-op student to join our growing Business Operations team supporting the Toronto Financial Services (TFS) "
     },
     {
       "company": "CPP Investments",
@@ -124,30 +126,6 @@
       "content": "Purpose. Performance. People. Joining CPP Investments means joining one of the world's most admired and respected institutional investors to drive a single mandate: to deliver strong, sustainable returns for generations of Canadians. With a long-term horizon and global reach, we deploy capital at scale across public and private markets. Our size, stability, and disciplined investment philosophy al"
     },
     {
-      "company": "Canadian Tire Corporation",
-      "title": "New Graduate Program - 2027 Next Generation Talent Rotational Program, Technology Associate",
-      "loc": "Toronto, Ontario",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5899454417?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-09-26T04:52:46Z",
-      "src": "adzuna",
-      "external_id": "5899454417",
-      "content": "Technology Associate - Next Generation Talent Program (June 2027 Start) To support Canadian Tire's long-term technology talent strategy, the Next Generation Talent (NGT) Program is a rotational program designed for new graduates. Through three progressive rotations, Technology Associates gain hands-on experience across a variety of roles, technologies, and delivery teams, accelerating their growth"
-    },
-    {
-      "company": "Celestica",
-      "title": "Student Intern, Customer Material Pricing Analyst",
-      "loc": "Toronto, Ontario",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5903595026?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-09-30T03:14:48Z",
-      "src": "adzuna",
-      "external_id": "5903595026",
-      "content": "Req ID: 140997 Remote Position: Hybrid Region: Americas Country: Canada State/Province: Ontario City: Toronto 16 Month Internship As a global technology leader, Celestica designs, engineers, and manufactures industry-leading products and services that drive customer success and market advancement. Headquartered in Toronto, Canada, we bring together over 33,000 employees across more than 45 sites i"
-    },
-    {
       "company": "Celestica",
       "title": "Student Intern, Procurement Sourcing Analyst",
       "loc": "Toronto, Ontario",
@@ -162,18 +140,6 @@
       "content": "Req ID: 140988 Remote Position: No Region: Americas Country: Canada State/Province: Ontario City: Toronto 16 Month Internship As a global technology leader, Celestica designs, engineers, and manufactures industry-leading products and services that drive customer success and market advancement. Headquartered in Toronto, Canada, we bring together over 33,000 employees across more than 45 sites in No"
     },
     {
-      "company": "Celestica",
-      "title": "Student Intern, SCM Data Scientist",
-      "loc": "Toronto, Ontario",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5903595029?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-09-30T03:14:48Z",
-      "src": "adzuna",
-      "external_id": "5903595029",
-      "content": "Req ID: 140972 Remote Position: Hybrid Region: Americas Country: Canada State/Province: Ontario City: Toronto 16 Month Internship As a global technology leader, Celestica designs, engineers, and manufactures industry-leading products and services that drive customer success and market advancement. Headquartered in Toronto, Canada, we bring together over 33,000 employees across more than 45 sites i"
-    },
-    {
       "company": "Dayforce",
       "title": "Product & AI Intern 4 months - Winter 2027",
       "loc": "Toronto, Ontario",
@@ -184,18 +150,6 @@
       "src": "adzuna",
       "external_id": "5903648791",
       "content": "Job Title: Product & AI Intern Location: Virtual Duration: Winter 2027 - 4 months (January 2027 - April 2027) Availability: *Full-time availability of 37.5 - 40 hours weekly is required to be eligible for this opportunity. Benefits for Students: Experience working for one of the fastest growing Human Capital Management technology companies in the world Access to Dayforce's development programs and"
-    },
-    {
-      "company": "Dayforce",
-      "title": "[Winter 2027] Site Reliability Engineer Intern 8 Months",
-      "loc": "Toronto, Ontario",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5900457857?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-09-27T04:58:15Z",
-      "src": "adzuna",
-      "external_id": "5900457857",
-      "content": "About the opportunity: We are looking for a motivated Software Developer / Site Reliability Engineer Intern to join our engineering team and work on software reliability, automation, observability, and operational improvements. The role will provide hands-on experience with enterprise-scale systems while exploring modern technologies and AI-powered development tools. What you'll get to do: Improve"
     },
     {
       "company": "Dermalogica",
@@ -210,6 +164,20 @@
       "src": "adzuna",
       "external_id": "5905204938",
       "content": "Influencer & Community Marketing Intern - Recent Graduate 6-Month Project Dermalogica is seeking an Influencer & Community Marketing Intern for a six-month paid internship. Full-time | 6 Months | Hybrid | 3 Days per Week in Office | Toronto, ON Are you a recent post-secondary graduate looking to launch your career in marketing, influencer relations, social media, and community engagement? Dermalog"
+    },
+    {
+      "company": "Dream Asset Management Corporation",
+      "title": "Intern, Development Accounting (8 month)",
+      "loc": "Toronto, Ontario",
+      "geo": "Toronto",
+      "cats": [
+        "Finance"
+      ],
+      "url": "https://www.adzuna.ca/details/5908015042?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-02T08:19:14Z",
+      "src": "adzuna",
+      "external_id": "5908015042",
+      "content": "Job Description Job Description Dream is looking for an Intern, Development Accounting (8 month)! We are always looking for the best and brightest to join our thriving community. Dream's Development Accounting team is currently looking to hire an 8-month Development Accounting intern, starting in January 2026. Who are you? Do you have superior analytical skills and the ability to multi-task? Are y"
     },
     {
       "company": "Dream CA",
@@ -255,6 +223,20 @@
     },
     {
       "company": "GAO Group",
+      "title": "Email Marketing Intern The GAO Group (USA & Canada)",
+      "loc": "Toronto, Ontario",
+      "geo": "Toronto",
+      "cats": [
+        "Marketing"
+      ],
+      "url": "https://www.adzuna.ca/details/5907605990?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-02T03:12:47Z",
+      "src": "adzuna",
+      "external_id": "5907605990",
+      "content": "Remote Digital Marketing Campaign Analytics Get hands-on with real email campaigns audience segmentation, A/B testing, and performance analytics with an international tech company. Full JD below Work Mode: Remote About the Role The GAO Group is looking for a creative and enthusiastic Email Marketing Intern to support the planning, execution, and optimization of email marketing campaigns. This inte"
+    },
+    {
+      "company": "GAO Group",
       "title": "Virtual AI Technical Writing Intern",
       "loc": "North York, Toronto",
       "geo": "Toronto",
@@ -264,6 +246,30 @@
       "src": "adzuna",
       "external_id": "5906010067",
       "content": "Remote Global Team GAO Group (USA & Canada) Turn your writing skills into real-world AI-powered tech content. Apply now! Are you passionate about tech and love writing? Join and gain hands-on experience creating impactful technical content in a global, high-tech environment. Write and edit technical documents (manuals, guides, datasheets) Use AI tools for research & content creation Simplify compl"
+    },
+    {
+      "company": "GE Vernova",
+      "title": "GE Vernova Nuclear Canadian Licensing Intern",
+      "loc": "Markham, York region",
+      "geo": "GTA",
+      "cats": [],
+      "url": "https://www.adzuna.ca/details/5907688937?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-02T04:34:39Z",
+      "src": "adzuna",
+      "external_id": "5907688937",
+      "content": "Job Description Summary GE Vernova Hitachi Nuclear Energy is looking to add engineering and science students for a 12-month co-op program starting in May 2027 to support the licensing of the BWRX-300 Small Modular Reactor in Canada! Job Description Role Summary/Purpose: GE Vernova is pleased to offer selected students the opportunity to join our licensing team for an internship. Students will be e"
+    },
+    {
+      "company": "Genus PLC",
+      "title": "Reproduction and Breeding Intern: Canada",
+      "loc": "Elmira, Waterloo region",
+      "geo": "Ontario",
+      "cats": [],
+      "url": "https://www.adzuna.ca/details/5907195484?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-01T23:58:09Z",
+      "src": "adzuna",
+      "external_id": "5907195484",
+      "content": "Do you have a passion for cattle and a knack for problem-solving? ABS Global, a Genus Company, is offering the ultimate Reproduction and Breeding Internship, where you'll be an arm's length away from the fascinating world of cattle reproduction-literally! As part of our expert team, you'll help farmers ensure their herds are thriving, while learning the ropes of cutting-edge bovine technology. If "
     },
     {
       "company": "Healthcare of Ontario Pension Plan",
@@ -278,7 +284,7 @@
       "posted": "2026-10-01T04:36:23Z",
       "src": "adzuna",
       "external_id": "5905209899",
-      "content": "Why you'll love working here: high-performance, people-focused culture our commitment that equity, diversity and inclusion are fundamental to our work environment and business success, which helps employees feel valued and empowered to be their authentic selves learning and development initiatives, including workshops, Speaker Series events and access to LinkedIn Learning, that support employees'"
+      "content": "Why you'll love working here: high-performance, people-focused culture our commitment that equity, diversity and inclusion are fundamental to our work environment and business success, which helps employees feel valued and empowered to be their authentic selves learning and development initiatives, including workshops, Speaker Series events and access to LinkedIn Learning, that support employees' "
     },
     {
       "company": "Healthcare of Ontario Pension Plan",
@@ -290,33 +296,19 @@
       "posted": "2026-10-01T04:29:03Z",
       "src": "adzuna",
       "external_id": "5905204876",
-      "content": "Why you'll love working here: high-performance, people-focused culture our commitment that equity, diversity and inclusion are fundamental to our work environment and business success, which helps employees feel valued and empowered to be their authentic selves learning and development initiatives, including workshops, Speaker Series events and access to LinkedIn Learning, that support employees'"
+      "content": "Why you'll love working here: high-performance, people-focused culture our commitment that equity, diversity and inclusion are fundamental to our work environment and business success, which helps employees feel valued and empowered to be their authentic selves learning and development initiatives, including workshops, Speaker Series events and access to LinkedIn Learning, that support employees' "
     },
     {
-      "company": "Honeycomb Mfg",
-      "title": "Marketing Intern - Digital Marketing and Lead Generation Support",
-      "loc": "Whitby, Durham region",
+      "company": "IDEMIA North America",
+      "title": "Global Sales AI & Automation Intern",
+      "loc": "Oakville, Halton",
       "geo": "GTA",
-      "cats": [
-        "Marketing"
-      ],
-      "url": "https://www.adzuna.ca/details/5901603577?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-09-28T09:02:26Z",
-      "src": "adzuna",
-      "external_id": "5901603577",
-      "content": "Job Description Job Description Company Overview Honeycomb Holding's Inc. is a leading supply chain management consulting firm. We design complex distribution centers and logistics systems to help companies move goods more efficiently. Our clients are manufacturers, distributors and retailers, including many brand names in food & beverage and consumer goods. From our offices in Montreal, Toronto,"
-    },
-    {
-      "company": "Jean Tweed Centre",
-      "title": "Day/ Res Counsellor Intern",
-      "loc": "Toronto, Ontario",
-      "geo": "Toronto",
       "cats": [],
-      "url": "https://www.adzuna.ca/details/5900588959?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-09-27T07:04:01Z",
+      "url": "https://www.adzuna.ca/details/5907203780?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-01T23:59:21Z",
       "src": "adzuna",
-      "external_id": "5900588959",
-      "content": "Job Description Job Description Jean Tweed is a leading, community-based organization that provides a supportive environment for women and their families with substance use, mental health, and gambling concerns. Recognizing the diversity of women's experience in today's society, our programs seek to address a range of issues in a woman's life that may contribute to substance use and gambling conce"
+      "external_id": "5907203780",
+      "content": "IDEMIA Public Security, a division of IDEMIA Group, is the leading provider of secure and trusted biometric-based solutions, transforming public and private organizations across the globe. Our industry-enabled and client-specific solutions draw upon decades of expertise in biometrics to revolutionize the fields of public security, justice and public safety, travel and transport, identity, and acce"
     },
     {
       "company": "Kao",
@@ -330,57 +322,7 @@
       "posted": "2026-09-30T04:52:52Z",
       "src": "adzuna",
       "external_id": "5903657038",
-      "content": "Brand Marketing - Winter Co-Op Work Term / Internship (Fixed Term - 4 or 8 Months) Term Start: January 4, 2027 Term End: April 30, 2027 This is a full-time remote position with the head office located in Toronto, ON. Occasional travel for group meetings or site visits may be required. About Kao Canada: Kao is a leader within the beauty industry with global headquarters located in Tokyo, operating"
-    },
-    {
-      "company": "Karbon Digital",
-      "title": "AI Research Intern",
-      "loc": "East York, Toronto",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5902430296?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-09-28T23:08:11Z",
-      "src": "adzuna",
-      "external_id": "5902430296",
-      "content": "Responsibilities: Conduct research on state-of-the-art AI algorithms and technologies, including machine learning, deep learning, and natural language processing (NLP). Design, implement, and optimize prototypes for AI-based solutions. Analyze datasets and develop models to solve business-specic challenges across various industries. Collaborate with the engineering team to integrate research findi"
-    },
-    {
-      "company": "Karbon Digital",
-      "title": "Finance Intern",
-      "loc": "East York, Toronto",
-      "geo": "Toronto",
-      "cats": [
-        "Finance"
-      ],
-      "url": "https://www.adzuna.ca/details/5902423592?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-09-28T23:06:09Z",
-      "src": "adzuna",
-      "external_id": "5902423592",
-      "content": "Role Overview As an AI SaaS Product Finance Intern, you'll work at the intersection of finance, product strategy, and analytics. You'll support financial modeling, SaaS metric tracking, and business case analysis for new product features and go-to-market (GTM) strategies. This role is ideal for someone curious about product-led growth and the financial mechanics behind high-growth SaaS businesses,"
-    },
-    {
-      "company": "Karbon Digital",
-      "title": "HR / TA Intern",
-      "loc": "East York, Toronto",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5902430298?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-09-28T23:08:11Z",
-      "src": "adzuna",
-      "external_id": "5902430298",
-      "content": "About the Role We are looking for an enthusiastic HR / TA Intern to join our team. You will support Talent Hiring and culture initiatives behind our growing AI SaaS and technology organization. You will work closely with leadership and cross-functional teams to assist with recruitment, onboarding, HR operations, and policy documentation while gaining hands-on exposure to how modern HR functions op"
-    },
-    {
-      "company": "Karbon Digital",
-      "title": "Product Management Intern",
-      "loc": "East York, Toronto",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5902423591?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-09-28T23:06:09Z",
-      "src": "adzuna",
-      "external_id": "5902423591",
-      "content": "Key Responsibilities Product Planning & Development Assist in defining product vision, strategy, and roadmaps for AI-driven applications Conduct market research and competitive analysis to identify customer needs and industry trends Collaborate with cross-functional teams including engineering, data science, design, and marketing to support seamless product development Stakeholder Communication Ga"
+      "content": "Brand Marketing - Winter Co-Op Work Term / Internship (Fixed Term - 4 or 8 Months) Term Start: January 4, 2027 Term End: April 30, 2027 This is a full-time remote position with the head office located in Toronto, ON. Occasional travel for group meetings or site visits may be required. About Kao Canada: Kao is a leader within the beauty industry with global headquarters located in Tokyo, operating "
     },
     {
       "company": "Labatt",
@@ -394,7 +336,7 @@
       "posted": "2026-10-01T04:42:15Z",
       "src": "adzuna",
       "external_id": "5905218514",
-      "content": "Dreaming big is in our DNA. It's who we are as a company. It's our culture. It's our heritage. And more than ever, it's our future. A future where we're always looking forward. Always serving up new ways to meet life's moments. A future where we keep dreaming bigger. We look for people with passion, talent, and curiosity, and provide them with the teammates, resources and opportunities to unleash"
+      "content": "Dreaming big is in our DNA. It's who we are as a company. It's our culture. It's our heritage. And more than ever, it's our future. A future where we're always looking forward. Always serving up new ways to meet life's moments. A future where we keep dreaming bigger. We look for people with passion, talent, and curiosity, and provide them with the teammates, resources and opportunities to unleash "
     },
     {
       "company": "Lyft",
@@ -409,28 +351,30 @@
       "content": "At Lyft, our purpose is to serve and connect. We aim to achieve this by cultivating a work environment where all team members belong and have the opportunity to thrive. We are seeking a motivated, technical student to join our Corporate FinTech team as a Business Systems Engineer Intern. This internship offers hands-on experience supporting the full suite of FinTech applications, modernizing finan"
     },
     {
-      "company": "Lyft",
-      "title": "Content Systems Intern (Summer 2027)",
+      "company": "Manulife",
+      "title": "Summer Intern 2027 - Change Management",
       "loc": "Toronto, Ontario",
       "geo": "Toronto",
       "cats": [],
-      "url": "https://www.adzuna.ca/details/5899465047?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-09-26T04:59:55Z",
+      "url": "https://www.adzuna.ca/details/5907615876?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-02T03:15:30Z",
       "src": "adzuna",
-      "external_id": "5899465047",
-      "content": "At Lyft, our purpose is to serve and connect. We aim to achieve this by cultivating a work environment where all team members belong and have the opportunity to thrive. Content Systems is the heart of Lyft's language ecosystem. The team is made up of two distinct disciplines, Content Design and Learning Experience Design, who create and own language across Lyft's in-app experiences that help custo"
+      "external_id": "5907615876",
+      "content": "This Change Management Intern role is an opportunity to contribute to the continued scaling of change management practices across Canada and US Retirement. The incumbent will help deliver practical tools, templates, insights, and reporting that improve consistency and efficiency across the change lifecycle. This opportunity will provide hands-on experience in change enablement, stakeholder engagem"
     },
     {
-      "company": "Lyft",
-      "title": "UX Research Intern (Summer 2027)",
+      "company": "Manulife",
+      "title": "Summer Intern 2027 - ESG & Sustainable Finance Intern",
       "loc": "Toronto, Ontario",
       "geo": "Toronto",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5900453936?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-09-27T04:53:43Z",
+      "cats": [
+        "Finance"
+      ],
+      "url": "https://www.adzuna.ca/details/5905070781?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-01T03:15:18Z",
       "src": "adzuna",
-      "external_id": "5900453936",
-      "content": "At Lyft, our purpose is to serve and connect. We aim to achieve this by cultivating a work environment where all team members belong and have the opportunity to thrive. Lyft is seeking a Mixed Methods User Experience Research Intern to join our team, which aspires to elevate the user experience for our drivers and riders across 300 cities nationwide. You will conduct research studies, as well as p"
+      "external_id": "5905070781",
+      "content": "This role supports the General Account ESG team in integrating ESG and climate-related considerations into investment decision-making across Manulife's global investment portfolio. Responsibilities include climate risk analysis, ESG integration, regulatory reporting, data analysis, and sustainable finance research. The successful candidate will work with colleagues across Investments, Risk, Financ"
     },
     {
       "company": "Marvell Technology",
@@ -442,7 +386,7 @@
       "posted": "2026-09-30T04:51:28Z",
       "src": "adzuna",
       "external_id": "5903656415",
-      "content": "About Marvell Marvell's semiconductor solutions are the essential building blocks of the data infrastructure that connects our world. Across enterprise, cloud and AI, and carrier architectures, our innovative technology is enabling new possibilities. At Marvell, you can affect the arc of individual lives, lift the trajectory of entire industries, and fuel the transformative potential of tomorrow."
+      "content": "About Marvell Marvell's semiconductor solutions are the essential building blocks of the data infrastructure that connects our world. Across enterprise, cloud and AI, and carrier architectures, our innovative technology is enabling new possibilities. At Marvell, you can affect the arc of individual lives, lift the trajectory of entire industries, and fuel the transformative potential of tomorrow. "
     },
     {
       "company": "Molson Coors",
@@ -457,54 +401,16 @@
       "content": "Requisition ID: 40023 Cheers to creating an incredible tomorrow! At Molson Coors, we tackle big challenges and defy the status quo. With a proud legacy of excellence, an incredible portfolio of beer, seltzers, spirits, and non-alcohol brands, and a bold vision for our future we're on the path to transforming the beverage industry. That requires remarkable individuals who are curious, tenacious, an"
     },
     {
-      "company": "Murex",
-      "title": "Trading Domain Functional Intern",
+      "company": "Park Lawn Corporation",
+      "title": "Funeral Director Intern",
       "loc": "Toronto, Ontario",
       "geo": "Toronto",
       "cats": [],
-      "url": "https://www.adzuna.ca/details/5899454994?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-09-26T04:52:57Z",
+      "url": "https://www.adzuna.ca/details/5905581420?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-01T08:29:35Z",
       "src": "adzuna",
-      "external_id": "5899454994",
-      "content": "Murex is a global fintech leader in trading, risk management and processing solutions for capital markets. Operating from our 19 offices, 3 400 Murexians from over 65 different nationalities ensure the development, implementation and support of our platform which is used by banks, asset managers, corporations and utilities, across the world. Join Murex and work on the challenges of an industry at"
-    },
-    {
-      "company": "NG Design Wave",
-      "title": "Intermediate Intern Architect",
-      "loc": "Waterloo, Waterloo region",
-      "geo": "Ontario",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5899627685?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-09-26T07:06:45Z",
-      "src": "adzuna",
-      "external_id": "5899627685",
-      "content": "Job Description Job Description New Generation Design Wave (NGDW) is an innovative architectural design firm dedicated to reshaping communities through uniquely designed spaces that enhance human experiences. Our approach melds aesthetic excellence with functional design to transform everyday environments into thriving social, cultural, and economic hubs. At NGDW, we prioritize sustainability, com"
-    },
-    {
-      "company": "Open Farm",
-      "title": "Financial Analyst - New Graduate",
-      "loc": "Toronto, Ontario",
-      "geo": "Toronto",
-      "cats": [
-        "Finance"
-      ],
-      "url": "https://www.adzuna.ca/details/5898060642?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-09-25T04:48:03Z",
-      "src": "adzuna",
-      "external_id": "5898060642",
-      "content": "About Us At Open Farm we are transforming the way people feed their pets, with a focus on producing premium, healthy food and treats, all ethically sourced from farm-to-bowl. Headquartered in Toronto and with team members across the US, Open Farm is one of the fastest growing CPG companies in North America. We believe that the best foods are made with consciously sourced, top-quality ingredients f"
-    },
-    {
-      "company": "Parrish & Heimbecker, Limited",
-      "title": "Information Technology Intern",
-      "loc": "Cambridge, Waterloo region",
-      "geo": "Ontario",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5899642279?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-09-26T07:10:45Z",
-      "src": "adzuna",
-      "external_id": "5899642279",
-      "content": "Job Description Job Description Information Technology Intern Employment Type: Full Time, Contract (May - August) Division: Corporate Location: Winnipeg, MB Compensation: This internship is a paid position. Who We Are Parrish & Heimbecker, Limited (P&H) is a Canadian, family-owned company with over 115 years in agriculture. We operate across four divisions: Grain & Crop Inputs, Flour Milling, P&H"
+      "external_id": "5905581420",
+      "content": "Job Description Job Description Why Work for Westminster Funeral & Reception Centre? Service At every level, our dedicated team members display a strong work ethic and commitment to our core values, respect for the family, the profession, and the individual. Work with leading experts in the funeral and cemetery profession. Benefits Financial assistance programs encouraging employees through educat"
     },
     {
       "company": "Pliteq",
@@ -519,6 +425,42 @@
       "content": "WHAT YOU'LL GET TO DO: As an engineering intern at Pliteq, you may have the opportunity to work closely in one or more of the 4 areas listed below; Business Development: -Assist in all aspects of major projects in the region that require acoustical design solutions and/or that use Pliteq and competitors' products in commercial and other building types -Assist in project identification and tracking"
     },
     {
+      "company": "Procter & Gamble",
+      "title": "Product Supply Internship/Co-Op Summer 2027/Stage ou programme coopratif en chane d'approvisionnement t 2027",
+      "loc": "Toronto, Ontario",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://www.adzuna.ca/details/5905071071?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-01T03:15:44Z",
+      "src": "adzuna",
+      "external_id": "5905071071",
+      "content": "GRTR TORONTO FULFILLMENT CTR Full time R000159889 Job Location GRTR TORONTO FULFILLMENT CTR Job Description Would you like to gain experience, grow & develop your skills at one of Canada's Top 100 Employers for Young People (https://reviews.canadastop100.com/top-employer-procter-&-gamble?\\_gl=1*1wezqcs*\\_ga*MTEwNTg0NjAyNS4xNzA1MDc4MzQ4*\\_ga\\_H481FDLVWD*MTcyMzQ4MzQ2Mi4zLjAuMTcyMzQ4MzQ2Mi4wLjAuMAct1"
+    },
+    {
+      "company": "Rexroth",
+      "title": "Factory Automation Engineering Intern - New Grad Opportunity",
+      "loc": "Burlington, Halton",
+      "geo": "GTA",
+      "cats": [],
+      "url": "https://www.adzuna.ca/details/5907315857?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-02T00:44:25Z",
+      "src": "adzuna",
+      "external_id": "5907315857",
+      "content": "Job Description As the Engineering Intern , you will be responsible for providing technical expertise and support for Bosch Rexroth Electrical Drives & Controls solutions, products, and services. Duties and responsibilities include.: Utilizing deep technical knowledge to understand our customers' applications and propose solutions that optimize performance, efficiency, and functionality. Effective"
+    },
+    {
+      "company": "Rexroth",
+      "title": "Factory Automation Engineering Intern - New Grad Opportunity",
+      "loc": "Burlington, Halton",
+      "geo": "GTA",
+      "cats": [],
+      "url": "https://www.adzuna.ca/details/5908013597?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-02T08:17:40Z",
+      "src": "adzuna",
+      "external_id": "5908013597",
+      "content": "Job Description Job Description Company Description Our drive and control technologies ensure efficient, powerful and safe movement in machines and systems of any size. We inspire our customers with intelligent components, tailored system solutions, and services - from fully connected applications to the factory of the future. Bosch Rexroth is dedicated to making the world a better place through i"
+    },
+    {
       "company": "Sahham Pharmacy",
       "title": "Pharmacy Intern, Hourly Part Time Day Greenlight Requisition",
       "loc": "Toronto, Ontario",
@@ -531,16 +473,28 @@
       "content": "Join a locally owned and operated store to help deliver health, beauty and convenience services in your community, and keep the customer at the centre of everything you do. Why this role is important? SUMMARY: Join a locally owned and operated store to help deliver health, beauty and convenience services in your community, and keep the customer at the centre of everything you do. DUTIES & RESPONSI"
     },
     {
-      "company": "Sheridan College",
-      "title": "Co-op & Internship Education Student Advisor (Temporary)",
-      "loc": "Oakville, Halton",
-      "geo": "GTA",
+      "company": "SiTime Corporation",
+      "title": "Co-op ASIC Digital Verification Engineer",
+      "loc": "Design Exchange, City of Toronto",
+      "geo": "Toronto",
       "cats": [],
-      "url": "https://www.adzuna.ca/details/5899453516?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-09-26T04:52:31Z",
+      "url": "https://www.adzuna.ca/details/5907691127?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-02T04:37:40Z",
       "src": "adzuna",
-      "external_id": "5899453516",
-      "content": "The position reports directly to the Associate Director, Cooperative and Internship Education. The incumbent's role is to facilitate the student success in co-op, using teaching methodologies, to develop and deliver career planning and job search courses and assistance to students, both individually and in groups, as they prepare to enter the workforce. The incumbent works as part of the Co-op/Int"
+      "external_id": "5907691127",
+      "content": "About SiTime SiTime is the Precision Timing company. Timing is the heartbeat of all electronics, ensuring performance, resilience and scalability. For decades, quartz devices, non-silicon technology, have kept systems in sync, but they struggle in harsher, more demanding environments. MEMS-based Precision Timing delivers greater accuracy, smaller size and resilience. Today, MEMS timing powers over"
+    },
+    {
+      "company": "SiTime Corporation",
+      "title": "Co-op ASIC Digital Verification Engineer",
+      "loc": "Design Exchange, City of Toronto",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://www.adzuna.ca/details/5907698096?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-02T04:46:26Z",
+      "src": "adzuna",
+      "external_id": "5907698096",
+      "content": "About SiTime SiTime is the Precision Timing company. Timing is the heartbeat of all electronics, ensuring performance, resilience and scalability. For decades, quartz devices, non-silicon technology, have kept systems in sync, but they struggle in harsher, more demanding environments. MEMS-based Precision Timing delivers greater accuracy, smaller size and resilience. Today, MEMS timing powers over"
     },
     {
       "company": "Standard BioTools",
@@ -557,42 +511,64 @@
       "content": "Would you like to join an innovative team driven by a bold vision - unleashing tools to accelerate breakthroughs in human health? Range for Role: $51,000.00-$73,000.00 All qualified applicants will receive consideration for employment without regard to race, color, sex, sexual orientation, gender identity, religion, national origin, disability, veteran status, or other legally protected status."
     },
     {
+      "company": "StepStone Group",
+      "title": "2027 Private Equity Infrastructure & Real Assets Co-op Analyst",
+      "loc": "Toronto, Ontario",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://www.adzuna.ca/details/5907704955?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-02T04:53:46Z",
+      "src": "adzuna",
+      "external_id": "5907704955",
+      "content": "We are global private markets specialists delivering tailored investment solutions, advisory services, and impactful, data driven insights to the world's investors. Leveraging the power of our platform and our peerless intelligence across sectors, strategies, and geographies, we help identify the advantages and the answers our clients need to succeed. The team you'll join StepStone Infrastructure "
+    },
+    {
+      "company": "StrategyCorp Inc.",
+      "title": "Summer Internship Application",
+      "loc": "Toronto, Ontario",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://www.adzuna.ca/details/5905588983?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-01T08:36:26Z",
+      "src": "adzuna",
+      "external_id": "5905588983",
+      "content": "Job Description Job Description OUR SUMMER 2027 INTERNSHIP APPLICATION PROCESS IS OPEN NOW UNTIL JANUARY 4, 2027. PLEASE REVIEW THE POSTING AND FOLLOW THE APPLICATION INSTRUCTIONS. Internship Opportunity at StrategyCorp WHO WE ARE? StrategyCorp is Canada's trusted public affairs, communications, and management consulting advisor. Our professionals create the conditions for success for our clients "
+    },
+    {
+      "company": "TD Bank",
+      "title": "Data Analytics & Insights Intern / Co-op (Winter 2027)",
+      "loc": "Toronto, Ontario",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://www.adzuna.ca/details/5907616140?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-02T03:15:52Z",
+      "src": "adzuna",
+      "external_id": "5907616140",
+      "content": "On Site Montr\u00e9al, Qu\u00e9bec Toronto, Ontario Full time R_1513914 Role Type: Internship/Co-op Work Term: Winter/Term 2 Work Location: Montr\u00e9al, Quebec, Canada Hours: 35 Pay Details: $45,700 - $74,400 CAD TD is committed to providing fair and equitable compensation opportunities to all colleagues. Growth opportunities and skill development are defining features of the colleague experience at TD. Our co"
+    },
+    {
       "company": "The Independent Order of Foresters",
-      "title": "Quality Assurance Engineer Co-op Student (4-month contract)",
+      "title": "Software Engineer Co-op Student (AI) (4-month contract)",
       "loc": "Toronto, Ontario",
       "geo": "Toronto",
       "cats": [],
-      "url": "https://www.adzuna.ca/details/5905230386?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-10-01T04:50:42Z",
+      "url": "https://www.adzuna.ca/details/5907700428?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-02T04:48:44Z",
       "src": "adzuna",
-      "external_id": "5905230386",
-      "content": "Career Opportunity Role Title Quality Assurance Engineer Co-op Student (4-month contract) Purpose of role The Quality Assurance Engineer Co-op offers a fantastic opportunity for a student to validate changes to workflows, business processes, product rules, and administrative systems using automated testing tools and techniques. This ensures that all modifications function correctly and do not nega"
+      "external_id": "5907700428",
+      "content": "Career Opportunity Role Title Software Engineer Co-op Student (AI) (4-month contract) Purpose of role The Software Engineer Co-op Student will join the AI & Enterprise Applications team and contribute to the design, development, and deployment of innovative software solutions and AI-powered applications. Working alongside experienced architects, engineers, and data professionals, you will gain han"
     },
     {
-      "company": "University Pension Plan",
-      "title": "Intern Analyst, Pension Operations (January 2027 - April 2027)",
-      "loc": "Toronto, Ontario",
-      "geo": "Toronto",
-      "cats": [
-        "Business Operations"
-      ],
-      "url": "https://www.adzuna.ca/details/5899436352?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-09-26T04:47:56Z",
-      "src": "adzuna",
-      "external_id": "5899436352",
-      "content": "THE ROLE We are actively recruiting for an Intern Analyst, Pension Operations roles to join our team in Winter 2027, for a 4-month or 8-month internship. The Intern Analyst is responsible for supporting all aspects of pension administration including annual statement production, processing benefit calculations, developing and testing calculation tools, and other initiatives. The incumbent will als"
-    },
-    {
-      "company": "Victaulic",
-      "title": "HR Intern - Brampton, ON (On-site)",
+      "company": "UU FERROVIAL CONSTRUCTION CANADA INC.",
+      "title": "Summer 2027 Interns - Toronto Area",
       "loc": "Toronto, Ontario",
       "geo": "Toronto",
       "cats": [],
-      "url": "https://www.adzuna.ca/details/5900459626?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-09-27T05:02:13Z",
+      "url": "https://www.adzuna.ca/details/5906840525?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-01T22:16:40Z",
       "src": "adzuna",
-      "external_id": "5900459626",
-      "content": "Job Description VICTAULIC Human Resources Intern Brampton, ON Full-Time Contract (May 2027 to August 2027) ABOUT VICTAULIC Victaulic, headquartered in Easton, Pennsylvania, is the global leader in mechanical pipe joining solutions, delivering advanced technologies and engineering services to address complex piping challenges faced by engineers, site owners and contractors. Since 1919, our innovati"
+      "external_id": "5906840525",
+      "content": "Join Ferrovial: Where Innovation Meets Opportunity Are you ready to elevate your career with a global leader in infrastructure solving complex problems and generating a positive outcome on people's lives? At Ferrovial , we are not just a company; we are a community of innovators and trailblazers. Listed on two major stock markets: Nasdaq - 100 Index (US) and IBEX 35 (Spain), we are also member of "
     },
     {
       "company": "Victaulic",
@@ -607,44 +583,6 @@
       "content": "Job Description VICTAULIC Manufacturing Engineer Intern Brampton, ON Full-Time Contract (May 2027 to August 2027) ABOUT VICTAULIC Victaulic, headquartered in Easton, Pennsylvania, is the global leader in mechanical pipe joining solutions, delivering advanced technologies and engineering services to address complex piping challenges faced by engineers, site owners and contractors. Since 1919, our i"
     },
     {
-      "company": "Victaulic",
-      "title": "Marketing Intern - Brampton, ON (On-site)",
-      "loc": "Toronto, Ontario",
-      "geo": "Toronto",
-      "cats": [
-        "Marketing"
-      ],
-      "url": "https://www.adzuna.ca/details/5900464000?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-09-27T05:07:39Z",
-      "src": "adzuna",
-      "external_id": "5900464000",
-      "content": "Job Description VICTAULIC Marketing Intern Brampton, ON Full-Time Contract (May 2027 to August 2027) ABOUT VICTAULIC Victaulic, headquartered in Easton, Pennsylvania, is the global leader in mechanical pipe joining solutions, delivering advanced technologies and engineering services to address complex piping challenges faced by engineers, site owners and contractors. Since 1919, our innovative sol"
-    },
-    {
-      "company": "Victaulic",
-      "title": "Sales Intern - GTA",
-      "loc": "Toronto, Ontario",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5900455718?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-09-27T04:55:08Z",
-      "src": "adzuna",
-      "external_id": "5900455718",
-      "content": "Job Description VICTAULIC Sales Intern Greater Toronto Area Full-Time Contract (May 2027 to August 2027) ABOUT VICTAULIC Victaulic, headquartered in Easton, Pennsylvania, is the global leader in mechanical pipe joining solutions, delivering advanced technologies and engineering services to address complex piping challenges faced by engineers, site owners and contractors. Since 1919, our innovative"
-    },
-    {
-      "company": "Vosyn",
-      "title": "Vosyn Prompt & Agentification Engineer - Masters-Level Internship Department: Software Development",
-      "loc": "Toronto, Ontario",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5902969983?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-09-29T12:39:37Z",
-      "src": "adzuna",
-      "external_id": "5902969983",
-      "content": "Job Openings \u203a Prompt & Agentification Engineer - Masters-Level Internship Work location: Remote (with hybrid options in Toronto) Compensation: Hourly ($32 CAD) About Us Vosyn is a Language Synthesis AI company based in Toronto. We build technology that removes language barriers, so people can access and understand information in any language. We are preparing for an IPO, and the people who join u"
-    },
-    {
       "company": "WSP",
       "title": "Intern, Electrical Engineering",
       "loc": "Rua A\u00e7ores, City of Toronto",
@@ -655,18 +593,6 @@
       "src": "adzuna",
       "external_id": "5903654550",
       "content": "Description What if you could redefine what's possible? With us, you can. You want Purpose. Growth. Opportunity. People who get it. We are the home of ambitious, passionate, and innovative world shapers. With an unmatched breadth and depth of engineering, advisory, and science-based expertise, our global minds unite to power local solutions. We are pathfinders and impact makers. We are Visioneers."
-    },
-    {
-      "company": "WSP Canada",
-      "title": "Intern, Electrical Engineering",
-      "loc": "Toronto, Ontario",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5903154414?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-09-29T19:43:51Z",
-      "src": "adzuna",
-      "external_id": "5903154414",
-      "content": "What if you could redefine what's possible? With us, you can. You want Purpose. Growth. Opportunity. People who get it. We are the home of ambitious, passionate, and innovative world shapers. With an unmatched breadth and depth of engineering, advisory, and science-based expertise, our global minds unite to power local solutions. We are pathfinders and impact makers. We are Visioneers. We are WSP."
     },
     {
       "company": "WSP USA",
@@ -681,13 +607,25 @@
       "content": "What if you could redefine what's possible? With us, you can. You want Purpose. Growth. Opportunity. People who get it. We are the home of ambitious, passionate, and innovative world shapers. With an unmatched breadth and depth of engineering, advisory, and science-based expertise, our global minds unite to power local solutions. We are pathfinders and impact makers. We are Visioneers. We are WSP."
     },
     {
+      "company": "WSP USA",
+      "title": "Intern, Environmental Engineering",
+      "loc": "Richmond Hill, York region",
+      "geo": "GTA",
+      "cats": [],
+      "url": "https://www.adzuna.ca/details/5905071275?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-01T03:16:13Z",
+      "src": "adzuna",
+      "external_id": "5905071275",
+      "content": "What if you could redefine what's possible? What if you could redefine what's possible? With us, you can. You want Purpose. Growth. Opportunity. People who get it. We are the home of ambitious, passionate, and innovative world shapers. With an unmatched breadth and depth of engineering, advisory and science-based expertise, our global minds unite to power local solutions. We are pathfinders and im"
+    },
+    {
       "company": "bmo",
       "title": "AI Engineer, Winter 2027 (Co-op/Internship) - 8 months",
       "loc": "Toronto, ON, CAN",
       "geo": "Toronto",
       "cats": [],
       "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Toronto-ON-CAN/AI-Engineer--Winter-2027--Co-op-Internship----8-months_R260027622-1",
-      "posted": "Posted 7 Days Ago",
+      "posted": "Posted 8 Days Ago",
       "src": "workday",
       "external_id": "bmo:R260027622-1",
       "content": ""
@@ -701,7 +639,7 @@
         "Finance"
       ],
       "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Toronto-ON-CAN/Actuarial-Analyst--Winter-2027--Co-op-Internship----4-months_R260027054",
-      "posted": "Posted 7 Days Ago",
+      "posted": "Posted 8 Days Ago",
       "src": "workday",
       "external_id": "bmo:R260027054",
       "content": ""
@@ -715,7 +653,7 @@
         "Finance"
       ],
       "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Mississauga-ON-CAN/Commercial-Banking-Credit-Analyst-Internship---Mississauga--Summer-2027--Co-op-Internship----4-months_R260026727",
-      "posted": "Posted 17 Days Ago",
+      "posted": "Posted 18 Days Ago",
       "src": "workday",
       "external_id": "bmo:R260026727",
       "content": ""
@@ -729,7 +667,7 @@
         "Finance"
       ],
       "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Toronto-ON-CAN/Commercial-Banking-Credit-Analyst-Internship--Summer-2027--Co-op-Internship----4-months_R260026697",
-      "posted": "Posted 17 Days Ago",
+      "posted": "Posted 18 Days Ago",
       "src": "workday",
       "external_id": "bmo:R260026697",
       "content": ""
@@ -743,7 +681,7 @@
         "Finance"
       ],
       "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Toronto-ON-CAN/Investment-Team-Intern--Summer-2027--Co-op-Internship----4-months_R260026187",
-      "posted": "Posted 21 Days Ago",
+      "posted": "Posted 22 Days Ago",
       "src": "workday",
       "external_id": "bmo:R260026187",
       "content": ""
@@ -755,7 +693,7 @@
       "geo": "Toronto",
       "cats": [],
       "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Toronto-ON-CAN/Junior-Analyst---Distribution-Intern--Summer-2027--Co-op-Internship----4-months_R260026188-2",
-      "posted": "Posted 21 Days Ago",
+      "posted": "Posted 22 Days Ago",
       "src": "workday",
       "external_id": "bmo:R260026188-2",
       "content": ""
@@ -769,7 +707,7 @@
         "Finance"
       ],
       "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Oakville-ON-CAN/Private-Wealth-Administrative-Assistant---Oakville--Winter-2027--Co-op-Internship----4-months_R260024359-1",
-      "posted": "Posted 2 Days Ago",
+      "posted": "Posted 3 Days Ago",
       "src": "workday",
       "external_id": "bmo:R260024359-1",
       "content": ""
@@ -783,7 +721,7 @@
         "Finance"
       ],
       "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Toronto-ON-CAN/Private-Wealth-Administrative-Assistant--Winter-2027--Co-op-Internship----4-months_R260025466-1",
-      "posted": "Posted 15 Days Ago",
+      "posted": "Posted 16 Days Ago",
       "src": "workday",
       "external_id": "bmo:R260025466-1",
       "content": ""
@@ -797,7 +735,7 @@
         "Finance"
       ],
       "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Waterloo-ON-CAN/Private-Wealth-Administrative-Assistant--Winter-2027--Co-op-Internship----4-months_R260027648",
-      "posted": "Posted 7 Days Ago",
+      "posted": "Posted 8 Days Ago",
       "src": "workday",
       "external_id": "bmo:R260027648",
       "content": ""
@@ -811,7 +749,7 @@
         "Finance"
       ],
       "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Toronto-ON-CAN/Private-Wealth-Analyst--Summer-2027--Co-op-Internship----4-months_R260025470",
-      "posted": "Posted 10 Days Ago",
+      "posted": "Posted 11 Days Ago",
       "src": "workday",
       "external_id": "bmo:R260025470",
       "content": ""
@@ -823,7 +761,7 @@
       "geo": "Toronto",
       "cats": [],
       "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Toronto-ON-CAN/Quantitative-Developer--Alpha-Research-Team----GAM--Summer-2027--Co-op-Internship----12-months_R260026715-3",
-      "posted": "Posted 10 Days Ago",
+      "posted": "Posted 11 Days Ago",
       "src": "workday",
       "external_id": "bmo:R260026715-3",
       "content": ""
@@ -835,7 +773,7 @@
       "geo": "Toronto",
       "cats": [],
       "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Toronto-ON-CAN/UX-UI-Designer--Winter-2027--Co-op-Internship---8-months_R260026951-1",
-      "posted": "Posted 9 Days Ago",
+      "posted": "Posted 10 Days Ago",
       "src": "workday",
       "external_id": "bmo:R260026951-1",
       "content": ""
@@ -847,7 +785,7 @@
       "geo": "Toronto",
       "cats": [],
       "url": "https://cibc.wd3.myworkdayjobs.com/en-US/search/job/Toronto-ON/First-Nations--Inuit--or-Mtis-Students---Winter-2027-Co-op-and-Internship-Opportunities_2616392-1",
-      "posted": "Posted 3 Days Ago",
+      "posted": "Posted 4 Days Ago",
       "src": "workday",
       "external_id": "cibc:2616392-1",
       "content": ""
@@ -861,7 +799,7 @@
         "Finance"
       ],
       "url": "https://cibc.wd3.myworkdayjobs.com/en-US/search/job/Toronto-ON/Internal-Audit---Intern_2619323-1",
-      "posted": "Posted Today",
+      "posted": "Posted Yesterday",
       "src": "workday",
       "external_id": "cibc:2619323-1",
       "content": ""
@@ -873,7 +811,7 @@
       "geo": "Toronto",
       "cats": [],
       "url": "https://cibc.wd3.myworkdayjobs.com/en-US/search/job/Toronto-ON/Quality-Assurance-Analyst-Co-op-Winter-2027_2619573-1",
-      "posted": "Posted Today",
+      "posted": "Posted Yesterday",
       "src": "workday",
       "external_id": "cibc:2619573-1",
       "content": ""
@@ -1571,7 +1509,7 @@
       "geo": "Ontario",
       "cats": [],
       "url": "https://td.wd3.myworkdayjobs.com/en-US/TD_Bank_Careers/job/Burlington-Ontario/Accident-Benefit-Claims-Intern-Co-op--Winter-2027-_R_1505358-1",
-      "posted": "Posted 5 Days Ago",
+      "posted": "Posted 6 Days Ago",
       "src": "workday",
       "external_id": "td:R_1505358-1",
       "content": ""
@@ -1583,33 +1521,9 @@
       "geo": "Toronto",
       "cats": [],
       "url": "https://td.wd3.myworkdayjobs.com/en-US/TD_Bank_Careers/job/Toronto-Ontario/Affinity-Market-Group--Sales-Enablement-Intern-Co-op--Winter-2027-_R_1506031",
-      "posted": "Posted 5 Days Ago",
+      "posted": "Posted 6 Days Ago",
       "src": "workday",
       "external_id": "td:R_1506031",
-      "content": ""
-    },
-    {
-      "company": "td",
-      "title": "Business System Analyst Intern/Co-op (Winter 2027)",
-      "loc": "Toronto, Ontario",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://td.wd3.myworkdayjobs.com/en-US/TD_Bank_Careers/job/Toronto-Ontario/Business-System-Analyst-Co-op---Intern---Winter-2027-_R_1509798",
-      "posted": "Posted 13 Days Ago",
-      "src": "workday",
-      "external_id": "td:R_1509798",
-      "content": ""
-    },
-    {
-      "company": "td",
-      "title": "Cyber Security Co-op/Intern - JEDI Partnership",
-      "loc": "Toronto, Ontario",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://td.wd3.myworkdayjobs.com/en-US/TD_Bank_Careers/job/Toronto-Ontario/Cyber-Security-Co-op-Intern---JEDI-Partnership_R_1512330",
-      "posted": "Posted 10 Days Ago",
-      "src": "workday",
-      "external_id": "td:R_1512330",
       "content": ""
     },
     {
@@ -1619,7 +1533,7 @@
       "geo": "Ontario",
       "cats": [],
       "url": "https://td.wd3.myworkdayjobs.com/en-US/TD_Bank_Careers/job/Montral-Qubec/Data-Analytics---Insights-Intern---Co-op--Winter-2027-_R_1513914",
-      "posted": "Posted 2 Days Ago",
+      "posted": "Posted 3 Days Ago",
       "src": "workday",
       "external_id": "td:R_1513914",
       "content": ""
@@ -1634,7 +1548,7 @@
         "Consulting"
       ],
       "url": "https://td.wd3.myworkdayjobs.com/en-US/TD_Bank_Careers/job/Toronto-Ontario/GI-Product-and-Underwriting-Strategy-Intern-Co-op--Winter-2027-_R_1508939",
-      "posted": "Posted 5 Days Ago",
+      "posted": "Posted 6 Days Ago",
       "src": "workday",
       "external_id": "td:R_1508939",
       "content": ""
@@ -1646,7 +1560,7 @@
       "geo": "Toronto",
       "cats": [],
       "url": "https://td.wd3.myworkdayjobs.com/en-US/TD_Bank_Careers/job/TD-Centre---TD-Tower---66-Wellington-Street-West-Toronto-Ontario/Governance---Control-Analyst-Intern-Co-op--Winter-2027-_R_1506480",
-      "posted": "Posted 5 Days Ago",
+      "posted": "Posted 6 Days Ago",
       "src": "workday",
       "external_id": "td:R_1506480",
       "content": ""
@@ -1658,7 +1572,7 @@
       "geo": "Ontario",
       "cats": [],
       "url": "https://td.wd3.myworkdayjobs.com/en-US/TD_Bank_Careers/job/Montral-Qubec/Governance---Control-Intern-Co-op--Winter-2027-_R_1507370",
-      "posted": "Posted 5 Days Ago",
+      "posted": "Posted 6 Days Ago",
       "src": "workday",
       "external_id": "td:R_1507370",
       "content": ""
@@ -1672,33 +1586,9 @@
         "Finance"
       ],
       "url": "https://td.wd3.myworkdayjobs.com/en-US/TD_Bank_Careers/job/Markham-Ontario/Life-and-Health-Underwriting-Analyst-Intern-Co-op--Winter-2027-_R_1507378",
-      "posted": "Posted 5 Days Ago",
+      "posted": "Posted 6 Days Ago",
       "src": "workday",
       "external_id": "td:R_1507378",
-      "content": ""
-    },
-    {
-      "company": "td",
-      "title": "Mobile Software Engineer Intern/Co-op (Winter 2027)",
-      "loc": "Toronto, Ontario",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://td.wd3.myworkdayjobs.com/en-US/TD_Bank_Careers/job/Toronto-Ontario/Mobile-Software-Engineer-Co-op---Intern---Winter-2027-_R_1509825",
-      "posted": "Posted 13 Days Ago",
-      "src": "workday",
-      "external_id": "td:R_1509825",
-      "content": ""
-    },
-    {
-      "company": "td",
-      "title": "Software Engineer Intern/Co-op (Winter 2027)",
-      "loc": "3 Locations (approved Ontario location)",
-      "geo": "Ontario",
-      "cats": [],
-      "url": "https://td.wd3.myworkdayjobs.com/en-US/TD_Bank_Careers/job/Toronto-Ontario/Software-Engineer-Co-op---Intern--Winter-2027-_R_1509790",
-      "posted": "Posted 13 Days Ago",
-      "src": "workday",
-      "external_id": "td:R_1509790",
       "content": ""
     },
     {
@@ -1708,7 +1598,7 @@
       "geo": "Toronto",
       "cats": [],
       "url": "https://td.wd3.myworkdayjobs.com/en-US/TD_Bank_Careers/job/Toronto-Ontario/Strategic-Insights-and-Business-Optimization-Intern---Co-Op--Winter-2027-_R_1506557",
-      "posted": "Posted 5 Days Ago",
+      "posted": "Posted 6 Days Ago",
       "src": "workday",
       "external_id": "td:R_1506557",
       "content": ""
@@ -1722,37 +1612,9 @@
         "Consulting"
       ],
       "url": "https://td.wd3.myworkdayjobs.com/en-US/TD_Bank_Careers/job/Toronto-Ontario/TD-Insurance-Governance---Control-Strategy---Transformation-Intern-Co-op--Winter-2027-_R_1505202",
-      "posted": "Posted 5 Days Ago",
+      "posted": "Posted 6 Days Ago",
       "src": "workday",
       "external_id": "td:R_1505202",
-      "content": ""
-    },
-    {
-      "company": "td",
-      "title": "TDI Actuarial Intern/Co-op (Summer 2027)",
-      "loc": "Toronto, Ontario",
-      "geo": "Toronto",
-      "cats": [
-        "Finance"
-      ],
-      "url": "https://td.wd3.myworkdayjobs.com/en-US/TD_Bank_Careers/job/Toronto-Ontario/TDI-Actuarial-Intern-Co-op--Summer-2027-_R_1506849",
-      "posted": "Posted 22 Days Ago",
-      "src": "workday",
-      "external_id": "td:R_1506849",
-      "content": ""
-    },
-    {
-      "company": "td",
-      "title": "TDI Actuarial Intern/Co-op (Winter 2027)",
-      "loc": "Toronto, Ontario",
-      "geo": "Toronto",
-      "cats": [
-        "Finance"
-      ],
-      "url": "https://td.wd3.myworkdayjobs.com/en-US/TD_Bank_Careers/job/Toronto-Ontario/TDI-Actuarial-Intern-Co-op--Winter-2027-_R_1506848-1",
-      "posted": "Posted 22 Days Ago",
-      "src": "workday",
-      "external_id": "td:R_1506848-1",
       "content": ""
     },
     {
@@ -1768,15 +1630,29 @@
       "src": "adzuna",
       "external_id": "5905587896",
       "content": "Job Description Job Description ventureLAB is seeking a Finance Operations Intern to provide basic administrative and transactional support for the ventureLAB finance team. This role focuses on routine day-to-day tasks including data entry, receipt processing, invoice logging, and basic spreadsheet upkeep. Project Scope & Key Deliverables The intern will be responsible for the following milestones"
+    },
+    {
+      "company": "ventureLAB",
+      "title": "Finance Intern",
+      "loc": "Markham, York region",
+      "geo": "GTA",
+      "cats": [
+        "Finance"
+      ],
+      "url": "https://www.adzuna.ca/details/5907696284?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-02T04:44:58Z",
+      "src": "adzuna",
+      "external_id": "5907696284",
+      "content": "ventureLAB is seeking a Finance Operations Intern to provide basic administrative and transactional support for the ventureLAB finance team. This role focuses on routine day-to-day tasks including data entry, receipt processing, invoice logging, and basic spreadsheet upkeep. Project Scope & Key Deliverables The intern will be responsible for the following milestones during their term: Finance Inbo"
     }
   ],
   "source_state": {
     "adzuna": {
-      "status": "reused-off-hour",
-      "refreshed_at": "2026-10-01T22:09:26.901242+00:00",
-      "age_seconds": 13464,
-      "requests": 0,
-      "reused": 54
+      "status": "fresh",
+      "refreshed_at": "2026-10-02T14:19:41.695852+00:00",
+      "age_seconds": 0,
+      "requests": 5,
+      "reused": 0
     }
   }
 }
