@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-03T14:29:31.276360+00:00",
+  "fetched_at": "2026-10-03T18:28:25.388294+00:00",
   "categories": [
     "Finance",
     "Marketing",
@@ -166,18 +166,6 @@
       "src": "adzuna",
       "external_id": "5907615596",
       "content": "Req ID: 140758 Remote Position: Hybrid Region: Americas Country: Canada State/Province: Ontario City: Toronto 16 Month Internship As a global technology leader, Celestica designs, engineers, and manufactures industry-leading products and services that drive customer success and market advancement. Headquartered in Toronto, Canada, we bring together over 33,000 employees across more than 45 sites i"
-    },
-    {
-      "company": "Cisco",
-      "title": "Software Developer Full Stack / Backend I (Co-op) - Canada",
-      "loc": "Toronto, Ontario",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5909664729?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-10-03T03:53:48Z",
-      "src": "adzuna",
-      "external_id": "5909664729",
-      "content": "Please note this posting is to advertise potential job opportunities. This exact role may not be open today but could open in the near future. When you apply, a Cisco representative may contact you directly if a relevant position opens. Applications are accepted until further notice. Meet the Team Join a vibrant community of passionate professionals from around the world, working together in Engin"
     },
     {
       "company": "Coty",
@@ -401,6 +389,18 @@
       "src": "adzuna",
       "external_id": "5907203780",
       "content": "IDEMIA Public Security, a division of IDEMIA Group, is the leading provider of secure and trusted biometric-based solutions, transforming public and private organizations across the globe. Our industry-enabled and client-specific solutions draw upon decades of expertise in biometrics to revolutionize the fields of public security, justice and public safety, travel and transport, identity, and acce"
+    },
+    {
+      "company": "Intact Financial Corporation",
+      "title": "Coordonnateur(trice), Acquisition de Talents - Stage/Coop 4 mois (Hiver 2027)",
+      "loc": "Toronto, Ontario",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://www.adzuna.ca/details/5910299369?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-03T12:41:07Z",
+      "src": "adzuna",
+      "external_id": "5910299369",
+      "content": "Nos \u00e9quipes sont au coeur de tout ce que nous faisons. Ensemble, nous aidons les gens, les entreprises et la soci\u00e9t\u00e9 \u00e0 aller de l'avant dans les bons moments et \u00e0 \u00eatre r\u00e9silients dans les moments difficiles. Notre promesse aux employ\u00e9s, c'est ce qu'Intact vous promet en \u00e9change de votre engagement \u00e0 vivre nos valeurs, \u00e0 donner le meilleur de vous-m\u00eames, \u00e0 \u00eatre ouverts au changement et \u00e0 vous inves"
     },
     {
       "company": "Kao",
@@ -1630,7 +1630,7 @@
   "source_state": {
     "adzuna": {
       "status": "fresh",
-      "refreshed_at": "2026-10-03T14:28:42.590984+00:00",
+      "refreshed_at": "2026-10-03T18:27:32.528528+00:00",
       "age_seconds": 0,
       "requests": 5,
       "reused": 0
