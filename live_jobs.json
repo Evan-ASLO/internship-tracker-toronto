@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-04T17:17:47.775823+00:00",
+  "fetched_at": "2026-10-04T20:41:36.451190+00:00",
   "categories": [
     "Finance",
     "Marketing",
@@ -7,20 +7,6 @@
     "Consulting"
   ],
   "jobs": [
-    {
-      "company": "Alexion",
-      "title": "Co-Op, Development Operations AI & Automation Enablement Intern",
-      "loc": "Mississauga, Peel region",
-      "geo": "GTA",
-      "cats": [
-        "Business Operations"
-      ],
-      "url": "https://www.adzuna.ca/details/5905229291?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-10-01T04:49:33Z",
-      "src": "adzuna",
-      "external_id": "5905229291",
-      "content": "12 Month Contract Co-Op, Development Operations AI & Automation Enablement This is what you will do: The AI Solutions & Development Operations Analyst Co-op supports the Development Operations Enterprise Optimization team in advancing digital transformation, AI-enabled ways of working, data analytics, automation, and operational excellence initiatives across Development Operations. This role combi"
-    },
     {
       "company": "Altera Semiconductor",
       "title": "High Level Synthesis Engineer - Intern",
@@ -55,7 +41,7 @@
       "posted": "2026-10-02T08:19:21Z",
       "src": "adzuna",
       "external_id": "5908015155",
-      "content": "Job Description Job Description For over 40 years, Archmill House Inc. has been a trusted leader in the creation of high-end millwork and premium store fixtures across North America. Our legacy is built on delivering exceptional craftsmanship, innovative solutions, and unwavering commitment to quality. This dedication has allowed us to become a preferred partner for a wide range of commercial and"
+      "content": "Job Description Job Description For over 40 years, Archmill House Inc. has been a trusted leader in the creation of high-end millwork and premium store fixtures across North America. Our legacy is built on delivering exceptional craftsmanship, innovative solutions, and unwavering commitment to quality. This dedication has allowed us to become a preferred partner for a wide range of commercial and "
     },
     {
       "company": "Archmill House",
@@ -79,7 +65,7 @@
       "posted": "2026-10-02T04:55:08Z",
       "src": "adzuna",
       "external_id": "5907706485",
-      "content": "Introduction Atura Power is the largest fleet of combined cycle power plants in Ontario. Our facilities are located across the province including Napanee, Halton Hills, Toronto, and Windsor. This position will be located at either Portlands Energy Centre in Toronto, or the company head office in Oakville. Guided by our values, we are inclusive, we work safely, we are flexible, we look for ways to"
+      "content": "Introduction Atura Power is the largest fleet of combined cycle power plants in Ontario. Our facilities are located across the province including Napanee, Halton Hills, Toronto, and Windsor. This position will be located at either Portlands Energy Centre in Toronto, or the company head office in Oakville. Guided by our values, we are inclusive, we work safely, we are flexible, we look for ways to "
     },
     {
       "company": "Autodesk",
@@ -142,18 +128,6 @@
       "content": "Job Requisition ID 26WD101435 Position Overview We're hiring Software Developer Interns across multiple teams at Autodesk in Canada. Rather than recruiting for just one specific team, we'll get to know your interests, experience, technical skills, and preferences throughout the hiring process. We'll use these alongside our teams' hiring needs to match successful candidates with opportunities where"
     },
     {
-      "company": "Birdseye Solutions",
-      "title": "Intern Computer Vision (Toronto)",
-      "loc": "Etobicoke, Toronto",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5905228499?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-10-01T04:48:53Z",
-      "src": "adzuna",
-      "external_id": "5905228499",
-      "content": "COMPANY OVERVIEW: Birdseye's mission is to help make the world a safer place! We are the leader in AI-driven Remote Facility Supervision solutions for the Trucking and Logistics Industry. Our Maximum Telepresence Approach\u2122 delivers cutting-edge, data-driven security and operational insights that create a safer working environment for millions of people every year. We provide end-to-end, cutting-ed"
-    },
-    {
       "company": "CGI",
       "title": "New Grad: AI-Assisted Full-Stack Developer",
       "loc": "Toronto, Ontario",
@@ -164,6 +138,20 @@
       "src": "adzuna",
       "external_id": "5907692079",
       "content": "Position Description: We are seeking an adaptable and tech-savvy Junior Developer to join our engineering team. This role is ideal for a recent graduate or a professional with 0-3 years of experience who possesses a strong foundation in full-stack development and an eagerness to leverage modern tools. You will work across diverse technology stacks (including C#, Python, JavaScript/TypeScript, Java"
+    },
+    {
+      "company": "Canadian Olympic Committee",
+      "title": "Intern, Communications",
+      "loc": "Toronto, Ontario",
+      "geo": "Toronto",
+      "cats": [
+        "Marketing"
+      ],
+      "url": "https://www.adzuna.ca/details/5911709007?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-04T12:40:36Z",
+      "src": "adzuna",
+      "external_id": "5911709007",
+      "content": "Be part of building a national brand. The Canadian Olympic Committee (COC) is a national, private, not-for-profit organization committed to high-performance sports excellence. We are the largest private supporter of high-performance sport in Canada and we are responsible for all aspects of Canada's involvement in the Olympic Movement, including participation in the Olympic and Pan American Games. "
     },
     {
       "company": "Celestica",
@@ -219,20 +207,6 @@
     },
     {
       "company": "Dream CA",
-      "title": "Intern, Corporate Tax (8 month)",
-      "loc": "Commerce Court, City of Toronto",
-      "geo": "Toronto",
-      "cats": [
-        "Finance"
-      ],
-      "url": "https://www.adzuna.ca/details/5905230242?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-10-01T04:50:31Z",
-      "src": "adzuna",
-      "external_id": "5905230242",
-      "content": "Dream is looking for an Intern, Corporate Tax (8 month)! We are always looking for the best and brightest to join our thriving community, and the Tax team at Dream is looking to hire an Intern, Corporate Tax for 8 months, starting in January 2026! Who are you? Do you have superior analytical skills and the ability to multi-task? Are you a tactful communicator and quick learner? Are you proactive a"
-    },
-    {
-      "company": "Dream CA",
       "title": "Intern, Development Accounting (8 month)",
       "loc": "Commerce Court, City of Toronto",
       "geo": "Toronto",
@@ -244,6 +218,18 @@
       "src": "adzuna",
       "external_id": "5909720235",
       "content": "Dream is looking for an Intern, Development Accounting (8 month)! We are always looking for the best and brightest to join our thriving community. Dream's Development Accounting team is currently looking to hire an 8-month Development Accounting intern, starting in January 2026. Who are you? Do you have superior analytical skills and the ability to multi-task? Are you a tactful communicator and qu"
+    },
+    {
+      "company": "GAO Group",
+      "title": "AI & IoT Research Intern",
+      "loc": "North York, Toronto",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://www.adzuna.ca/details/5911708271?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-04T12:40:22Z",
+      "src": "adzuna",
+      "external_id": "5911708271",
+      "content": "Employment: Internship Duration: 3 6 Months Location: Remote GAO Group & Aperture Venture Studio are seeking PhD students for a 3 6 month AI & IoT Research Internship. Join our Research & Development (R&D) team and contribute to Physical AI, AIoT, IoT, AI/ML, intelligent sensing, Edge AI, connected systems, and emerging technologies through research, experiments, prototypes, and proof-of-concept d"
     },
     {
       "company": "GAO Group",
@@ -272,6 +258,18 @@
       "src": "adzuna",
       "external_id": "5907605990",
       "content": "Remote Digital Marketing Campaign Analytics Get hands-on with real email campaigns audience segmentation, A/B testing, and performance analytics with an international tech company. Full JD below Work Mode: Remote About the Role The GAO Group is looking for a creative and enthusiastic Email Marketing Intern to support the planning, execution, and optimization of email marketing campaigns. This inte"
+    },
+    {
+      "company": "GAO Group",
+      "title": "Human Resource Intern",
+      "loc": "North York, Toronto",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://www.adzuna.ca/details/5911708192?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-04T12:40:21Z",
+      "src": "adzuna",
+      "external_id": "5911708192",
+      "content": "& Kickstart your HR career with an international tech-focused company! As an youll support recruitment, onboarding and talent management while working with AI-powered tools in a diverse global environment. Source and recruit candidates Post jobs on platforms & university portals Screen resumes and schedule interviews Communicate with applicants via email & LinkedIn Assist with AI-based HR tasks an"
     },
     {
       "company": "GAO Group",
@@ -319,7 +317,7 @@
       "posted": "2026-10-01T23:58:09Z",
       "src": "adzuna",
       "external_id": "5907195484",
-      "content": "Do you have a passion for cattle and a knack for problem-solving? ABS Global, a Genus Company, is offering the ultimate Reproduction and Breeding Internship, where you'll be an arm's length away from the fascinating world of cattle reproduction-literally! As part of our expert team, you'll help farmers ensure their herds are thriving, while learning the ropes of cutting-edge bovine technology. If"
+      "content": "Do you have a passion for cattle and a knack for problem-solving? ABS Global, a Genus Company, is offering the ultimate Reproduction and Breeding Internship, where you'll be an arm's length away from the fascinating world of cattle reproduction-literally! As part of our expert team, you'll help farmers ensure their herds are thriving, while learning the ropes of cutting-edge bovine technology. If "
     },
     {
       "company": "HarperCollins Publishers",
@@ -380,6 +378,18 @@
       "src": "adzuna",
       "external_id": "5910299369",
       "content": "Nos \u00e9quipes sont au coeur de tout ce que nous faisons. Ensemble, nous aidons les gens, les entreprises et la soci\u00e9t\u00e9 \u00e0 aller de l'avant dans les bons moments et \u00e0 \u00eatre r\u00e9silients dans les moments difficiles. Notre promesse aux employ\u00e9s, c'est ce qu'Intact vous promet en \u00e9change de votre engagement \u00e0 vivre nos valeurs, \u00e0 donner le meilleur de vous-m\u00eames, \u00e0 \u00eatre ouverts au changement et \u00e0 vous inves"
+    },
+    {
+      "company": "Intuit, Inc.",
+      "title": "Winter 2027: Product Research Co-op (8 months)",
+      "loc": "Toronto, Ontario",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://www.adzuna.ca/details/5911708977?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-04T12:40:36Z",
+      "src": "adzuna",
+      "external_id": "5911708977",
+      "content": "About our Emerging Talent Program: Intuit invests in Emerging Talent because fresh perspectives strengthen our products and teams. The program is backed by a culture that values curiosity and collaboration, and you'll be supported by dedicated managers and mentors who are invested in your growth. As an intern or co-op, you'll work on meaningful projects with business impact, many centered on AI an"
     },
     {
       "company": "Loblaw Companies",
@@ -518,6 +528,20 @@
       "content": "About Pinterest: Millions of people around the world come to our platform to find creative ideas, dream about new possibilities and plan for memories that will last a lifetime. At Pinterest, we're on a mission to bring everyone the inspiration to create a life they love, and that starts with the people behind the product. Discover a career where you ignite innovation for millions, transform passio"
     },
     {
+      "company": "Pomerleau",
+      "title": "Internship, Communications",
+      "loc": "Toronto, Ontario",
+      "geo": "Toronto",
+      "cats": [
+        "Marketing"
+      ],
+      "url": "https://www.adzuna.ca/details/5911708844?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-04T12:40:33Z",
+      "src": "adzuna",
+      "external_id": "5911708844",
+      "content": "To be eligible for Pomerleau's internship program, you must meet the following criteria: Be legally authorized to work in Canada at the time of application and for the entire duration of the internship. Reside in Canada at the time of application and for the entire duration of the internship. Be duly enrolled in a Canadian post-secondary institution or have graduated from such an institution withi"
+    },
+    {
       "company": "Qode Media",
       "title": "Social Media Marketing Intern",
       "loc": "North York, Toronto",
@@ -529,7 +553,7 @@
       "posted": "2026-10-02T12:49:24Z",
       "src": "adzuna",
       "external_id": "5908475480",
-      "content": "This internship role is strictly reserved for students enrolled in a Canadian post-secondary institution. You must be enrolled in September, have full-time student status, and be a Canadian resident or Canadian citizen or have refugee status. Qode Media is now accepting applications for Social Media Marketing Interns & Co-Op Students. You will have the opportunity to observe and assist our Social"
+      "content": "This internship role is strictly reserved for students enrolled in a Canadian post-secondary institution. You must be enrolled in September, have full-time student status, and be a Canadian resident or Canadian citizen or have refugee status. Qode Media is now accepting applications for Social Media Marketing Interns & Co-Op Students. You will have the opportunity to observe and assist our Social "
     },
     {
       "company": "Qode Media",
@@ -595,7 +619,7 @@
       "posted": "2026-10-04T08:21:58Z",
       "src": "adzuna",
       "external_id": "5911514150",
-      "content": "Job Description Job Description Job Description Bring It You are pursuing or have recently completed a bachelor's or master's degree in Economics, Marketing, Commerce, Communications, Event Management, Management Information Systems (MIS), or something similar. You'll bring experience in customer success, marketing, or communications, combined with well-developed technical and business expertise,"
+      "content": "Job Description Job Description Job Description Bring It You are pursuing or have recently completed a bachelor's or master's degree in Economics, Marketing, Commerce, Communications, Event Management, Management Information Systems (MIS), or something similar. You'll bring experience in customer success, marketing, or communications, combined with well-developed technical and business expertise, "
     },
     {
       "company": "StrategyCorp Inc.",
@@ -607,7 +631,7 @@
       "posted": "2026-10-01T08:36:26Z",
       "src": "adzuna",
       "external_id": "5905588983",
-      "content": "Job Description Job Description OUR SUMMER 2027 INTERNSHIP APPLICATION PROCESS IS OPEN NOW UNTIL JANUARY 4, 2027. PLEASE REVIEW THE POSTING AND FOLLOW THE APPLICATION INSTRUCTIONS. Internship Opportunity at StrategyCorp WHO WE ARE? StrategyCorp is Canada's trusted public affairs, communications, and management consulting advisor. Our professionals create the conditions for success for our clients"
+      "content": "Job Description Job Description OUR SUMMER 2027 INTERNSHIP APPLICATION PROCESS IS OPEN NOW UNTIL JANUARY 4, 2027. PLEASE REVIEW THE POSTING AND FOLLOW THE APPLICATION INSTRUCTIONS. Internship Opportunity at StrategyCorp WHO WE ARE? StrategyCorp is Canada's trusted public affairs, communications, and management consulting advisor. Our professionals create the conditions for success for our clients "
     },
     {
       "company": "Stripe",
@@ -693,7 +717,7 @@
       "posted": "2026-10-01T22:16:40Z",
       "src": "adzuna",
       "external_id": "5906840525",
-      "content": "Join Ferrovial: Where Innovation Meets Opportunity Are you ready to elevate your career with a global leader in infrastructure solving complex problems and generating a positive outcome on people's lives? At Ferrovial , we are not just a company; we are a community of innovators and trailblazers. Listed on two major stock markets: Nasdaq - 100 Index (US) and IBEX 35 (Spain), we are also member of"
+      "content": "Join Ferrovial: Where Innovation Meets Opportunity Are you ready to elevate your career with a global leader in infrastructure solving complex problems and generating a positive outcome on people's lives? At Ferrovial , we are not just a company; we are a community of innovators and trailblazers. Listed on two major stock markets: Nasdaq - 100 Index (US) and IBEX 35 (Spain), we are also member of "
     },
     {
       "company": "VINCI Construction Grands Projets Canada",
@@ -1486,11 +1510,11 @@
   ],
   "source_state": {
     "adzuna": {
-      "status": "reused-off-hour",
-      "refreshed_at": "2026-10-04T12:57:38.761070+00:00",
-      "age_seconds": 15570,
-      "requests": 0,
-      "reused": 58
+      "status": "fresh",
+      "refreshed_at": "2026-10-04T20:40:57.509425+00:00",
+      "age_seconds": 0,
+      "requests": 5,
+      "reused": 0
     }
   }
 }
