@@ -92,7 +92,7 @@ class AdzunaSourceTests(unittest.TestCase):
         payload = {
             "fetched_at": refreshed_at.isoformat(),
             "categories": ["Finance"],
-            "jobs": rows or [self.baseline_row("prior-1")],
+            "jobs": rows if rows is not None else [self.baseline_row("prior-1")],
             "source_state": {
                 "adzuna": {
                     "status": "fresh",
@@ -438,8 +438,8 @@ class AdzunaSourceTests(unittest.TestCase):
         self.assertEqual(report["projectedDistinctTotal"], 5)
         self.assertTrue(report["sampleJobs"])
 
-    def test_off_hour_reuses_prior_slice_without_network_or_duplicates(self):
-        now = self.moment_with_parity(1)
+    def test_fresh_cache_reuses_prior_slice_even_on_even_hour(self):
+        now = self.moment_with_parity(0)
         with tempfile.TemporaryDirectory() as temp:
             baseline = Path(temp) / "baseline.json"
             self.write_baseline(
@@ -467,12 +467,120 @@ class AdzunaSourceTests(unittest.TestCase):
             ["prior-1", "prior-2"],
         )
         coverage = scrape.COVERAGE[scrape.coverage_key("adzuna", "ca/Toronto")]
-        self.assertEqual(coverage["status"], "reused-off-hour")
+        self.assertEqual(coverage["status"], "reused-fresh")
         self.assertEqual(coverage["request_attempts"], 0)
         self.assertEqual(coverage["reused"], 2)
         source_state = scrape.source_state_payload()["adzuna"]
-        self.assertEqual(source_state["status"], "reused-off-hour")
+        self.assertEqual(source_state["status"], "reused-fresh")
         self.assertEqual(source_state["reused"], 2)
+
+    def test_refresh_age_boundary_and_delayed_odd_hour(self):
+        now = datetime(2026, 10, 3, 9, 32, tzinfo=timezone.utc)
+        for age, expected_requests in [
+            (timedelta(hours=2) - timedelta(microseconds=1), 0),
+            (timedelta(hours=2), 5),
+            (timedelta(hours=7), 5),
+            (timedelta(hours=19, minutes=13), 5),
+        ]:
+            with self.subTest(age=age), tempfile.TemporaryDirectory() as temp:
+                baseline = Path(temp) / "baseline.json"
+                self.write_baseline(baseline, now - age)
+                payload = json.loads(baseline.read_text(encoding="utf-8"))
+                payload["fetched_at"] = now.isoformat()
+                baseline.write_text(json.dumps(payload), encoding="utf-8")
+                with (
+                    patch.dict(os.environ, {
+                        "ADZUNA_APP_ID": "test-id",
+                        "ADZUNA_APP_KEY": "test-key",
+                        "ADZUNA_BASELINE_PATH": str(baseline),
+                    }, clear=True),
+                    patch.object(scrape, "g", return_value=FakeResponse(
+                        json_value={"count": 0, "results": []}
+                    )) as get,
+                ):
+                    jobs = scrape.from_adzuna(None, now=now)
+                self.assertEqual(get.call_count, expected_requests)
+                state = scrape.source_state_payload()["adzuna"]
+                self.assertEqual(state["status"], (
+                    "fresh" if expected_requests else "reused-fresh"
+                ))
+                self.assertEqual(state["refreshed_at"], (
+                    now if expected_requests else now - age
+                ).isoformat())
+                self.assertEqual(len(jobs), 0 if expected_requests else 1)
+
+    def test_successful_empty_cache_waits_for_refresh_interval(self):
+        now = self.moment_with_parity(0)
+        with tempfile.TemporaryDirectory() as temp:
+            baseline = Path(temp) / "baseline.json"
+            self.write_baseline(baseline, now - timedelta(hours=1), rows=[])
+            with (
+                patch.dict(os.environ, {
+                    "ADZUNA_APP_ID": "test-id",
+                    "ADZUNA_APP_KEY": "test-key",
+                    "ADZUNA_BASELINE_PATH": str(baseline),
+                }, clear=True),
+                patch.object(scrape, "g") as get,
+            ):
+                self.assertEqual(scrape.from_adzuna(None, now=now), [])
+            get.assert_not_called()
+            self.assertEqual(
+                scrape.source_state_payload()["adzuna"]["status"], "reused-fresh"
+            )
+
+    def test_no_baseline_refreshes_on_odd_hour(self):
+        now = self.moment_with_parity(1)
+        with tempfile.TemporaryDirectory() as temp:
+            with (
+                patch.dict(os.environ, {
+                    "ADZUNA_APP_ID": "test-id",
+                    "ADZUNA_APP_KEY": "test-key",
+                    "ADZUNA_BASELINE_PATH": str(Path(temp) / "missing.json"),
+                }, clear=True),
+                patch.object(scrape, "g", return_value=FakeResponse(
+                    json_value={"count": 0, "results": []}
+                )) as get,
+            ):
+                self.assertEqual(scrape.from_adzuna(None, now=now), [])
+            self.assertEqual(get.call_count, 5)
+            self.assertEqual(
+                scrape.source_state_payload()["adzuna"]["refreshed_at"],
+                now.isoformat(),
+            )
+
+    def test_invalid_success_timestamp_never_uses_catalog_timestamp(self):
+        now = self.moment_with_parity(1)
+        for timestamp in [None, "not-a-date", (now + timedelta(days=1)).isoformat()]:
+            for status in [200, 429]:
+                with self.subTest(timestamp=timestamp, status=status):
+                    with tempfile.TemporaryDirectory() as temp:
+                        baseline = Path(temp) / "baseline.json"
+                        self.write_baseline(baseline, now)
+                        payload = json.loads(baseline.read_text(encoding="utf-8"))
+                        payload["source_state"]["adzuna"]["refreshed_at"] = timestamp
+                        baseline.write_text(json.dumps(payload), encoding="utf-8")
+                        with (
+                            patch.dict(os.environ, {
+                                "ADZUNA_APP_ID": "test-id",
+                                "ADZUNA_APP_KEY": "test-key",
+                                "ADZUNA_BASELINE_PATH": str(baseline),
+                            }, clear=True),
+                            patch.object(scrape, "g", return_value=FakeResponse(
+                                status_code=status,
+                                json_value={"count": 0, "results": []},
+                            )) as get,
+                            patch("builtins.print") as report,
+                        ):
+                            self.assertEqual(scrape.from_adzuna(None, now=now), [])
+                        self.assertEqual(get.call_count, 5)
+                        self.assertIn("invalid successful", report.call_args.args[0])
+                        state = scrape.source_state_payload()["adzuna"]
+                        self.assertEqual(state["status"], (
+                            "fresh" if status == 200 else "expired"
+                        ))
+                        self.assertEqual(state["refreshed_at"], (
+                            now.isoformat() if status == 200 else None
+                        ))
 
     def test_partial_active_failure_reuses_fresh_prior_slice(self):
         now = self.moment_with_parity(0)
@@ -486,7 +594,7 @@ class AdzunaSourceTests(unittest.TestCase):
                         "ADZUNA_APP_ID": "test-id",
                         "ADZUNA_APP_KEY": "test-key",
                         "ADZUNA_BASELINE_PATH": str(baseline),
-                        "ADZUNA_FORCE_REFRESH": "true",
+                        "ADZUNA_FORCE_REFRESH": "false",
                     },
                     clear=False,
                 ),
@@ -541,7 +649,7 @@ class AdzunaSourceTests(unittest.TestCase):
         self.assertEqual(coverage["status"], "fresh")
         self.assertEqual(coverage["reused"], 0)
 
-    def test_expired_prior_slice_is_not_carried(self):
+    def test_failed_refresh_after_long_gap_does_not_carry_expired_slice(self):
         now = self.moment_with_parity(1)
         with tempfile.TemporaryDirectory() as temp:
             baseline = Path(temp) / "baseline.json"
@@ -559,11 +667,14 @@ class AdzunaSourceTests(unittest.TestCase):
                     },
                     clear=False,
                 ),
-                patch.object(scrape, "g") as get,
+                patch.object(
+                    scrape, "g",
+                    return_value=FakeResponse(status_code=429, json_value={}),
+                ) as get,
             ):
                 jobs = scrape.from_adzuna(None, now=now)
 
-        get.assert_not_called()
+        self.assertEqual(get.call_count, 5)
         self.assertEqual(jobs, [])
         coverage = scrape.COVERAGE[scrape.coverage_key("adzuna", "ca/Toronto")]
         self.assertEqual(coverage["status"], "expired")

@@ -588,10 +588,14 @@ def load_adzuna_baseline(now=None):
         if isinstance(job, dict) and job.get("src") == "adzuna"
     ]
     state = ((snapshot.get("source_state") or {}).get("adzuna") or {})
-    refreshed_at = _parse_timestamp(
-        state.get("refreshed_at")
-        or (snapshot.get("fetched_at") if rows else None)
-    )
+    refreshed_at = _parse_timestamp(state.get("refreshed_at"))
+    if refreshed_at and refreshed_at > now:
+        refreshed_at = None
+    if rows and refreshed_at is None:
+        print(
+            "COVERAGE WARNING adzuna:ca/Toronto: missing or invalid successful "
+            "refresh timestamp; cached rows cannot be reused"
+        )
     age_hours = None
     if refreshed_at:
         age_hours = max(0.0, (now - refreshed_at).total_seconds() / 3600)
@@ -618,8 +622,7 @@ def from_adzuna(_, now=None):
     now = now.astimezone(timezone.utc)
     baseline = load_adzuna_baseline(now)
     baseline_fresh = (
-        bool(baseline["rows"])
-        and baseline["age_hours"] is not None
+        baseline["age_hours"] is not None
         and baseline["age_hours"] <= ADZUNA_GRACE_HOURS
     )
     app_id = os.environ.get("ADZUNA_APP_ID", "").strip()
@@ -659,37 +662,23 @@ def from_adzuna(_, now=None):
         return []
 
     force_refresh = _truthy_env("ADZUNA_FORCE_REFRESH")
-    hour_slot = int(now.timestamp() // 3600)
     refresh_due = (
         force_refresh
-        or not baseline["rows"]
-        or baseline["refreshed_at"] is None
-        or hour_slot % ADZUNA_REFRESH_INTERVAL_HOURS == 0
+        or baseline["age_hours"] is None
+        or baseline["age_hours"] >= ADZUNA_REFRESH_INTERVAL_HOURS
     )
     if not refresh_due:
-        if baseline_fresh:
-            rows = _adzuna_carried_rows(baseline["rows"], key)
-            set_coverage(
-                key, source="adzuna", target="ca/Toronto",
-                status="reused-off-hour", pages=0, request_attempts=0,
-                returned=len(rows), records=len(rows), reused=len(rows),
-                query_total=None, selected_total=None,
-                location_mode="carry-forward", fallback_terms=0,
-                capped_terms=0, repeated_terms=0, errors=[],
-                source_refreshed_at=baseline["refreshed_at"].isoformat(),
-                source_age_hours=baseline["age_hours"], complete=True)
-            return rows
+        rows = _adzuna_carried_rows(baseline["rows"], key)
         set_coverage(
-            key, source="adzuna", target="ca/Toronto", status="expired",
-            pages=0, request_attempts=0, returned=0, records=0, reused=0,
+            key, source="adzuna", target="ca/Toronto",
+            status="reused-fresh", pages=0, request_attempts=0,
+            returned=len(rows), records=len(rows), reused=len(rows),
             query_total=None, selected_total=None,
             location_mode="carry-forward", fallback_terms=0,
-            capped_terms=0, repeated_terms=0,
-            errors=["baseline grace expired"], source_refreshed_at=(
-                baseline["refreshed_at"].isoformat()
-                if baseline["refreshed_at"] else None),
-            source_age_hours=baseline["age_hours"], complete=False)
-        return []
+            capped_terms=0, repeated_terms=0, errors=[],
+            source_refreshed_at=baseline["refreshed_at"].isoformat(),
+            source_age_hours=baseline["age_hours"], complete=True)
+        return rows
 
     out, seen = [], set()
     pages = returned = 0

@@ -98,7 +98,8 @@ makes no request and reports `skipped` in source coverage.
 
 The adapter uses the official Canada endpoint
 `/v1/api/jobs/ca/search/{page}`, centered on Toronto with a 100 km radius.
-Every second hour uses the five-request budget for high-signal depth:
+When at least two hours have elapsed since the last successful Adzuna refresh,
+the adapter uses the five-request budget for high-signal depth:
 
 1. `title_only=internship`, page 1
 2. `title_only=internship`, page 2
@@ -110,20 +111,27 @@ The redundant `intern` query and noisy broad `student` query are intentionally
 excluded. New-grad results must also contain `new grad` or `new graduate` in
 the title; a description-only mention is rejected.
 
-On the alternating hour, the scraper carries the prior successful Adzuna slice
-from the checked-in baseline and still applies normal deduplication and URL
-verification. A successful active refresh atomically replaces that slice. A
+Before two hours have elapsed, the scraper carries the prior successful Adzuna
+slice (including a successful empty result) from the checked-in baseline and
+still applies normal deduplication and URL verification. Delayed runs refresh
+when due regardless of the UTC hour; the overall catalog's `fetched_at` never
+resets the Adzuna clock. Missing, malformed, or future successful-refresh
+timestamps make the cache ineligible for reuse and trigger a fresh attempt.
+A successful active refresh atomically replaces that slice. A
 partial provider failure reuses the prior slice for up to six hours; its
 original refresh timestamp persists in top-level `source_state.adzuna`. After
 the grace window, the source is marked `expired` and catalog guard requires
 manual `allow_catalog_drop` review instead of silently publishing a wipe.
 
-Normal operation is exactly 60 requests/day, 420/week, 1,800 per 30-day month,
+At an uninterrupted two-hour cadence, normal operation uses 60 requests/day,
+420/week, 1,800 per 30-day month,
 and 1,860 per 31-day month, below Adzuna's published default limits of
 25/minute, 250/day, 1,000/week, and 2,500/month. Transient retries consume the
 same hard five-request active-run budget and may displace a later query, but
 cannot increase the total. Per-query totals, returned rows, kept rows, caps,
-reuse status, source age, and errors appear in coverage telemetry.
+reuse status, source age, and errors appear in coverage telemetry. Fresh-cache
+reuse is reported as `reused-fresh`; a failed due refresh does not advance the
+last-successful-refresh timestamp or renew the six-hour failure grace.
 
 Before changing query allocation, manually dispatch *Refresh Toronto
 internships* with `adzuna_dry_run=true`. That runs only the Adzuna adapter,
