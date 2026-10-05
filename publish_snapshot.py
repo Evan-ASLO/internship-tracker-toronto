@@ -222,11 +222,16 @@ def normalize_job(job: Mapping[str, Any]) -> dict[str, Any]:
 
     explicit_external_id = _explicit_external_id(job)
     url_external_id = _reliable_url_external_id(source, canonical_url)
+    greenhouse_ids = {url_external_id}
+    parsed_url = urlsplit(canonical_url)
+    if parsed_url.hostname in {"job-boards.greenhouse.io", "boards.greenhouse.io"}:
+        board = parsed_url.path.strip("/").split("/")[0]
+        greenhouse_ids.add(f"{board}:{url_external_id}")
     if (
         source == "greenhouse"
         and explicit_external_id
         and url_external_id
-        and explicit_external_id != url_external_id
+        and explicit_external_id not in greenhouse_ids
     ):
         raise SnapshotError(
             f"Greenhouse externalId {explicit_external_id!r} does not match "

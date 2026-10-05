@@ -10,7 +10,7 @@ business tracks: **Marketing, Business Operations, Finance, Consulting**.
 Every hour, GitHub Actions runs the pipeline:
 
 1. **Pull** — reads postings directly from employer applicant-tracking systems
-   (Greenhouse, Ashby, Workday, SuccessFactors, optional Adzuna, and native
+   (Greenhouse, Lever, Ashby, Workday, SuccessFactors, optional Adzuna, and native
    employer APIs). Nothing is invented. Workday queries use
    tenant-issued Toronto/GTA/Ontario location facets and paginate to exhaustion;
    SuccessFactors pagination continues until empty or repeated results.
@@ -153,6 +153,75 @@ The Cloudflare v1 marker is exactly `source === "adzuna"`. Do not enable the
 secrets until the Cloudflare jobs list, job detail, saved-job, and application
 surfaces also render the same linked minimum-size attribution and the intended
 use is confirmed with Adzuna.
+
+### Verified free public employer boards
+
+`PUBLIC_BOARDS` in `scrape.py` extends the existing connectors with this bounded,
+verified batch:
+
+| Employer | Public API / board | Discovery evidence |
+|---|---|---|
+| Geotab | Greenhouse `internshiplist2000` (separate from the main `geotab` board) | [Public Finance Intern posting](https://job-boards.greenhouse.io/internshiplist2000/jobs/5383131008) identifies Geotab and links its official campus program |
+| Wealthsimple | Ashby `wealthsimple` | [Employer careers page](https://www.wealthsimple.com/en-ca/careers) links this board and its internship program |
+| Waabi | Lever `waabi` | [Employer careers page](https://waabi.ai/careers) links this board |
+
+These are documented, unauthenticated **read-only** interfaces:
+[Greenhouse Job Board API](https://docs.greenhouse.io/job-board.html),
+[Lever Postings API](https://github.com/lever/postings-api), and
+[Ashby Public Job Posting API](https://developers.ashbyhq.com/docs/public-job-posting-api).
+They need no service key or paid plan. This does **not** make hosting, GitHub
+Actions minutes, or other existing providers free. No application submission,
+private ATS API, paid proxy, JobSpy aggregator scrape, LinkedIn scrape, or
+automated search-engine scraping is part of this pipeline.
+
+Greenhouse returns its complete published list; the adapter checks its
+`meta.total` and rejects prospect posts (`internal_job_id: null`). Ashby
+requires `isListed: true` and considers primary and secondary locations.
+Lever uses `skip`/`limit` pagination until a short/empty page, with repeated
+IDs and the 20-page safety cap treated as incomplete rather than a successful
+empty result. Existing bounded network retries and concurrency limits apply.
+
+The existing internship/student and Toronto/GTA/Ontario rules remain in place.
+New boards cannot admit new-grad-only titles, talent communities, or US-only
+remote jobs. A Canadian secondary location is eligible; a generic
+North-America/remote label alone is not. Categories remain tags, not a
+requirement: technical internships were already eligible and are not presented
+as business-track roles. Provider-supplied deadlines are honored where present;
+missing industry, duration, season, or deadline values are not invented.
+
+New board records use `board:provider-id` identities, official posting/application
+URLs, `source_target`, and an absolute `last_seen`. Existing source IDs stay
+unchanged. Canonical official URLs and matching cross-source listings are
+deduplicated before counting additions; replacing an Adzuna copy with a direct
+posting is not a new opportunity.
+
+Each new board records its last successful collection in
+`source_state.public_boards`. On a failed, malformed, or truncated fetch, its
+last-good slice may be reused for six hours **without renewing its timestamp**.
+An expired/missing cache or an inconclusive posting check (for example 403,
+429, or a timeout) blocks both publishers even when the total drop is small.
+`allow_catalog_drop` does not bypass this completeness block. A complete empty
+response replaces the slice immediately; explicit closed/404/410 postings are
+removed, not retained indefinitely. `SOURCE_BASELINE_PATH` selects the captured
+checked-in snapshot; locally it defaults to `live_jobs.json`.
+
+To add a board, first follow a real employer careers link or verify a public
+ATS posting's employer identity, confirm its public API/terms and exact token,
+and check its current eligible listings. Then add a `(source, board, company)`
+entry to `PUBLIC_BOARDS`, not a guessed slug or duplicate main-board entry.
+Exercise parsing, pagination, failure/cache, eligibility, and identity tests.
+Compare against one dated snapshot and verify official pages before reporting
+net-new positions. Write candidate evidence outside the repository; never run
+a full paid-provider refresh just to evaluate a new free board.
+
+Targeted tests (from the repository root):
+
+```text
+python -m unittest discover -s tests -p "test_public_sources.py"
+python -m unittest discover -s tests -p "test_adzuna_source.py"
+python -m unittest discover -s tests -p "test_catalog_guard.py"
+python -m unittest discover -s tests -p "test_publish_snapshot.py"
+```
 
 ## Moving browser data
 

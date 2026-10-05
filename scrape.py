@@ -14,7 +14,10 @@ import json, os, re, time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from threading import Lock, Semaphore
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 import requests
+
+from publish_snapshot import canonicalize_url
 
 TIMEOUT = 20
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -31,6 +34,9 @@ SUCCESSFACTORS_PAGE_SIZE = 25
 SUCCESSFACTORS_MAX_PAGES = 100
 VERIFY_RETRIES = 3
 VERIFY_RETRY_BASE_SECONDS = 0.5
+LEVER_PAGE_SIZE = 100
+LEVER_MAX_PAGES = 20
+PUBLIC_BOARD_GRACE_HOURS = 6
 ADZUNA_RESULTS_PER_PAGE = 50
 ADZUNA_REQUESTS_PER_ACTIVE_RUN = 5
 ADZUNA_REFRESH_INTERVAL_HOURS = 2
@@ -202,6 +208,19 @@ mercury samsara verkada brex riotgames d2l databricks
 
 ASHBY = "cohere ramp deel mercor openai harvey sierra elevenlabs".split()
 
+# Verified public boards; evidence and addition procedure are in README.md.
+PUBLIC_BOARDS = [
+    ("greenhouse", "internshiplist2000", "Geotab"),
+    ("ashby", "wealthsimple", "Wealthsimple"),
+    ("lever", "waabi", "Waabi"),
+]
+PUBLIC_BOARD_KEYS = {coverage_key(source, board) for source, board, _ in PUBLIC_BOARDS}
+PUBLIC_INTERNSHIP_RE = re.compile(
+    r"\b(interns?|internships?|co-?ops?|students?)\b", re.I)
+TALENT_POOL_RE = re.compile(
+    r"\b(talent (?:pool|community|network)|general (?:application|interest)|"
+    r"expression of interest|future opportunities|register your interest)\b", re.I)
+
 # tenant, site, host  - only combos proven to resolve, plus business-heavy tries
 WORKDAY = [
     ("cibc", "search", "wd3"), ("sunlife", "Experienced-Jobs", "wd3"),
@@ -229,26 +248,42 @@ def from_greenhouse(tok):
                          returned=0, query_total=0, complete=False,
                          errors=[f"HTTP {r.status_code}"])
             return []
-        jobs = r.json().get("jobs", [])
+        data = r.json()
+        if not isinstance(data, dict) or not isinstance(data.get("jobs"), list):
+            raise ValueError("invalid jobs response")
+        jobs = data["jobs"]
+        total = (data.get("meta") or {}).get("total", len(jobs))
+        if total != len(jobs):
+            raise ValueError("incomplete jobs response")
         out = []
         for j in jobs:
+            if not isinstance(j, dict) or not source_id(j, "id"):
+                raise ValueError("job missing provider ID")
+            if "internal_job_id" not in j:
+                raise ValueError("job missing prospect status")
+            if j["internal_job_id"] is None:
+                continue
+            if not j.get("title") or not j.get("absolute_url"):
+                raise ValueError("job missing title or URL")
             out.append(with_coverage(
                 dict(company=tok, src="greenhouse", title=j.get("title", ""),
                      loc=(j.get("location") or {}).get("name", ""),
-                     url=j.get("absolute_url", ""),
+                     url=canonicalize_url(j["absolute_url"]),
                      external_id=source_id(j, "id"),
+                     application_deadline=j.get("application_deadline"),
                      posted=j.get("first_published") or j.get("updated_at", ""),
                      content=re.sub("<[^>]+>", " ", j.get("content", "") or "")[:600]),
                 key))
         set_coverage(key, source="greenhouse", target=tok, pages=1,
-                     returned=len(out), query_total=len(jobs), selected_total=len(jobs),
+                     returned=len(jobs), records=len(out),
+                     query_total=len(jobs), selected_total=len(jobs),
                      location_mode="provider", fallback_terms=0, capped_terms=0,
                      errors=[], complete=True)
         return out
-    except Exception as exc:
+    except (requests.RequestException, ValueError, TypeError) as exc:
         set_coverage(key, source="greenhouse", target=tok, pages=0,
                      returned=0, query_total=0, complete=False,
-                     errors=[type(exc).__name__])
+                     errors=[f"{type(exc).__name__}: {exc}"])
         return []
 
 
@@ -264,28 +299,204 @@ def from_ashby(tok):
         d = r.json()
         if not isinstance(d, dict):
             raise ValueError("non-object response")
-        jobs = d.get("jobs", [])
-        out = [
-            with_coverage(
-                dict(company=tok, src="ashby", title=j.get("title", ""),
-                     loc=j.get("location", "") or "", url=j.get("jobUrl", ""),
+        jobs = d.get("jobs")
+        if not isinstance(jobs, list):
+            raise ValueError("invalid jobs response")
+        out = []
+        for j in jobs:
+            if not isinstance(j, dict):
+                raise ValueError("invalid job record")
+            if not isinstance(j.get("isListed"), bool):
+                raise ValueError("job missing listed status")
+            if j.get("isListed") is not True:
+                continue
+            if not source_id(j, "id") or not j.get("title") or not j.get("jobUrl"):
+                raise ValueError("job missing ID, title or URL")
+            locations = [ashby_location(j)]
+            locations.extend(
+                ashby_location(location)
+                for location in (j.get("secondaryLocations") or [])
+            )
+            out.append(with_coverage(
+                dict(company=tok, src="ashby", title=j["title"],
+                     loc=public_location(locations) or locations[0],
+                     locations=locations, url=canonicalize_url(j["jobUrl"]),
                      external_id=source_id(j, "id"),
                      posted=j.get("publishedAt", "") or "",
-                     content=re.sub("<[^>]+>", " ",
-                                    j.get("descriptionHtml", "") or "")[:600]),
-                key)
-            for j in jobs
-        ]
+                     content=clean_text(j.get("descriptionPlain") or re.sub(
+                         "<[^>]+>", " ", j.get("descriptionHtml", "") or ""))[:600]),
+                key))
         set_coverage(key, source="ashby", target=tok, pages=1,
-                     returned=len(out), query_total=len(jobs), selected_total=len(jobs),
+                     returned=len(jobs), records=len(out),
+                     query_total=len(jobs), selected_total=len(jobs),
                      location_mode="provider", fallback_terms=0, capped_terms=0,
                      errors=[], complete=True)
         return out
-    except Exception as exc:
+    except (requests.RequestException, ValueError, TypeError) as exc:
         set_coverage(key, source="ashby", target=tok, pages=0,
                      returned=0, query_total=0, complete=False,
-                     errors=[type(exc).__name__])
+                     errors=[f"{type(exc).__name__}: {exc}"])
         return []
+
+
+def ashby_location(record):
+    address = record.get("address") or {}
+    address = address.get("postalAddress") or address
+    country = clean_text(address.get("addressCountry")).casefold()
+    if country and country not in {"ca", "can", "canada"}:
+        return ""
+    return clean_text(record.get("location"))
+
+
+def public_location(locations):
+    for location in locations:
+        for part in clean_text(location).split(";"):
+            part = part.strip()
+            if geo(part) and (
+                target_location_descriptor(part)
+                or re.fullmatch(r"Ontario(?:,?\s+Canada)?", part, re.I)
+            ):
+                return part
+    return ""
+
+
+def from_lever(tok):
+    key = coverage_key("lever", tok)
+    out, seen = [], set()
+    pages = returned = 0
+    errors = []
+    exhausted = False
+    capped = False
+    try:
+        for page in range(LEVER_MAX_PAGES):
+            response = g(
+                f"https://api.lever.co/v0/postings/{tok}",
+                params={"mode": "json", "skip": page * LEVER_PAGE_SIZE,
+                        "limit": LEVER_PAGE_SIZE},
+            )
+            pages += 1
+            if response.status_code != 200:
+                raise ValueError(f"HTTP {response.status_code}")
+            jobs = response.json()
+            if not isinstance(jobs, list):
+                raise ValueError("invalid jobs response")
+            returned += len(jobs)
+            for job in jobs:
+                if not isinstance(job, dict) or not source_id(job, "id"):
+                    raise ValueError("job missing provider ID")
+                external_id = source_id(job, "id")
+                if external_id in seen:
+                    raise ValueError("repeated posting during pagination")
+                seen.add(external_id)
+                if not job.get("text") or not job.get("hostedUrl"):
+                    raise ValueError("job missing title or URL")
+                categories = job.get("categories") or {}
+                primary = categories.get("location") or ""
+                locations = list(categories.get("allLocations") or [primary])
+                if job.get("country") not in (None, "", "CA"):
+                    locations = [loc for loc in locations if loc != primary]
+                created = job.get("createdAt")
+                posted = (
+                    datetime.fromtimestamp(created / 1000, timezone.utc).isoformat()
+                    if isinstance(created, (int, float)) else ""
+                )
+                out.append(with_coverage(
+                    dict(company=tok, src="lever", title=job["text"],
+                         loc=public_location(locations), locations=locations,
+                         url=canonicalize_url(job["hostedUrl"]),
+                         external_id=external_id, posted=posted,
+                         content=clean_text(job.get("descriptionPlain") or "")[:600]),
+                    key))
+            if len(jobs) < LEVER_PAGE_SIZE:
+                exhausted = True
+                break
+        if not exhausted:
+            capped = True
+            errors.append("pagination safety cap reached")
+    except (requests.RequestException, ValueError, TypeError, OverflowError) as exc:
+        errors.append(f"{type(exc).__name__}: {exc}")
+    set_coverage(
+        key, source="lever", target=tok, pages=pages, returned=returned,
+        records=len(out), query_total=None, selected_total=None,
+        location_mode="provider", capped_terms=int(capped),
+        errors=errors, complete=exhausted and not errors,
+    )
+    return out
+
+
+def from_public_board(spec, now=None):
+    source, board, company = spec
+    key = coverage_key(source, board)
+    now = now or datetime.now(timezone.utc)
+    now = now.astimezone(timezone.utc)
+    adapter = {"greenhouse": from_greenhouse, "ashby": from_ashby, "lever": from_lever}
+    rows = adapter[source](board)
+    if any(
+        row.get("application_deadline")
+        and _parse_timestamp(row["application_deadline"]) is None
+        for row in rows
+    ):
+        set_coverage(key, complete=False, errors=["invalid application deadline"])
+    if COVERAGE[key]["complete"]:
+        for row in rows:
+            row["company"] = company
+            row["external_id"] = f"{board}:{row['external_id']}"
+            row["source_target"] = board
+            row["last_seen"] = now.isoformat()
+            row["loc"] = public_location(row.get("locations") or [row["loc"]])
+        set_coverage(key, status="fresh", source_refreshed_at=now.isoformat(),
+                     source_age_hours=0.0, reused=0)
+        return [
+            row for row in rows if not row.get("application_deadline")
+            or _parse_timestamp(row["application_deadline"]) > now
+        ]
+
+    print(f"COVERAGE WARNING {key}: incomplete fetch; checking last-good slice")
+    baseline_path = os.environ.get("SOURCE_BASELINE_PATH", "live_jobs.json")
+    try:
+        with open(baseline_path, encoding="utf-8") as handle:
+            baseline = json.load(handle)
+        if not isinstance(baseline, dict) or not isinstance(baseline.get("jobs"), list):
+            raise ValueError("invalid baseline snapshot")
+        state = baseline.get("source_state") or {}
+        if not isinstance(state, dict) or not all(
+            isinstance(row, dict) for row in baseline["jobs"]
+        ):
+            raise ValueError("invalid baseline records")
+        public_states = state.get("public_boards") or {}
+        if not isinstance(public_states, dict) or not isinstance(
+            public_states.get(key, {}), dict
+        ):
+            raise ValueError("invalid source state")
+        refreshed_at = _parse_timestamp(public_states.get(key, {}).get("refreshed_at"))
+        age_hours = (
+            (now - refreshed_at).total_seconds() / 3600 if refreshed_at else None
+        )
+        prior_rows = [
+            with_coverage(dict(row), key) for row in baseline["jobs"]
+            if row.get("src") == source and row.get("source_target") == board
+        ]
+        if any(
+            row.get("application_deadline")
+            and _parse_timestamp(row["application_deadline"]) is None
+            for row in prior_rows
+        ):
+            raise ValueError("invalid cached application deadline")
+    except (OSError, ValueError, TypeError, KeyError) as exc:
+        print(f"COVERAGE WARNING {key}: baseline unavailable ({type(exc).__name__})")
+        prior_rows, refreshed_at, age_hours = [], None, None
+    can_reuse = age_hours is not None and 0 <= age_hours <= PUBLIC_BOARD_GRACE_HOURS
+    set_coverage(
+        key, status="reused-incomplete" if can_reuse else "blocked",
+        source_refreshed_at=refreshed_at.isoformat() if refreshed_at else None,
+        source_age_hours=age_hours, reused=len(prior_rows) if can_reuse else 0,
+    )
+    if not can_reuse:
+        return []
+    return [
+        row for row in prior_rows if not row.get("application_deadline")
+        or _parse_timestamp(row["application_deadline"]) > now
+    ]
 
 
 def _iter_workday_facets(facets, inside_location_group=False):
@@ -946,6 +1157,8 @@ TASKS = (
        for spec in SUCCESSFACTORS]
     + [(from_amazon, "amazon", coverage_key("amazon", "amazon"))]
     + [(from_adzuna, "adzuna", coverage_key("adzuna", "ca/Toronto"))]
+    + [(from_public_board, spec, coverage_key(spec[0], spec[1]))
+       for spec in PUBLIC_BOARDS]
 )
 
 
@@ -972,14 +1185,15 @@ def verify(rec):
     low = r.text.lower()
     for dead in ("no longer accepting", "position has been filled",
                  "job is no longer available", "posting is closed",
-                 "no longer available", "req is closed"):
+                 "no longer available", "req is closed",
+                 "not accepting any further applicants"):
         if dead in low:
             return rec, False, "closed text"
     return rec, True, "200"
 
 
 DIRECT_JOB_SOURCES = {
-    "workday", "greenhouse", "successfactors", "ashby", "amazon"
+    "workday", "greenhouse", "successfactors", "ashby", "lever", "amazon"
 }
 
 
@@ -1009,8 +1223,21 @@ def same_listing(left, right):
     return not left_location or not right_location or left_location == right_location
 
 
+def listing_url(record):
+    parsed = urlsplit(canonicalize_url(record.get("url")))
+    query = urlencode([
+        (key, value) for key, value in parse_qsl(parsed.query, keep_blank_values=True)
+        if not key.lower().startswith("utm_") and key not in {"gh_src", "lever-source"}
+    ])
+    path = parsed.path.rstrip("/")
+    if parsed.hostname in {"jobs.ashbyhq.com", "jobs.lever.co"}:
+        path = re.sub(r"/(?:apply|application)$", "", path)
+    return urlunsplit((parsed.scheme, parsed.netloc, path, query, ""))
+
+
 def dedupe_candidates(candidates):
     seen_identity = set()
+    seen_urls = set()
     unique = []
     unique_counts = {}
     direct_records = []
@@ -1032,6 +1259,9 @@ def dedupe_candidates(candidates):
         if identity in seen_identity:
             continue
         seen_identity.add(identity)
+        canonical_url = listing_url(record) if record.get("url") else ""
+        if canonical_url and canonical_url in seen_urls:
+            continue
 
         key = record.get("_coverage_key")
         if record.get("src") == "adzuna" and any(
@@ -1039,8 +1269,17 @@ def dedupe_candidates(candidates):
         ):
             direct_overlap_counts[key] = direct_overlap_counts.get(key, 0) + 1
             continue
+        if any(
+            record.get("src") != direct.get("src")
+            and (record.get("source_target") or direct.get("source_target"))
+            and same_listing(record, direct)
+            for direct in direct_records
+        ):
+            continue
 
         unique.append(record)
+        if canonical_url:
+            seen_urls.add(canonical_url)
         unique_counts[key] = unique_counts.get(key, 0) + 1
         if record.get("src") in DIRECT_JOB_SOURCES:
             direct_records.append(record)
@@ -1162,11 +1401,14 @@ def source_state_payload():
     key = coverage_key("adzuna", "ca/Toronto")
     with COVERAGE_LOCK:
         entry = dict(COVERAGE.get(key) or {})
-    if not entry:
-        return {}
-    age_hours = entry.get("source_age_hours")
-    return {
-        "adzuna": {
+        public_entries = {
+            public_key: dict(COVERAGE[public_key])
+            for public_key in sorted(PUBLIC_BOARD_KEYS) if public_key in COVERAGE
+        }
+    result = {}
+    if entry:
+        age_hours = entry.get("source_age_hours")
+        result["adzuna"] = {
             "status": entry.get("status"),
             "refreshed_at": entry.get("source_refreshed_at"),
             "age_seconds": (
@@ -1176,7 +1418,68 @@ def source_state_payload():
             "requests": entry.get("request_attempts", 0),
             "reused": entry.get("reused", 0),
         }
+    if public_entries:
+        result["public_boards"] = {
+            public_key: {
+                "status": values.get("status", "blocked"),
+                "refreshed_at": values.get("source_refreshed_at"),
+                "complete": values.get("complete", False),
+                "reused": values.get("reused", 0),
+            }
+            for public_key, values in public_entries.items()
+        }
+    return result
+
+
+def filter_candidates(records):
+    candidates, counts = [], {}
+    for record in records:
+        record["title"] = clean_text(record.get("title"))
+        record["loc"] = clean_text(record.get("loc"))
+        if not record["title"] or not record.get("url"):
+            continue
+        if not is_internship(record["title"]):
+            continue
+        if record.get("source_target") and (
+            not PUBLIC_INTERNSHIP_RE.search(record["title"])
+            or TALENT_POOL_RE.search(record["title"])
+        ):
+            continue
+        region = geo(record["loc"])
+        if not region:
+            continue
+        record["geo"] = region
+        record["cats"] = categorize(record["title"])
+        candidates.append(record)
+        key = record.get("_coverage_key")
+        counts[key] = counts.get(key, 0) + 1
+    return candidates, counts
+
+
+def public_verification_failure(record, reason):
+    key = coverage_key(record.get("src"), record.get("source_target"))
+    if key not in PUBLIC_BOARD_KEYS or reason in {"HTTP 404", "HTTP 410", "closed text"}:
+        return
+    with COVERAGE_LOCK:
+        errors = list(COVERAGE[key].get("errors") or [])
+    errors.append(f"posting verification inconclusive: {reason}")
+    set_coverage(key, status="blocked", complete=False, errors=errors)
+    print(f"COVERAGE WARNING {key}: publication blocked by inconclusive verification")
+
+
+def snapshot_job(record):
+    row = {
+        "company": record["company"], "title": record["title"], "loc": record["loc"],
+        "geo": record["geo"], "cats": record["cats"], "url": record["url"],
+        "posted": record["posted"], "src": record["src"],
+        "external_id": record.get("external_id"),
+        "content": " ".join((record.get("content") or "").split())[:400],
     }
+    if record.get("source_target"):
+        row.update(source_target=record["source_target"], last_seen=record["last_seen"])
+        if record.get("application_deadline"):
+            row["application_deadline"] = record["application_deadline"]
+    return row
 
 
 def main():
@@ -1194,33 +1497,12 @@ def main():
                 set_coverage(
                     key, source=source, target=target, pages=0, returned=0,
                     query_total=None, selected_total=None, complete=False,
-                    errors=[type(exc).__name__])
+                    errors=[type(exc).__name__],
+                    status="blocked" if key in PUBLIC_BOARD_KEYS else "incomplete")
                 print(f"COVERAGE WARNING {key}: task failed with {type(exc).__name__}")
     print(f"pulled {len(raw)} raw postings in {time.time()-t0:.0f}s")
 
-    # Normalize before any filtering: invisible characters would otherwise
-    # break regex word boundaries and leak into the published JSON.
-    for r in raw:
-        r["title"] = clean_text(r.get("title"))
-        r["loc"] = clean_text(r.get("loc"))
-
-    # filter: intern + Toronto area. Category is TAGGED, not required -
-    # dropping uncategorized rows would hide real postings from the user.
-    cand = []
-    filtered_counts = {}
-    for r in raw:
-        if not r["title"] or not r["url"]:
-            continue
-        if not is_internship(r["title"]):
-            continue
-        gt = geo(r["loc"])
-        if not gt:
-            continue
-        r["geo"] = gt
-        r["cats"] = categorize(r["title"])
-        cand.append(r)
-        key = r.get("_coverage_key")
-        filtered_counts[key] = filtered_counts.get(key, 0) + 1
+    cand, filtered_counts = filter_candidates(raw)
 
     # Dedupe by source identity, then prefer direct ATS records when an Adzuna
     # aggregate row matches the same normalized company/title/location.
@@ -1241,6 +1523,7 @@ def main():
     print(f"VERIFIED LIVE: {len(live)}   DROPPED (closed/unreachable): {len(dropped)}")
     for rec, why in dropped:
         print(f"   drop [{why}] {rec['company']} - {rec['title'][:50]}")
+        public_verification_failure(rec, why)
 
     live_counts = {}
     for rec, _ in live:
@@ -1250,13 +1533,7 @@ def main():
 
     out = []
     for rec, _ in live:
-        out.append({
-            "company": rec["company"], "title": rec["title"], "loc": rec["loc"],
-            "geo": rec["geo"], "cats": rec["cats"], "url": rec["url"],
-            "posted": rec["posted"], "src": rec["src"],
-            "external_id": rec.get("external_id"),
-            "content": " ".join((rec.get("content") or "").split())[:400],
-        })
+        out.append(snapshot_job(rec))
     out.sort(key=lambda r: (r["company"], r["title"], r["url"]))
 
     print("\n=== SHIPPING ===")

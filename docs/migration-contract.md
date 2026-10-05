@@ -51,6 +51,10 @@ Provider identity details:
 
 - Greenhouse API IDs are used directly. When a URL also exposes `gh_jid` or a
   `/jobs/<id>` path, normalization fails if it disagrees with the API ID.
+- Newly verified `PUBLIC_BOARDS` records qualify provider IDs by board, for
+  example `internshiplist2000:5383131008`, `wealthsimple:<uuid>`, or
+  `waabi:<uuid>`. A scoped Greenhouse ID must match both the official URL's
+  board and numeric post ID. Existing unqualified IDs are not rewritten.
 - Workday title-bearing URLs are parsed for their terminal requisition token
   and namespaced by tenant, for example `bmo:R260026123-1`.
 - SuccessFactors terminal numeric requisitions are namespaced by host, for
@@ -63,6 +67,13 @@ Provider identity details:
 All IDs and hashes are full 64-character lowercase hexadecimal strings.
 Relative provider dates such as `Posted Today` remain in `postedText`;
 `postedAt` is populated only for parseable absolute timestamps.
+
+The scraper's `source_target`, `last_seen`, optional `application_deadline`,
+and `source_state.public_boards` are local/Vercel snapshot metadata. They are
+not added to the strict normalized job shape above. Cloudflare continues to
+receive the same schema-version-1 fields, source strings, and count/byte limits.
+Source completeness is checked before either publisher; stale failed-board
+caches and inconclusive URL verification cannot silently deactivate a slice.
 
 Cloudflare v1 field caps are enforced before publication:
 
@@ -111,7 +122,9 @@ The hourly/manual workflow preserves this order:
    whether git snapshots changed.
 4. Compare normalized counts against the higher of the checked-in and live
    baselines. A drop greater than 25% blocks both publication paths unless a
-   manually dispatched run sets `allow_catalog_drop`.
+   manually dispatched run sets `allow_catalog_drop`. A new public board whose
+   failed fetch has no usable last-good slice, or whose posting verification
+   is inconclusive, blocks publication regardless of the percentage or override.
 5. Attempt Cloudflare ingest only when the repository Actions variable
    `CLOUDFLARE_DUAL_PUBLISH` is exactly `true`.
 6. Attempt the existing Vercel production deployment when live drift exists or

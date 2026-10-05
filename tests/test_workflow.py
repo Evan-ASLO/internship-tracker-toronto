@@ -56,6 +56,13 @@ class RefreshWorkflowTests(unittest.TestCase):
         self.assertIn("force_adzuna_refresh:", WORKFLOW)
         self.assertIn('ADZUNA_FORCE_REFRESH: "true"', WORKFLOW)
 
+    def test_public_boards_use_captured_baseline_without_changing_schedule(self):
+        self.assertIn(
+            "SOURCE_BASELINE_PATH: ${{ runner.temp }}/checked-in-live_jobs.json",
+            WORKFLOW,
+        )
+        self.assertIn('- cron: "0 * * * *"', WORKFLOW)
+
 
 if __name__ == "__main__":
     unittest.main()

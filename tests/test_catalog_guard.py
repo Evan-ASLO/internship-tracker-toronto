@@ -58,6 +58,22 @@ class CatalogDropGuardTests(unittest.TestCase):
         self.assertEqual(blocked, 1)
         self.assertEqual(allowed, 0)
 
+    def test_incomplete_public_source_blocks_even_a_small_or_overridden_drop(self):
+        snapshot = {
+            "fetched_at": "2026-10-04T21:00:00Z", "jobs": [],
+            "source_state": {"public_boards": {
+                "lever:waabi": {"status": "blocked", "complete": False}
+            }},
+        }
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / "snapshot.json"
+            path.write_text(json.dumps(snapshot), encoding="utf-8")
+            for extra in [[], ["--allow-drop"]]:
+                with redirect_stderr(io.StringIO()) as output:
+                    result = main(["--current", str(path), *extra])
+                self.assertEqual(result, 1)
+                self.assertIn("lever:waabi", output.getvalue())
+
 
 if __name__ == "__main__":
     unittest.main()

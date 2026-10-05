@@ -97,6 +97,15 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         current_snapshot = load_snapshot(args.current)
+        public_states = (current_snapshot.get("source_state") or {}).get("public_boards") or {}
+        blocked_sources = [
+            key for key, state in public_states.items()
+            if state.get("status") == "blocked"
+        ]
+        if blocked_sources:
+            raise CatalogDropError(
+                "Public source coverage blocks publication: " + ", ".join(blocked_sources)
+            )
         adzuna_state = (
             (current_snapshot.get("source_state") or {}).get("adzuna") or {}
         )
