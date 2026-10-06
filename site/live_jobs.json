@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-06T01:07:45.149665+00:00",
+  "fetched_at": "2026-10-06T08:21:37.013323+00:00",
   "categories": [
     "Finance",
     "Marketing",
@@ -7,6 +7,20 @@
     "Consulting"
   ],
   "jobs": [
+    {
+      "company": "01705 Continental Casualty Company-Canada",
+      "title": "Technology Intern (Transformation- 12 M Contract)",
+      "loc": "Toronto, Ontario",
+      "geo": "Toronto",
+      "cats": [
+        "Consulting"
+      ],
+      "url": "https://www.adzuna.ca/details/5912737261?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-05T12:47:32Z",
+      "src": "adzuna",
+      "external_id": "5912737261",
+      "content": "JOB DESCRIPTION: The Technology Intern (Transformation) will support initiatives that help the organization adopt new technologies, improve processes, and strengthen governance practices. Working alongside technology and business professionals, the intern will assist with research, documentation, meeting coordination, process mapping, and governance activities while developing an understanding of "
+    },
     {
       "company": "Altera Semiconductor",
       "title": "High Level Synthesis Engineer - Intern",
@@ -44,6 +58,18 @@
       "content": "Description Are you a PhD student interested in machine learning, natural language processing, computer vision, automated reasoning, or robotics? We are looking for skilled scientists capable of putting theory into practice through experimentation and invention, leveraging science techniques and implementing systems to work on massive datasets in an effort to tackle never-before-solved problems. A"
     },
     {
+      "company": "Anish Shirodker Pharmacy",
+      "title": "Pharmacy Intern, Hourly Part Time Flexible Shifts",
+      "loc": "Milton, Halton",
+      "geo": "GTA",
+      "cats": [],
+      "url": "https://www.adzuna.ca/details/5912307242?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-05T04:39:46Z",
+      "src": "adzuna",
+      "external_id": "5912307242",
+      "content": "Join a locally owned and operated store to help deliver health, beauty and convenience services in your community, and keep the customer at the centre of everything you do. Why this role is important? SUMMARY: Join a locally owned and operated store to help deliver health, beauty and convenience services in your community, and keep the customer at the centre of everything you do. DUTIES & RESPONSI"
+    },
+    {
       "company": "Archmill House",
       "title": "Business Administration Intern",
       "loc": "Ancaster, Hamilton region",
@@ -53,7 +79,7 @@
       "posted": "2026-10-02T08:19:21Z",
       "src": "adzuna",
       "external_id": "5908015155",
-      "content": "Job Description Job Description For over 40 years, Archmill House Inc. has been a trusted leader in the creation of high-end millwork and premium store fixtures across North America. Our legacy is built on delivering exceptional craftsmanship, innovative solutions, and unwavering commitment to quality. This dedication has allowed us to become a preferred partner for a wide range of commercial and"
+      "content": "Job Description Job Description For over 40 years, Archmill House Inc. has been a trusted leader in the creation of high-end millwork and premium store fixtures across North America. Our legacy is built on delivering exceptional craftsmanship, innovative solutions, and unwavering commitment to quality. This dedication has allowed us to become a preferred partner for a wide range of commercial and "
     },
     {
       "company": "Archmill House",
@@ -77,7 +103,7 @@
       "posted": "2026-10-02T04:55:08Z",
       "src": "adzuna",
       "external_id": "5907706485",
-      "content": "Introduction Atura Power is the largest fleet of combined cycle power plants in Ontario. Our facilities are located across the province including Napanee, Halton Hills, Toronto, and Windsor. This position will be located at either Portlands Energy Centre in Toronto, or the company head office in Oakville. Guided by our values, we are inclusive, we work safely, we are flexible, we look for ways to"
+      "content": "Introduction Atura Power is the largest fleet of combined cycle power plants in Ontario. Our facilities are located across the province including Napanee, Halton Hills, Toronto, and Windsor. This position will be located at either Portlands Energy Centre in Toronto, or the company head office in Oakville. Guided by our values, we are inclusive, we work safely, we are flexible, we look for ways to "
     },
     {
       "company": "Autodesk",
@@ -154,18 +180,6 @@
       "content": "Application Deadline: 10/03/2026 Address: 33 Dundas Street West Job Family Group: Technology As a co-op/intern student at BMO, you will have the opportunity to be heard, keep growing and make a difference. You will be part of our campus program to gain the skills and knowledge needed to take on roles similar to the description listed below. Our student experience is designed to integrate you to th"
     },
     {
-      "company": "CGI",
-      "title": "New Grad: AI-Assisted Full-Stack Developer",
-      "loc": "Toronto, Ontario",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5907692079?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-10-02T04:38:57Z",
-      "src": "adzuna",
-      "external_id": "5907692079",
-      "content": "Position Description: We are seeking an adaptable and tech-savvy Junior Developer to join our engineering team. This role is ideal for a recent graduate or a professional with 0-3 years of experience who possesses a strong foundation in full-stack development and an eagerness to leverage modern tools. You will work across diverse technology stacks (including C#, Python, JavaScript/TypeScript, Java"
-    },
-    {
       "company": "CNA",
       "title": "Technology Intern (Transformation- 12 M Contract)",
       "loc": "Toronto, Ontario",
@@ -191,7 +205,7 @@
       "posted": "2026-10-04T12:40:36Z",
       "src": "adzuna",
       "external_id": "5911709007",
-      "content": "Be part of building a national brand. The Canadian Olympic Committee (COC) is a national, private, not-for-profit organization committed to high-performance sports excellence. We are the largest private supporter of high-performance sport in Canada and we are responsible for all aspects of Canada's involvement in the Olympic Movement, including participation in the Olympic and Pan American Games."
+      "content": "Be part of building a national brand. The Canadian Olympic Committee (COC) is a national, private, not-for-profit organization committed to high-performance sports excellence. We are the largest private supporter of high-performance sport in Canada and we are responsible for all aspects of Canada's involvement in the Olympic Movement, including participation in the Olympic and Pan American Games. "
     },
     {
       "company": "Capital One Canada",
@@ -207,15 +221,15 @@
     },
     {
       "company": "Celestica",
-      "title": "Student Intern, Continuous Improvement",
+      "title": "Student Intern, Supply Line Management",
       "loc": "Toronto, Ontario",
       "geo": "Toronto",
       "cats": [],
-      "url": "https://www.adzuna.ca/details/5907615596?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-10-02T03:15:07Z",
+      "url": "https://www.adzuna.ca/details/5912257805?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-05T03:54:01Z",
       "src": "adzuna",
-      "external_id": "5907615596",
-      "content": "Req ID: 140758 Remote Position: Hybrid Region: Americas Country: Canada State/Province: Ontario City: Toronto 16 Month Internship As a global technology leader, Celestica designs, engineers, and manufactures industry-leading products and services that drive customer success and market advancement. Headquartered in Toronto, Canada, we bring together over 33,000 employees across more than 45 sites i"
+      "external_id": "5912257805",
+      "content": "Req ID: 141144 Remote Position: Hybrid Region: Americas Country: Canada State/Province: Ontario City: Toronto 16 Month Internship As a global technology leader, Celestica designs, engineers, and manufactures industry-leading products and services that drive customer success and market advancement. Headquartered in Toronto, Canada, we bring together over 33,000 employees across more than 45 sites i"
     },
     {
       "company": "Coty",
@@ -283,7 +297,7 @@
       "posted": "2026-10-04T04:38:51Z",
       "src": "adzuna",
       "external_id": "5911279710",
-      "content": "Join a Challenger At EQ, we're remaking banking so every Canadian gets ahead, every day. Serving nearly 4 million Canadians from coast to coast, we offer a wide variety of financial services from banking and lending, to trust and credit union solutions. We've been at this since 1970, challenging the conventions of traditional banking with smarter, faster, and more connected financial experiences."
+      "content": "Join a Challenger At EQ, we're remaking banking so every Canadian gets ahead, every day. Serving nearly 4 million Canadians from coast to coast, we offer a wide variety of financial services from banking and lending, to trust and credit union solutions. We've been at this since 1970, challenging the conventions of traditional banking with smarter, faster, and more connected financial experiences. "
     },
     {
       "company": "GAO Group",
@@ -299,17 +313,15 @@
     },
     {
       "company": "GAO Group",
-      "title": "Email Marketing Intern The GAO Group (USA & Canada)",
+      "title": "AI & IoT Research Intern",
       "loc": "Toronto, Ontario",
       "geo": "Toronto",
-      "cats": [
-        "Marketing"
-      ],
-      "url": "https://www.adzuna.ca/details/5907605990?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-10-02T03:12:47Z",
+      "cats": [],
+      "url": "https://www.adzuna.ca/details/5912248047?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-05T03:34:51Z",
       "src": "adzuna",
-      "external_id": "5907605990",
-      "content": "Remote Digital Marketing Campaign Analytics Get hands-on with real email campaigns audience segmentation, A/B testing, and performance analytics with an international tech company. Full JD below Work Mode: Remote About the Role The GAO Group is looking for a creative and enthusiastic Email Marketing Intern to support the planning, execution, and optimization of email marketing campaigns. This inte"
+      "external_id": "5912248047",
+      "content": "Employment: Internship Duration: 3 6 Months Location: Remote GAO Group & Aperture Venture Studio are seeking PhD students for a 3 6 month AI & IoT Research Internship. Join our Research & Development (R&D) team and contribute to Physical AI, AIoT, IoT, AI/ML, intelligent sensing, Edge AI, connected systems, and emerging technologies through research, experiments, prototypes, and proof-of-concept d"
     },
     {
       "company": "GAO Group",
@@ -325,39 +337,15 @@
     },
     {
       "company": "GAO Group",
-      "title": "Virtual AI Technical Writing Intern",
+      "title": "Human Resource Intern",
       "loc": "Toronto, Ontario",
       "geo": "Toronto",
       "cats": [],
-      "url": "https://www.adzuna.ca/details/5907605995?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-10-02T03:12:47Z",
+      "url": "https://www.adzuna.ca/details/5912248046?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-05T03:34:51Z",
       "src": "adzuna",
-      "external_id": "5907605995",
-      "content": "Remote Global Team GAO Group (USA & Canada) Turn your writing skills into real-world AI-powered tech content. Apply now! Are you passionate about tech and love writing? Join and gain hands-on experience creating impactful technical content in a global, high-tech environment. Write and edit technical documents (manuals, guides, datasheets) Use AI tools for research & content creation Simplify compl"
-    },
-    {
-      "company": "GE Vernova",
-      "title": "GE Vernova Nuclear Canadian Licensing Intern",
-      "loc": "Markham, York region",
-      "geo": "GTA",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5907688937?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-10-02T04:34:39Z",
-      "src": "adzuna",
-      "external_id": "5907688937",
-      "content": "Job Description Summary GE Vernova Hitachi Nuclear Energy is looking to add engineering and science students for a 12-month co-op program starting in May 2027 to support the licensing of the BWRX-300 Small Modular Reactor in Canada! Job Description Role Summary/Purpose: GE Vernova is pleased to offer selected students the opportunity to join our licensing team for an internship. Students will be e"
-    },
-    {
-      "company": "Genus PLC",
-      "title": "Reproduction and Breeding Intern: Canada",
-      "loc": "Elmira, Waterloo region",
-      "geo": "Ontario",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5907195484?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-10-01T23:58:09Z",
-      "src": "adzuna",
-      "external_id": "5907195484",
-      "content": "Do you have a passion for cattle and a knack for problem-solving? ABS Global, a Genus Company, is offering the ultimate Reproduction and Breeding Internship, where you'll be an arm's length away from the fascinating world of cattle reproduction-literally! As part of our expert team, you'll help farmers ensure their herds are thriving, while learning the ropes of cutting-edge bovine technology. If"
+      "external_id": "5912248046",
+      "content": "& Kickstart your HR career with an international tech-focused company! As an youll support recruitment, onboarding and talent management while working with AI-powered tools in a diverse global environment. Source and recruit candidates Post jobs on platforms & university portals Screen resumes and schedule interviews Communicate with applicants via email & LinkedIn Assist with AI-based HR tasks an"
     },
     {
       "company": "Geotab",
@@ -371,7 +359,7 @@
       "external_id": "internshiplist2000:5309667008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-06T01:07:02.290287+00:00"
+      "last_seen": "2026-10-06T08:20:41.943653+00:00"
     },
     {
       "company": "Geotab",
@@ -387,7 +375,7 @@
       "external_id": "internshiplist2000:5380853008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-06T01:07:02.290287+00:00"
+      "last_seen": "2026-10-06T08:20:41.943653+00:00"
     },
     {
       "company": "Geotab",
@@ -401,7 +389,7 @@
       "external_id": "internshiplist2000:5413032008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-06T01:07:02.290287+00:00"
+      "last_seen": "2026-10-06T08:20:41.943653+00:00"
     },
     {
       "company": "Geotab",
@@ -417,7 +405,7 @@
       "external_id": "internshiplist2000:5384593008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-06T01:07:02.290287+00:00"
+      "last_seen": "2026-10-06T08:20:41.943653+00:00"
     },
     {
       "company": "Geotab",
@@ -431,7 +419,7 @@
       "external_id": "internshiplist2000:5309952008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-06T01:07:02.290287+00:00"
+      "last_seen": "2026-10-06T08:20:41.943653+00:00"
     },
     {
       "company": "Geotab",
@@ -447,7 +435,7 @@
       "external_id": "internshiplist2000:5383289008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-06T01:07:02.290287+00:00"
+      "last_seen": "2026-10-06T08:20:41.943653+00:00"
     },
     {
       "company": "Geotab",
@@ -461,7 +449,7 @@
       "external_id": "internshiplist2000:5396891008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-06T01:07:02.290287+00:00"
+      "last_seen": "2026-10-06T08:20:41.943653+00:00"
     },
     {
       "company": "Geotab",
@@ -477,7 +465,7 @@
       "external_id": "internshiplist2000:5383131008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-06T01:07:02.290287+00:00"
+      "last_seen": "2026-10-06T08:20:41.943653+00:00"
     },
     {
       "company": "Geotab",
@@ -491,7 +479,7 @@
       "external_id": "internshiplist2000:5399993008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-06T01:07:02.290287+00:00"
+      "last_seen": "2026-10-06T08:20:41.943653+00:00"
     },
     {
       "company": "Geotab",
@@ -507,7 +495,7 @@
       "external_id": "internshiplist2000:5368704008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-06T01:07:02.290287+00:00"
+      "last_seen": "2026-10-06T08:20:41.943653+00:00"
     },
     {
       "company": "Geotab",
@@ -521,7 +509,7 @@
       "external_id": "internshiplist2000:5441309008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-06T01:07:02.290287+00:00"
+      "last_seen": "2026-10-06T08:20:41.943653+00:00"
     },
     {
       "company": "Geotab",
@@ -537,7 +525,7 @@
       "external_id": "internshiplist2000:5358560008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-06T01:07:02.290287+00:00"
+      "last_seen": "2026-10-06T08:20:41.943653+00:00"
     },
     {
       "company": "Geotab",
@@ -551,7 +539,7 @@
       "external_id": "internshiplist2000:5367495008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-06T01:07:02.290287+00:00"
+      "last_seen": "2026-10-06T08:20:41.943653+00:00"
     },
     {
       "company": "Geotab",
@@ -565,7 +553,7 @@
       "external_id": "internshiplist2000:5360844008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-06T01:07:02.290287+00:00"
+      "last_seen": "2026-10-06T08:20:41.943653+00:00"
     },
     {
       "company": "Geotab",
@@ -581,7 +569,7 @@
       "external_id": "internshiplist2000:5422327008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-06T01:07:02.290287+00:00"
+      "last_seen": "2026-10-06T08:20:41.943653+00:00"
     },
     {
       "company": "Geotab",
@@ -595,7 +583,7 @@
       "external_id": "internshiplist2000:5379678008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-06T01:07:02.290287+00:00"
+      "last_seen": "2026-10-06T08:20:41.943653+00:00"
     },
     {
       "company": "Geotab",
@@ -609,7 +597,7 @@
       "external_id": "internshiplist2000:5350915008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-06T01:07:02.290287+00:00"
+      "last_seen": "2026-10-06T08:20:41.943653+00:00"
     },
     {
       "company": "Geotab",
@@ -623,7 +611,7 @@
       "external_id": "internshiplist2000:5376578008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-06T01:07:02.290287+00:00"
+      "last_seen": "2026-10-06T08:20:41.943653+00:00"
     },
     {
       "company": "Geotab",
@@ -637,7 +625,7 @@
       "external_id": "internshiplist2000:5361630008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-06T01:07:02.290287+00:00"
+      "last_seen": "2026-10-06T08:20:41.943653+00:00"
     },
     {
       "company": "Geotab",
@@ -651,7 +639,7 @@
       "external_id": "internshiplist2000:5383412008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-06T01:07:02.290287+00:00"
+      "last_seen": "2026-10-06T08:20:41.943653+00:00"
     },
     {
       "company": "Geotab",
@@ -665,7 +653,7 @@
       "external_id": "internshiplist2000:5367565008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-06T01:07:02.290287+00:00"
+      "last_seen": "2026-10-06T08:20:41.943653+00:00"
     },
     {
       "company": "Geotab",
@@ -679,7 +667,7 @@
       "external_id": "internshiplist2000:5177168008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-06T01:07:02.290287+00:00"
+      "last_seen": "2026-10-06T08:20:41.943653+00:00"
     },
     {
       "company": "Geotab",
@@ -693,7 +681,7 @@
       "external_id": "internshiplist2000:5385281008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-06T01:07:02.290287+00:00"
+      "last_seen": "2026-10-06T08:20:41.943653+00:00"
     },
     {
       "company": "HarperCollins Publishers",
@@ -744,44 +732,18 @@
       "content": "Location: Toronto, Ontario, Canada Job ID: R0145764 Date Posted: 2026-10-01 Company Name: Hitachi Rail Canada Inc. Profession (Job Category): Administration & Facilities Job Schedule: Full time Remote: No About Us A career at Hitachi Rail will help create a legacy. With operations in every corner of the world, our work goes to the cutting-edge of digital transformation and technology. From the mul"
     },
     {
-      "company": "Intuit, Inc.",
-      "title": "Winter 2027: Product Research Co-op (8 months)",
-      "loc": "Toronto, Ontario",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5911708977?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-10-04T12:40:36Z",
-      "src": "adzuna",
-      "external_id": "5911708977",
-      "content": "About our Emerging Talent Program: Intuit invests in Emerging Talent because fresh perspectives strengthen our products and teams. The program is backed by a culture that values curiosity and collaboration, and you'll be supported by dedicated managers and mentors who are invested in your growth. As an intern or co-op, you'll work on meaningful projects with business impact, many centered on AI an"
-    },
-    {
-      "company": "J&J Family of Companies",
-      "title": "Global Strategic Marketing, Co-Op",
+      "company": "IBM",
+      "title": "AI & Automation Consultant Intern / Stagiaire conseiller en IA et automatisation",
       "loc": "Toronto, Ontario",
       "geo": "Toronto",
       "cats": [
-        "Marketing"
+        "Consulting"
       ],
-      "url": "https://www.adzuna.ca/details/5912264401?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-10-05T03:59:34Z",
+      "url": "https://www.adzuna.ca/details/5912257901?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-05T03:54:12Z",
       "src": "adzuna",
-      "external_id": "5912264401",
-      "content": "At Johnson & Johnson, we believe health is everything. Our strength in healthcare innovation empowers us to build a world where complex diseases are prevented, treated, and cured, where treatments are smarter and less invasive, and solutions are personal. Through our expertise in Innovative Medicine and MedTech, we are uniquely positioned to innovate across the full spectrum of healthcare solution"
-    },
-    {
-      "company": "Johnson and Johnson",
-      "title": "Global Strategic Marketing, Co-Op",
-      "loc": "Toronto, Ontario",
-      "geo": "Toronto",
-      "cats": [
-        "Marketing"
-      ],
-      "url": "https://www.adzuna.ca/details/5912040738?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-10-04T22:18:37Z",
-      "src": "adzuna",
-      "external_id": "5912040738",
-      "content": "At Johnson & Johnson,we believe health is everything. Our strength in healthcare innovation empowers us to build aworld where complex diseases are prevented, treated, and cured,where treatments are smarter and less invasive, andsolutions are personal.Through our expertise in Innovative Medicine and MedTech, we are uniquely positioned to innovate across the full spectrum of healthcare solutions tod"
+      "external_id": "5912257901",
+      "content": "Introduction A career in IBM Consulting is rooted by long term relationships and close collaboration with clients across the globe. You'll work with visionaries across multiple industries to improve the hybrid cloud and AI journey for the most innovative and valuable companies in the world. Your ability to accelerate impact and make meaningful change for your clients is enabled by our strategic pa"
     },
     {
       "company": "Loblaw Companies",
@@ -808,18 +770,6 @@
       "content": "Come make your difference in communities across Canada, where authenticity, trust and making connections is valued - as we shape the future of Canadian retail, together. Our unique position as one of the country's largest employers, coupled with our commitment to positively impact the lives of all Canadians, provides our colleagues a range of opportunities and experiences to help Canadians Live Li"
     },
     {
-      "company": "Magna International, Inc",
-      "title": "Manufacturing Execution Systems (MES) Co-Op - Starting in September",
-      "loc": "Milton, Halton",
-      "geo": "GTA",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5912029000?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-10-04T21:59:54Z",
-      "src": "adzuna",
-      "external_id": "5912029000",
-      "content": "What we offer: At Magna, you can expect an engaging and dynamic environment where you can help to develop industry-leading automotive technologies. We invest in our employees, providing them with the support and resources they need to succeed. As a member of our global team, you can expect exciting, varied responsibilities as well as a wide range of development prospects. Because we believe that y"
-    },
-    {
       "company": "Manulife",
       "title": "Summer Intern 2027 - Canadian Real Estate Finance Group",
       "loc": "Toronto, Ontario",
@@ -832,30 +782,6 @@
       "src": "adzuna",
       "external_id": "5911230917",
       "content": "At Manulife John Hancock, we believe in investing in the future - starting with you. Our Co-op Program is your launchpad to success, offering the support, structure, and exciting opportunities you need to thrive and make your mark. Our co-op program offers more than just experience; you'll join a vibrant community, participate in engaging events, receive competitive compensation with exam study su"
-    },
-    {
-      "company": "Manulife",
-      "title": "Summer Intern 2027 - Change Management",
-      "loc": "Toronto, Ontario",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5907615876?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-10-02T03:15:30Z",
-      "src": "adzuna",
-      "external_id": "5907615876",
-      "content": "This Change Management Intern role is an opportunity to contribute to the continued scaling of change management practices across Canada and US Retirement. The incumbent will help deliver practical tools, templates, insights, and reporting that improve consistency and efficiency across the change lifecycle. This opportunity will provide hands-on experience in change enablement, stakeholder engagem"
-    },
-    {
-      "company": "Marriott Hotels Resorts",
-      "title": "Food & Beverage & Stewarding Intern (Jan - Apr 2027)",
-      "loc": "Rua A\u00e7ores, City of Toronto",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5907689118?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-10-02T04:35:03Z",
-      "src": "adzuna",
-      "external_id": "5907689118",
-      "content": "Description JOB SUMMARY Build upon your classroom studies through our Hotel Internship Program opportunities. You will learn first-hand about a hotel's operations. Our Hotel Internship Program allows you to truly experience the industry from the ground up, where our founders and many of our leaders began. You will get immersed in Marriott's culture and business and find your true calling in the tr"
     },
     {
       "company": "Microsoft",
@@ -923,6 +849,18 @@
     },
     {
       "company": "Qode Media",
+      "title": "Google & Meta Ads Internship",
+      "loc": "North York, Toronto",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://www.adzuna.ca/details/5912977848?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-05T18:54:27Z",
+      "src": "adzuna",
+      "external_id": "5912977848",
+      "content": "Seeking a Student for an Internship: 1. Full-time Student Status 2. Canadian Citizen or Resident 3. Willing to come to our office at Yonge/Sheppard We are seeking an intern for Google & Meta Paid Ads and SEO Specialist for an in-person Internship Work from our office located at Sheppard Centre Subway! No need to walk outside. Responsibilities: Google Search Engine Optimization Strategy Google Paid"
+    },
+    {
+      "company": "Qode Media",
       "title": "Social Media Marketing Intern",
       "loc": "North York, Toronto",
       "geo": "Toronto",
@@ -933,7 +871,7 @@
       "posted": "2026-10-02T12:49:24Z",
       "src": "adzuna",
       "external_id": "5908475480",
-      "content": "This internship role is strictly reserved for students enrolled in a Canadian post-secondary institution. You must be enrolled in September, have full-time student status, and be a Canadian resident or Canadian citizen or have refugee status. Qode Media is now accepting applications for Social Media Marketing Interns & Co-Op Students. You will have the opportunity to observe and assist our Social"
+      "content": "This internship role is strictly reserved for students enrolled in a Canadian post-secondary institution. You must be enrolled in September, have full-time student status, and be a Canadian resident or Canadian citizen or have refugee status. Qode Media is now accepting applications for Social Media Marketing Interns & Co-Op Students. You will have the opportunity to observe and assist our Social "
     },
     {
       "company": "Qode Media",
@@ -948,18 +886,6 @@
       "src": "adzuna",
       "external_id": "5910002804",
       "content": "Job Description Job Description This internship role is strictly reserved for students enrolled in a Canadian post-secondary institution. You must be enrolled in September, have full-time student status, and be a Canadian resident or Canadian citizen or have refugee status. Qode Media is now accepting applications for Social Media Marketing Interns & Co-Op Students. You will have the opportunity t"
-    },
-    {
-      "company": "Rexroth",
-      "title": "Factory Automation Engineering Intern - New Grad Opportunity",
-      "loc": "Burlington, Halton",
-      "geo": "GTA",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5907315857?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-10-02T00:44:25Z",
-      "src": "adzuna",
-      "external_id": "5907315857",
-      "content": "Job Description As the Engineering Intern , you will be responsible for providing technical expertise and support for Bosch Rexroth Electrical Drives & Controls solutions, products, and services. Duties and responsibilities include.: Utilizing deep technical knowledge to understand our customers' applications and propose solutions that optimize performance, efficiency, and functionality. Effective"
     },
     {
       "company": "Rexroth",
@@ -999,7 +925,7 @@
       "posted": "2026-10-04T08:21:58Z",
       "src": "adzuna",
       "external_id": "5911514150",
-      "content": "Job Description Job Description Job Description Bring It You are pursuing or have recently completed a bachelor's or master's degree in Economics, Marketing, Commerce, Communications, Event Management, Management Information Systems (MIS), or something similar. You'll bring experience in customer success, marketing, or communications, combined with well-developed technical and business expertise,"
+      "content": "Job Description Job Description Job Description Bring It You are pursuing or have recently completed a bachelor's or master's degree in Economics, Marketing, Commerce, Communications, Event Management, Management Information Systems (MIS), or something similar. You'll bring experience in customer success, marketing, or communications, combined with well-developed technical and business expertise, "
     },
     {
       "company": "SDM Brant & Upper Middle",
@@ -1011,6 +937,18 @@
       "posted": "2026-10-05T04:47:24Z",
       "src": "adzuna",
       "external_id": "5912314436",
+      "content": "Join a locally owned and operated store to help deliver health, beauty and convenience services in your community, and keep the customer at the centre of everything you do. Why this role is important? SUMMARY: Join a locally owned and operated store to help deliver health, beauty and convenience services in your community, and keep the customer at the centre of everything you do. DUTIES & RESPONSI"
+    },
+    {
+      "company": "SDM Toronto King",
+      "title": "Pharmacy Intern, Hourly Part Time Day",
+      "loc": "Toronto, Ontario",
+      "geo": "Toronto",
+      "cats": [],
+      "url": "https://www.adzuna.ca/details/5912304968?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-05T04:35:42Z",
+      "src": "adzuna",
+      "external_id": "5912304968",
       "content": "Join a locally owned and operated store to help deliver health, beauty and convenience services in your community, and keep the customer at the centre of everything you do. Why this role is important? SUMMARY: Join a locally owned and operated store to help deliver health, beauty and convenience services in your community, and keep the customer at the centre of everything you do. DUTIES & RESPONSI"
     },
     {
@@ -1038,18 +976,6 @@
       "content": "Who we are About Stripe Stripe is a technology company focused on improving the conditions for economic growth and prosperity. We build programmable financial infrastructure, rethinking from first principles how financial services should work, to make it easier and cheaper for any business to start and scale. More than 10 million businesses build on Stripe, spanning the economic frontier-from solo"
     },
     {
-      "company": "TD Bank",
-      "title": "Data Analytics & Insights Intern / Co-op (Winter 2027)",
-      "loc": "Toronto, Ontario",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5907616140?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-10-02T03:15:52Z",
-      "src": "adzuna",
-      "external_id": "5907616140",
-      "content": "Onsite Montr\u00e9al, Qu\u00e9bec Toronto, Ontario Full time R_1513914 Role Type: Internship/Co-op Work Term: Winter/Term 2 Work Location: Montr\u00e9al, Quebec, Canada Hours: 35 Pay Details: $45,700 - $74,400 CAD TD is committed to providing fair and equitable compensation opportunities to all colleagues. Growth opportunities and skill development are defining features of the colleague experience at TD. Our com"
-    },
-    {
       "company": "TFS-Canada's International School / TFS-l'\u00c9cole internationale du Canada",
       "title": "Business Office - Accountant Intern / Bureau des affaires - Stagiaire en comptabilit\u00e9",
       "loc": "Lawrence Park, City of Toronto",
@@ -1074,18 +1000,6 @@
       "src": "adzuna",
       "external_id": "5911284186",
       "content": "Who We Are Hi! We're The Heist, the motion design, live action, and post production studio within Thinkingbox, the Brief-to-Built agency. We bring together directors, designers, animators, editors, and technologists to create work that moves. From brand films to broadcast spots to social campaigns and experiential content, our team blends craft and curiosity to push ideas further. Across our studi"
-    },
-    {
-      "company": "UU FERROVIAL CONSTRUCTION CANADA INC.",
-      "title": "Summer 2027 Interns - Toronto Area",
-      "loc": "Toronto, Ontario",
-      "geo": "Toronto",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5906840525?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-10-01T22:16:40Z",
-      "src": "adzuna",
-      "external_id": "5906840525",
-      "content": "Join Ferrovial: Where Innovation Meets Opportunity Are you ready to elevate your career with a global leader in infrastructure solving complex problems and generating a positive outcome on people's lives? At Ferrovial , we are not just a company; we are a community of innovators and trailblazers. Listed on two major stock markets: Nasdaq - 100 Index (US) and IBEX 35 (Spain), we are also member of"
     },
     {
       "company": "VINCI Construction Grands Projets Canada",
@@ -1127,7 +1041,7 @@
       "external_id": "waabi:62700386-b9db-4c78-aec3-5ef59cbe841e",
       "content": "Waabi, founded by AI visionary Raquel Urtasun, is the leader in Physical AI. With a world-class team, we're unlocking the next era of autonomous transportation with technology that's powering commercial autonomous trucks and robotaxis. Waabi is backed by and partners with world leaders in AI, automotive, logistics, and deep tech. With offices in Toronto, San Francisco, Dallas, and Pittsburgh, Waab",
       "source_target": "waabi",
-      "last_seen": "2026-10-06T01:07:02.879053+00:00"
+      "last_seen": "2026-10-06T08:20:42.072662+00:00"
     },
     {
       "company": "Waabi",
@@ -1141,7 +1055,7 @@
       "external_id": "waabi:0fd4e30b-9bd1-4b53-9043-6088457363cb",
       "content": "Waabi, founded by AI visionary Raquel Urtasun, is the leader in Physical AI. With a world-class team, we're unlocking the next era of autonomous transportation with technology that's powering commercial autonomous trucks and robotaxis. Waabi is backed by and partners with world leaders in AI, automotive, logistics, and deep tech. With offices in Toronto, San Francisco, Dallas, and Pittsburgh, Waab",
       "source_target": "waabi",
-      "last_seen": "2026-10-06T01:07:02.879053+00:00"
+      "last_seen": "2026-10-06T08:20:42.072662+00:00"
     },
     {
       "company": "Wealthsimple",
@@ -1157,7 +1071,7 @@
       "external_id": "wealthsimple:50dcb3a5-b896-42c6-8173-0f6a95718ead",
       "content": "BUILD SOMETHING PEOPLE LOVE Wealthsimple is Canada's leading financial innovator. The company offers a full suite of simple, sophisticated financial products across managed investing, do-it-yourself trading, cryptocurrency, tax filing, spending and saving. Wealthsimple currently serves more than 4 million Canadians and holds over $155 billion in assets under administration. The company was founded",
       "source_target": "wealthsimple",
-      "last_seen": "2026-10-06T01:07:02.504669+00:00"
+      "last_seen": "2026-10-06T08:20:41.949934+00:00"
     },
     {
       "company": "Zurich NA",
@@ -1180,7 +1094,7 @@
       "geo": "Toronto",
       "cats": [],
       "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Toronto-ON-CAN/AI-Engineer--Winter-2027--Co-op-Internship----8-months_R260027622-1",
-      "posted": "Posted 11 Days Ago",
+      "posted": "Posted 12 Days Ago",
       "src": "workday",
       "external_id": "bmo:R260027622-1",
       "content": ""
@@ -1192,7 +1106,7 @@
       "geo": "Toronto",
       "cats": [],
       "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Toronto-ON-CAN/Business-Management-Coordinator--Winter-2027--Co-op-Internship----4-months_R260024334-1",
-      "posted": "Posted Today",
+      "posted": "Posted Yesterday",
       "src": "workday",
       "external_id": "bmo:R260024334-1",
       "content": ""
@@ -1206,7 +1120,7 @@
         "Finance"
       ],
       "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Mississauga-ON-CAN/Commercial-Banking-Credit-Analyst-Internship---Mississauga--Summer-2027--Co-op-Internship----4-months_R260026727",
-      "posted": "Posted 21 Days Ago",
+      "posted": "Posted 22 Days Ago",
       "src": "workday",
       "external_id": "bmo:R260026727",
       "content": ""
@@ -1220,7 +1134,7 @@
         "Finance"
       ],
       "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Toronto-ON-CAN/Commercial-Banking-Credit-Analyst-Internship--Summer-2027--Co-op-Internship----4-months_R260026697",
-      "posted": "Posted 21 Days Ago",
+      "posted": "Posted 22 Days Ago",
       "src": "workday",
       "external_id": "bmo:R260026697",
       "content": ""
@@ -1234,7 +1148,7 @@
         "Marketing"
       ],
       "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Toronto-ON-CAN/Marketing-Coordinator--Winter-2027--Co-op-Internship----8-Months_R260024511-1",
-      "posted": "Posted Today",
+      "posted": "Posted Yesterday",
       "src": "workday",
       "external_id": "bmo:R260024511-1",
       "content": ""
@@ -1248,7 +1162,7 @@
         "Finance"
       ],
       "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Oakville-ON-CAN/Private-Wealth-Administrative-Assistant---Oakville--Winter-2027--Co-op-Internship----4-months_R260024359-1",
-      "posted": "Posted 6 Days Ago",
+      "posted": "Posted 7 Days Ago",
       "src": "workday",
       "external_id": "bmo:R260024359-1",
       "content": ""
@@ -1262,7 +1176,7 @@
         "Finance"
       ],
       "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Waterloo-ON-CAN/Private-Wealth-Administrative-Assistant--Winter-2027--Co-op-Internship----4-months_R260027648",
-      "posted": "Posted 11 Days Ago",
+      "posted": "Posted 12 Days Ago",
       "src": "workday",
       "external_id": "bmo:R260027648",
       "content": ""
@@ -1276,7 +1190,7 @@
         "Finance"
       ],
       "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Toronto-ON-CAN/Private-Wealth-Analyst--Summer-2027--Co-op-Internship----4-months_R260025470",
-      "posted": "Posted 14 Days Ago",
+      "posted": "Posted 15 Days Ago",
       "src": "workday",
       "external_id": "bmo:R260025470",
       "content": ""
@@ -1288,7 +1202,7 @@
       "geo": "Toronto",
       "cats": [],
       "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Toronto-ON-CAN/Quantitative-Developer--Alpha-Research-Team----GAM--Summer-2027--Co-op-Internship----12-months_R260026715-3",
-      "posted": "Posted 14 Days Ago",
+      "posted": "Posted 15 Days Ago",
       "src": "workday",
       "external_id": "bmo:R260026715-3",
       "content": ""
@@ -1300,7 +1214,7 @@
       "geo": "GTA",
       "cats": [],
       "url": "https://cibc.wd3.myworkdayjobs.com/en-US/search/job/Markham-ON/Branch-Assistant-Co-op---Thornhill--ON-Winter-2027_2620365-1",
-      "posted": "Posted 3 Days Ago",
+      "posted": "Posted 4 Days Ago",
       "src": "workday",
       "external_id": "cibc:2620365-1",
       "content": ""
@@ -1312,23 +1226,9 @@
       "geo": "Toronto",
       "cats": [],
       "url": "https://cibc.wd3.myworkdayjobs.com/en-US/search/job/Toronto-ON/First-Nations--Inuit--or-Mtis-Students---Winter-2027-Co-op-and-Internship-Opportunities_2616392-1",
-      "posted": "Posted 7 Days Ago",
+      "posted": "Posted 8 Days Ago",
       "src": "workday",
       "external_id": "cibc:2616392-1",
-      "content": ""
-    },
-    {
-      "company": "cibc",
-      "title": "Internal Audit, Winter 2027 Co-op",
-      "loc": "Toronto, ON",
-      "geo": "Toronto",
-      "cats": [
-        "Finance"
-      ],
-      "url": "https://cibc.wd3.myworkdayjobs.com/en-US/search/job/Toronto-ON/Internal-Audit---Intern_2619323-1",
-      "posted": "Posted 4 Days Ago",
-      "src": "workday",
-      "external_id": "cibc:2619323-1",
       "content": ""
     },
     {
@@ -1341,7 +1241,7 @@
         "Consulting"
       ],
       "url": "https://cibc.wd3.myworkdayjobs.com/en-US/search/job/Toronto-ON/Investment-Strategy-Analyst--Wealth-Solutions-Winter-Co-op-2027_2620494-1",
-      "posted": "Posted Today",
+      "posted": "Posted Yesterday",
       "src": "workday",
       "external_id": "cibc:2620494-1",
       "content": ""
@@ -1355,7 +1255,7 @@
         "Finance"
       ],
       "url": "https://cibc.wd3.myworkdayjobs.com/en-US/search/job/Toronto-ON/Private-Banking-Associate-Co-op---Winter-2027_2620375-2",
-      "posted": "Posted 3 Days Ago",
+      "posted": "Posted 4 Days Ago",
       "src": "workday",
       "external_id": "cibc:2620375-2",
       "content": ""
@@ -1367,7 +1267,7 @@
       "geo": "Toronto",
       "cats": [],
       "url": "https://cibc.wd3.myworkdayjobs.com/en-US/search/job/Toronto-ON/Quality-Assurance-Analyst-Co-op-Winter-2027_2619573-1",
-      "posted": "Posted 4 Days Ago",
+      "posted": "Posted 5 Days Ago",
       "src": "workday",
       "external_id": "cibc:2619573-1",
       "content": ""
@@ -1913,50 +1813,36 @@
       "geo": "Ontario",
       "cats": [],
       "url": "https://td.wd3.myworkdayjobs.com/en-US/TD_Bank_Careers/job/Montral-Qubec/Data-Analytics---Insights-Intern---Co-op--Winter-2027-_R_1513914",
-      "posted": "Posted 6 Days Ago",
+      "posted": "Posted 7 Days Ago",
       "src": "workday",
       "external_id": "td:R_1513914",
       "content": ""
-    },
-    {
-      "company": "ventureLAB",
-      "title": "Finance Intern",
-      "loc": "Markham, York region",
-      "geo": "GTA",
-      "cats": [
-        "Finance"
-      ],
-      "url": "https://www.adzuna.ca/details/5907696284?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-10-02T04:44:58Z",
-      "src": "adzuna",
-      "external_id": "5907696284",
-      "content": "ventureLAB is seeking a Finance Operations Intern to provide basic administrative and transactional support for the ventureLAB finance team. This role focuses on routine day-to-day tasks including data entry, receipt processing, invoice logging, and basic spreadsheet upkeep. Project Scope & Key Deliverables The intern will be responsible for the following milestones during their term: Finance Inbo"
     }
   ],
   "source_state": {
     "adzuna": {
-      "status": "reused-partial",
-      "refreshed_at": "2026-10-05T20:03:08.455061+00:00",
-      "age_seconds": 18233,
+      "status": "fresh",
+      "refreshed_at": "2026-10-06T08:20:41.682028+00:00",
+      "age_seconds": 0,
       "requests": 5,
-      "reused": 63
+      "reused": 0
     },
     "public_boards": {
       "ashby:wealthsimple": {
         "status": "fresh",
-        "refreshed_at": "2026-10-06T01:07:02.504669+00:00",
+        "refreshed_at": "2026-10-06T08:20:41.949934+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:internshiplist2000": {
         "status": "fresh",
-        "refreshed_at": "2026-10-06T01:07:02.290287+00:00",
+        "refreshed_at": "2026-10-06T08:20:41.943653+00:00",
         "complete": true,
         "reused": 0
       },
       "lever:waabi": {
         "status": "fresh",
-        "refreshed_at": "2026-10-06T01:07:02.879053+00:00",
+        "refreshed_at": "2026-10-06T08:20:42.072662+00:00",
         "complete": true,
         "reused": 0
       }
