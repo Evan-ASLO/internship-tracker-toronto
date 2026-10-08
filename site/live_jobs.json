@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-08T14:15:29.372711+00:00",
+  "fetched_at": "2026-10-08T20:24:59.020437+00:00",
   "categories": [
     "Finance",
     "Marketing",
@@ -32,18 +32,6 @@
       "src": "adzuna",
       "external_id": "5911266945",
       "content": "Job Details: Job Description: Altera is at the forefront of programmable logic and hardware acceleration. Our mission is to empower developers and system architects to rapidly design and deploy cutting-edge solutions using advanced FPGA and SoC technologies. The High Level Synthesis (HLS) team at Altera specializes in creating sophisticated tools and compiler technologies that translate high-level"
-    },
-    {
-      "company": "Archmill House",
-      "title": "Business Administration Intern",
-      "loc": "Ancaster, Hamilton region",
-      "geo": "GTA",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5909720315?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-10-03T04:53:29Z",
-      "src": "adzuna",
-      "external_id": "5909720315",
-      "content": "For over 40 years, Archmill House Inc. has been a trusted leader in the creation of high-end millwork and premium store fixtures across North America. Our legacy is built on delivering exceptional craftsmanship, innovative solutions, and unwavering commitment to quality. This dedication has allowed us to become a preferred partner for a wide range of commercial and retail sectors. At Archmill Hous"
     },
     {
       "company": "Burnbrae Farms",
@@ -158,20 +146,6 @@
       "content": "Req ID: 141144 Remote Position: Hybrid Region: Americas Country: Canada State/Province: Ontario City: Toronto 16 Month Internship As a global technology leader, Celestica designs, engineers, and manufactures industry-leading products and services that drive customer success and market advancement. Headquartered in Toronto, Canada, we bring together over 33,000 employees across more than 45 sites i"
     },
     {
-      "company": "Dream CA",
-      "title": "Intern, Development Accounting (8 month)",
-      "loc": "Commerce Court, City of Toronto",
-      "geo": "Toronto",
-      "cats": [
-        "Finance"
-      ],
-      "url": "https://www.adzuna.ca/details/5909720235?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-10-03T04:53:17Z",
-      "src": "adzuna",
-      "external_id": "5909720235",
-      "content": "Dream is looking for an Intern, Development Accounting (8 month)! We are always looking for the best and brightest to join our thriving community. Dream's Development Accounting team is currently looking to hire an 8-month Development Accounting intern, starting in January 2026. Who are you? Do you have superior analytical skills and the ability to multi-task? Are you a tactful communicator and qu"
-    },
-    {
       "company": "EQ Bank",
       "title": "Intern - Product Marketing Winter 2027",
       "loc": "Toronto, Ontario",
@@ -259,7 +233,7 @@
       "external_id": "internshiplist2000:5309667008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-08T14:14:31.404231+00:00"
+      "last_seen": "2026-10-08T20:23:26.048641+00:00"
     },
     {
       "company": "Geotab",
@@ -275,7 +249,7 @@
       "external_id": "internshiplist2000:5380853008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-08T14:14:31.404231+00:00"
+      "last_seen": "2026-10-08T20:23:26.048641+00:00"
     },
     {
       "company": "Geotab",
@@ -289,7 +263,7 @@
       "external_id": "internshiplist2000:5413032008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-08T14:14:31.404231+00:00"
+      "last_seen": "2026-10-08T20:23:26.048641+00:00"
     },
     {
       "company": "Geotab",
@@ -305,7 +279,7 @@
       "external_id": "internshiplist2000:5384593008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-08T14:14:31.404231+00:00"
+      "last_seen": "2026-10-08T20:23:26.048641+00:00"
     },
     {
       "company": "Geotab",
@@ -319,7 +293,7 @@
       "external_id": "internshiplist2000:5309952008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-08T14:14:31.404231+00:00"
+      "last_seen": "2026-10-08T20:23:26.048641+00:00"
     },
     {
       "company": "Geotab",
@@ -335,7 +309,7 @@
       "external_id": "internshiplist2000:5383289008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-08T14:14:31.404231+00:00"
+      "last_seen": "2026-10-08T20:23:26.048641+00:00"
     },
     {
       "company": "Geotab",
@@ -349,7 +323,7 @@
       "external_id": "internshiplist2000:5396891008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-08T14:14:31.404231+00:00"
+      "last_seen": "2026-10-08T20:23:26.048641+00:00"
     },
     {
       "company": "Geotab",
@@ -365,7 +339,7 @@
       "external_id": "internshiplist2000:5383131008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-08T14:14:31.404231+00:00"
+      "last_seen": "2026-10-08T20:23:26.048641+00:00"
     },
     {
       "company": "Geotab",
@@ -379,7 +353,7 @@
       "external_id": "internshiplist2000:5399993008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-08T14:14:31.404231+00:00"
+      "last_seen": "2026-10-08T20:23:26.048641+00:00"
     },
     {
       "company": "Geotab",
@@ -395,7 +369,7 @@
       "external_id": "internshiplist2000:5368704008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-08T14:14:31.404231+00:00"
+      "last_seen": "2026-10-08T20:23:26.048641+00:00"
     },
     {
       "company": "Geotab",
@@ -409,7 +383,7 @@
       "external_id": "internshiplist2000:5441309008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-08T14:14:31.404231+00:00"
+      "last_seen": "2026-10-08T20:23:26.048641+00:00"
     },
     {
       "company": "Geotab",
@@ -425,7 +399,7 @@
       "external_id": "internshiplist2000:5358560008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-08T14:14:31.404231+00:00"
+      "last_seen": "2026-10-08T20:23:26.048641+00:00"
     },
     {
       "company": "Geotab",
@@ -439,7 +413,7 @@
       "external_id": "internshiplist2000:5360844008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-08T14:14:31.404231+00:00"
+      "last_seen": "2026-10-08T20:23:26.048641+00:00"
     },
     {
       "company": "Geotab",
@@ -455,7 +429,7 @@
       "external_id": "internshiplist2000:5422327008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-08T14:14:31.404231+00:00"
+      "last_seen": "2026-10-08T20:23:26.048641+00:00"
     },
     {
       "company": "Geotab",
@@ -469,7 +443,7 @@
       "external_id": "internshiplist2000:5379678008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-08T14:14:31.404231+00:00"
+      "last_seen": "2026-10-08T20:23:26.048641+00:00"
     },
     {
       "company": "Geotab",
@@ -483,7 +457,7 @@
       "external_id": "internshiplist2000:5350915008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-08T14:14:31.404231+00:00"
+      "last_seen": "2026-10-08T20:23:26.048641+00:00"
     },
     {
       "company": "Geotab",
@@ -497,7 +471,7 @@
       "external_id": "internshiplist2000:5376578008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-08T14:14:31.404231+00:00"
+      "last_seen": "2026-10-08T20:23:26.048641+00:00"
     },
     {
       "company": "Geotab",
@@ -511,7 +485,7 @@
       "external_id": "internshiplist2000:5361630008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-08T14:14:31.404231+00:00"
+      "last_seen": "2026-10-08T20:23:26.048641+00:00"
     },
     {
       "company": "Geotab",
@@ -525,7 +499,7 @@
       "external_id": "internshiplist2000:5383412008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-08T14:14:31.404231+00:00"
+      "last_seen": "2026-10-08T20:23:26.048641+00:00"
     },
     {
       "company": "Geotab",
@@ -539,7 +513,7 @@
       "external_id": "internshiplist2000:5367565008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-08T14:14:31.404231+00:00"
+      "last_seen": "2026-10-08T20:23:26.048641+00:00"
     },
     {
       "company": "Geotab",
@@ -553,7 +527,7 @@
       "external_id": "internshiplist2000:5177168008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-08T14:14:31.404231+00:00"
+      "last_seen": "2026-10-08T20:23:26.048641+00:00"
     },
     {
       "company": "Geotab",
@@ -567,7 +541,7 @@
       "external_id": "internshiplist2000:5385281008",
       "content": "&lt;div class=&quot;content-intro&quot;&gt;&lt;h1 class=&quot;MuiGrid-root css-1j4zddb&quot;&gt;&lt;span style=&quot;color: rgb(37, 71, 123);&quot;&gt;Who we are:&lt;/span&gt;&lt;/h1&gt; &lt;div class=&quot;MuiGrid-root css-17v2lcf&quot;&gt;&lt;span style=&quot;color: rgb(102, 120, 140);&quot;&gt;Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d ",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-10-08T14:14:31.404231+00:00"
+      "last_seen": "2026-10-08T20:23:26.048641+00:00"
     },
     {
       "company": "HVE Healthcare Assessment",
@@ -709,17 +683,15 @@
     },
     {
       "company": "Molson Coors",
-      "title": "Marketing Intern",
+      "title": "Sales Intern",
       "loc": "Toronto, Ontario",
       "geo": "Toronto",
-      "cats": [
-        "Marketing"
-      ],
-      "url": "https://www.adzuna.ca/details/5917391310?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-10-07T12:47:30Z",
+      "cats": [],
+      "url": "https://www.adzuna.ca/details/5919377178?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-08T12:48:13Z",
       "src": "adzuna",
-      "external_id": "5917391310",
-      "content": "Requisition ID: 40136 Cheers to creating an incredible tomorrow! At Molson Coors, we tackle big challenges and defy the status quo. With a proud legacy of excellence, an incredible portfolio of beer, seltzers, spirits, and non-alcohol brands, and a bold vision for our future we're on the path to transforming the beverage industry. That requires remarkable individuals who are curious, tenacious, an"
+      "external_id": "5919377178",
+      "content": "Requisition ID: 40110 Career in Beer and Beyond: Our purpose at Molson Coors Beverage Company is to brew beverages that unite people to celebrate all life's moments. We've been brewing iconic brands for over 350 years and are now proud to be offering a modern portfolio that expands beyond the beer aisle. We are Talent Brewers with our culture rooted in our core Values. We believe in our brands and"
     },
     {
       "company": "Mondelez International",
@@ -989,7 +961,7 @@
       "external_id": "waabi:62700386-b9db-4c78-aec3-5ef59cbe841e",
       "content": "Waabi, founded by AI visionary Raquel Urtasun, is the leader in Physical AI. With a world-class team, we're unlocking the next era of autonomous transportation with technology that's powering commercial autonomous trucks and robotaxis. Waabi is backed by and partners with world leaders in AI, automotive, logistics, and deep tech. With offices in Toronto, San Francisco, Dallas, and Pittsburgh, Waab",
       "source_target": "waabi",
-      "last_seen": "2026-10-08T14:14:31.795943+00:00"
+      "last_seen": "2026-10-08T20:23:26.907324+00:00"
     },
     {
       "company": "Waabi",
@@ -1003,7 +975,21 @@
       "external_id": "waabi:0fd4e30b-9bd1-4b53-9043-6088457363cb",
       "content": "Waabi, founded by AI visionary Raquel Urtasun, is the leader in Physical AI. With a world-class team, we're unlocking the next era of autonomous transportation with technology that's powering commercial autonomous trucks and robotaxis. Waabi is backed by and partners with world leaders in AI, automotive, logistics, and deep tech. With offices in Toronto, San Francisco, Dallas, and Pittsburgh, Waab",
       "source_target": "waabi",
-      "last_seen": "2026-10-08T14:14:31.795943+00:00"
+      "last_seen": "2026-10-08T20:23:26.907324+00:00"
+    },
+    {
+      "company": "Wizy Marketing Agency",
+      "title": "Creative Marketing Intern",
+      "loc": "Toronto, Ontario",
+      "geo": "Toronto",
+      "cats": [
+        "Marketing"
+      ],
+      "url": "https://www.adzuna.ca/details/5919397889?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-10-08T12:53:43Z",
+      "src": "adzuna",
+      "external_id": "5919397889",
+      "content": "Creative Marketing Intern Create social content, develop campaign ideas and edit short-form videos with CapCut and AI tools for Wizy and local businesses across the Greater Toronto Area (GTA). About the Role This GTA-based internship focuses on turning ideas into creative marketing content. With guidance from Wizy's Canada-based team and collaboration with our Vietnam delivery team, you will devel"
     },
     {
       "company": "Zurich NA",
@@ -1032,6 +1018,20 @@
       "posted": "Posted 2 Days Ago",
       "src": "workday",
       "external_id": "accenture:R00360855",
+      "content": ""
+    },
+    {
+      "company": "bmo",
+      "title": "Analyst, Capital Markets Treasury - Winter 2027 (Co-op/Internship) - 4 Months",
+      "loc": "Toronto, ON, CAN",
+      "geo": "Toronto",
+      "cats": [
+        "Finance"
+      ],
+      "url": "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/Toronto-ON-CAN/Analyst--Capital-Markets-Treasury---Winter-2027--Co-op-Internship----4-Months_R260028665",
+      "posted": "Posted Today",
+      "src": "workday",
+      "external_id": "bmo:R260028665",
       "content": ""
     },
     {
@@ -1605,7 +1605,7 @@
   "source_state": {
     "adzuna": {
       "status": "fresh",
-      "refreshed_at": "2026-10-08T14:14:31.397253+00:00",
+      "refreshed_at": "2026-10-08T20:23:24.686491+00:00",
       "age_seconds": 0,
       "requests": 5,
       "reused": 0
@@ -1613,19 +1613,19 @@
     "public_boards": {
       "ashby:wealthsimple": {
         "status": "fresh",
-        "refreshed_at": "2026-10-08T14:14:31.575397+00:00",
+        "refreshed_at": "2026-10-08T20:23:26.863647+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:internshiplist2000": {
         "status": "fresh",
-        "refreshed_at": "2026-10-08T14:14:31.404231+00:00",
+        "refreshed_at": "2026-10-08T20:23:26.048641+00:00",
         "complete": true,
         "reused": 0
       },
       "lever:waabi": {
         "status": "fresh",
-        "refreshed_at": "2026-10-08T14:14:31.795943+00:00",
+        "refreshed_at": "2026-10-08T20:23:26.907324+00:00",
         "complete": true,
         "reused": 0
       }
