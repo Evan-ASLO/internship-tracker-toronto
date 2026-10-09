@@ -432,6 +432,22 @@ class PublicCacheTests(unittest.TestCase):
                 blocked = reason not in {"HTTP 404", "HTTP 410", "closed text"}
                 self.assertEqual(scrape.COVERAGE[self.key]["status"] == "blocked", blocked)
 
+    def test_verified_public_greenhouse_board_accepts_runner_http_202(self):
+        response = type("Response", (), {
+            "status_code": 202,
+            "text": "",
+        })()
+        record = {
+            "url": "https://job-boards.greenhouse.io/coveoen/jobs/123",
+            "src": "greenhouse",
+            "source_target": "coveoen",
+        }
+        with patch.object(scrape.requests, "get", return_value=response):
+            _, ok, reason = scrape.verify(record)
+
+        self.assertTrue(ok)
+        self.assertEqual(reason, "202")
+
 
 class PublicIdentityTests(unittest.TestCase):
     def test_new_greenhouse_ids_are_board_scoped_without_changing_legacy_ids(self):
