@@ -1,7 +1,9 @@
-# Internship Tracker — Toronto
+# Internship Tracker — Canada
 
-Verified-live internship board for the Greater Toronto Area, focused on four
-business tracks: **Marketing, Business Operations, Finance, Consulting**.
+Verified-live internship board for all Canadian provinces and territories,
+including remote roles only when the source explicitly supports Canadian
+applicants. Four business-track tags remain available: **Marketing, Business
+Operations, Finance, Consulting**.
 
 **Live site:** https://internship-tracker-gamma-five.vercel.app
 
@@ -12,10 +14,11 @@ Every hour, GitHub Actions runs the pipeline:
 1. **Pull** — reads postings directly from employer applicant-tracking systems
    (Greenhouse, Lever, Ashby, Workday, SuccessFactors, optional Adzuna, and native
    employer APIs). Nothing is invented. Workday queries use
-   tenant-issued Toronto/GTA/Ontario location facets and paginate to exhaustion;
+   tenant-issued Canadian location facets and paginate to exhaustion;
    SuccessFactors pagination continues until empty or repeated results.
-2. **Filter** — keeps internship/co-op titles in the Toronto area, rejecting
-   senior roles that merely contain a keyword like "campus".
+2. **Filter** — keeps Canadian internships, co-ops, student roles, and true
+   new-grad roles. Generic worldwide/US-only remote listings and geographic
+   namesakes such as Ontario, California are rejected.
 3. **Verify** — re-fetches every posting URL and requires a live response.
    Closed requisitions are dropped before they reach the site.
 4. **Compare** — checks posting content against the live Vercel site, not git
@@ -66,7 +69,7 @@ python scrape.py          # writes live_jobs.json
 python publish_snapshot.py --dry-run
 ```
 
-Trigger the automation manually from the **Actions** tab → *Refresh Toronto
+Trigger the automation manually from the **Actions** tab → *Refresh Canadian
 internships* → *Run workflow*.
 
 ## Configuration
@@ -97,7 +100,7 @@ passes them only to the scrape step. If either value is missing, the adapter
 makes no request and reports `skipped` in source coverage.
 
 The adapter uses the official Canada endpoint
-`/v1/api/jobs/ca/search/{page}`, centered on Toronto with a 100 km radius.
+`/v1/api/jobs/ca/search/{page}`, scoped to Canada.
 When at least two hours have elapsed since the last successful Adzuna refresh,
 the adapter uses the five-request budget for high-signal depth:
 
@@ -133,7 +136,7 @@ reuse status, source age, and errors appear in coverage telemetry. Fresh-cache
 reuse is reported as `reused-fresh`; a failed due refresh does not advance the
 last-successful-refresh timestamp or renew the six-hour failure grace.
 
-Before changing query allocation, manually dispatch *Refresh Toronto
+Before changing query allocation, manually dispatch *Refresh Canadian
 internships* with `adzuna_dry_run=true`. That runs only the Adzuna adapter,
 skips the refresh/publish/deploy/commit job, and uploads a seven-day sanitized
 coverage JSON artifact. Set `force_adzuna_refresh=true` on a normal manual run
@@ -157,13 +160,15 @@ use is confirmed with Adzuna.
 ### Verified free public employer boards
 
 `PUBLIC_BOARDS` in `scrape.py` extends the existing connectors with this bounded,
-verified batch:
-
-| Employer | Public API / board | Discovery evidence |
-|---|---|---|
-| Geotab | Greenhouse `internshiplist2000` (separate from the main `geotab` board) | [Public Finance Intern posting](https://job-boards.greenhouse.io/internshiplist2000/jobs/5383131008) identifies Geotab and links its official campus program |
-| Wealthsimple | Ashby `wealthsimple` | [Employer careers page](https://www.wealthsimple.com/en-ca/careers) links this board and its internship program |
-| Waabi | Lever `waabi` | [Employer careers page](https://waabi.ai/careers) links this board |
+verified batch of Canadian employers on Greenhouse, Lever, and Ashby. The
+registry includes finance and business employers such as EQ Bank, BMO-adjacent
+fintechs, Arc'teryx, Coveo, Geotab, Trulioo, Orennia, StepStone, Brattle,
+Wealthsimple, and Waabi alongside engineering, aerospace, AI, healthcare, and
+climate-tech employers. Every shipped row is freshly fetched from the
+employer's official ATS endpoint; registry candidates are never copied into
+the snapshot. Geotab's separate `internshiplist2000` Greenhouse board is
+retained because the live postings are Geotab-branded, link Geotab's official
+campus program, and use canonical Greenhouse application IDs.
 
 These are documented, unauthenticated **read-only** interfaces:
 [Greenhouse Job Board API](https://docs.greenhouse.io/job-board.html),
@@ -174,6 +179,24 @@ Actions minutes, or other existing providers free. No application submission,
 private ATS API, paid proxy, JobSpy aggregator scrape, LinkedIn scrape, or
 automated search-engine scraping is part of this pipeline.
 
+Tenant candidates were derived from real employer career links and a
+discovery-only comparison against the MIT-labelled OpenApply tenant registry.
+OpenApply rows and descriptions are not ingested or redistributed; each tenant
+must pass official API schema, stable ID, canonical URL, and employer identity
+checks. The linked OpenApply source repository does not carry a root LICENSE,
+so its job content is not treated as redistributable source data.
+SimplifyJobs is excluded entirely because its repository has no detected
+license or explicit bulk-reuse permission.
+
+The expansion deliberately avoids a separate fleet of per-company HTML
+scrapers. Greenhouse, Lever, and Ashby cover the added employers through three
+maintained adapters. Bounded tenant validation is the “slug discovery” step;
+the scheduled job then calls only documented/public ATS JSON endpoints.
+Apify and other paid cloud actors are not required for this coverage and were
+not authorized. “Hidden endpoint” work is limited to documented public ATS
+interfaces used by employer career pages—no private API, bot-warning bypass,
+or blind guessed-slug flood.
+
 Greenhouse returns its complete published list; the adapter checks its
 `meta.total` and rejects prospect posts (`internal_job_id: null`). Ashby
 requires `isListed: true` and considers primary and secondary locations.
@@ -181,13 +204,15 @@ Lever uses `skip`/`limit` pagination until a short/empty page, with repeated
 IDs and the 20-page safety cap treated as incomplete rather than a successful
 empty result. Existing bounded network retries and concurrency limits apply.
 
-The existing internship/student and Toronto/GTA/Ontario rules remain in place.
-New boards cannot admit new-grad-only titles, talent communities, or US-only
-remote jobs. A Canadian secondary location is eligible; a generic
-North-America/remote label alone is not. Categories remain tags, not a
-requirement: technical internships were already eligible and are not presented
-as business-track roles. Provider-supplied deadlines are honored where present;
-missing industry, duration, season, or deadline values are not invented.
+Internship, co-op, student, and true new-grad titles are eligible throughout
+Canada. Structured provider country/address fields take priority. Explicit
+Canada or US+Canada remote roles are eligible; generic worldwide, North America,
+and US-only remote roles are not. Canadian secondary locations are eligible,
+while Ontario, California and other geographic namesakes are explicitly
+rejected. Categories remain tags, not a requirement: technical internships
+are eligible and are not mislabelled as business-track roles.
+Provider-supplied deadlines are honored where present; missing industry,
+duration, season, eligibility, or deadline values are not invented.
 
 New board records use `board:provider-id` identities, official posting/application
 URLs, `source_target`, and an absolute `last_seen`. Existing source IDs stay
@@ -208,7 +233,9 @@ checked-in snapshot; locally it defaults to `live_jobs.json`.
 To add a board, first follow a real employer careers link or verify a public
 ATS posting's employer identity, confirm its public API/terms and exact token,
 and check its current eligible listings. Then add a `(source, board, company)`
-entry to `PUBLIC_BOARDS`, not a guessed slug or duplicate main-board entry.
+entry to `PUBLIC_BOARDS`, not a guessed slug, aggregator board, or duplicate
+main-board entry. Separate employer-verified campus boards, such as Geotab's,
+are allowed when their official posting content proves the employer identity.
 Exercise parsing, pagination, failure/cache, eligibility, and identity tests.
 Compare against one dated snapshot and verify official pages before reporting
 net-new positions. Write candidate evidence outside the repository; never run

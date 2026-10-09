@@ -52,7 +52,7 @@ Provider identity details:
 - Greenhouse API IDs are used directly. When a URL also exposes `gh_jid` or a
   `/jobs/<id>` path, normalization fails if it disagrees with the API ID.
 - Newly verified `PUBLIC_BOARDS` records qualify provider IDs by board, for
-  example `internshiplist2000:5383131008`, `wealthsimple:<uuid>`, or
+  example `coveoen:8851717002`, `wealthsimple:<uuid>`, or
   `waabi:<uuid>`. A scoped Greenhouse ID must match both the official URL's
   board and numeric post ID. Existing unqualified IDs are not rewritten.
 - Workday title-bearing URLs are parsed for their terminal requisition token

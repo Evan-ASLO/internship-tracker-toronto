@@ -84,7 +84,7 @@ class WorkdayCoverageTests(unittest.TestCase):
 
         late = [job for job in jobs if job["title"] == fixture["lateJob"]["title"]]
         self.assertEqual(len(late), 1)
-        self.assertIn("approved Ontario location", late[0]["loc"])
+        self.assertIn("approved Canada location", late[0]["loc"])
         self.assertEqual(late[0]["external_id"], "fixture:R999999")
         self.assertIn(60, [call["offset"] for call in calls])
         self.assertIn(80, [call["offset"] for call in calls])

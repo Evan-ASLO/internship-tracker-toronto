@@ -14,7 +14,7 @@ import json, os, re, time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from threading import Lock, Semaphore
-from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
+from urllib.parse import parse_qs, parse_qsl, unquote, urlencode, urlsplit, urlunsplit
 import requests
 
 from publish_snapshot import canonicalize_url
@@ -41,8 +41,9 @@ ADZUNA_RESULTS_PER_PAGE = 50
 ADZUNA_REQUESTS_PER_ACTIVE_RUN = 5
 ADZUNA_REFRESH_INTERVAL_HOURS = 2
 ADZUNA_GRACE_HOURS = 6
-ADZUNA_WHERE = "Toronto"
-ADZUNA_DISTANCE_KM = 100
+ADZUNA_WHERE = "Canada"
+ADZUNA_DISTANCE_KM = None
+ADZUNA_COVERAGE_TARGET = "ca/Canada"
 ADZUNA_QUERY_NAMES = (
     "internship-p1", "internship-p2",
     "coop-p1", "coop-p2",
@@ -51,6 +52,7 @@ ADZUNA_QUERY_NAMES = (
 
 COVERAGE = {}
 COVERAGE_LOCK = Lock()
+FILTER_FUNNEL = {}
 
 
 class SourceRequestBudgetExceeded(RuntimeError):
@@ -95,34 +97,99 @@ SENIOR_RE = re.compile(r"\b(senior|sr\.?|manager|director|principal|lead|vp"
                        r"|head\s+of|associate\s+partner|executive)\b", re.I)
 EXPLICIT_RE = re.compile(r"\b(intern|internship|co-?op)\b", re.I)
 NEW_GRAD_TITLE_RE = re.compile(r"\bnew\s*grad(?:uate)?\b", re.I)
+NEW_GRAD_SENIOR_RE = re.compile(
+    r"\b(senior|sr\.?|director|principal|lead|vp|head\s+of|executive)\b", re.I)
 
 
 def is_internship(title):
     t = title or ""
     if not INTERN_RE.search(t):
         return False
+    if NEW_GRAD_TITLE_RE.search(t):
+        return not NEW_GRAD_SENIOR_RE.search(t)
     if SENIOR_RE.search(t) and not EXPLICIT_RE.search(t):
         return False
     return True
 
-TORONTO = ("toronto",)
-GTA = ("mississauga", "brampton", "markham", "vaughan", "richmond hill",
-       "scarborough", "etobicoke", "north york", "oakville", "burlington",
-       "ajax", "pickering", "whitby", "oshawa", "milton", "gta", "concord")
-ONTARIO = ("waterloo", "kitchener", "ottawa", "hamilton", "guelph", "ontario",
-           ", on", "(on)", "windsor", "barrie")
-FACET_LOCATION_TERMS = TORONTO + GTA + tuple(
-    term for term in ONTARIO if term not in ("ontario", ", on", "(on)")
-)
-CANADIAN_LOCATION_RE = re.compile(
-    r"(?:\bontario\b|,\s*on(?:\b|,)|\bcanada\b|,\s*can(?:\b|,))", re.I)
+CANADIAN_REGIONS = {
+    "alberta": "Alberta", "ab": "Alberta",
+    "british columbia": "British Columbia", "bc": "British Columbia",
+    "manitoba": "Manitoba", "mb": "Manitoba",
+    "new brunswick": "New Brunswick", "nb": "New Brunswick",
+    "newfoundland and labrador": "Newfoundland and Labrador",
+    "newfoundland": "Newfoundland and Labrador", "labrador": "Newfoundland and Labrador",
+    "nl": "Newfoundland and Labrador",
+    "nova scotia": "Nova Scotia", "ns": "Nova Scotia",
+    "ontario": "Ontario", "on": "Ontario",
+    "prince edward island": "Prince Edward Island", "pei": "Prince Edward Island",
+    "pe": "Prince Edward Island",
+    "quebec": "Quebec", "québec": "Quebec", "qc": "Quebec", "pq": "Quebec",
+    "saskatchewan": "Saskatchewan", "sk": "Saskatchewan",
+    "northwest territories": "Northwest Territories", "nt": "Northwest Territories",
+    "nunavut": "Nunavut", "nu": "Nunavut",
+    "yukon": "Yukon", "yt": "Yukon",
+}
+CANADIAN_CITIES = {
+    "toronto": "Ontario", "mississauga": "Ontario", "brampton": "Ontario",
+    "markham": "Ontario", "vaughan": "Ontario", "richmond hill": "Ontario",
+    "scarborough": "Ontario", "etobicoke": "Ontario", "north york": "Ontario",
+    "oakville": "Ontario", "ajax": "Ontario",
+    "pickering": "Ontario", "whitby": "Ontario", "oshawa": "Ontario",
+    "milton": "Ontario", "waterloo": "Ontario",
+    "kitchener": "Ontario", "ottawa": "Ontario", "hamilton": "Ontario",
+    "guelph": "Ontario", "windsor": "Ontario", "barrie": "Ontario",
+    "peterborough": "Ontario", "thornhill": "Ontario",
+    "montreal": "Quebec", "montréal": "Quebec", "quebec city": "Quebec",
+    "québec city": "Quebec", "laval": "Quebec", "gatineau": "Quebec",
+    "vancouver": "British Columbia", "surrey": "British Columbia",
+    "burnaby": "British Columbia",
+    "victoria": "British Columbia", "north vancouver": "British Columbia",
+    "new westminster": "British Columbia", "kelowna": "British Columbia",
+    "calgary": "Alberta", "edmonton": "Alberta", "red deer": "Alberta",
+    "winnipeg": "Manitoba", "halifax": "Nova Scotia",
+    "fredericton": "New Brunswick", "moncton": "New Brunswick",
+    "saint john": "New Brunswick", "st. john's": "Newfoundland and Labrador",
+    "regina": "Saskatchewan", "saskatoon": "Saskatchewan",
+    "charlottetown": "Prince Edward Island", "whitehorse": "Yukon",
+    "yellowknife": "Northwest Territories", "iqaluit": "Nunavut",
+}
+US_LOCATION_RE = re.compile(
+    r"\b(united states(?: of america)?|u\.?s\.?a?\.?|california|new york|texas|"
+    r"florida|washington|massachusetts|illinois|virginia|colorado|ohio|"
+    r"michigan|georgia|pennsylvania|new jersey|north carolina|south carolina)\b|"
+    r",\s*(?:ca|ny|tx|fl|wa|ma|il|va|co|oh|mi|ga|pa|nj|nc|sc)\b", re.I)
+EXPLICIT_CANADA_REMOTE_RE = re.compile(
+    r"(?:\bremote\s*[-,(]?\s*(?:in\s+)?canada\b|\bcanada\s*[-,(]?\s*remote\b|"
+    r"remote\s*\((?:us\s*\+\s*)?canada(?:\s+only)?\)|"
+    r"\bremote\s+(?:us\s*\+\s*canada|canada\s*\+\s*us)\b)", re.I)
+FACET_LOCATION_TERMS = tuple(CANADIAN_REGIONS) + tuple(CANADIAN_CITIES) + ("canada",)
 
 
 def geo(loc):
-    l = (loc or "").lower()
-    if any(k in l for k in TORONTO): return "Toronto"
-    if any(k in l for k in GTA): return "GTA"
-    if any(k in l for k in ONTARIO): return "Ontario"
+    text = clean_text(loc)
+    lowered = text.casefold()
+    if not lowered:
+        return None
+    if EXPLICIT_CANADA_REMOTE_RE.search(text):
+        return "Remote - Canada"
+    if US_LOCATION_RE.search(text) and not re.search(r"\bcanada\b", lowered):
+        return None
+    if re.search(r"\bcanada\b", lowered):
+        for name, region in CANADIAN_REGIONS.items():
+            if len(name) > 2 and re.search(rf"\b{re.escape(name)}\b", lowered):
+                return region
+        for city, region in CANADIAN_CITIES.items():
+            if re.search(rf"\b{re.escape(city)}\b", lowered):
+                return region
+        return "Canada"
+    for city, region in CANADIAN_CITIES.items():
+        if re.search(rf"\b{re.escape(city)}\b", lowered):
+            return region
+    for name, region in CANADIAN_REGIONS.items():
+        if len(name) > 2 and re.search(rf"\b{re.escape(name)}\b", lowered):
+            return region
+        if len(name) == 2 and re.search(rf"(?:,|\()\s*{re.escape(name)}(?:\b|,|\))", lowered):
+            return region
     return None
 
 
@@ -161,6 +228,7 @@ def g(url, request_budget=None, **kw):
 def reset_coverage():
     with COVERAGE_LOCK:
         COVERAGE.clear()
+        FILTER_FUNNEL.clear()
 
 
 def set_coverage(key, **values):
@@ -180,13 +248,7 @@ def with_coverage(record, key):
 
 def target_location_descriptor(descriptor):
     text = clean_text(descriptor).lower()
-    if not text or not any(term in text for term in FACET_LOCATION_TERMS):
-        return False
-    if CANADIAN_LOCATION_RE.search(text):
-        return True
-    normalized = re.sub(r"[^a-z]+", " ", text).strip()
-    return normalized in {re.sub(r"[^a-z]+", " ", term).strip()
-                          for term in FACET_LOCATION_TERMS}
+    return bool(text and geo(text))
 
 
 def source_id(record, *keys):
@@ -211,12 +273,67 @@ ASHBY = "cohere ramp deel mercor openai harvey sierra elevenlabs".split()
 # Verified public boards; evidence and addition procedure are in README.md.
 PUBLIC_BOARDS = [
     ("greenhouse", "internshiplist2000", "Geotab"),
+    ("greenhouse", "coveoen", "Coveo"),
+    ("greenhouse", "momentenergy", "Moment Energy"),
+    ("greenhouse", "cresta", "Cresta"),
+    ("greenhouse", "rocketlab", "Rocket Lab"),
+    ("greenhouse", "aperaaiinc", "Apera AI"),
+    ("greenhouse", "spaceium", "Spaceium"),
+    ("greenhouse", "tenstorrentuniversity", "Tenstorrent"),
+    ("greenhouse", "doordashcanada", "DoorDash"),
+    ("greenhouse", "drweng", "DRW"),
+    ("greenhouse", "orennia", "Orennia"),
+    ("greenhouse", "procogia", "Procogia"),
+    ("greenhouse", "stackadapt", "StackAdapt"),
+    ("greenhouse", "towerresearchcapital", "Tower Research Capital"),
+    ("greenhouse", "bestpass", "Drivewyze"),
+    ("greenhouse", "brave", "Brave"),
+    ("greenhouse", "captiveaire", "CaptiveAire"),
+    ("greenhouse", "globalrelay", "Global Relay"),
+    ("greenhouse", "instalilyai", "InstaLILY AI"),
+    ("greenhouse", "kao", "Kao"),
+    ("greenhouse", "khanacademy", "Khan Academy"),
+    ("greenhouse", "later", "Later"),
+    ("greenhouse", "openfarminc", "Open Farm"),
+    ("greenhouse", "rivaltechnologies", "Rival Technologies"),
+    ("greenhouse", "sonyinteractiveentertainmentglobal", "Sony Interactive Entertainment"),
+    ("greenhouse", "stepstone", "StepStone Group"),
+    ("greenhouse", "thebrattlegroup", "The Brattle Group"),
+    ("greenhouse", "tribalscale", "TribalScale"),
+    ("ashby", "human-computer-lab", "Human Computer Lab"),
+    ("ashby", "bree", "Bree"),
+    ("ashby", "trulioo-coopandinterns", "Trulioo"),
+    ("ashby", "zip", "Zip"),
+    ("ashby", "Superhuman Platform Inc", "Superhuman"),
+    ("ashby", "eastwoodcleef", "Eastwood & Cleef"),
+    ("ashby", "exegy", "Exegy"),
+    ("ashby", "fellowai", "Fellow"),
+    ("ashby", "georgian", "Georgian"),
+    ("ashby", "remarcable-inc", "Remarcable"),
+    ("ashby", "rivianvw.tech", "Rivian and Volkswagen Group Technologies"),
+    ("ashby", "veeda-ai", "Veeda AI"),
+    ("ashby", "viggle", "Viggle"),
+    ("ashby", "yotta", "Yotta"),
+    ("ashby", "quora", "Quora"),
+    ("ashby", "uncountable", "Uncountable"),
     ("ashby", "wealthsimple", "Wealthsimple"),
+    ("lever", "eqbank", "EQ Bank"),
+    ("lever", "arcteryx.com", "Arc'teryx"),
+    ("lever", "acceldata", "Acceldata"),
+    ("lever", "gomaterials", "GoMaterials"),
+    ("lever", "thinkingbox", "Thinkingbox"),
+    ("lever", "extremenetworks", "Extreme Networks"),
+    ("lever", "fullscript", "Fullscript"),
+    ("lever", "geocomply-2", "GeoComply"),
+    ("lever", "kepler", "Kepler Communications"),
+    ("lever", "shyftlabs", "ShyftLabs"),
+    ("lever", "univeris.com", "Univeris"),
+    ("lever", "waremalcomb", "Ware Malcomb"),
     ("lever", "waabi", "Waabi"),
 ]
 PUBLIC_BOARD_KEYS = {coverage_key(source, board) for source, board, _ in PUBLIC_BOARDS}
 PUBLIC_INTERNSHIP_RE = re.compile(
-    r"\b(interns?|internships?|co-?ops?|students?)\b", re.I)
+    r"\b(interns?|internships?|co-?ops?|students?|new\s*grad(?:uate)?s?)\b", re.I)
 TALENT_POOL_RE = re.compile(
     r"\b(talent (?:pool|community|network)|general (?:application|interest)|"
     r"expression of interest|future opportunities|register your interest)\b", re.I)
@@ -343,21 +460,68 @@ def ashby_location(record):
     address = record.get("address") or {}
     address = address.get("postalAddress") or address
     country = clean_text(address.get("addressCountry")).casefold()
+    location = clean_text(record.get("location"))
+    lowered = location.casefold()
     if country and country not in {"ca", "can", "canada"}:
+        if EXPLICIT_CANADA_REMOTE_RE.search(location):
+            return location
+        for city, region in CANADIAN_CITIES.items():
+            if re.search(rf"\b{re.escape(city)}\b", lowered):
+                return f"{city.title()}, {region}, Canada"
         return ""
-    return clean_text(record.get("location"))
+    if country in {"ca", "can", "canada"}:
+        if geo(location):
+            return location
+        if location:
+            return f"{location}, Canada"
+        locality = clean_text(address.get("addressLocality"))
+        region = clean_text(address.get("addressRegion"))
+        return ", ".join(part for part in (locality, region, "Canada") if part)
+    if geo(location):
+        return location
+    for city, region in CANADIAN_CITIES.items():
+        if re.search(rf"\b{re.escape(city)}\b", lowered):
+            return f"{city.title()}, {region}, Canada"
+    return ""
 
 
 def public_location(locations):
     for location in locations:
         for part in clean_text(location).split(";"):
             part = part.strip()
-            if geo(part) and (
-                target_location_descriptor(part)
-                or re.fullmatch(r"Ontario(?:,?\s+Canada)?", part, re.I)
-            ):
+            if geo(part):
                 return part
     return ""
+
+
+def public_board_url_matches(source, board, url, external_id):
+    parsed = urlsplit(canonicalize_url(url))
+    path_parts = [unquote(part) for part in parsed.path.split("/") if part]
+    if source == "lever":
+        return (
+            parsed.hostname == "jobs.lever.co"
+            and bool(path_parts)
+            and path_parts[0].casefold() == board.casefold()
+        )
+    if source == "ashby":
+        return (
+            parsed.hostname == "jobs.ashbyhq.com"
+            and bool(path_parts)
+            and path_parts[0].casefold() == board.casefold()
+        )
+    if source == "greenhouse":
+        query = parse_qs(parsed.query)
+        query_ids = (query.get("gh_jid") or []) + (query.get("job_id") or [])
+        if str(external_id) in query_ids:
+            return True
+        if parsed.hostname in {"boards.greenhouse.io", "job-boards.greenhouse.io"}:
+            if path_parts and path_parts[0].casefold() == board.casefold():
+                return True
+        return any(
+            part == str(external_id)
+            for part in path_parts[-2:]
+        )
+    return False
 
 
 def from_lever(tok):
@@ -393,8 +557,19 @@ def from_lever(tok):
                 categories = job.get("categories") or {}
                 primary = categories.get("location") or ""
                 locations = list(categories.get("allLocations") or [primary])
-                if job.get("country") not in (None, "", "CA"):
+                country = clean_text(job.get("country")).upper()
+                if country not in ("", "CA", "CAN", "CANADA"):
                     locations = [loc for loc in locations if loc != primary]
+                eligible_location = public_location(locations)
+                if not eligible_location and country in {"CA", "CAN", "CANADA"}:
+                    eligible_location = (
+                        "Remote - Canada"
+                        if clean_text(job.get("workplaceType")).casefold() == "remote"
+                        else (
+                            f"{clean_text(primary)}, Canada"
+                            if clean_text(primary) else "Canada"
+                        )
+                    )
                 created = job.get("createdAt")
                 posted = (
                     datetime.fromtimestamp(created / 1000, timezone.utc).isoformat()
@@ -402,7 +577,7 @@ def from_lever(tok):
                 )
                 out.append(with_coverage(
                     dict(company=tok, src="lever", title=job["text"],
-                         loc=public_location(locations), locations=locations,
+                         loc=eligible_location, locations=locations,
                          url=canonicalize_url(job["hostedUrl"]),
                          external_id=external_id, posted=posted,
                          content=clean_text(job.get("descriptionPlain") or "")[:600]),
@@ -431,6 +606,17 @@ def from_public_board(spec, now=None):
     now = now.astimezone(timezone.utc)
     adapter = {"greenhouse": from_greenhouse, "ashby": from_ashby, "lever": from_lever}
     rows = adapter[source](board)
+    invalid_urls = [
+        row for row in rows
+        if not public_board_url_matches(
+            source, board, row.get("url"), row.get("external_id"))
+    ]
+    if invalid_urls:
+        set_coverage(
+            key, complete=False,
+            errors=[f"tenant URL identity mismatch ({len(invalid_urls)} rows)"],
+        )
+        rows = []
     if any(
         row.get("application_deadline")
         and _parse_timestamp(row["application_deadline"]) is None
@@ -676,7 +862,7 @@ def from_workday(spec):
                 if location_filter and not geo(location):
                     location = (
                         f"{location or 'Multiple locations'} "
-                        "(approved Ontario location)"
+                        "(approved Canada location)"
                     )
                 out.append(with_coverage(
                     dict(company=tenant, src="workday",
@@ -714,7 +900,7 @@ def from_amazon(_):
             try:
                 r = g("https://www.amazon.jobs/en/search.json?radius=100km"
                       f"&offset={off}&result_limit=100&sort=recent&base_query={q.replace(' ','%20')}"
-                      "&loc_query=Toronto%2C%20Ontario%2C%20Canada&country=CAN")
+                      "&loc_query=Canada&country=CAN")
                 pages += 1
                 if r.status_code != 200:
                     errors.append(f"{q}:HTTP {r.status_code}")
@@ -804,7 +990,7 @@ def load_adzuna_baseline(now=None):
         refreshed_at = None
     if rows and refreshed_at is None:
         print(
-            "COVERAGE WARNING adzuna:ca/Toronto: missing or invalid successful "
+            f"COVERAGE WARNING adzuna:{ADZUNA_COVERAGE_TARGET}: missing or invalid successful "
             "refresh timestamp; cached rows cannot be reused"
         )
     age_hours = None
@@ -826,7 +1012,7 @@ def _adzuna_carried_rows(rows, key):
 
 
 def from_adzuna(_, now=None):
-    key = coverage_key("adzuna", "ca/Toronto")
+    key = coverage_key("adzuna", ADZUNA_COVERAGE_TARGET)
     now = now or datetime.now(timezone.utc)
     if now.tzinfo is None:
         now = now.replace(tzinfo=timezone.utc)
@@ -842,7 +1028,7 @@ def from_adzuna(_, now=None):
         if baseline_fresh:
             rows = _adzuna_carried_rows(baseline["rows"], key)
             set_coverage(
-                key, source="adzuna", target="ca/Toronto",
+                key, source="adzuna", target=ADZUNA_COVERAGE_TARGET,
                 status="reused-missing-credentials", pages=0,
                 request_attempts=0, returned=len(rows), records=len(rows),
                 reused=len(rows), query_total=None, selected_total=None,
@@ -853,7 +1039,7 @@ def from_adzuna(_, now=None):
             return rows
         if baseline["rows"]:
             set_coverage(
-                key, source="adzuna", target="ca/Toronto", status="expired",
+                key, source="adzuna", target=ADZUNA_COVERAGE_TARGET, status="expired",
                 pages=0, request_attempts=0, returned=0, records=0, reused=0,
                 query_total=None, selected_total=None,
                 location_mode="carry-forward", fallback_terms=0,
@@ -865,7 +1051,7 @@ def from_adzuna(_, now=None):
                 source_age_hours=baseline["age_hours"], complete=False)
             return []
         set_coverage(
-            key, source="adzuna", target="ca/Toronto", status="skipped",
+            key, source="adzuna", target=ADZUNA_COVERAGE_TARGET, status="skipped",
             pages=0, returned=0, records=0, query_total=None,
             selected_total=None, location_mode="where+distance",
             fallback_terms=0, capped_terms=0, repeated_terms=0,
@@ -881,7 +1067,7 @@ def from_adzuna(_, now=None):
     if not refresh_due:
         rows = _adzuna_carried_rows(baseline["rows"], key)
         set_coverage(
-            key, source="adzuna", target="ca/Toronto",
+            key, source="adzuna", target=ADZUNA_COVERAGE_TARGET,
             status="reused-fresh", pages=0, request_attempts=0,
             returned=len(rows), records=len(rows), reused=len(rows),
             query_total=None, selected_total=None,
@@ -906,11 +1092,12 @@ def from_adzuna(_, now=None):
             "app_key": app_key,
             "results_per_page": ADZUNA_RESULTS_PER_PAGE,
             "where": ADZUNA_WHERE,
-            "distance": ADZUNA_DISTANCE_KM,
             "sort_by": "date",
             "content-type": "application/json",
             **query["params"],
         }
+        if ADZUNA_DISTANCE_KM is not None:
+            params["distance"] = ADZUNA_DISTANCE_KM
         query_metric = {
             "name": query["name"], "page": query["page"],
             "total": None, "returned": 0,
@@ -1006,7 +1193,7 @@ def from_adzuna(_, now=None):
     if active_success:
         refreshed_at = now.isoformat()
         set_coverage(
-            key, source="adzuna", target="ca/Toronto", status="fresh",
+            key, source="adzuna", target=ADZUNA_COVERAGE_TARGET, status="fresh",
             query_total=query_total, selected_total=query_total,
             pages=pages, request_attempts=request_attempts,
             returned=returned, records=len(out), reused=0,
@@ -1019,7 +1206,7 @@ def from_adzuna(_, now=None):
     if baseline_fresh:
         rows = _adzuna_carried_rows(baseline["rows"], key)
         set_coverage(
-            key, source="adzuna", target="ca/Toronto",
+            key, source="adzuna", target=ADZUNA_COVERAGE_TARGET,
             status="reused-partial", query_total=query_total,
             selected_total=query_total, pages=pages,
             request_attempts=request_attempts, returned=returned,
@@ -1032,7 +1219,7 @@ def from_adzuna(_, now=None):
         return rows
 
     set_coverage(
-        key, source="adzuna", target="ca/Toronto", status="expired",
+        key, source="adzuna", target=ADZUNA_COVERAGE_TARGET, status="expired",
         query_total=query_total, selected_total=query_total,
         pages=pages,
         request_attempts=request_attempts,
@@ -1081,6 +1268,26 @@ def clean_text(s):
     return " ".join(s.split())
 
 
+def successfactors_location(href):
+    decoded = clean_text(unquote(href)).casefold()
+    words = re.sub(r"[^a-zà-ÿ]+", " ", decoded)
+    for city, region in sorted(
+        CANADIAN_CITIES.items(), key=lambda item: len(item[0]), reverse=True
+    ):
+        if re.search(rf"\b{re.escape(city)}\b", words):
+            return f"{city.title()}, {region}, Canada"
+    suffix = re.search(
+        r"-(ab|bc|mb|nb|nl|ns|nt|nu|on|pe|qc|sk|yt)/\d+/?$",
+        decoded,
+        re.I,
+    )
+    if suffix:
+        return f"{CANADIAN_REGIONS[suffix.group(1).casefold()]}, Canada"
+    if "canada" in words:
+        return "Canada"
+    return ""
+
+
 def from_successfactors(spec):
     label, base, extra = spec
     key = coverage_key("successfactors", label)
@@ -1093,7 +1300,7 @@ def from_successfactors(spec):
         page_signatures = set()
         term_pages = 0
         while term_pages < SUCCESSFACTORS_MAX_PAGES:
-            params = {"q": term, "locationsearch": "Toronto", "startrow": start}
+            params = {"q": term, "locationsearch": "Canada", "startrow": start}
             params.update(extra)
             try:
                 r = g(f"{base}/search/", params=params)
@@ -1125,7 +1332,7 @@ def from_successfactors(spec):
                 # The listing page does not expose a machine-readable location
                 # or date; the slug carries the city, which is enough to place
                 # it. Date is left empty rather than invented.
-                loc = "Toronto, ON" if "/job/toronto" in href.lower() else ""
+                loc = successfactors_location(href)
                 out.append(with_coverage(
                     dict(company=label, src="successfactors", title=title,
                          loc=loc, url=url, posted="", content=""),
@@ -1156,7 +1363,7 @@ TASKS = (
     + [(from_successfactors, spec, coverage_key("successfactors", spec[0]))
        for spec in SUCCESSFACTORS]
     + [(from_amazon, "amazon", coverage_key("amazon", "amazon"))]
-    + [(from_adzuna, "adzuna", coverage_key("adzuna", "ca/Toronto"))]
+    + [(from_adzuna, "adzuna", coverage_key("adzuna", ADZUNA_COVERAGE_TARGET))]
     + [(from_public_board, spec, coverage_key(spec[0], spec[1]))
        for spec in PUBLIC_BOARDS]
 )
@@ -1398,7 +1605,7 @@ def print_coverage_report(filtered_counts, unique_counts, live_counts):
 
 
 def source_state_payload():
-    key = coverage_key("adzuna", "ca/Toronto")
+    key = coverage_key("adzuna", ADZUNA_COVERAGE_TARGET)
     with COVERAGE_LOCK:
         entry = dict(COVERAGE.get(key) or {})
         public_entries = {
@@ -1433,6 +1640,7 @@ def source_state_payload():
 
 def filter_candidates(records):
     candidates, counts = [], {}
+    role_eligible = 0
     for record in records:
         record["title"] = clean_text(record.get("title"))
         record["loc"] = clean_text(record.get("loc"))
@@ -1445,6 +1653,7 @@ def filter_candidates(records):
             or TALENT_POOL_RE.search(record["title"])
         ):
             continue
+        role_eligible += 1
         region = geo(record["loc"])
         if not region:
             continue
@@ -1453,6 +1662,11 @@ def filter_candidates(records):
         candidates.append(record)
         key = record.get("_coverage_key")
         counts[key] = counts.get(key, 0) + 1
+    FILTER_FUNNEL.update(
+        raw_active_listed=len(records),
+        role_eligible=role_eligible,
+        canada_eligible=len(candidates),
+    )
     return candidates, counts
 
 
@@ -1503,17 +1717,23 @@ def main():
     print(f"pulled {len(raw)} raw postings in {time.time()-t0:.0f}s")
 
     cand, filtered_counts = filter_candidates(raw)
+    print(
+        "FILTER FUNNEL: "
+        f"active/listed={FILTER_FUNNEL['raw_active_listed']} "
+        f"internship/co-op/new-grad={FILTER_FUNNEL['role_eligible']} "
+        f"Canada-eligible={FILTER_FUNNEL['canada_eligible']}"
+    )
 
     # Dedupe by source identity, then prefer direct ATS records when an Adzuna
     # aggregate row matches the same normalized company/title/location.
     uniq, unique_counts, direct_overlap_counts = dedupe_candidates(cand)
-    adzuna_key = coverage_key("adzuna", "ca/Toronto")
+    adzuna_key = coverage_key("adzuna", ADZUNA_COVERAGE_TARGET)
     if direct_overlap_counts.get(adzuna_key):
         set_coverage(
             adzuna_key,
             direct_overlap=direct_overlap_counts[adzuna_key],
         )
-    print(f"{len(uniq)} unique Toronto-area internships (before liveness check)")
+    print(f"{len(uniq)} unique Canada-eligible internships (before liveness check)")
 
     # verify every URL is still live
     live, dropped = [], []

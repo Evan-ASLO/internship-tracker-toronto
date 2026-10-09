@@ -129,10 +129,10 @@ class PublicParsingTests(unittest.TestCase):
 
     def test_malformed_or_truncated_responses_never_report_complete_empty(self):
         cases = [
-            (scrape.from_greenhouse, "internshiplist2000", {}),
-            (scrape.from_greenhouse, "internshiplist2000",
+            (scrape.from_greenhouse, "coveoen", {}),
+            (scrape.from_greenhouse, "coveoen",
              {"jobs": [], "meta": {"total": 1}}),
-            (scrape.from_greenhouse, "internshiplist2000",
+            (scrape.from_greenhouse, "coveoen",
              {"jobs": [{"title": "Finance Intern"}]}),
             (scrape.from_ashby, "wealthsimple", {"jobs": None}),
             (scrape.from_ashby, "wealthsimple", {"jobs": [{"id": "1"}]}),
@@ -149,26 +149,30 @@ class PublicParsingTests(unittest.TestCase):
         job = {
             "id": 1, "internal_job_id": 100, "title": "Finance Intern",
             "location": {"name": "Toronto, Ontario"},
-            "absolute_url": "https://job-boards.greenhouse.io/internshiplist2000/jobs/1",
+            "absolute_url": "https://job-boards.greenhouse.io/coveoen/jobs/1",
         }
         data = {"jobs": [job, {**job, "id": 2, "internal_job_id": None}],
                 "meta": {"total": 2}}
         with patch.object(scrape, "g", return_value=FakeResponse(data)):
-            rows = scrape.from_greenhouse("internshiplist2000")
+            rows = scrape.from_greenhouse("coveoen")
         self.assertEqual([row["external_id"] for row in rows], ["1"])
-        self.assertTrue(scrape.COVERAGE["greenhouse:internshiplist2000"]["complete"])
+        self.assertTrue(scrape.COVERAGE["greenhouse:coveoen"]["complete"])
 
-    def test_public_eligibility_keeps_scope_without_new_grad_or_pool_padding(self):
+    def test_public_eligibility_keeps_scope_without_pool_or_remote_padding(self):
         cases = [
             ("Finance Intern", "Toronto, ON", True),
-            ("Marketing Co-op", "Oakville, Ontario", True),
-            ("Legal Summer Student", "Toronto, Ontario", True),
+            ("Marketing Co-op", "Vancouver, British Columbia", True),
+            ("Legal Summer Student", "Halifax, Nova Scotia", True),
             ("Senior Finance Manager", "Toronto, ON", False),
             ("International Accountant", "Toronto, ON", False),
-            ("New Graduate Analyst", "Toronto, ON", False),
+            ("New Graduate Analyst", "Calgary, Alberta", True),
+            ("Product Manager (New Grad)", "Toronto, Ontario", True),
+            ("Senior Product Manager - New Grad", "Toronto, Ontario", False),
             ("Internship Talent Community", "Toronto, ON", False),
             ("Finance Intern", "Remote US", False),
-            ("Finance Intern", "Remote Canada", False),
+            ("Finance Intern", "Remote Canada", True),
+            ("Finance Intern", "Remote (US + Canada Only)", True),
+            ("Finance Intern", "Remote", False),
             ("Finance Intern", "Ontario, California", False),
         ]
         for title, location, expected in cases:
@@ -178,21 +182,122 @@ class PublicParsingTests(unittest.TestCase):
                 candidates, _ = scrape.filter_candidates([row])
                 self.assertEqual(bool(candidates), expected)
 
+    def test_canada_geography_covers_regions_and_rejects_us_namesakes(self):
+        cases = {
+            "Edmonton, AB": "Alberta",
+            "Vancouver, British Columbia": "British Columbia",
+            "Winnipeg, Manitoba": "Manitoba",
+            "Fredericton, New Brunswick": "New Brunswick",
+            "St. John's, Newfoundland and Labrador": "Newfoundland and Labrador",
+            "Halifax, Nova Scotia": "Nova Scotia",
+            "Toronto, Ontario": "Ontario",
+            "Charlottetown, Prince Edward Island": "Prince Edward Island",
+            "Montreal, Quebec": "Quebec",
+            "Saskatoon, SK": "Saskatchewan",
+            "Yellowknife, Northwest Territories": "Northwest Territories",
+            "Iqaluit, Nunavut": "Nunavut",
+            "Whitehorse, Yukon": "Yukon",
+            "Remote (US + Canada Only)": "Remote - Canada",
+            "Ontario, California": None,
+            "Remote, United States": None,
+            "Remote": None,
+        }
+        for location, expected in cases.items():
+            with self.subTest(location=location):
+                self.assertEqual(scrape.geo(location), expected)
+
+    def test_ashby_nested_secondary_canada_location_is_eligible(self):
+        job = {
+            "id": "1", "isListed": True, "title": "Software Intern",
+            "location": "San Francisco, California",
+            "address": {"postalAddress": {"addressCountry": "United States"}},
+            "secondaryLocations": [{
+                "location": "Toronto, Ontario",
+                "address": {"postalAddress": {
+                    "addressCountry": "Canada", "addressRegion": "Ontario",
+                    "addressLocality": "Toronto",
+                }},
+            }],
+            "employmentType": "Intern",
+            "jobUrl": "https://jobs.ashbyhq.com/bree/1",
+        }
+        with patch.object(scrape, "g", return_value=FakeResponse({"jobs": [job]})):
+            rows = scrape.from_ashby("bree")
+        candidates, _ = scrape.filter_candidates(rows)
+        self.assertEqual(len(candidates), 1)
+        self.assertEqual(candidates[0]["geo"], "Ontario")
+
+    def test_ashby_multi_location_keeps_explicit_canadian_city(self):
+        job = {
+            "id": "1", "isListed": True, "title": "Product Manager (New Grad)",
+            "location": "New York, London, Toronto, San Francisco",
+            "address": {"postalAddress": {"addressCountry": "United States"}},
+            "secondaryLocations": [],
+            "employmentType": "FullTime",
+            "jobUrl": "https://jobs.ashbyhq.com/uncountable/1",
+        }
+        with patch.object(scrape, "g", return_value=FakeResponse({"jobs": [job]})):
+            rows = scrape.from_ashby("uncountable")
+        candidates, _ = scrape.filter_candidates(rows)
+        self.assertEqual(len(candidates), 1)
+        self.assertEqual(candidates[0]["loc"], "Toronto, Ontario, Canada")
+
+    def test_public_registry_has_verified_native_and_campus_boards(self):
+        boards = {(source, board) for source, board, _ in scrape.PUBLIC_BOARDS}
+        for expected in {
+            ("greenhouse", "internshiplist2000"),
+            ("lever", "eqbank"), ("lever", "arcteryx.com"),
+            ("ashby", "bree"), ("ashby", "trulioo-coopandinterns"),
+            ("greenhouse", "coveoen"), ("greenhouse", "momentenergy"),
+        }:
+            self.assertIn(expected, boards)
+
+    def test_filter_funnel_reports_role_and_canada_counts(self):
+        rows = [
+            {"title": "Finance Intern", "loc": "Toronto, Ontario",
+             "url": "https://example.com/1"},
+            {"title": "Finance Intern", "loc": "New York, NY",
+             "url": "https://example.com/2"},
+            {"title": "Senior Finance Manager", "loc": "Calgary, Alberta",
+             "url": "https://example.com/3"},
+        ]
+
+        candidates, _ = scrape.filter_candidates(rows)
+
+        self.assertEqual(len(candidates), 1)
+        self.assertEqual(scrape.FILTER_FUNNEL, {
+            "raw_active_listed": 3,
+            "role_eligible": 2,
+            "canada_eligible": 1,
+        })
+
+    def test_public_board_url_identity_validation(self):
+        self.assertTrue(scrape.public_board_url_matches(
+            "lever", "eqbank", "https://jobs.lever.co/eqbank/abc", "abc"))
+        self.assertTrue(scrape.public_board_url_matches(
+            "ashby", "Superhuman Platform Inc",
+            "https://jobs.ashbyhq.com/Superhuman%20Platform%20Inc/abc", "abc"))
+        self.assertTrue(scrape.public_board_url_matches(
+            "greenhouse", "coveoen",
+            "https://www.coveo.com/careers?gh_jid=123", "123"))
+        self.assertFalse(scrape.public_board_url_matches(
+            "lever", "eqbank", "https://jobs.lever.co/other/abc", "abc"))
+
 
 class PublicCacheTests(unittest.TestCase):
     now = datetime(2026, 10, 4, 21, tzinfo=timezone.utc)
-    spec = ("greenhouse", "internshiplist2000", "Geotab")
-    key = "greenhouse:internshiplist2000"
+    spec = ("greenhouse", "coveoen", "Coveo")
+    key = "greenhouse:coveoen"
 
     def setUp(self):
         scrape.reset_coverage()
 
     def prior_row(self, refreshed):
         return {
-            "company": "Geotab", "title": "Finance Intern", "loc": "Toronto, ON",
-            "src": "greenhouse", "external_id": "internshiplist2000:123",
-            "url": "https://job-boards.greenhouse.io/internshiplist2000/jobs/123",
-            "source_target": "internshiplist2000", "last_seen": refreshed.isoformat(),
+            "company": "Coveo", "title": "Finance Intern", "loc": "Montreal, Quebec",
+            "src": "greenhouse", "external_id": "coveoen:123",
+            "url": "https://job-boards.greenhouse.io/coveoen/jobs/123",
+            "source_target": "coveoen", "last_seen": refreshed.isoformat(),
             "posted": "", "cats": ["Finance"],
         }
 
@@ -227,7 +332,7 @@ class PublicCacheTests(unittest.TestCase):
                 self.assertEqual(len(rows), int(expected_status == "reused-incomplete"))
                 if rows:
                     self.assertEqual(rows[0]["last_seen"], refreshed.isoformat())
-                    self.assertEqual(rows[0]["external_id"], "internshiplist2000:123")
+                    self.assertEqual(rows[0]["external_id"], "coveoen:123")
 
     def test_incomplete_first_fetch_is_blocked_not_successful_empty(self):
         with tempfile.TemporaryDirectory() as temp:
@@ -272,11 +377,11 @@ class PublicCacheTests(unittest.TestCase):
             return [{**self.prior_row(self.now), "external_id": "123"}]
         with patch.object(scrape, "from_greenhouse", side_effect=success):
             rows = scrape.from_public_board(self.spec, now=self.now)
-        self.assertEqual(rows[0]["external_id"], "internshiplist2000:123")
+        self.assertEqual(rows[0]["external_id"], "coveoen:123")
         self.assertEqual(rows[0]["last_seen"], self.now.isoformat())
         envelope, _ = build_envelope({"fetched_at": self.now.isoformat(), "jobs": rows})
         normalized = envelope["jobs"][0]
-        self.assertEqual(normalized["externalId"], "internshiplist2000:123")
+        self.assertEqual(normalized["externalId"], "coveoen:123")
         self.assertNotIn("last_seen", normalized)
         self.assertNotIn("source_target", normalized)
 
@@ -291,14 +396,14 @@ class PublicCacheTests(unittest.TestCase):
             ]
         with patch.object(scrape, "from_greenhouse", side_effect=success):
             rows = scrape.from_public_board(self.spec, now=self.now)
-        self.assertEqual([row["external_id"] for row in rows], ["internshiplist2000:124"])
+        self.assertEqual([row["external_id"] for row in rows], ["coveoen:124"])
 
     def test_pipeline_retains_metadata_without_changing_consumer_contract(self):
         record = {**self.prior_row(self.now), "content": "Provider description"}
         candidates, _ = scrape.filter_candidates([record])
         serialized = scrape.snapshot_job(candidates[0])
         self.assertEqual(serialized["last_seen"], self.now.isoformat())
-        self.assertEqual(serialized["source_target"], "internshiplist2000")
+        self.assertEqual(serialized["source_target"], "coveoen")
         envelope, body = build_envelope({
             "fetched_at": self.now.isoformat(), "jobs": [serialized],
         })

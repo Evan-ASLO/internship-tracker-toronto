@@ -151,7 +151,9 @@ def main(argv=None):
 
     scrape.reset_coverage()
     records = scrape.from_adzuna(None)
-    coverage = scrape.COVERAGE[scrape.coverage_key("adzuna", "ca/Toronto")]
+    coverage = scrape.COVERAGE[
+        scrape.coverage_key("adzuna", scrape.ADZUNA_COVERAGE_TARGET)
+    ]
     baseline_jobs = []
     baseline_path = os.environ.get("ADZUNA_BASELINE_PATH", "live_jobs.json")
     try:

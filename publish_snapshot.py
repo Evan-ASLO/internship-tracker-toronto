@@ -227,6 +227,9 @@ def normalize_job(job: Mapping[str, Any]) -> dict[str, Any]:
     if parsed_url.hostname in {"job-boards.greenhouse.io", "boards.greenhouse.io"}:
         board = parsed_url.path.strip("/").split("/")[0]
         greenhouse_ids.add(f"{board}:{url_external_id}")
+    source_target = clean_text(job.get("source_target"))
+    if source == "greenhouse" and source_target and url_external_id:
+        greenhouse_ids.add(f"{source_target}:{url_external_id}")
     if (
         source == "greenhouse"
         and explicit_external_id

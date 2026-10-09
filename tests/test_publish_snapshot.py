@@ -200,6 +200,25 @@ class SnapshotNormalizationTests(unittest.TestCase):
                 }
             )
 
+    def test_board_scoped_greenhouse_id_matches_custom_employer_url(self):
+        job = normalize_job(
+            {
+                "src": "greenhouse",
+                "source_target": "coveoen",
+                "external_id": "coveoen:123",
+                "company": "Coveo",
+                "title": "Finance Intern",
+                "loc": "Montreal, Quebec, Canada",
+                "geo": "Quebec",
+                "cats": ["Finance"],
+                "url": "https://www.coveo.com/careers?gh_jid=123",
+                "posted": "2026-10-01T12:00:00Z",
+                "content": "",
+            }
+        )
+
+        self.assertEqual(job["externalId"], "coveoen:123")
+
     def test_current_snapshot_normalizes_every_job_with_unique_ids(self):
         with open("live_jobs.json", encoding="utf-8") as fh:
             source = json.load(fh)
