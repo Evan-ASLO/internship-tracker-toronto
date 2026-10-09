@@ -374,11 +374,18 @@ class PublicCacheTests(unittest.TestCase):
     def test_success_adds_board_qualified_identity_and_last_seen(self):
         def success(_):
             scrape.set_coverage(self.key, complete=True, errors=[])
-            return [{**self.prior_row(self.now), "external_id": "123"}]
+            return [{
+                **self.prior_row(self.now), "external_id": "123",
+                "url": "https://www.coveo.com/careers?gh_jid=123",
+            }]
         with patch.object(scrape, "from_greenhouse", side_effect=success):
             rows = scrape.from_public_board(self.spec, now=self.now)
         self.assertEqual(rows[0]["external_id"], "coveoen:123")
         self.assertEqual(rows[0]["last_seen"], self.now.isoformat())
+        self.assertEqual(
+            rows[0]["url"],
+            "https://job-boards.greenhouse.io/coveoen/jobs/123",
+        )
         envelope, _ = build_envelope({"fetched_at": self.now.isoformat(), "jobs": rows})
         normalized = envelope["jobs"][0]
         self.assertEqual(normalized["externalId"], "coveoen:123")
