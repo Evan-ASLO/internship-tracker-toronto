@@ -38,6 +38,7 @@ LEVER_PAGE_SIZE = 100
 LEVER_MAX_PAGES = 20
 SMARTRECRUITERS_PAGE_SIZE = 100
 SMARTRECRUITERS_MAX_PAGES = 20
+GREENHOUSE_DETAIL_MAX_REQUESTS = 200
 PUBLIC_BOARD_GRACE_HOURS = 6
 ADZUNA_RESULTS_PER_PAGE = 50
 ADZUNA_REQUESTS_PER_ACTIVE_RUN = 5
@@ -411,8 +412,9 @@ def from_greenhouse(tok):
                      loc=(j.get("location") or {}).get("name", ""),
                      url=canonicalize_url(j["absolute_url"]),
                      external_id=source_id(j, "id"),
+                     _greenhouse_board=tok,
                      application_deadline=j.get("application_deadline"),
-                     posted=j.get("first_published") or j.get("updated_at", ""),
+                     posted=j.get("first_published", "") or "",
                      content=re.sub("<[^>]+>", " ", j.get("content", "") or "")[:600]),
                 key))
         set_coverage(key, source="greenhouse", target=tok, pages=1,
@@ -1813,6 +1815,76 @@ def mark_baseline_records(records):
             record["_baseline_existing"] = True
 
 
+def hydrate_greenhouse_posted_dates(records):
+    pending = {}
+    for record in records:
+        if (
+            record.get("src") != "greenhouse"
+            or record.get("posted")
+            or not record.get("_greenhouse_board")
+            or not record.get("external_id")
+        ):
+            continue
+        board = record["_greenhouse_board"]
+        provider_id = str(record["external_id"]).rsplit(":", 1)[-1]
+        pending.setdefault((board, provider_id), []).append(record)
+
+    lookups = sorted(pending)[:GREENHOUSE_DETAIL_MAX_REQUESTS]
+    capped = len(pending) - len(lookups)
+    if not lookups:
+        result = {"requested": 0, "resolved": 0, "unavailable": 0, "capped": capped}
+        print(
+            "GREENHOUSE POSTED DATES: "
+            "detail_requests=0 resolved=0 unavailable=0 "
+            f"capped={result['capped']}"
+        )
+        return result
+
+    def fetch_posted_at(identity):
+        board, provider_id = identity
+        try:
+            response = g(
+                f"https://boards-api.greenhouse.io/v1/boards/"
+                f"{quote(board, safe='')}/jobs/{quote(provider_id, safe='')}"
+            )
+            if response.status_code != 200:
+                return identity, None
+            job = response.json()
+            if (
+                not isinstance(job, dict)
+                or str(job.get("id")) != provider_id
+                or _parse_timestamp(job.get("first_published")) is None
+            ):
+                return identity, None
+            return identity, job["first_published"]
+        except (requests.RequestException, ValueError, TypeError):
+            return identity, None
+
+    resolved = 0
+    with ThreadPoolExecutor(max_workers=8) as executor:
+        for identity, posted_at in executor.map(fetch_posted_at, lookups):
+            if not posted_at:
+                continue
+            resolved += 1
+            for record in pending[identity]:
+                record["posted"] = posted_at
+
+    result = {
+        "requested": len(lookups),
+        "resolved": resolved,
+        "unavailable": len(lookups) - resolved,
+        "capped": capped,
+    }
+    print(
+        "GREENHOUSE POSTED DATES: "
+        f"detail_requests={result['requested']} "
+        f"resolved={result['resolved']} "
+        f"unavailable={result['unavailable']} "
+        f"capped={result['capped']}"
+    )
+    return result
+
+
 def filter_candidates(records):
     candidates, counts = [], {}
     role_eligible = 0
@@ -1899,6 +1971,7 @@ def main():
 
     mark_baseline_records(raw)
     cand, filtered_counts = filter_candidates(raw)
+    hydrate_greenhouse_posted_dates(cand)
     print(
         "FILTER FUNNEL: "
         f"active/listed={FILTER_FUNNEL['raw_active_listed']} "

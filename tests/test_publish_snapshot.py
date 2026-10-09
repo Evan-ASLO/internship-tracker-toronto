@@ -98,6 +98,57 @@ class SnapshotNormalizationTests(unittest.TestCase):
         self.assertEqual(job["postedText"], "Posted Today")
         self.assertIsNone(job["description"])
 
+    def test_invalid_and_future_posted_dates_are_unavailable(self):
+        base = {
+            "src": "greenhouse",
+            "company": "Example",
+            "title": "Finance Intern",
+            "loc": "Toronto",
+            "geo": "Ontario",
+            "cats": ["Finance"],
+            "url": "https://job-boards.greenhouse.io/example/jobs/123",
+            "content": "",
+        }
+        invalid = normalize_job(
+            {**base, "postedAt": "not-a-date"},
+            generated_at="2026-10-09T12:00:00Z",
+        )
+        future = normalize_job(
+            {**base, "posted": "2026-10-10T12:00:00Z"},
+            generated_at="2026-10-09T12:00:00Z",
+        )
+
+        self.assertIsNone(invalid["postedAt"])
+        self.assertIsNone(invalid["postedText"])
+        self.assertIsNone(future["postedAt"])
+        self.assertEqual(future["postedText"], "2026-10-10T12:00:00Z")
+
+    def test_workday_relative_posted_text_never_becomes_posted_at(self):
+        snapshot = {
+            "fetched_at": "2026-10-09T12:00:00Z",
+            "jobs": [
+                {
+                    "src": "workday",
+                    "company": "BMO",
+                    "title": "Finance Intern",
+                    "loc": "Toronto, Ontario",
+                    "geo": "Ontario",
+                    "cats": ["Finance"],
+                    "url": (
+                        "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/"
+                        "Toronto/Finance-Intern_R123"
+                    ),
+                    "posted": "Posted 2 Days Ago",
+                    "content": "",
+                }
+            ],
+        }
+
+        envelope, _ = build_envelope(snapshot)
+
+        self.assertIsNone(envelope["jobs"][0]["postedAt"])
+        self.assertEqual(envelope["jobs"][0]["postedText"], "Posted 2 Days Ago")
+
     def test_workday_id_uses_tenant_scoped_requisition_not_title_slug(self):
         base = {
             "src": "workday",

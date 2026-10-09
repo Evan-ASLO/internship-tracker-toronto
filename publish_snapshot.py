@@ -202,7 +202,11 @@ def _generated_at(value: Any) -> str:
     return normalized
 
 
-def normalize_job(job: Mapping[str, Any]) -> dict[str, Any]:
+def normalize_job(
+    job: Mapping[str, Any],
+    *,
+    generated_at: str | None = None,
+) -> dict[str, Any]:
     source = _normalized_identity_text(job.get("source") or job.get("src"))
     company_identity = clean_text(job.get("company"))
     title_identity = clean_text(job.get("title"))
@@ -268,10 +272,13 @@ def normalize_job(job: Mapping[str, Any]) -> dict[str, Any]:
     posted_at = clean_text(job.get("postedAt")) or None
     if posted_at:
         posted_at = _absolute_posted_at(posted_at)
-        if not posted_at:
-            raise SnapshotError(f"Invalid postedAt value for {title_identity!r}")
     elif posted_text_identity:
         posted_at = _absolute_posted_at(posted_text_identity)
+    if posted_at and generated_at:
+        posted_datetime = datetime.fromisoformat(posted_at.replace("Z", "+00:00"))
+        generated_datetime = datetime.fromisoformat(generated_at.replace("Z", "+00:00"))
+        if posted_datetime > generated_datetime:
+            posted_at = None
 
     description_identity = clean_text(job.get("description") or job.get("content")) or None
     normalized_id = stable_job_id(
@@ -314,7 +321,11 @@ def build_envelope(snapshot: Mapping[str, Any]) -> tuple[dict[str, Any], bytes]:
     if len(source_jobs) > MAX_JOBS:
         raise SnapshotError(f"Snapshot has {len(source_jobs)} jobs; limit is {MAX_JOBS}")
 
-    jobs = sorted((normalize_job(job) for job in source_jobs), key=lambda job: job["id"])
+    generated_at = _generated_at(snapshot.get("generatedAt") or snapshot.get("fetched_at"))
+    jobs = sorted(
+        (normalize_job(job, generated_at=generated_at) for job in source_jobs),
+        key=lambda job: job["id"],
+    )
     ids = [job["id"] for job in jobs]
     if len(ids) != len(set(ids)):
         raise SnapshotError("Snapshot contains duplicate normalized job IDs")
@@ -322,7 +333,7 @@ def build_envelope(snapshot: Mapping[str, Any]) -> tuple[dict[str, Any], bytes]:
     jobs_bytes = canonical_json_bytes(jobs)
     envelope = {
         "schemaVersion": SCHEMA_VERSION,
-        "generatedAt": _generated_at(snapshot.get("generatedAt") or snapshot.get("fetched_at")),
+        "generatedAt": generated_at,
         "snapshotHash": hashlib.sha256(jobs_bytes).hexdigest(),
         "jobs": jobs,
     }

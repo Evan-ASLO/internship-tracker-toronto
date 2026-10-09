@@ -45,6 +45,27 @@ internship-growth target is reported separately and counts only explicit
 internship, co-op, and student-placement titles. Newly added `PUBLIC_BOARDS`
 cannot introduce new-grad-only roles.
 
+### Posting-date provenance
+
+Recent-date filters use only source-supplied publication timestamps. They never
+use scrape time, `last_seen`, import time, or an ATS update timestamp as a
+substitute for the employer's posting date.
+
+| Source | `postedAt` provenance |
+|---|---|
+| Greenhouse | `first_published`; never `updated_at`. If the list omits it, the scraper performs a bounded lookup against the official public job-detail endpoint for otherwise eligible roles. |
+| Lever | `createdAt`, the posting creation timestamp documented by the Postings API. |
+| Ashby | `publishedAt`, the public posting's documented published timestamp. |
+| SmartRecruiters | `releasedDate`, the public posting release timestamp. |
+| Amazon | `posted_date` from the employer job API is date-only text, so it remains `postedText` and does not become `postedAt`. |
+| Adzuna | `created`, the Adzuna provider-listing timestamp returned with the job result. |
+| Workday | Relative `postedOn` text is retained as `postedText` only; `postedAt` remains unavailable. |
+| SuccessFactors | The list source has no reliable publication timestamp, so `postedAt` remains unavailable. |
+
+Missing, invalid, or future source timestamps normalize to `postedAt: null`.
+Source text may still be retained in `postedText` for display, but cannot qualify
+a job for the 24-hour, 7-day, or 30-day filters.
+
 Every scrape prints a **SOURCE COVERAGE** table with provider query totals,
 pages, returned rows, product-filtered rows, unique rows, and verified-live
 rows. Missing location facets, request errors, repeated pages, and safety-cap

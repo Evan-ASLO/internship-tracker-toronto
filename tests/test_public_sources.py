@@ -217,13 +217,63 @@ class PublicParsingTests(unittest.TestCase):
             "id": 1, "internal_job_id": 100, "title": "Finance Intern",
             "location": {"name": "Toronto, Ontario"},
             "absolute_url": "https://job-boards.greenhouse.io/coveoen/jobs/1",
+            "updated_at": "2026-10-09T12:00:00Z",
         }
         data = {"jobs": [job, {**job, "id": 2, "internal_job_id": None}],
                 "meta": {"total": 2}}
         with patch.object(scrape, "g", return_value=FakeResponse(data)):
             rows = scrape.from_greenhouse("coveoen")
         self.assertEqual([row["external_id"] for row in rows], ["1"])
+        self.assertEqual(rows[0]["posted"], "")
         self.assertTrue(scrape.COVERAGE["greenhouse:coveoen"]["complete"])
+
+    def test_greenhouse_missing_list_date_uses_detail_first_published_only(self):
+        list_job = {
+            "id": 1, "internal_job_id": 100, "title": "Finance Intern",
+            "location": {"name": "Toronto, Ontario"},
+            "absolute_url": "https://job-boards.greenhouse.io/coveoen/jobs/1",
+            "updated_at": "2026-10-09T12:00:00Z",
+        }
+        detail_job = {
+            "id": 1,
+            "first_published": "2026-09-01T08:00:00-04:00",
+            "updated_at": "2026-10-09T12:00:00Z",
+        }
+        with patch.object(
+            scrape,
+            "g",
+            side_effect=[
+                FakeResponse({"jobs": [list_job], "meta": {"total": 1}}),
+                FakeResponse(detail_job),
+            ],
+        ):
+            rows = scrape.from_greenhouse("coveoen")
+            stats = scrape.hydrate_greenhouse_posted_dates(rows)
+
+        self.assertEqual(rows[0]["posted"], "2026-09-01T08:00:00-04:00")
+        self.assertEqual(
+            stats,
+            {"requested": 1, "resolved": 1, "unavailable": 0, "capped": 0},
+        )
+
+    def test_greenhouse_missing_first_published_remains_unavailable(self):
+        row = {
+            "src": "greenhouse",
+            "_greenhouse_board": "coveoen",
+            "external_id": "1",
+            "posted": "",
+        }
+        with patch.object(
+            scrape,
+            "g",
+            return_value=FakeResponse(
+                {"id": 1, "updated_at": "2026-10-09T12:00:00Z"}
+            ),
+        ):
+            stats = scrape.hydrate_greenhouse_posted_dates([row])
+
+        self.assertEqual(row["posted"], "")
+        self.assertEqual(stats["unavailable"], 1)
 
     def test_public_eligibility_keeps_scope_without_pool_or_remote_padding(self):
         cases = [
