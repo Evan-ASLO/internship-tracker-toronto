@@ -123,6 +123,27 @@ class SnapshotNormalizationTests(unittest.TestCase):
         self.assertIsNone(future["postedAt"])
         self.assertEqual(future["postedText"], "2026-10-10T12:00:00Z")
 
+    def test_posted_at_uses_canonical_utc_seconds_or_milliseconds(self):
+        base = {
+            "src": "lever",
+            "company": "Example",
+            "title": "Finance Intern",
+            "loc": "Toronto",
+            "geo": "Ontario",
+            "cats": ["Finance"],
+            "url": "https://jobs.lever.co/example/123",
+            "content": "",
+        }
+        milliseconds = normalize_job(
+            {**base, "posted": "2026-10-09T12:00:00.761000Z"}
+        )
+        seconds = normalize_job(
+            {**base, "posted": "2026-10-09T12:00:00+00:00"}
+        )
+
+        self.assertEqual(milliseconds["postedAt"], "2026-10-09T12:00:00.761Z")
+        self.assertEqual(seconds["postedAt"], "2026-10-09T12:00:00Z")
+
     def test_workday_relative_posted_text_never_becomes_posted_at(self):
         snapshot = {
             "fetched_at": "2026-10-09T12:00:00Z",

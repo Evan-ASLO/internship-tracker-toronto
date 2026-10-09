@@ -189,7 +189,9 @@ def _absolute_posted_at(value: str) -> str | None:
 
     if parsed.tzinfo is None:
         parsed = parsed.replace(tzinfo=timezone.utc)
-    return parsed.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")
+    parsed = parsed.astimezone(timezone.utc)
+    timespec = "seconds" if parsed.microsecond == 0 else "milliseconds"
+    return parsed.isoformat(timespec=timespec).replace("+00:00", "Z")
 
 
 def _generated_at(value: Any) -> str:
