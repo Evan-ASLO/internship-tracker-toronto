@@ -332,6 +332,9 @@ PUBLIC_BOARDS = [
     ("lever", "waabi", "Waabi"),
 ]
 PUBLIC_BOARD_KEYS = {coverage_key(source, board) for source, board, _ in PUBLIC_BOARDS}
+PUBLIC_GREENHOUSE_BOARDS = {
+    board for source, board, _ in PUBLIC_BOARDS if source == "greenhouse"
+}
 PUBLIC_INTERNSHIP_RE = re.compile(
     r"\b(interns?|internships?|co-?ops?|students?|new\s*grad(?:uate)?s?)\b", re.I)
 TALENT_POOL_RE = re.compile(
@@ -1394,6 +1397,12 @@ def verify(rec):
             time.sleep(VERIFY_RETRY_BASE_SECONDS * (2 ** attempt))
     if r is None:
         return rec, False, last_error or "error RequestException"
+    if (
+        r.status_code == 202
+        and rec.get("src") == "greenhouse"
+        and rec.get("source_target") in PUBLIC_GREENHOUSE_BOARDS
+    ):
+        return rec, True, "202"
     if r.status_code != 200:
         return rec, False, f"HTTP {r.status_code}"
     low = r.text.lower()
