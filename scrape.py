@@ -36,6 +36,8 @@ VERIFY_RETRIES = 3
 VERIFY_RETRY_BASE_SECONDS = 0.5
 LEVER_PAGE_SIZE = 100
 LEVER_MAX_PAGES = 20
+SMARTRECRUITERS_PAGE_SIZE = 100
+SMARTRECRUITERS_MAX_PAGES = 20
 PUBLIC_BOARD_GRACE_HOURS = 6
 ADZUNA_RESULTS_PER_PAGE = 50
 ADZUNA_REQUESTS_PER_ACTIVE_RUN = 5
@@ -88,7 +90,7 @@ EXCLUDE_RE = re.compile(
 
 INTERN_RE = re.compile(
     r"\b(intern|interns|internship|internships|co-?op|co-?ops|new\s?grad|"
-    r"new\s?graduate|students?)\b", re.I)
+    r"new\s?graduate|students?|stagiaires?|[eé]tudiants?|[eé]tudiantes?)\b", re.I)
 
 # "Campus Talent Acquisition Senior Associate" matched on 'campus' - it is a
 # recruiter job, not an internship. Reject seniority markers unless the title
@@ -330,32 +332,51 @@ PUBLIC_BOARDS = [
     ("lever", "univeris.com", "Univeris"),
     ("lever", "waremalcomb", "Ware Malcomb"),
     ("lever", "waabi", "Waabi"),
+    ("smartrecruiters", "gdmsi", "General Dynamics Mission Systems Canada"),
+    ("smartrecruiters", "veoliaenvironnementsa", "Veolia"),
+    ("smartrecruiters", "syngentagroup", "Syngenta"),
+    ("smartrecruiters", "aecom2", "AECOM"),
+    ("smartrecruiters", "crb", "CRB"),
+    ("smartrecruiters", "boschgroup", "Bosch"),
+    ("smartrecruiters", "houseofcommonscanadachambredescommunescanada",
+     "House of Commons of Canada"),
+    ("smartrecruiters", "beumergroup1", "BEUMER Group"),
+    ("smartrecruiters", "cima2", "CIMA+"),
+    ("smartrecruiters", "groupecanam", "Canam"),
+    ("smartrecruiters", "groupemontoni", "MONTONI"),
+    ("smartrecruiters", "videotron", "Videotron"),
+    ("smartrecruiters", "louisdreyfuscompany", "Louis Dreyfus Company"),
+    ("smartrecruiters", "qsl", "QSL"),
+    ("smartrecruiters", "sgs", "SGS"),
+    ("smartrecruiters", "torstar", "Torstar"),
 ]
 PUBLIC_BOARD_KEYS = {coverage_key(source, board) for source, board, _ in PUBLIC_BOARDS}
 PUBLIC_GREENHOUSE_BOARDS = {
     board for source, board, _ in PUBLIC_BOARDS if source == "greenhouse"
 }
 PUBLIC_INTERNSHIP_RE = re.compile(
-    r"\b(interns?|internships?|co-?ops?|students?|new\s*grad(?:uate)?s?)\b", re.I)
+    r"\b(interns?|internships?|co-?ops?|students?|stagiaires?|"
+    r"[eé]tudiants?|[eé]tudiantes?)\b", re.I)
 TALENT_POOL_RE = re.compile(
     r"\b(talent (?:pool|community|network)|general (?:application|interest)|"
     r"expression of interest|future opportunities|register your interest)\b", re.I)
 
 # tenant, site, host  - only combos proven to resolve, plus business-heavy tries
 WORKDAY = [
-    ("cibc", "search", "wd3"), ("sunlife", "Experienced-Jobs", "wd3"),
-    ("rbc", "RBCJobs", "wd3"), ("rbc", "External", "wd3"),
+    ("cibc", "search", "wd3"),
+    ("cibc", "Campus", "wd3"),
+    ("rbc", "RBCEarlyTalent1", "wd3"),
     ("td", "TD_Bank_Careers", "wd3"), ("scotiabank", "Scotiabank_Careers", "wd3"),
-    ("bmo", "External", "wd3"), ("manulife", "MFCJH", "wd3"),
+    ("bmo", "External", "wd3"),
+    ("manulife", "MFCJH_Jobs", "wd3"), ("sunlife", "Campus", "wd3"),
     ("telus", "TELUS_Careers", "wd3"), ("loblaw", "LCLCareers", "wd3"),
-    ("rogers", "rogers-jobs", "wd3"), ("omers", "External", "wd3"),
+    ("rogers", "rogers-jobs", "wd3"), ("omers", "OMERS_External", "wd3"),
     ("pwc", "Global_Experienced_Careers", "wd3"),
     # Accenture is on wd103, not wd3 - wd3 returns HTTP 422 and silently
     # contributed nothing. Confirmed from accenture.com/ca-en/careers.
     ("accenture", "AccentureCareers", "wd103"),
     ("deloittecanada", "External", "wd3"), ("kpmg", "External", "wd3"),
     ("cpp", "CPPIB_Careers", "wd3"), ("otpp", "External", "wd3"),
-    ("cibc", "search", "wd1"), ("sunlife", "Experienced-Jobs", "wd1"),
 ]
 
 
@@ -512,6 +533,13 @@ def public_board_url_matches(source, board, url, external_id):
             and bool(path_parts)
             and path_parts[0].casefold() == board.casefold()
         )
+    if source == "smartrecruiters":
+        return (
+            parsed.hostname == "jobs.smartrecruiters.com"
+            and len(path_parts) >= 2
+            and path_parts[0].casefold() == board.casefold()
+            and path_parts[1] == str(external_id)
+        )
     if source == "greenhouse":
         query = parse_qs(parsed.query)
         query_ids = (query.get("gh_jid") or []) + (query.get("job_id") or [])
@@ -602,12 +630,113 @@ def from_lever(tok):
     return out
 
 
+def from_smartrecruiters(tok):
+    key = coverage_key("smartrecruiters", tok)
+    out, seen = [], set()
+    pages = returned = 0
+    errors = []
+    exhausted = False
+    capped = False
+    try:
+        total = None
+        for page in range(SMARTRECRUITERS_MAX_PAGES):
+            response = g(
+                f"https://api.smartrecruiters.com/v1/companies/{tok}/postings",
+                params={
+                    "limit": SMARTRECRUITERS_PAGE_SIZE,
+                    "offset": page * SMARTRECRUITERS_PAGE_SIZE,
+                    "country": "ca",
+                },
+            )
+            pages += 1
+            if response.status_code != 200:
+                raise ValueError(f"HTTP {response.status_code}")
+            data = response.json()
+            if not isinstance(data, dict) or not isinstance(data.get("content"), list):
+                raise ValueError("invalid postings response")
+            if total is None:
+                total = data.get("totalFound")
+                if not isinstance(total, int) or total < 0:
+                    raise ValueError("invalid postings total")
+            postings = data["content"]
+            returned += len(postings)
+            for posting in postings:
+                if not isinstance(posting, dict) or not source_id(posting, "id"):
+                    raise ValueError("posting missing provider ID")
+                external_id = source_id(posting, "id")
+                if external_id in seen:
+                    raise ValueError("repeated posting during pagination")
+                seen.add(external_id)
+                company = posting.get("company") or {}
+                if clean_text(company.get("identifier")).casefold() != tok.casefold():
+                    raise ValueError("company identifier mismatch")
+                if posting.get("visibility") not in (None, "PUBLIC"):
+                    continue
+                title = clean_text(posting.get("name"))
+                location = posting.get("location") or {}
+                country = clean_text(location.get("country")).casefold()
+                if country not in {"ca", "can", "canada"}:
+                    continue
+                full_location = clean_text(location.get("fullLocation"))
+                if not full_location:
+                    full_location = ", ".join(
+                        part for part in (
+                            clean_text(location.get("city")),
+                            clean_text(location.get("region")),
+                            "Canada",
+                        ) if part
+                    )
+                if location.get("remote") and not geo(full_location):
+                    full_location = "Remote - Canada"
+                if not title or not full_location:
+                    raise ValueError("posting missing title or location")
+                out.append(with_coverage(
+                    dict(
+                        company=clean_text(company.get("name")) or tok,
+                        src="smartrecruiters",
+                        title=title,
+                        loc=full_location,
+                        locations=[full_location],
+                        url=canonicalize_url(
+                            f"https://jobs.smartrecruiters.com/"
+                            f"{quote(company.get('identifier') or tok, safe='')}/"
+                            f"{external_id}"
+                        ),
+                        external_id=external_id,
+                        posted=posting.get("releasedDate", "") or "",
+                        content="",
+                    ),
+                    key,
+                ))
+            if len(postings) < SMARTRECRUITERS_PAGE_SIZE or returned >= total:
+                exhausted = True
+                break
+        if not exhausted:
+            capped = True
+            errors.append("pagination safety cap reached")
+    except (requests.RequestException, ValueError, TypeError) as exc:
+        errors.append(f"{type(exc).__name__}: {exc}")
+    set_coverage(
+        key, source="smartrecruiters", target=tok, pages=pages,
+        returned=returned, records=len(out), query_total=total,
+        selected_total=total, location_mode="country=ca",
+        capped_terms=int(capped), errors=errors,
+        complete=exhausted and not errors,
+    )
+    return out
+
+
 def from_public_board(spec, now=None):
     source, board, company = spec
     key = coverage_key(source, board)
     now = now or datetime.now(timezone.utc)
     now = now.astimezone(timezone.utc)
-    adapter = {"greenhouse": from_greenhouse, "ashby": from_ashby, "lever": from_lever}
+    adapter = {
+        "greenhouse": from_greenhouse,
+        "ashby": from_ashby,
+        "lever": from_lever,
+        "smartrecruiters": from_smartrecruiters,
+    }
     rows = adapter[source](board)
     fetch_complete = COVERAGE.get(key, {}).get("complete", False)
     if source == "greenhouse" and fetch_complete:
@@ -1416,7 +1545,8 @@ def verify(rec):
 
 
 DIRECT_JOB_SOURCES = {
-    "workday", "greenhouse", "successfactors", "ashby", "lever", "amazon"
+    "workday", "greenhouse", "successfactors", "ashby", "lever",
+    "smartrecruiters", "amazon"
 }
 
 
@@ -1654,6 +1784,35 @@ def source_state_payload():
     return result
 
 
+def mark_baseline_records(records):
+    baseline_path = os.environ.get("SOURCE_BASELINE_PATH", "live_jobs.json")
+    try:
+        with open(baseline_path, encoding="utf-8") as handle:
+            baseline = json.load(handle)
+        baseline_jobs = baseline.get("jobs")
+        if not isinstance(baseline_jobs, list):
+            raise ValueError("invalid baseline jobs")
+    except (OSError, json.JSONDecodeError, ValueError, TypeError):
+        return
+    baseline_ids = {
+        (job.get("src"), str(job.get("external_id")))
+        for job in baseline_jobs if job.get("src") and job.get("external_id")
+    }
+    baseline_urls = {
+        listing_url(job) for job in baseline_jobs if job.get("url")
+    }
+    for record in records:
+        identity = (
+            record.get("src"),
+            str(record.get("external_id")),
+        )
+        if (
+            identity in baseline_ids
+            or (record.get("url") and listing_url(record) in baseline_urls)
+        ):
+            record["_baseline_existing"] = True
+
+
 def filter_candidates(records):
     candidates, counts = [], {}
     role_eligible = 0
@@ -1663,6 +1822,12 @@ def filter_candidates(records):
         if not record["title"] or not record.get("url"):
             continue
         if not is_internship(record["title"]):
+            continue
+        if (
+            NEW_GRAD_TITLE_RE.search(record["title"])
+            and not PUBLIC_INTERNSHIP_RE.search(record["title"])
+            and not record.get("_baseline_existing")
+        ):
             continue
         if record.get("source_target") and (
             not PUBLIC_INTERNSHIP_RE.search(record["title"])
@@ -1732,6 +1897,7 @@ def main():
                 print(f"COVERAGE WARNING {key}: task failed with {type(exc).__name__}")
     print(f"pulled {len(raw)} raw postings in {time.time()-t0:.0f}s")
 
+    mark_baseline_records(raw)
     cand, filtered_counts = filter_candidates(raw)
     print(
         "FILTER FUNNEL: "

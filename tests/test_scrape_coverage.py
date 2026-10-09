@@ -153,6 +153,26 @@ class WorkdayCoverageTests(unittest.TestCase):
         self.assertEqual(response["total"], 0)
         self.assertEqual(post.call_count, 3)
 
+    def test_workday_registry_uses_verified_repaired_sites(self):
+        specs = set(scrape.WORKDAY)
+        for expected in {
+            ("cibc", "Campus", "wd3"),
+            ("rbc", "RBCEarlyTalent1", "wd3"),
+            ("manulife", "MFCJH_Jobs", "wd3"),
+            ("sunlife", "Campus", "wd3"),
+            ("omers", "OMERS_External", "wd3"),
+        }:
+            self.assertIn(expected, specs)
+        for stale in {
+            ("rbc", "RBCJobs", "wd3"),
+            ("rbc", "External", "wd3"),
+            ("manulife", "MFCJH", "wd3"),
+            ("omers", "External", "wd3"),
+            ("cibc", "search", "wd1"),
+            ("sunlife", "Experienced-Jobs", "wd1"),
+        }:
+            self.assertNotIn(stale, specs)
+
 
 class SuccessFactorsCoverageTests(unittest.TestCase):
     def setUp(self):

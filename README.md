@@ -12,8 +12,8 @@ Operations, Finance, Consulting**.
 Every hour, GitHub Actions runs the pipeline:
 
 1. **Pull** — reads postings directly from employer applicant-tracking systems
-   (Greenhouse, Lever, Ashby, Workday, SuccessFactors, optional Adzuna, and native
-   employer APIs). Nothing is invented. Workday queries use
+   (Greenhouse, Lever, Ashby, SmartRecruiters, Workday, SuccessFactors,
+   optional Adzuna, and native employer APIs). Nothing is invented. Workday queries use
    tenant-issued Canadian location facets and paginate to exhaustion;
    SuccessFactors pagination continues until empty or repeated results.
 2. **Filter** — keeps Canadian internships, co-ops, student roles, and true
@@ -38,6 +38,12 @@ Every hour, GitHub Actions runs the pipeline:
 The board never pads itself with invented listings. In the off-season a small
 number is the market, not a gap in coverage. Anything older than 45 days is
 flagged as stale rather than quietly presented as fresh.
+
+The displayed catalog is an early-career catalog: it preserves a small number
+of pre-existing new-grad roles for stable user/history references. The
+internship-growth target is reported separately and counts only explicit
+internship, co-op, and student-placement titles. Newly added `PUBLIC_BOARDS`
+cannot introduce new-grad-only roles.
 
 Every scrape prints a **SOURCE COVERAGE** table with provider query totals,
 pages, returned rows, product-filtered rows, unique rows, and verified-live
@@ -160,7 +166,8 @@ use is confirmed with Adzuna.
 ### Verified free public employer boards
 
 `PUBLIC_BOARDS` in `scrape.py` extends the existing connectors with this bounded,
-verified batch of Canadian employers on Greenhouse, Lever, and Ashby. The
+verified batch of Canadian employers on Greenhouse, Lever, Ashby, and
+SmartRecruiters. The
 registry includes finance and business employers such as EQ Bank, BMO-adjacent
 fintechs, Arc'teryx, Coveo, Geotab, Trulioo, Orennia, StepStone, Brattle,
 Wealthsimple, and Waabi alongside engineering, aerospace, AI, healthcare, and
@@ -173,7 +180,8 @@ campus program, and use canonical Greenhouse application IDs.
 These are documented, unauthenticated **read-only** interfaces:
 [Greenhouse Job Board API](https://docs.greenhouse.io/job-board.html),
 [Lever Postings API](https://github.com/lever/postings-api), and
-[Ashby Public Job Posting API](https://developers.ashbyhq.com/docs/public-job-posting-api).
+[Ashby Public Job Posting API](https://developers.ashbyhq.com/docs/public-job-posting-api),
+plus SmartRecruiters' public company postings API.
 They need no service key or paid plan. This does **not** make hosting, GitHub
 Actions minutes, or other existing providers free. No application submission,
 private ATS API, paid proxy, JobSpy aggregator scrape, LinkedIn scrape, or
@@ -189,7 +197,7 @@ SimplifyJobs is excluded entirely because its repository has no detected
 license or explicit bulk-reuse permission.
 
 The expansion deliberately avoids a separate fleet of per-company HTML
-scrapers. Greenhouse, Lever, and Ashby cover the added employers through three
+scrapers. Greenhouse, Lever, Ashby, and SmartRecruiters cover the added employers through shared
 maintained adapters. Bounded tenant validation is the “slug discovery” step;
 the scheduled job then calls only documented/public ATS JSON endpoints.
 Apify and other paid cloud actors are not required for this coverage and were
@@ -202,7 +210,15 @@ Greenhouse returns its complete published list; the adapter checks its
 requires `isListed: true` and considers primary and secondary locations.
 Lever uses `skip`/`limit` pagination until a short/empty page, with repeated
 IDs and the 20-page safety cap treated as incomplete rather than a successful
-empty result. Existing bounded network retries and concurrency limits apply.
+empty result. SmartRecruiters uses its documented `country=ca`, `limit`, and
+`offset` parameters, validates the returned company identifier and public
+visibility, and builds stable canonical job links from the public posting ID.
+Existing bounded network retries and concurrency limits apply.
+
+The Workday registry also replaces stale site names with verified official
+sites for CIBC Campus, RBC Early Talent, Manulife Jobs, Sun Life Campus, and
+OMERS External. General RBC postings were deliberately not added because titles
+such as “Branch Manager Intern” are not student placements.
 
 Internship, co-op, student, and true new-grad titles are eligible throughout
 Canada. Structured provider country/address fields take priority. Explicit

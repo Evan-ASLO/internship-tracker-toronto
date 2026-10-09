@@ -36,6 +36,22 @@ def lever_job(identifier, **updates):
     }
 
 
+def smartrecruiters_job(identifier, **updates):
+    return {
+        "id": str(identifier),
+        "name": "Finance Intern",
+        "company": {"identifier": "GDMSI", "name": "GDMS Canada"},
+        "releasedDate": "2026-10-01T12:00:00Z",
+        "location": {
+            "city": "Ottawa", "region": "ON", "country": "ca",
+            "fullLocation": "Ottawa, ON, Canada", "remote": False,
+        },
+        "typeOfEmployment": {"id": "intern", "label": "Intern"},
+        "visibility": "PUBLIC",
+        **updates,
+    }
+
+
 class PublicParsingTests(unittest.TestCase):
     def setUp(self):
         scrape.reset_coverage()
@@ -58,6 +74,56 @@ class PublicParsingTests(unittest.TestCase):
         with patch.object(scrape, "g", return_value=FakeResponse([])):
             self.assertEqual(scrape.from_lever("waabi"), [])
         self.assertTrue(scrape.COVERAGE["lever:waabi"]["complete"])
+
+    def test_smartrecruiters_paginates_and_validates_company_country(self):
+        responses = [
+            FakeResponse({
+                "totalFound": 3,
+                "content": [smartrecruiters_job(1), smartrecruiters_job(2)],
+            }),
+            FakeResponse({
+                "totalFound": 3,
+                "content": [smartrecruiters_job(3)],
+            }),
+        ]
+        with (
+            patch.object(scrape, "SMARTRECRUITERS_PAGE_SIZE", 2),
+            patch.object(scrape, "g", side_effect=responses) as get,
+        ):
+            rows = scrape.from_smartrecruiters("gdmsi")
+
+        self.assertEqual([row["external_id"] for row in rows], ["1", "2", "3"])
+        self.assertEqual(
+            [call.kwargs["params"]["offset"] for call in get.call_args_list],
+            [0, 2],
+        )
+        self.assertEqual(
+            rows[0]["url"],
+            "https://jobs.smartrecruiters.com/GDMSI/1",
+        )
+        self.assertEqual(rows[0]["loc"], "Ottawa, ON, Canada")
+        self.assertTrue(scrape.COVERAGE["smartrecruiters:gdmsi"]["complete"])
+
+    def test_smartrecruiters_rejects_non_canada_and_identity_mismatch(self):
+        non_canada = smartrecruiters_job(
+            1,
+            location={"city": "Boston", "region": "MA", "country": "us",
+                      "fullLocation": "Boston, MA, United States"},
+        )
+        with patch.object(scrape, "g", return_value=FakeResponse({
+            "totalFound": 1, "content": [non_canada],
+        })):
+            self.assertEqual(scrape.from_smartrecruiters("gdmsi"), [])
+        self.assertTrue(scrape.COVERAGE["smartrecruiters:gdmsi"]["complete"])
+
+        mismatch = smartrecruiters_job(
+            2, company={"identifier": "OTHER", "name": "Other"},
+        )
+        with patch.object(scrape, "g", return_value=FakeResponse({
+            "totalFound": 1, "content": [mismatch],
+        })):
+            scrape.from_smartrecruiters("gdmsi")
+        self.assertFalse(scrape.COVERAGE["smartrecruiters:gdmsi"]["complete"])
 
     def test_lever_partial_failure_repetition_and_cap_are_incomplete(self):
         cases = [
@@ -137,6 +203,7 @@ class PublicParsingTests(unittest.TestCase):
             (scrape.from_ashby, "wealthsimple", {"jobs": None}),
             (scrape.from_ashby, "wealthsimple", {"jobs": [{"id": "1"}]}),
             (scrape.from_lever, "waabi", [{"id": "1"}]),
+            (scrape.from_smartrecruiters, "gdmsi", {"content": []}),
         ]
         for adapter, board, data in cases:
             with self.subTest(adapter=adapter.__name__, data=data):
@@ -165,8 +232,8 @@ class PublicParsingTests(unittest.TestCase):
             ("Legal Summer Student", "Halifax, Nova Scotia", True),
             ("Senior Finance Manager", "Toronto, ON", False),
             ("International Accountant", "Toronto, ON", False),
-            ("New Graduate Analyst", "Calgary, Alberta", True),
-            ("Product Manager (New Grad)", "Toronto, Ontario", True),
+            ("New Graduate Analyst", "Calgary, Alberta", False),
+            ("Product Manager (New Grad)", "Toronto, Ontario", False),
             ("Senior Product Manager - New Grad", "Toronto, Ontario", False),
             ("Internship Talent Community", "Toronto, ON", False),
             ("Finance Intern", "Remote US", False),
@@ -181,6 +248,43 @@ class PublicParsingTests(unittest.TestCase):
                        "source_target": "wealthsimple", "url": "https://example.com/1"}
                 candidates, _ = scrape.filter_candidates([row])
                 self.assertEqual(bool(candidates), expected)
+
+        baseline_new_grad = {
+            "title": "New Graduate Analyst",
+            "loc": "Calgary, Alberta",
+            "url": "https://example.com/baseline-new-grad",
+            "_baseline_existing": True,
+        }
+        candidates, _ = scrape.filter_candidates([baseline_new_grad])
+        self.assertEqual(len(candidates), 1)
+        new_new_grad = {
+            "title": "New Graduate Analyst",
+            "loc": "Calgary, Alberta",
+            "url": "https://example.com/new-new-grad",
+        }
+        self.assertEqual(scrape.filter_candidates([new_new_grad])[0], [])
+
+    def test_baseline_marker_preserves_existing_ids_only(self):
+        rows = [
+            {
+                "src": "workday", "external_id": "cibc:1",
+                "title": "New Graduate Analyst", "loc": "Toronto, Ontario",
+                "url": "https://example.com/1",
+            },
+            {
+                "src": "workday", "external_id": "cibc:2",
+                "title": "New Graduate Analyst", "loc": "Toronto, Ontario",
+                "url": "https://example.com/2",
+            },
+        ]
+        with tempfile.TemporaryDirectory() as temp:
+            baseline = Path(temp) / "baseline.json"
+            baseline.write_text(json.dumps({"jobs": [rows[0]]}), encoding="utf-8")
+            with patch.dict(os.environ, {"SOURCE_BASELINE_PATH": str(baseline)}):
+                scrape.mark_baseline_records(rows)
+
+        candidates, _ = scrape.filter_candidates(rows)
+        self.assertEqual([row["external_id"] for row in candidates], ["cibc:1"])
 
     def test_canada_geography_covers_regions_and_rejects_us_namesakes(self):
         cases = {
@@ -229,7 +333,7 @@ class PublicParsingTests(unittest.TestCase):
 
     def test_ashby_multi_location_keeps_explicit_canadian_city(self):
         job = {
-            "id": "1", "isListed": True, "title": "Product Manager (New Grad)",
+            "id": "1", "isListed": True, "title": "Product Management Intern",
             "location": "New York, London, Toronto, San Francisco",
             "address": {"postalAddress": {"addressCountry": "United States"}},
             "secondaryLocations": [],
@@ -249,6 +353,7 @@ class PublicParsingTests(unittest.TestCase):
             ("lever", "eqbank"), ("lever", "arcteryx.com"),
             ("ashby", "bree"), ("ashby", "trulioo-coopandinterns"),
             ("greenhouse", "coveoen"), ("greenhouse", "momentenergy"),
+            ("smartrecruiters", "gdmsi"),
         }:
             self.assertIn(expected, boards)
 
@@ -280,6 +385,9 @@ class PublicParsingTests(unittest.TestCase):
         self.assertTrue(scrape.public_board_url_matches(
             "greenhouse", "coveoen",
             "https://www.coveo.com/careers?gh_jid=123", "123"))
+        self.assertTrue(scrape.public_board_url_matches(
+            "smartrecruiters", "gdmsi",
+            "https://jobs.smartrecruiters.com/GDMSI/123", "123"))
         self.assertFalse(scrape.public_board_url_matches(
             "lever", "eqbank", "https://jobs.lever.co/other/abc", "abc"))
 
@@ -477,6 +585,19 @@ class PublicIdentityTests(unittest.TestCase):
                     "url": base["url"] + "/apply?utm_source=feed"}
         unique, _, _ = scrape.dedupe_candidates([base, mirrored])
         self.assertEqual(len(unique), 1)
+
+    def test_smartrecruiters_id_is_stable_and_board_scoped(self):
+        normalized = normalize_job({
+            "src": "smartrecruiters",
+            "company": "GDMS Canada",
+            "title": "Finance Intern",
+            "loc": "Ottawa, ON, Canada",
+            "cats": ["Finance"],
+            "external_id": "gdmsi:7440001",
+            "url": "https://jobs.smartrecruiters.com/GDMSI/7440001",
+        })
+
+        self.assertEqual(normalized["externalId"], "gdmsi:7440001")
 
     def test_direct_source_replaces_matching_aggregate_not_new_opportunity(self):
         direct = {
