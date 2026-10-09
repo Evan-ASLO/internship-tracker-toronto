@@ -14,7 +14,7 @@ import json, os, re, time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from threading import Lock, Semaphore
-from urllib.parse import parse_qs, parse_qsl, unquote, urlencode, urlsplit, urlunsplit
+from urllib.parse import parse_qs, parse_qsl, quote, unquote, urlencode, urlsplit, urlunsplit
 import requests
 
 from publish_snapshot import canonicalize_url
@@ -606,7 +606,14 @@ def from_public_board(spec, now=None):
     now = now.astimezone(timezone.utc)
     adapter = {"greenhouse": from_greenhouse, "ashby": from_ashby, "lever": from_lever}
     rows = adapter[source](board)
-    invalid_urls = [
+    fetch_complete = COVERAGE.get(key, {}).get("complete", False)
+    if source == "greenhouse" and fetch_complete:
+        for row in rows:
+            row["url"] = canonicalize_url(
+                f"https://job-boards.greenhouse.io/{quote(board, safe='')}/jobs/"
+                f"{row['external_id']}"
+            )
+    invalid_urls = [] if not fetch_complete else [
         row for row in rows
         if not public_board_url_matches(
             source, board, row.get("url"), row.get("external_id"))
