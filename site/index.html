@@ -446,7 +446,7 @@ body.landing-open { overflow:hidden; }
   <main class="main">
     <div class="topbar">
       <h1 id="viewTitle">Internships</h1><span class="sep">·</span>
-      <span class="sub" id="viewSub">Browse and discover internship opportunities</span>
+      <span class="sub" id="viewSub">Browse internships and early-career opportunities</span>
       <div class="right" id="fetchedAt"></div>
     </div>
     <div class="scroll" id="scroll"></div>
@@ -660,7 +660,7 @@ function sourceAttribution(j){
 }
 
 /* ═════════ nav ═════════ */
-const NAV=[{k:'internships',label:'Internships',icon:I.grid},
+const NAV=[{k:'internships',label:'Early-career Jobs',icon:I.grid},
 {k:'saved',label:'Saved Jobs',icon:I.book,count:()=>S.saved.size},
 {k:'profile',label:'Profile',icon:I.user},{g:'Tools'},
 {k:'tracker',label:'Job Tracker',icon:I.kanban,count:()=>tracked().size}];
@@ -786,7 +786,7 @@ function emptyState(){
   return `<div class="empty">${I.search}
     <h3>${S.cats.size?'No live postings in these tracks right now':'No results'}</h3>
     <p>${anyLive
-      ? `There are <b>${S.live.length}</b> verified Canada-eligible internships in coverage, but none match this filter.
+      ? `There are <b>${S.live.length}</b> verified Canada-eligible early-career roles in coverage, but none match this filter.
          Mid-August sits between the Summer 2026 cycle (closed) and Summer 2027 postings, which land September–October.
          Rather than pad the board with invented rows, it shows nothing.`
       : 'No verified postings loaded. Re-run the scraper to refresh live_jobs.json.'}</p>
@@ -837,7 +837,7 @@ function viewTracker(){
     </div></div>`).join('')}</div>`;
 }
 
-const TITLES={internships:['Internships','Canada internships — verified live only'],
+const TITLES={internships:['Early-career Jobs','Canadian internships and early-career roles — verified live only'],
 saved:['Saved Jobs','Roles you bookmarked'],tracker:['Job Tracker','Applied → Interview → Offer'],
 profile:['Profile','Export saved jobs and application progress']};
 
@@ -951,7 +951,7 @@ function renderOnboard(){
   if(OB.step === 0){
     el.innerHTML = `<div class="wrap-ob" data-ob><div class="wcard">
       <div class="wmark">IT</div>
-      <h2>Canadian internships,<br/><span>verified live.</span></h2>
+      <h2>Canadian early-career roles,<br/><span>verified live.</span></h2>
       <p class="lede">A Canada-wide board, including explicitly Canada-eligible remote roles. Postings come straight from employer applicant-tracking
         systems, and every link is re-checked for a live response before it appears — so you
         never click through to a closed req.</p>
@@ -981,7 +981,7 @@ function renderOnboard(){
         <div class="wdots"><span class="wdot"></span><span class="wdot on"></span></div>
         <span class="grow"></span>
         <button class="btn" data-obback>Back</button>
-        <button class="btn primary" data-obdone>${OB.picks.size?'Show my internships':'Browse everything'}</button>
+        <button class="btn primary" data-obdone>${OB.picks.size?'Show my roles':'Browse everything'}</button>
       </div></div></div>`;
   }
 }
@@ -1128,7 +1128,7 @@ function buildLanding(){
       <div class="marquee r2"><div class="mrow rev">${chipRow()}${chipRow()}</div></div>
 
       <div class="badge-pill"><span class="dot-live"></span>${n} verified live · Canada</div>
-      <h1 class="hero-h">Canadian internships,<br/><em>verified live.</em></h1>
+      <h1 class="hero-h">Canadian early-career roles,<br/><em>verified live.</em></h1>
       <p class="hero-p">No invented listings. No dead links. Every posting is pulled straight from an
         employer's applicant-tracking system and re-checked before it reaches you.</p>
       <button class="enter-btn shine" data-enter><span>Enter the tracker</span> ${I.ext}</button>
