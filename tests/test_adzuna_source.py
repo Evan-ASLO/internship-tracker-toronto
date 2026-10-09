@@ -48,7 +48,7 @@ class AdzunaSourceTests(unittest.TestCase):
 
         self.assertEqual(jobs, [])
         get.assert_not_called()
-        coverage = scrape.COVERAGE[scrape.coverage_key("adzuna", "ca/Toronto")]
+        coverage = scrape.COVERAGE[scrape.coverage_key("adzuna", "ca/Canada")]
         self.assertEqual(coverage["status"], "skipped")
         self.assertEqual(coverage["pages"], 0)
 
@@ -162,12 +162,12 @@ class AdzunaSourceTests(unittest.TestCase):
             [int(url.rsplit("/", 1)[-1]) for url, _ in calls],
             [1, 2, 1, 2, 1],
         )
-        self.assertTrue(all(params["where"] == "Toronto" for _, params in calls))
-        self.assertTrue(all(params["distance"] == 100 for _, params in calls))
+        self.assertTrue(all(params["where"] == "Canada" for _, params in calls))
+        self.assertTrue(all("distance" not in params for _, params in calls))
         self.assertTrue(all(params["app_id"] == "test-id" for _, params in calls))
         self.assertTrue(all(params["app_key"] == "test-key" for _, params in calls))
 
-        coverage = scrape.COVERAGE[scrape.coverage_key("adzuna", "ca/Toronto")]
+        coverage = scrape.COVERAGE[scrape.coverage_key("adzuna", "ca/Canada")]
         self.assertEqual(coverage["query_total"], 156)
         self.assertEqual(coverage["pages"], 5)
         self.assertEqual(coverage["request_attempts"], 5)
@@ -215,7 +215,7 @@ class AdzunaSourceTests(unittest.TestCase):
         }
         self.assertEqual(
             kept,
-            {"adz-1", "adz-2", "adz-4", "adz-5"},
+            {"adz-1", "adz-2", "adz-3", "adz-4", "adz-5"},
         )
 
     def test_page_two_results_are_recovered(self):
@@ -294,7 +294,7 @@ class AdzunaSourceTests(unittest.TestCase):
                 jobs = scrape.from_adzuna(None)
 
         self.assertEqual(jobs, [])
-        coverage = scrape.COVERAGE[scrape.coverage_key("adzuna", "ca/Toronto")]
+        coverage = scrape.COVERAGE[scrape.coverage_key("adzuna", "ca/Canada")]
         self.assertEqual(len(coverage["errors"]), 5)
         self.assertTrue(all("HTTP 429" in error for error in coverage["errors"]))
         self.assertFalse(coverage["complete"])
@@ -376,7 +376,7 @@ class AdzunaSourceTests(unittest.TestCase):
 
         self.assertEqual(jobs, [])
         self.assertEqual(get.call_count, 5)
-        coverage = scrape.COVERAGE[scrape.coverage_key("adzuna", "ca/Toronto")]
+        coverage = scrape.COVERAGE[scrape.coverage_key("adzuna", "ca/Canada")]
         self.assertEqual(coverage["request_attempts"], 5)
         self.assertEqual(coverage["status"], "expired")
 
@@ -430,12 +430,12 @@ class AdzunaSourceTests(unittest.TestCase):
         report = build_report(records, coverage, baseline)
 
         self.assertEqual(report["requests"], 5)
-        self.assertEqual(report["productUnique"], 4)
+        self.assertEqual(report["productUnique"], 5)
         self.assertEqual(report["queries"][0]["name"], "internship")
         self.assertEqual(report["baselineNonAdzuna"], 2)
         self.assertEqual(report["overlapWithBaseline"], 1)
-        self.assertEqual(report["projectedSnapshotTotal"], 6)
-        self.assertEqual(report["projectedDistinctTotal"], 5)
+        self.assertEqual(report["projectedSnapshotTotal"], 7)
+        self.assertEqual(report["projectedDistinctTotal"], 6)
         self.assertTrue(report["sampleJobs"])
 
     def test_fresh_cache_reuses_prior_slice_even_on_even_hour(self):
@@ -466,7 +466,7 @@ class AdzunaSourceTests(unittest.TestCase):
             [job["external_id"] for job in jobs],
             ["prior-1", "prior-2"],
         )
-        coverage = scrape.COVERAGE[scrape.coverage_key("adzuna", "ca/Toronto")]
+        coverage = scrape.COVERAGE[scrape.coverage_key("adzuna", "ca/Canada")]
         self.assertEqual(coverage["status"], "reused-fresh")
         self.assertEqual(coverage["request_attempts"], 0)
         self.assertEqual(coverage["reused"], 2)
@@ -607,7 +607,7 @@ class AdzunaSourceTests(unittest.TestCase):
                 jobs = scrape.from_adzuna(None, now=now)
 
         self.assertEqual([job["external_id"] for job in jobs], ["prior-1"])
-        coverage = scrape.COVERAGE[scrape.coverage_key("adzuna", "ca/Toronto")]
+        coverage = scrape.COVERAGE[scrape.coverage_key("adzuna", "ca/Canada")]
         self.assertEqual(coverage["status"], "reused-partial")
         self.assertEqual(coverage["reused"], 1)
         self.assertEqual(len(coverage["errors"]), 5)
@@ -645,7 +645,7 @@ class AdzunaSourceTests(unittest.TestCase):
             "adz-1", "adz-2", "adz-3", "adz-4",
             "adz-5",
         })
-        coverage = scrape.COVERAGE[scrape.coverage_key("adzuna", "ca/Toronto")]
+        coverage = scrape.COVERAGE[scrape.coverage_key("adzuna", "ca/Canada")]
         self.assertEqual(coverage["status"], "fresh")
         self.assertEqual(coverage["reused"], 0)
 
@@ -676,7 +676,7 @@ class AdzunaSourceTests(unittest.TestCase):
 
         self.assertEqual(get.call_count, 5)
         self.assertEqual(jobs, [])
-        coverage = scrape.COVERAGE[scrape.coverage_key("adzuna", "ca/Toronto")]
+        coverage = scrape.COVERAGE[scrape.coverage_key("adzuna", "ca/Canada")]
         self.assertEqual(coverage["status"], "expired")
         self.assertGreater(coverage["source_age_hours"], scrape.ADZUNA_GRACE_HOURS)
 
@@ -697,13 +697,13 @@ class AdzunaSourceTests(unittest.TestCase):
             "loc": "Toronto, Ontario",
             "url": "https://www.adzuna.ca/details/1",
             "external_id": "1",
-            "_coverage_key": "adzuna:ca/Toronto",
+            "_coverage_key": "adzuna:ca/Canada",
         }
 
         unique, _, overlaps = scrape.dedupe_candidates([aggregate, direct])
 
         self.assertEqual(unique, [direct])
-        self.assertEqual(overlaps["adzuna:ca/Toronto"], 1)
+        self.assertEqual(overlaps["adzuna:ca/Canada"], 1)
 
     def test_same_title_at_different_location_is_not_cross_source_deduped(self):
         direct = {
@@ -722,7 +722,7 @@ class AdzunaSourceTests(unittest.TestCase):
             "loc": "Mississauga, Ontario",
             "url": "https://www.adzuna.ca/details/2",
             "external_id": "2",
-            "_coverage_key": "adzuna:ca/Toronto",
+            "_coverage_key": "adzuna:ca/Canada",
         }
 
         unique, _, overlaps = scrape.dedupe_candidates([direct, aggregate])

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Internship Tracker — Toronto</title>
+<title>Internship Tracker — Canada</title>
 <script>
   (() => {
     const param = new URLSearchParams(window.location.search).get("scoutTheme");
@@ -786,7 +786,7 @@ function emptyState(){
   return `<div class="empty">${I.search}
     <h3>${S.cats.size?'No live postings in these tracks right now':'No results'}</h3>
     <p>${anyLive
-      ? `There are <b>${S.live.length}</b> verified Toronto internships in coverage, but none match this filter.
+      ? `There are <b>${S.live.length}</b> verified Canada-eligible internships in coverage, but none match this filter.
          Mid-August sits between the Summer 2026 cycle (closed) and Summer 2027 postings, which land September–October.
          Rather than pad the board with invented rows, it shows nothing.`
       : 'No verified postings loaded. Re-run the scraper to refresh live_jobs.json.'}</p>
@@ -837,7 +837,7 @@ function viewTracker(){
     </div></div>`).join('')}</div>`;
 }
 
-const TITLES={internships:['Internships','Toronto business internships — verified live only'],
+const TITLES={internships:['Internships','Canada internships — verified live only'],
 saved:['Saved Jobs','Roles you bookmarked'],tracker:['Job Tracker','Applied → Interview → Offer'],
 profile:['Profile','Export saved jobs and application progress']};
 
@@ -951,13 +951,13 @@ function renderOnboard(){
   if(OB.step === 0){
     el.innerHTML = `<div class="wrap-ob" data-ob><div class="wcard">
       <div class="wmark">IT</div>
-      <h2>Every Toronto internship,<br/><span>verified live.</span></h2>
-      <p class="lede">A GTA-only board. Postings come straight from employer applicant-tracking
+      <h2>Canadian internships,<br/><span>verified live.</span></h2>
+      <p class="lede">A Canada-wide board, including explicitly Canada-eligible remote roles. Postings come straight from employer applicant-tracking
         systems, and every link is re-checked for a live response before it appears — so you
         never click through to a closed req.</p>
       <div class="wstats">
         <div class="wstat"><div class="v">${liveN}</div><div class="l">verified live right now</div></div>
-        <div class="wstat"><div class="v">${emp.toLocaleString()}</div><div class="l">GTA employers tracked</div></div>
+        <div class="wstat"><div class="v">${emp.toLocaleString()}</div><div class="l">employers tracked</div></div>
         <div class="wstat"><div class="v">100%</div><div class="l">links re-checked</div></div>
       </div>
       <div class="wfoot">
@@ -1075,7 +1075,7 @@ document.addEventListener('click', e=>{
 const LAND_KEY = 'it_seen_landing_v1';
 const easeInOut = t => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2;
 
-/* GTA employers in the tracked registry. Logos are pulled from a public
+/* Employers in the tracked registry. Logos are pulled from a public
    favicon service and fall back to a monogram if the request fails. */
 const EMPLOYERS = [
   ['CIBC','cibc.com'], ['TD','td.com'], ['RBC','rbc.com'], ['Scotiabank','scotiabank.com'],
@@ -1127,8 +1127,8 @@ function buildLanding(){
       <div class="marquee r1"><div class="mrow">${chipRow()}${chipRow()}</div></div>
       <div class="marquee r2"><div class="mrow rev">${chipRow()}${chipRow()}</div></div>
 
-      <div class="badge-pill"><span class="dot-live"></span>${n} verified live · Greater Toronto Area</div>
-      <h1 class="hero-h">Toronto internships,<br/><em>verified live.</em></h1>
+      <div class="badge-pill"><span class="dot-live"></span>${n} verified live · Canada</div>
+      <h1 class="hero-h">Canadian internships,<br/><em>verified live.</em></h1>
       <p class="hero-p">No invented listings. No dead links. Every posting is pulled straight from an
         employer's applicant-tracking system and re-checked before it reaches you.</p>
       <button class="enter-btn shine" data-enter><span>Enter the tracker</span> ${I.ext}</button>
@@ -1158,7 +1158,7 @@ function buildLanding(){
       <div class="lgrid">
         ${CATEGORIES.map((c,i)=>`<div class="lcard tilt shine ${i%2?'rv-r':'rv-l'}" data-ltrack="${esc(c.name)}">
           <div><h3>${esc(c.name)}</h3>
-          <p>${catCount(c.name)} live in the GTA right now. Click to enter filtered to this track.</p></div></div>`).join('')}
+          <p>${catCount(c.name)} live across Canada right now. Click to enter filtered to this track.</p></div></div>`).join('')}
       </div>
     </section>
 
@@ -1167,7 +1167,7 @@ function buildLanding(){
       <p class="lead rv-u">Numbers from the most recent run — not marketing copy.</p>
       <div class="lstats">
         <div class="lstat tilt shine rv-l"><div><div class="v">${n}</div><div class="l">verified live postings</div></div></div>
-        <div class="lstat tilt shine rv-u"><div><div class="v">${EMPLOYERS.length}+</div><div class="l">GTA employers in the registry</div></div></div>
+        <div class="lstat tilt shine rv-u"><div><div class="v">${EMPLOYERS.length}+</div><div class="l">employers in the registry</div></div></div>
         <div class="lstat tilt shine rv-r"><div><div class="v">100%</div><div class="l">links re-checked</div></div></div>
       </div>
       <p class="lead rv-u" style="margin-top:34px;font-size:13.5px">Mid-August sits between recruiting
