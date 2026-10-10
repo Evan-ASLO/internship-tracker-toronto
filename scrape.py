@@ -6,8 +6,8 @@ Rules:
   2. Posted dates come from the API, never estimated.
   3. Every URL is re-fetched and must return HTTP 200 before it ships.
      Closed reqs (404/410) are dropped.
-  4. Scope narrowed to 4 business tracks: Marketing, Business Operations,
-     Finance, Consulting.
+  4. Career-track tags cover Marketing, Business Operations, Finance,
+     Consulting, and Software Engineering.
 """
 
 import json, os, re, time
@@ -79,13 +79,46 @@ CATEGORIES = {
                            r"|merchandis\w*|category\s+management)\b",
     "Consulting": r"\b(consult\w*|advisory|strategy|strategic\s+plan\w*"
                   r"|transformation)\b",
+    "Software Engineering": r"(?:\bsoftware\b|\blogiciels?\b|\b(?:swe|sde)\b|"
+                            r"\bsystems?\s+development\s+engineer(?:ing)?\b|"
+                            r"\b(?:back[\s-]?end|front[\s-]?end|full[\s-]?stack)\b|"
+                            r"\b(?:developers?|d[ée]veloppeu(?:r|se)s?|"
+                            r"programmeu(?:r|se)s?|programmers?)\b)",
 }
 CATEGORIES = {k: re.compile(v, re.I) for k, v in CATEGORIES.items()}
+SOFTWARE_ENGINEERING_TRACK = "Software Engineering"
+SOFTWARE_ENGINEERING_RE = CATEGORIES[SOFTWARE_ENGINEERING_TRACK]
+NON_SOFTWARE_DEVELOPER_RE = re.compile(
+    r"\b(?:business|sales|partnerships?|real\s+estate|land|community|talent|"
+    r"learning|curriculum|content|product)\s+(?:developers?|"
+    r"d[ée]veloppeu(?:r|se)s?|programmeu(?:r|se)s?|programmers?)\b|"
+    r"\b(?:developers?|d[ée]veloppeu(?:r|se)s?)\s+"
+    r"(?:relations|advocacy|experience|marketing)\b",
+    re.I,
+)
+NON_ENGINEERING_SOFTWARE_RE = re.compile(
+    r"\bsoftware\s+(?:sales|marketing|product\s+marketing|account\s+management|"
+    r"customer\s+success|product\s+management|business\s+development)\b|"
+    r"\b(?:sales|marketing|product\s+marketing|account\s+management|"
+    r"customer\s+success|product\s+management|business\s+development)\b"
+    r".*\bsoftware\b",
+    re.I,
+)
+STRONG_SOFTWARE_ROLE_RE = re.compile(
+    r"\b(?:software|logiciels?)\b.*\b(?:engineer\w*|developers?|development|"
+    r"d[ée]veloppeu(?:r|se)s?)\b|"
+    r"\b(?:engineer\w*|developers?|development|d[ée]veloppeu(?:r|se)s?)\b"
+    r".*\b(?:software|logiciels?)\b|"
+    r"\b(?:swe|sde)\b|"
+    r"\bsystems?\s+development\s+engineer(?:ing)?\b|"
+    r"\b(?:back[\s-]?end|front[\s-]?end|full[\s-]?stack)\b",
+    re.I,
+)
 
 # Technical roles must never be classified into a business track just because a
 # keyword like "brand" or "media" appears in the title.
 EXCLUDE_RE = re.compile(
-    r"\b(engineer\w*|developer|software|swe|backend|front[\s-]?end|fullstack|full[\s-]?stack"
+    r"\b(engineer\w*|developer|swe|backend|front[\s-]?end|fullstack|full[\s-]?stack"
     r"|scientist|machine\s+learning|ml|data\s+engineer|devops|sre|infrastructure"
     r"|designer|ux|ui|security\s+engineer|qa|test|firmware|hardware|silicon)\b", re.I)
 
@@ -198,9 +231,23 @@ def geo(loc):
 
 def categorize(title):
     t = title or ""
+    if SOFTWARE_ENGINEERING_RE.search(t):
+        if (
+            NON_SOFTWARE_DEVELOPER_RE.search(t)
+            or (
+                NON_ENGINEERING_SOFTWARE_RE.search(t)
+                and not STRONG_SOFTWARE_ROLE_RE.search(t)
+            )
+        ):
+            pass
+        else:
+            return [SOFTWARE_ENGINEERING_TRACK]
     if EXCLUDE_RE.search(t):
         return []
-    return [c for c, rx in CATEGORIES.items() if rx.search(t)]
+    return [
+        category for category, pattern in CATEGORIES.items()
+        if category != SOFTWARE_ENGINEERING_TRACK and pattern.search(t)
+    ]
 
 
 def g(url, request_budget=None, **kw):

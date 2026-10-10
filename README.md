@@ -2,8 +2,8 @@
 
 Verified-live internship board for all Canadian provinces and territories,
 including remote roles only when the source explicitly supports Canadian
-applicants. Four business-track tags remain available: **Marketing, Business
-Operations, Finance, Consulting**.
+applicants. Normalized jobs carry five career-track tags: **Marketing,
+Business Operations, Finance, Consulting, Software Engineering**.
 
 **Live site:** https://internship-tracker-gamma-five.vercel.app
 
@@ -115,8 +115,20 @@ Cloudflare publication is disabled unless the repository Actions variable
 `CLOUDFLARE_DUAL_PUBLISH` is exactly `true`. A manual run may set
 `allow_catalog_drop` only after reviewing a legitimate drop greater than 25%.
 
-To add or change a track, edit `CATEGORIES` in `scrape.py` and the matching
-array in `site/index.html`.
+To add or change a normalized producer track, edit `CATEGORIES` in
+`scrape.py`. Consumer facets map the canonical category label and search
+aliases separately; producer changes do not infer or overwrite employer
+industry.
+
+`Software Engineering` is assigned from role-title evidence rather than the
+employer's industry. A software co-op at a bank remains a banking employer
+while its career track is Software Engineering. Recognized title signals
+include software engineer/developer/development, SWE/SDE, backend, frontend,
+full-stack, application/web/mobile developers, systems development engineer,
+and French software-developer equivalents. Generic engineering, data/ML,
+DevOps/SRE, QA, firmware/hardware/security, business development, and
+software sales/marketing titles are not swept into the track without explicit
+software-engineering evidence.
 
 ### Optional Adzuna source
 

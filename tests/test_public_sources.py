@@ -275,6 +275,53 @@ class PublicParsingTests(unittest.TestCase):
         self.assertEqual(row["posted"], "")
         self.assertEqual(stats["unavailable"], 1)
 
+    def test_software_engineering_track_uses_title_evidence(self):
+        positives = [
+            "Software Engineer Intern",
+            "Software/Application Developer Co-op",
+            "Backend Developer Intern",
+            "SWE Intern",
+            "SDE Intern",
+            "Full Stack Developer (Student Co-op)",
+            "Systems Development Engineer Intern",
+            "AI Software Intern",
+            "Quantitative Developer - Summer Internship",
+            "Développeur Logiciels (Stagiaire)",
+            "Stagiaire en développement de logiciels",
+        ]
+        negatives = [
+            "Mobile Domain System Engineering Co-op",
+            "Machine Learning Intern",
+            "DevOps Intern",
+            "Firmware Engineering Intern",
+            "Business Development Intern",
+            "Product Development Intern",
+            "Crop Protection Development Assistant Intern",
+            "Developer Relations Intern",
+            "Software Sales Intern",
+            "Engineering Intern",
+        ]
+
+        for title in positives:
+            with self.subTest(title=title):
+                self.assertEqual(
+                    scrape.categorize(title),
+                    [scrape.SOFTWARE_ENGINEERING_TRACK],
+                )
+        for title in negatives:
+            with self.subTest(title=title):
+                self.assertNotIn(
+                    scrape.SOFTWARE_ENGINEERING_TRACK,
+                    scrape.categorize(title),
+                )
+
+    def test_software_word_does_not_hide_non_engineering_track(self):
+        self.assertEqual(
+            scrape.categorize("Software Product Marketing Intern"),
+            ["Marketing"],
+        )
+        self.assertEqual(scrape.categorize("Finance Intern"), ["Finance"])
+
     def test_public_eligibility_keeps_scope_without_pool_or_remote_padding(self):
         cases = [
             ("Finance Intern", "Toronto, ON", True),
