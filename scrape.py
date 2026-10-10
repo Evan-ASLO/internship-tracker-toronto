@@ -22,7 +22,7 @@ from publish_snapshot import canonicalize_url
 TIMEOUT = 20
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
                     "(KHTML, like Gecko) Chrome/124.0 Safari/537.36"}
-SEARCH_TERMS = ("intern", "co-op", "student")
+SEARCH_TERMS = ("intern", "co-op", "student", "stagiaire", "\u00e9tudiant")
 WORKDAY_PAGE_SIZE = 20
 WORKDAY_MAX_PAGES = 100
 WORKDAY_RETRIES = 3
@@ -51,6 +51,14 @@ ADZUNA_QUERY_NAMES = (
     "internship-p1", "internship-p2",
     "coop-p1", "coop-p2",
     "new-grad-p1",
+)
+AMAZON_QUERIES = (
+    "intern finance",
+    "intern marketing",
+    "intern operations",
+    "intern business",
+    "software development engineer intern",
+    "applied science intern",
 )
 
 COVERAGE = {}
@@ -825,6 +833,10 @@ def from_public_board(spec, now=None):
             or _parse_timestamp(row["application_deadline"]) > now
         ]
 
+    return reuse_last_good_source(key, source, board, now)
+
+
+def reuse_last_good_source(key, source, target, now):
     print(f"COVERAGE WARNING {key}: incomplete fetch; checking last-good slice")
     baseline_path = os.environ.get("SOURCE_BASELINE_PATH", "live_jobs.json")
     try:
@@ -848,7 +860,7 @@ def from_public_board(spec, now=None):
         )
         prior_rows = [
             with_coverage(dict(row), key) for row in baseline["jobs"]
-            if row.get("src") == source and row.get("source_target") == board
+            if row.get("src") == source and row.get("source_target") == target
         ]
         if any(
             row.get("application_deadline")
@@ -962,6 +974,28 @@ def workday_external_id(tenant, external_path):
     return f"{tenant}:{match.group(1)}" if match else None
 
 
+def workday_location_from_path(external_path):
+    decoded = clean_text(unquote(external_path))
+    match = re.search(r"/job/([^/]+)/", decoded, re.I)
+    if not match:
+        return ""
+    descriptor = clean_text(
+        match.group(1).replace("_", " ").replace("-", " ")
+    )
+    region = geo(descriptor)
+    if not region:
+        return ""
+    for city, city_region in sorted(
+        CANADIAN_CITIES.items(), key=lambda item: len(item[0]), reverse=True
+    ):
+        if (
+            city_region == region
+            and re.search(rf"\b{re.escape(city)}\b", descriptor, re.I)
+        ):
+            return f"{city.title()}, {region}, Canada"
+    return "Canada" if region == "Canada" else f"{region}, Canada"
+
+
 def from_workday(spec):
     tenant, site, host = spec
     target = f"{tenant}.{host}/{site}"
@@ -1047,6 +1081,8 @@ def from_workday(spec):
                     continue
                 seen.add(identity)
                 location = clean_text(job.get("locationsText"))
+                if not location:
+                    location = workday_location_from_path(path)
                 if location_filter and not geo(location):
                     location = (
                         f"{location or 'Multiple locations'} "
@@ -1083,7 +1119,7 @@ def from_workday(spec):
 def from_amazon(_):
     key = coverage_key("amazon", "amazon")
     out, pages, returned, errors = [], 0, 0, []
-    for q in ("intern finance", "intern marketing", "intern operations", "intern business"):
+    for q in AMAZON_QUERIES:
         for off in (0, 100):
             try:
                 r = g("https://www.amazon.jobs/en/search.json?radius=100km"
@@ -1433,6 +1469,115 @@ SUCCESSFACTORS = [
     ("deloitte",   "https://careers.deloitte.ca", {}),
 ]
 
+RETAINED_SOURCES = [
+    ("successfactors", ("bell", "https://jobs.bce.ca", {}), "Bell"),
+    ("successfactors", ("hydroone", "https://jobs.hydroone.com", {}), "Hydro One"),
+    ("successfactors", ("fortisbc", "https://careers.fortisbc.com", {}), "FortisBC"),
+    ("workday", ("autodesk", "uni", "wd1"), "Autodesk"),
+    ("workday", ("cae", "career", "wd3"), "CAE"),
+    (
+        "workday",
+        ("canadiantirecorporation", "enterprise_external_careers_site", "wd3"),
+        "Canadian Tire",
+    ),
+    ("workday", ("intactfc", "intactfc", "wd3"), "Intact Financial"),
+    ("workday", ("cenovus", "careers", "wd3"), "Cenovus"),
+    ("workday", ("tcenergy", "career_site_tc", "wd3"), "TC Energy"),
+    (
+        "workday",
+        ("colliers", "colliers-external-career-site", "wd3"),
+        "Colliers",
+    ),
+    (
+        "workday",
+        ("thomsonreuters", "external_career_site", "wd5"),
+        "Thomson Reuters",
+    ),
+    ("workday", ("bmo", "Campus", "wd3"), "BMO"),
+    ("workday", ("olg", "careers-students", "wd3"), "OLG"),
+    ("workday", ("mastercard", "campus", "wd1"), "Mastercard"),
+    (
+        "workday",
+        (
+            "rockwellautomation",
+            "external-rockwell-automation-early-careers",
+            "wd1",
+        ),
+        "Rockwell Automation",
+    ),
+]
+
+
+def retained_source_target(source, adapter_spec):
+    if source == "workday":
+        tenant, site, host = adapter_spec
+        return f"{tenant}.{host}/{site}"
+    return adapter_spec[0]
+
+
+def retained_source_key(source, adapter_spec):
+    return coverage_key(source, retained_source_target(source, adapter_spec))
+
+
+EXPANSION_SOURCE_KEYS = {
+    retained_source_key(source, adapter_spec)
+    for source, adapter_spec, _ in RETAINED_SOURCES
+}
+RETAINED_SOURCE_KEYS = PUBLIC_BOARD_KEYS | EXPANSION_SOURCE_KEYS
+
+
+def retained_source_url_matches(source, adapter_spec, url):
+    parsed = urlsplit(canonicalize_url(url))
+    if source == "workday":
+        tenant, site, host = adapter_spec
+        return (
+            parsed.hostname == f"{tenant}.{host}.myworkdayjobs.com"
+            and f"/{site.casefold()}/job/" in parsed.path.casefold()
+        )
+    base = urlsplit(adapter_spec[1])
+    return (
+        parsed.hostname == base.hostname
+        and bool(re.search(r"/(?:[A-Za-z0-9_-]+/)?job/", parsed.path))
+    )
+
+
+def from_retained_source(spec, now=None):
+    source, adapter_spec, company = spec
+    target = retained_source_target(source, adapter_spec)
+    key = coverage_key(source, target)
+    now = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
+    adapter = {
+        "workday": from_workday,
+        "successfactors": from_successfactors,
+    }[source]
+    rows = adapter(adapter_spec)
+    fetch_complete = COVERAGE.get(key, {}).get("complete", False)
+    invalid_urls = [] if not fetch_complete else [
+        row for row in rows
+        if not retained_source_url_matches(source, adapter_spec, row.get("url"))
+    ]
+    if invalid_urls:
+        set_coverage(
+            key,
+            complete=False,
+            errors=[f"source URL identity mismatch ({len(invalid_urls)} rows)"],
+        )
+        rows = []
+    if COVERAGE[key]["complete"]:
+        for row in rows:
+            row["company"] = company
+            row["source_target"] = target
+            row["last_seen"] = now.isoformat()
+        set_coverage(
+            key,
+            status="fresh",
+            source_refreshed_at=now.isoformat(),
+            source_age_hours=0.0,
+            reused=0,
+        )
+        return rows
+    return reuse_last_good_source(key, source, target, now)
+
 SF_ROW = re.compile(r'href="(/(?:[A-Za-z0-9_\-]+/)?job/[^"]+)"[^>]*>\s*([^<]{6,140}?)\s*<', re.I)
 
 
@@ -1550,6 +1695,8 @@ TASKS = (
        for spec in WORKDAY]
     + [(from_successfactors, spec, coverage_key("successfactors", spec[0]))
        for spec in SUCCESSFACTORS]
+    + [(from_retained_source, spec, retained_source_key(spec[0], spec[1]))
+       for spec in RETAINED_SOURCES]
     + [(from_amazon, "amazon", coverage_key("amazon", "amazon"))]
     + [(from_adzuna, "adzuna", coverage_key("adzuna", ADZUNA_COVERAGE_TARGET))]
     + [(from_public_board, spec, coverage_key(spec[0], spec[1]))
@@ -1637,6 +1784,15 @@ def listing_url(record):
     return urlunsplit((parsed.scheme, parsed.netloc, path, query, ""))
 
 
+def workday_requisition_base(record):
+    if record.get("src") != "workday" or not record.get("external_id"):
+        return None
+    tenant, separator, requisition = str(record["external_id"]).partition(":")
+    if not separator:
+        return None
+    return tenant.casefold(), re.sub(r"-\d+$", "", requisition).casefold()
+
+
 def dedupe_candidates(candidates):
     seen_identity = set()
     seen_urls = set()
@@ -1646,7 +1802,12 @@ def dedupe_candidates(candidates):
     direct_overlap_counts = {}
     ordered = sorted(
         enumerate(candidates),
-        key=lambda item: (item[1].get("src") == "adzuna", item[0]),
+        key=lambda item: (
+            item[1].get("src") == "adzuna",
+            not item[1].get("_baseline_existing", False),
+            item[1].get("source_target") or "",
+            item[0],
+        ),
     )
     for _, record in ordered:
         if record.get("external_id"):
@@ -1670,6 +1831,14 @@ def dedupe_candidates(candidates):
             same_listing(record, direct) for direct in direct_records
         ):
             direct_overlap_counts[key] = direct_overlap_counts.get(key, 0) + 1
+            continue
+        if any(
+            workday_requisition_base(record)
+            and workday_requisition_base(record) == workday_requisition_base(direct)
+            and record.get("source_target") != direct.get("source_target")
+            and same_listing(record, direct)
+            for direct in direct_records
+        ):
             continue
         if any(
             record.get("src") != direct.get("src")
@@ -1805,7 +1974,7 @@ def source_state_payload():
         entry = dict(COVERAGE.get(key) or {})
         public_entries = {
             public_key: dict(COVERAGE[public_key])
-            for public_key in sorted(PUBLIC_BOARD_KEYS) if public_key in COVERAGE
+            for public_key in sorted(RETAINED_SOURCE_KEYS) if public_key in COVERAGE
         }
     result = {}
     if entry:
@@ -1942,15 +2111,17 @@ def filter_candidates(records):
             continue
         if not is_internship(record["title"]):
             continue
+        if TALENT_POOL_RE.search(record["title"]):
+            continue
         if (
             NEW_GRAD_TITLE_RE.search(record["title"])
             and not PUBLIC_INTERNSHIP_RE.search(record["title"])
             and not record.get("_baseline_existing")
         ):
             continue
-        if record.get("source_target") and (
-            not PUBLIC_INTERNSHIP_RE.search(record["title"])
-            or TALENT_POOL_RE.search(record["title"])
+        if (
+            record.get("source_target")
+            and not PUBLIC_INTERNSHIP_RE.search(record["title"])
         ):
             continue
         role_eligible += 1
@@ -1972,7 +2143,10 @@ def filter_candidates(records):
 
 def public_verification_failure(record, reason):
     key = coverage_key(record.get("src"), record.get("source_target"))
-    if key not in PUBLIC_BOARD_KEYS or reason in {"HTTP 404", "HTTP 410", "closed text"}:
+    if (
+        key not in RETAINED_SOURCE_KEYS
+        or reason in {"HTTP 404", "HTTP 410", "closed text"}
+    ):
         return
     with COVERAGE_LOCK:
         errors = list(COVERAGE[key].get("errors") or [])
@@ -2012,7 +2186,7 @@ def main():
                     key, source=source, target=target, pages=0, returned=0,
                     query_total=None, selected_total=None, complete=False,
                     errors=[type(exc).__name__],
-                    status="blocked" if key in PUBLIC_BOARD_KEYS else "incomplete")
+                    status="blocked" if key in RETAINED_SOURCE_KEYS else "incomplete")
                 print(f"COVERAGE WARNING {key}: task failed with {type(exc).__name__}")
     print(f"pulled {len(raw)} raw postings in {time.time()-t0:.0f}s")
 

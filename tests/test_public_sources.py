@@ -333,6 +333,7 @@ class PublicParsingTests(unittest.TestCase):
             ("Product Manager (New Grad)", "Toronto, Ontario", False),
             ("Senior Product Manager - New Grad", "Toronto, Ontario", False),
             ("Internship Talent Community", "Toronto, ON", False),
+            ("2027 Intern Program - Future Opportunities", "Toronto, ON", False),
             ("Finance Intern", "Remote US", False),
             ("Finance Intern", "Remote Canada", True),
             ("Finance Intern", "Remote (US + Canada Only)", True),
@@ -654,6 +655,93 @@ class PublicCacheTests(unittest.TestCase):
         self.assertEqual(reason, "202")
 
 
+class RetainedSourceCacheTests(unittest.TestCase):
+    now = datetime(2026, 10, 4, 21, tzinfo=timezone.utc)
+    spec = ("workday", ("autodesk", "uni", "wd1"), "Autodesk")
+    key = "workday:autodesk.wd1/uni"
+    target = "autodesk.wd1/uni"
+
+    def setUp(self):
+        scrape.reset_coverage()
+
+    def prior_row(self, refreshed):
+        return {
+            "company": "Autodesk",
+            "title": "Software Development Intern",
+            "loc": "Toronto, Ontario, Canada",
+            "src": "workday",
+            "external_id": "autodesk:R123",
+            "url": (
+                "https://autodesk.wd1.myworkdayjobs.com/en-US/uni/job/"
+                "Toronto-Ontario-Canada/Software-Development-Intern_R123"
+            ),
+            "source_target": self.target,
+            "last_seen": refreshed.isoformat(),
+            "posted": "Posted 2 Days Ago",
+            "cats": ["Software Engineering"],
+        }
+
+    def write_baseline(self, path, refreshed):
+        path.write_text(json.dumps({
+            "fetched_at": self.now.isoformat(),
+            "jobs": [self.prior_row(refreshed)],
+            "source_state": {"public_boards": {
+                self.key: {
+                    "status": "fresh",
+                    "refreshed_at": refreshed.isoformat(),
+                }
+            }},
+        }), encoding="utf-8")
+
+    def test_success_adds_display_company_and_retention_metadata(self):
+        def success(_):
+            scrape.set_coverage(self.key, complete=True, errors=[])
+            row = self.prior_row(self.now)
+            row.pop("source_target")
+            row.pop("last_seen")
+            row["company"] = "autodesk"
+            return [row]
+
+        with patch.object(scrape, "from_workday", side_effect=success):
+            rows = scrape.from_retained_source(self.spec, now=self.now)
+
+        self.assertEqual(rows[0]["company"], "Autodesk")
+        self.assertEqual(rows[0]["source_target"], self.target)
+        self.assertEqual(rows[0]["last_seen"], self.now.isoformat())
+        self.assertEqual(scrape.COVERAGE[self.key]["status"], "fresh")
+
+    def test_incomplete_fetch_reuses_only_bounded_last_good_slice(self):
+        def failed(_):
+            scrape.set_coverage(
+                self.key,
+                complete=False,
+                errors=["HTTP 503"],
+            )
+            return []
+
+        for age, expected in [(2, 1), (6.01, 0)]:
+            with self.subTest(age=age), tempfile.TemporaryDirectory() as temp:
+                path = Path(temp) / "baseline.json"
+                self.write_baseline(path, self.now - timedelta(hours=age))
+                with (
+                    patch.dict(
+                        os.environ,
+                        {"SOURCE_BASELINE_PATH": str(path)},
+                    ),
+                    patch.object(scrape, "from_workday", side_effect=failed),
+                    redirect_stdout(io.StringIO()),
+                ):
+                    rows = scrape.from_retained_source(
+                        self.spec,
+                        now=self.now,
+                    )
+                self.assertEqual(len(rows), expected)
+                self.assertEqual(
+                    scrape.COVERAGE[self.key]["status"],
+                    "reused-incomplete" if expected else "blocked",
+                )
+
+
 class PublicIdentityTests(unittest.TestCase):
     def test_new_greenhouse_ids_are_board_scoped_without_changing_legacy_ids(self):
         base = {
@@ -695,6 +783,46 @@ class PublicIdentityTests(unittest.TestCase):
         })
 
         self.assertEqual(normalized["externalId"], "gdmsi:7440001")
+
+    def test_dedupe_prefers_baseline_identity_over_new_duplicate_source(self):
+        baseline = {
+            "src": "workday",
+            "company": "bmo",
+            "title": "Finance Co-op",
+            "loc": "Toronto, Ontario",
+            "url": (
+                "https://bmo.wd3.myworkdayjobs.com/en-US/External/job/"
+                "Toronto-Ontario/Finance-Co-op_R123-3"
+            ),
+            "external_id": "bmo:R123-3",
+            "_baseline_existing": True,
+        }
+        campus = {
+            **baseline,
+            "company": "BMO",
+            "url": (
+                "https://bmo.wd3.myworkdayjobs.com/en-US/Campus/job/"
+                "Toronto-Ontario/Finance-Co-op_R123"
+            ),
+            "external_id": "bmo:R123",
+            "source_target": "bmo.wd3/Campus",
+            "_baseline_existing": False,
+        }
+
+        unique, _, _ = scrape.dedupe_candidates([campus, baseline])
+
+        self.assertEqual([row["external_id"] for row in unique], ["bmo:R123-3"])
+
+        distinct = {
+            **campus,
+            "external_id": "bmo:R124",
+            "url": campus["url"].replace("R123", "R124"),
+        }
+        unique, _, _ = scrape.dedupe_candidates([campus, baseline, distinct])
+        self.assertEqual(
+            [row["external_id"] for row in unique],
+            ["bmo:R123-3", "bmo:R124"],
+        )
 
     def test_direct_source_replaces_matching_aggregate_not_new_opportunity(self):
         direct = {

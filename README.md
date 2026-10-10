@@ -253,6 +253,23 @@ sites for CIBC Campus, RBC Early Talent, Manulife Jobs, Sun Life Campus, and
 OMERS External. General RBC postings were deliberately not added because titles
 such as “Branch Manager Intern” are not student placements.
 
+The nationwide placement pass adds only measured-yield official sources:
+Bell, Hydro One, and FortisBC on SuccessFactors, plus campus/employer Workday
+sites for Autodesk, CAE, Canadian Tire, Intact Financial, Cenovus, TC Energy,
+Colliers, Thomson Reuters, BMO Campus, OLG, Mastercard, and Rockwell
+Automation. These sources use the same six-hour last-good retention and
+source-specific publication block as `PUBLIC_BOARDS`. Workday locations may
+fall back to the public posting URL's `/job/{location}/...` segment only when
+that segment independently resolves to a recognized Canadian place; US and
+ambiguous paths remain ineligible.
+
+Workday and SuccessFactors searches include English and French placement terms
+(`intern`, `co-op`, `student`, `stagiaire`, and `étudiant`). The Amazon
+employer API also includes bounded Software Development Engineer and Applied
+Science internship queries alongside the existing business-track queries.
+Repeated results are deduplicated, and the previously published Workday
+identity wins when a campus and general site expose the same requisition.
+
 Internship, co-op, student, and true new-grad titles are eligible throughout
 Canada. Structured provider country/address fields take priority. Explicit
 Canada or US+Canada remote roles are eligible; generic worldwide, North America,
@@ -263,13 +280,15 @@ are eligible and are not mislabelled as business-track roles.
 Provider-supplied deadlines are honored where present; missing industry,
 duration, season, eligibility, or deadline values are not invented.
 
-New board records use `board:provider-id` identities, official posting/application
-URLs, `source_target`, and an absolute `last_seen`. Existing source IDs stay
-unchanged. Canonical official URLs and matching cross-source listings are
-deduplicated before counting additions; replacing an Adzuna copy with a direct
-posting is not a new opportunity.
+New retained-source records use provider-scoped identities, official
+posting/application URLs, `source_target`, and an absolute `last_seen`.
+Greenhouse, Lever, Ashby, and SmartRecruiters board records remain
+`board:provider-id`; Workday requisitions remain tenant-scoped. Existing source
+IDs stay unchanged. Canonical official URLs and matching cross-source listings
+are deduplicated before counting additions; replacing an Adzuna copy with a
+direct posting is not a new opportunity.
 
-Each new board records its last successful collection in
+Each retained source records its last successful collection in
 `source_state.public_boards`. On a failed, malformed, or truncated fetch, its
 last-good slice may be reused for six hours **without renewing its timestamp**.
 An expired/missing cache or an inconclusive posting check (for example 403,
@@ -279,12 +298,14 @@ response replaces the slice immediately; explicit closed/404/410 postings are
 removed, not retained indefinitely. `SOURCE_BASELINE_PATH` selects the captured
 checked-in snapshot; locally it defaults to `live_jobs.json`.
 
-To add a board, first follow a real employer careers link or verify a public
+To add a source, first follow a real employer careers link or verify a public
 ATS posting's employer identity, confirm its public API/terms and exact token,
-and check its current eligible listings. Then add a `(source, board, company)`
-entry to `PUBLIC_BOARDS`, not a guessed slug, aggregator board, or duplicate
-main-board entry. Separate employer-verified campus boards, such as Geotab's,
-are allowed when their official posting content proves the employer identity.
+and check its current eligible listings. Add shared public-API boards to
+`PUBLIC_BOARDS`; add measured-yield Workday or SuccessFactors sites to
+`RETAINED_SOURCES`. Do not add a guessed slug, aggregator board, or duplicate
+main-board entry. Separate employer-verified campus boards, such as Geotab's or
+BMO's, are allowed when their official posting content proves the employer
+identity and baseline-first deduplication preserves existing records.
 Exercise parsing, pagination, failure/cache, eligibility, and identity tests.
 Compare against one dated snapshot and verify official pages before reporting
 net-new positions. Write candidate evidence outside the repository; never run

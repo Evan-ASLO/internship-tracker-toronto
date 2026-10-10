@@ -127,6 +127,22 @@ class WorkdayCoverageTests(unittest.TestCase):
         self.assertEqual(selected["parameter"], "Location")
         self.assertEqual(selected["ids"], ["markham-id"])
 
+    def test_workday_path_recovers_only_canadian_locations(self):
+        self.assertEqual(
+            scrape.workday_location_from_path(
+                "/job/Canada-Toronto-Ontario/"
+                "Applied-Research-Intern_JREQ202812"
+            ),
+            "Toronto, Ontario, Canada",
+        )
+        self.assertEqual(
+            scrape.workday_location_from_path(
+                "/job/United-States-Rochester-New-York/"
+                "Software-Engineer-Co-Op_JREQ203587"
+            ),
+            "",
+        )
+
     def test_workday_request_retries_transient_tls_failures(self):
         success = FakeResponse(
             json_value={"total": 0, "jobPostings": [], "facets": []}
@@ -172,6 +188,45 @@ class WorkdayCoverageTests(unittest.TestCase):
             ("sunlife", "Experienced-Jobs", "wd1"),
         }:
             self.assertNotIn(stale, specs)
+
+    def test_expansion_registry_uses_measured_official_sites(self):
+        sources = {
+            (source, scrape.retained_source_target(source, adapter_spec))
+            for source, adapter_spec, _ in scrape.RETAINED_SOURCES
+        }
+        for expected in {
+            ("successfactors", "bell"),
+            ("successfactors", "hydroone"),
+            ("successfactors", "fortisbc"),
+            ("workday", "autodesk.wd1/uni"),
+            ("workday", "cae.wd3/career"),
+            (
+                "workday",
+                "canadiantirecorporation.wd3/"
+                "enterprise_external_careers_site",
+            ),
+            ("workday", "bmo.wd3/Campus"),
+            ("workday", "olg.wd3/careers-students"),
+            (
+                "workday",
+                "rockwellautomation.wd1/"
+                "external-rockwell-automation-early-careers",
+            ),
+        }:
+            self.assertIn(expected, sources)
+            self.assertIn(
+                scrape.coverage_key(*expected),
+                scrape.RETAINED_SOURCE_KEYS,
+            )
+
+    def test_search_terms_and_amazon_queries_cover_approved_expansion(self):
+        self.assertIn("stagiaire", scrape.SEARCH_TERMS)
+        self.assertIn("\u00e9tudiant", scrape.SEARCH_TERMS)
+        self.assertIn(
+            "software development engineer intern",
+            scrape.AMAZON_QUERIES,
+        )
+        self.assertIn("applied science intern", scrape.AMAZON_QUERIES)
 
 
 class SuccessFactorsCoverageTests(unittest.TestCase):
