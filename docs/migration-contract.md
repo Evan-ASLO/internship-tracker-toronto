@@ -68,6 +68,35 @@ All IDs and hashes are full 64-character lowercase hexadecimal strings.
 Relative provider dates such as `Posted Today` remain in `postedText`;
 `postedAt` is populated only for parseable absolute timestamps.
 
+`categories` remains a string array in schema version 1. Technical jobs may
+carry overlapping values, so category totals are not additive. The canonical
+technical values are:
+
+```text
+Software Engineering
+Data Science & AI
+Cybersecurity
+IT & Infrastructure
+Quality & Test Engineering
+Hardware & Embedded Systems
+Electrical & Electronics Engineering
+Mechanical, Mechatronics & Robotics
+Civil & Structural Engineering
+Environmental Engineering
+Chemical, Process & Materials Engineering
+Industrial & Manufacturing Engineering
+Aerospace Engineering
+Biomedical Engineering
+Mining & Geological Engineering
+General Engineering
+```
+
+Categories describe role function, not employer industry. Bare
+`engineer`/`engineering` evidence maps to `General Engineering`, not Software
+Engineering. Existing Finance, Marketing, Business Operations, and Consulting
+tags remain valid and may coexist with technical tags when the title
+independently supports both.
+
 The scraper's `source_target`, `last_seen`, optional `application_deadline`,
 and `source_state.public_boards` are local/Vercel snapshot metadata. They are
 not added to the strict normalized job shape above. Cloudflare continues to

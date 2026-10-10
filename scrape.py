@@ -92,10 +92,123 @@ CATEGORIES = {
                             r"\b(?:back[\s-]?end|front[\s-]?end|full[\s-]?stack)\b|"
                             r"\b(?:developers?|d[ée]veloppeu(?:r|se)s?|"
                             r"programmeu(?:r|se)s?|programmers?)\b)",
+    "Data Science & AI": r"\bdata\s+(?:science|scientist|engineering|engineer|"
+                         r"analytics?|analyst|platform|quality|governance|management)\b|"
+                         r"\bdata\s*(?:&|and)\s*reporting\b|"
+                         r"\b(?:analytics?|business intelligence|artificial intelligence|"
+                         r"intelligence artificielle|machine learning|"
+                         r"apprentissage (?:automatique|machine)|applied science|"
+                         r"applied research|predictive insights|computer vision|"
+                         r"genai|nlp|donn[ée]es)\b|\b(?:ai|ml)\b|"
+                         r"\b(?:quantitative|financial)\s+(?:engineering|research|"
+                         r"developer|analytics?)\b",
+    "Cybersecurity": r"\b(?:cyber(?:security)?|information security|"
+                     r"application security|product security|browser security|"
+                     r"cloud security|network security|security engineer|"
+                     r"security analyst|threat(?: detection| hunting)?|soc analyst|"
+                     r"identity and access|iam|cybers[ée]curit[ée])\b",
+    "IT & Infrastructure": r"\b(?:devops|site reliability|sre|it support|"
+                           r"information technology|information systems|network services|"
+                           r"network engineer|networking|systems? administrator|"
+                           r"telecom(?:munications)?|data cent(?:er|re)|"
+                           r"business systems engineer|technology systems|cloud|"
+                           r"infrastructure engineer|platform engineer|mainframe|"
+                           r"infonuagique|informatique|r[ée]seaux?)\b",
+    "Quality & Test Engineering": r"\b(?:qa|sdet|quality assurance|"
+                                  r"quality engineer(?:ing)?|test engineer(?:ing)?|"
+                                  r"test automation|software test(?:ing)?|"
+                                  r"design validation|hardware validation|ic validation|"
+                                  r"validation engineer(?:ing)?|verification(?: and validation)?|"
+                                  r"v&v|systems? integration.*(?:test|verification|validation)|"
+                                  r"product development test laboratory|assurance qualit[ée]|"
+                                  r"automatisation des tests)\b",
+    "Hardware & Embedded Systems": r"\b(?:hardware|embedded|firmware|fpga|asic|soc|"
+                                   r"silicon|pcb|pcba|microelectronics|"
+                                   r"analog (?:design|engineer|layout)|signal integrity|"
+                                   r"photonics|modem hw|computer engineering|ic validation|"
+                                   r"ams layout|layout engineer|"
+                                   r"logiciel embarqu[ée])\b",
+    "Electrical & Electronics Engineering": r"\b(?:electrical|electronics?|"
+                                          r"power systems?|power engineering|energy engineering|"
+                                          r"grid|transmission|distribution (?:engineering|"
+                                          r"planning|projects?)|controls? engineer|"
+                                          r"control systems?|instrumentation|electromechanical|"
+                                          r"circuit|analog (?:design|engineer)|ams layout|"
+                                          r"layout engineer|signal integrity|"
+                                          r"photonics|[ée]lectrique|[ée]lectronique|"
+                                          r"[ée]lectrom[ée]canique|mechatronics?|"
+                                          r"m[ée]catronique)\b",
+    "Mechanical, Mechatronics & Robotics": r"\b(?:mechanical|mechatronics?|robotics?|"
+                                          r"electromechanical|thermal|fluid(?:s| dynamics)?|"
+                                          r"hvac|controls? engineer|m[ée]canique|"
+                                          r"m[ée]catronique|robotique|[ée]lectrom[ée]canique)\b",
+    "Civil & Structural Engineering": r"\b(?:civil|structural|transportation engineering|"
+                                      r"tunnell\w*|underground infrastructure|"
+                                      r"construction(?: engineering)?|geotechnical|"
+                                      r"municipal engineering|rail engineering|"
+                                      r"transit and rail|water resources|g[ée]nie civil)\b",
+    "Environmental Engineering": r"\b(?:environmental|"
+                                 r"environment,?\s+health\s*(?:&|and)\s+safety|"
+                                 r"sustainab(?:ility|le)|"
+                                 r"forestry operations|waste management|ecolog\w*|"
+                                 r"environnemental)\b",
+    "Chemical, Process & Materials Engineering": r"\b(?:chemical|process engineer(?:ing)?|"
+                                               r"materials? (?:science|engineering|innovation)|"
+                                               r"metallurg\w*|chemistry|polymer|battery engineering|"
+                                               r"extractive metallurgy|chimique|proc[ée]d[ée]s?|"
+                                               r"mat[ée]riaux)\b",
+    "Industrial & Manufacturing Engineering": r"\b(?:industrial(?: engineering|ization)?|"
+                                             r"manufactur\w*|production engineering|"
+                                             r"factory automation|continuous improvement|"
+                                             r"operations engineering|warehouse automation|"
+                                             r"industriel|manufacturier|fabrication|"
+                                             r"am[ée]lioration continue)\b",
+    "Aerospace Engineering": r"\b(?:aerospace|aeronaut\w*|avionics?|aircraft|"
+                             r"flight (?:systems?|software|controls?|simulator)|"
+                             r"propulsion|satellite|spacecraft|a[ée]rospatial|"
+                             r"a[ée]ronautique|avionique)\b",
+    "Biomedical Engineering": r"\b(?:biomedical|bioengineering|medical devices?|"
+                              r"clinical engineering|biom[ée]dical)\b",
+    "Mining & Geological Engineering": r"\b(?:mining|geological|geoscience|mineral|"
+                                       r"mine engineering|extractive metallurgy|minier|"
+                                       r"min[ée]ral|g[ée]ologique)\b",
+    "General Engineering": r"\b(?:engineer(?:ing)?|technologist|ing[ée]nieur|"
+                           r"ing[ée]nierie|g[ée]nie|systems? integration|"
+                           r"system of systems|nuclear)\b",
 }
 CATEGORIES = {k: re.compile(v, re.I) for k, v in CATEGORIES.items()}
+BUSINESS_CATEGORY_NAMES = (
+    "Finance",
+    "Marketing",
+    "Business Operations",
+    "Consulting",
+)
 SOFTWARE_ENGINEERING_TRACK = "Software Engineering"
 SOFTWARE_ENGINEERING_RE = CATEGORIES[SOFTWARE_ENGINEERING_TRACK]
+QUALITY_TRACK = "Quality & Test Engineering"
+GENERAL_ENGINEERING_TRACK = "General Engineering"
+TECHNICAL_CATEGORY_NAMES = (
+    SOFTWARE_ENGINEERING_TRACK,
+    "Data Science & AI",
+    "Cybersecurity",
+    "IT & Infrastructure",
+    QUALITY_TRACK,
+    "Hardware & Embedded Systems",
+    "Electrical & Electronics Engineering",
+    "Mechanical, Mechatronics & Robotics",
+    "Civil & Structural Engineering",
+    "Environmental Engineering",
+    "Chemical, Process & Materials Engineering",
+    "Industrial & Manufacturing Engineering",
+    "Aerospace Engineering",
+    "Biomedical Engineering",
+    "Mining & Geological Engineering",
+    GENERAL_ENGINEERING_TRACK,
+)
+BASE_TECHNICAL_CATEGORY_NAMES = set(TECHNICAL_CATEGORY_NAMES) - {
+    QUALITY_TRACK,
+    GENERAL_ENGINEERING_TRACK,
+}
 NON_SOFTWARE_DEVELOPER_RE = re.compile(
     r"\b(?:business|sales|partnerships?|real\s+estate|land|community|talent|"
     r"learning|curriculum|content|product)\s+(?:developers?|"
@@ -122,6 +235,11 @@ STRONG_SOFTWARE_ROLE_RE = re.compile(
     r"\b(?:back[\s-]?end|front[\s-]?end|full[\s-]?stack)\b",
     re.I,
 )
+BUSINESS_REENGINEERING_RE = re.compile(
+    r"\b(?:process|business|finance|cfo)\s+re-?engineering\b",
+    re.I,
+)
+NON_TEST_QUALITY_RE = re.compile(r"\bdata quality\b|\bquality coach\b", re.I)
 
 # Technical roles must never be classified into a business track just because a
 # keyword like "brand" or "media" appears in the title.
@@ -202,6 +320,17 @@ US_LOCATION_RE = re.compile(
     r"florida|washington|massachusetts|illinois|virginia|colorado|ohio|"
     r"michigan|georgia|pennsylvania|new jersey|north carolina|south carolina)\b|"
     r",\s*(?:ca|ny|tx|fl|wa|ma|il|va|co|oh|mi|ga|pa|nj|nc|sc)\b", re.I)
+FOREIGN_COUNTRY_RE = re.compile(
+    r"\b(australia|india|singapore|united kingdom|england|scotland|wales|"
+    r"ireland|germany|france|spain|italy|netherlands|poland|switzerland|"
+    r"austria|belgium|denmark|sweden|norway|finland|portugal|czechia|"
+    r"czech republic|romania|hungary|greece|turkey|israel|"
+    r"united arab emirates|uae|saudi arabia|south africa|brazil|argentina|"
+    r"chile|colombia|peru|mexico|japan|china|hong kong|taiwan|"
+    r"south korea|korea|new zealand|philippines|malaysia|indonesia|"
+    r"thailand|vietnam)\b",
+    re.I,
+)
 EXPLICIT_CANADA_REMOTE_RE = re.compile(
     r"(?:\bremote\s*[-,(]?\s*(?:in\s+)?canada\b|\bcanada\s*[-,(]?\s*remote\b|"
     r"remote\s*\((?:us\s*\+\s*)?canada(?:\s+only)?\)|"
@@ -216,7 +345,10 @@ def geo(loc):
         return None
     if EXPLICIT_CANADA_REMOTE_RE.search(text):
         return "Remote - Canada"
-    if US_LOCATION_RE.search(text) and not re.search(r"\bcanada\b", lowered):
+    if (
+        (US_LOCATION_RE.search(text) or FOREIGN_COUNTRY_RE.search(text))
+        and not re.search(r"\bcanada\b", lowered)
+    ):
         return None
     if re.search(r"\bcanada\b", lowered):
         for name, region in CANADIAN_REGIONS.items():
@@ -239,23 +371,41 @@ def geo(loc):
 
 def categorize(title):
     t = title or ""
-    if SOFTWARE_ENGINEERING_RE.search(t):
+    software_role = (
+        SOFTWARE_ENGINEERING_RE.search(t)
+        and not NON_SOFTWARE_DEVELOPER_RE.search(t)
+        and not (
+            NON_ENGINEERING_SOFTWARE_RE.search(t)
+            and not STRONG_SOFTWARE_ROLE_RE.search(t)
+        )
+    )
+    selected = set()
+    if not software_role and not EXCLUDE_RE.search(t):
+        selected.update(
+            category for category in BUSINESS_CATEGORY_NAMES
+            if CATEGORIES[category].search(t)
+        )
+    if software_role:
+        selected.add(SOFTWARE_ENGINEERING_TRACK)
+    for category in TECHNICAL_CATEGORY_NAMES:
+        if category in {SOFTWARE_ENGINEERING_TRACK, GENERAL_ENGINEERING_TRACK}:
+            continue
         if (
-            NON_SOFTWARE_DEVELOPER_RE.search(t)
-            or (
-                NON_ENGINEERING_SOFTWARE_RE.search(t)
-                and not STRONG_SOFTWARE_ROLE_RE.search(t)
-            )
+            category == QUALITY_TRACK
+            and NON_TEST_QUALITY_RE.search(t)
         ):
-            pass
-        else:
-            return [SOFTWARE_ENGINEERING_TRACK]
-    if EXCLUDE_RE.search(t):
-        return []
-    return [
-        category for category, pattern in CATEGORIES.items()
-        if category != SOFTWARE_ENGINEERING_TRACK and pattern.search(t)
-    ]
+            continue
+        if CATEGORIES[category].search(t):
+            selected.add(category)
+    if (
+        CATEGORIES[GENERAL_ENGINEERING_TRACK].search(t)
+        and not BUSINESS_REENGINEERING_RE.search(t)
+        and not any(
+            category in selected for category in BASE_TECHNICAL_CATEGORY_NAMES
+        )
+    ):
+        selected.add(GENERAL_ENGINEERING_TRACK)
+    return [category for category in CATEGORIES if category in selected]
 
 
 def g(url, request_budget=None, **kw):
@@ -996,6 +1146,17 @@ def workday_location_from_path(external_path):
     return "Canada" if region == "Canada" else f"{region}, Canada"
 
 
+GENERIC_WORKDAY_LOCATION_RE = re.compile(
+    r"^(?:(?:\d+|multiple)\s+locations?|various locations?)$",
+    re.I,
+)
+
+
+def workday_can_use_facet_location(location):
+    text = clean_text(location)
+    return not text or bool(GENERIC_WORKDAY_LOCATION_RE.fullmatch(text))
+
+
 def from_workday(spec):
     tenant, site, host = spec
     target = f"{tenant}.{host}/{site}"
@@ -1083,7 +1244,11 @@ def from_workday(spec):
                 location = clean_text(job.get("locationsText"))
                 if not location:
                     location = workday_location_from_path(path)
-                if location_filter and not geo(location):
+                if (
+                    location_filter
+                    and not geo(location)
+                    and workday_can_use_facet_location(location)
+                ):
                     location = (
                         f"{location or 'Multiple locations'} "
                         "(approved Canada location)"
@@ -1504,6 +1669,23 @@ RETAINED_SOURCES = [
             "wd1",
         ),
         "Rockwell Automation",
+    ),
+    ("workday", ("abb", "external_career_page", "wd3"), "ABB"),
+    ("workday", ("ciena", "careers", "wd5"), "Ciena"),
+    ("workday", ("cisco", "cisco_careers", "wd5"), "Cisco"),
+    ("workday", ("generalmotors", "careers_gm", "wd5"), "General Motors"),
+    ("workday", ("gevernova", "vernova_externalsite", "wd5"), "GE Vernova"),
+    ("workday", ("intel", "external", "wd1"), "Intel"),
+    ("workday", ("marvell", "marvellcareers", "wd1"), "Marvell"),
+    (
+        "workday",
+        ("motorolasolutions", "careers", "wd5"),
+        "Motorola Solutions",
+    ),
+    (
+        "workday",
+        ("nvidia", "nvidiaexternalcareersite", "wd5"),
+        "NVIDIA",
     ),
 ]
 
