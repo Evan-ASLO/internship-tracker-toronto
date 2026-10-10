@@ -2,8 +2,9 @@
 
 Verified-live internship board for all Canadian provinces and territories,
 including remote roles only when the source explicitly supports Canadian
-applicants. Normalized jobs carry five career-track tags: **Marketing,
-Business Operations, Finance, Consulting, Software Engineering**.
+applicants. Normalized jobs retain the existing **Marketing, Business
+Operations, Finance, Consulting, and Software Engineering** tracks and add
+overlapping technical-family tags derived from the posting title.
 
 **Live site:** https://internship-tracker-gamma-five.vercel.app
 
@@ -44,6 +45,44 @@ of pre-existing new-grad roles for stable user/history references. The
 internship-growth target is reported separately and counts only explicit
 internship, co-op, and student-placement titles. Newly added `PUBLIC_BOARDS`
 cannot introduce new-grad-only roles.
+
+### Technical career tracks
+
+Technical categories describe the role function, not the employer's industry.
+A software co-op at a bank remains a banking employer. Jobs may carry multiple
+technical tags; family counts therefore overlap and must not be summed as a
+unique-job total.
+
+The canonical schema-v1 values are:
+
+- `Software Engineering`
+- `Data Science & AI`
+- `Cybersecurity`
+- `IT & Infrastructure`
+- `Quality & Test Engineering`
+- `Hardware & Embedded Systems`
+- `Electrical & Electronics Engineering`
+- `Mechanical, Mechatronics & Robotics`
+- `Civil & Structural Engineering`
+- `Environmental Engineering`
+- `Chemical, Process & Materials Engineering`
+- `Industrial & Manufacturing Engineering`
+- `Aerospace Engineering`
+- `Biomedical Engineering`
+- `Mining & Geological Engineering`
+- `General Engineering`
+
+Classification is title-evidence based. Bare `engineer`/`engineering` maps to
+`General Engineering`, never `Software Engineering`. Specific signals can
+overlap—for example, embedded software can be both Software Engineering and
+Hardware & Embedded Systems, while mechatronics can be both Electrical &
+Electronics Engineering and Mechanical, Mechatronics & Robotics. Generic
+analyst, business-development, physical-security, product-management, and
+business process re-engineering titles do not become technical solely because
+an employer is technical or a broad keyword appears in the description.
+French title evidence is supported for software, data/AI, IT, electrical,
+mechanical, civil, environmental, process/materials, industrial, aerospace,
+biomedical, mining/geological, and general engineering roles.
 
 ### Posting-date provenance
 
@@ -257,11 +296,14 @@ The nationwide placement pass adds only measured-yield official sources:
 Bell, Hydro One, and FortisBC on SuccessFactors, plus campus/employer Workday
 sites for Autodesk, CAE, Canadian Tire, Intact Financial, Cenovus, TC Energy,
 Colliers, Thomson Reuters, BMO Campus, OLG, Mastercard, and Rockwell
-Automation. These sources use the same six-hour last-good retention and
-source-specific publication block as `PUBLIC_BOARDS`. Workday locations may
-fall back to the public posting URL's `/job/{location}/...` segment only when
-that segment independently resolves to a recognized Canadian place; US and
-ambiguous paths remain ineligible.
+Automation. The technical placement pass adds measured-yield Workday sources
+for ABB, Ciena, Cisco, General Motors, GE Vernova, Intel, Marvell, Motorola
+Solutions, and NVIDIA. These sources use the same six-hour last-good retention
+and source-specific publication block as `PUBLIC_BOARDS`. Workday locations
+may fall back to the public posting URL's `/job/{location}/...` segment only
+when that segment independently resolves to a recognized Canadian place.
+Generic multi-location labels can inherit a provider-issued Canadian facet;
+explicit foreign locations cannot.
 
 Workday and SuccessFactors searches include English and French placement terms
 (`intern`, `co-op`, `student`, `stagiaire`, and `étudiant`). The Amazon

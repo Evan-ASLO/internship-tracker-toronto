@@ -304,9 +304,9 @@ class PublicParsingTests(unittest.TestCase):
 
         for title in positives:
             with self.subTest(title=title):
-                self.assertEqual(
+                self.assertIn(
+                    scrape.SOFTWARE_ENGINEERING_TRACK,
                     scrape.categorize(title),
-                    [scrape.SOFTWARE_ENGINEERING_TRACK],
                 )
         for title in negatives:
             with self.subTest(title=title):
@@ -321,6 +321,102 @@ class PublicParsingTests(unittest.TestCase):
             ["Marketing"],
         )
         self.assertEqual(scrape.categorize("Finance Intern"), ["Finance"])
+
+    def test_technical_category_vocabulary_and_overlapping_fixtures(self):
+        expected_vocabulary = (
+            "Software Engineering",
+            "Data Science & AI",
+            "Cybersecurity",
+            "IT & Infrastructure",
+            "Quality & Test Engineering",
+            "Hardware & Embedded Systems",
+            "Electrical & Electronics Engineering",
+            "Mechanical, Mechatronics & Robotics",
+            "Civil & Structural Engineering",
+            "Environmental Engineering",
+            "Chemical, Process & Materials Engineering",
+            "Industrial & Manufacturing Engineering",
+            "Aerospace Engineering",
+            "Biomedical Engineering",
+            "Mining & Geological Engineering",
+            "General Engineering",
+        )
+        self.assertEqual(scrape.TECHNICAL_CATEGORY_NAMES, expected_vocabulary)
+
+        fixtures = {
+            "Software Engineer Intern, Test Automation": [
+                "Software Engineering",
+                "Quality & Test Engineering",
+            ],
+            "Data Engineer Intern": ["Data Science & AI"],
+            "Browser Security Engineer Intern": ["Cybersecurity"],
+            "DevOps & Cloud Platform Intern": ["IT & Infrastructure"],
+            "Embedded Software Engineering Intern": [
+                "Software Engineering",
+                "Hardware & Embedded Systems",
+            ],
+            "Firmware Engineering Co-op": ["Hardware & Embedded Systems"],
+            "Intern - Mechatronics Engineer": [
+                "Electrical & Electronics Engineering",
+                "Mechanical, Mechatronics & Robotics",
+            ],
+            "Civil/Transportation Engineering Intern/Co-op": [
+                "Civil & Structural Engineering",
+            ],
+            "Environmental Compliance Intern": [
+                "Environmental Engineering",
+            ],
+            "Environment, Health & Safety Intern": [
+                "Environmental Engineering",
+            ],
+            "Process Engineer Co-op": [
+                "Chemical, Process & Materials Engineering",
+            ],
+            "Manufacturing Engineering Co-op": [
+                "Industrial & Manufacturing Engineering",
+            ],
+            "Applied Research Intern (NLP/ML/GenAI)": [
+                "Data Science & AI",
+            ],
+            "Systems Integration, Verification and Validation Co-op": [
+                "Quality & Test Engineering",
+                "General Engineering",
+            ],
+            "Student, Engineering": ["General Engineering"],
+            "Nuclear Canadian Licensing Intern": ["General Engineering"],
+            "Data Quality Intern": ["Data Science & AI"],
+            "Intern, Quality Assurance": ["Quality & Test Engineering"],
+            "AMS Layout Engineer Intern": [
+                "Hardware & Embedded Systems",
+                "Electrical & Electronics Engineering",
+            ],
+            "IC Validation Engineer Intern": [
+                "Quality & Test Engineering",
+                "Hardware & Embedded Systems",
+            ],
+            "Sales & Distribution Operations Intern": [
+                "Business Operations",
+            ],
+            "CFO Process Re-Engineering Intern": [],
+            "Business Analyst Student": ["Business Operations"],
+        }
+        for title, expected in fixtures.items():
+            with self.subTest(title=title):
+                self.assertEqual(scrape.categorize(title), expected)
+
+    def test_employer_industry_does_not_infer_technical_track(self):
+        self.assertEqual(
+            scrape.categorize("Mechanical Engineering Intern"),
+            ["Mechanical, Mechatronics & Robotics"],
+        )
+        self.assertNotIn(
+            "Aerospace Engineering",
+            scrape.categorize("Mechanical Engineering Intern"),
+        )
+        self.assertEqual(
+            scrape.categorize("Intern, Technical Sales & Consulting"),
+            ["Consulting"],
+        )
 
     def test_public_eligibility_keeps_scope_without_pool_or_remote_padding(self):
         cases = [
@@ -400,7 +496,10 @@ class PublicParsingTests(unittest.TestCase):
             "Iqaluit, Nunavut": "Nunavut",
             "Whitehorse, Yukon": "Yukon",
             "Remote (US + Canada Only)": "Remote - Canada",
+            "Victoria, British Columbia, Canada": "British Columbia",
             "Ontario, California": None,
+            "Port Melbourne, Victoria, Australia": None,
+            "Paris, France": None,
             "Remote, United States": None,
             "Remote": None,
         }

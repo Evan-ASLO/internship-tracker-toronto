@@ -142,6 +142,12 @@ class WorkdayCoverageTests(unittest.TestCase):
             ),
             "",
         )
+        self.assertTrue(scrape.workday_can_use_facet_location("3 Locations"))
+        self.assertFalse(
+            scrape.workday_can_use_facet_location(
+                "Port Melbourne, Victoria, Australia"
+            )
+        )
 
     def test_workday_request_retries_transient_tls_failures(self):
         success = FakeResponse(
@@ -212,6 +218,15 @@ class WorkdayCoverageTests(unittest.TestCase):
                 "rockwellautomation.wd1/"
                 "external-rockwell-automation-early-careers",
             ),
+            ("workday", "abb.wd3/external_career_page"),
+            ("workday", "ciena.wd5/careers"),
+            ("workday", "cisco.wd5/cisco_careers"),
+            ("workday", "generalmotors.wd5/careers_gm"),
+            ("workday", "gevernova.wd5/vernova_externalsite"),
+            ("workday", "intel.wd1/external"),
+            ("workday", "marvell.wd1/marvellcareers"),
+            ("workday", "motorolasolutions.wd5/careers"),
+            ("workday", "nvidia.wd5/nvidiaexternalcareersite"),
         }:
             self.assertIn(expected, sources)
             self.assertIn(
