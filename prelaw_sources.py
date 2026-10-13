@@ -60,7 +60,8 @@ STUDENT_PROGRAM_RE = re.compile(
 LEGAL_TITLE_RE = re.compile(
     r"\b(legal(?: operations?| administration?)?|law clerk|paralegal|"
     r"contract management|compliance|ethics(?: and compliance)?|"
-    r"governance|privacy|data protection|corporate secretarial|"
+    r"corporate governance|legal governance|compliance governance|"
+    r"supervision and governance|privacy|data protection|corporate secretarial|"
     r"regulatory affairs|conformit[ée]|gouvernance|juridique|parajuriste)\b",
     re.I,
 )

@@ -90,7 +90,12 @@ class PrelawEligibilityTests(unittest.TestCase):
             "AI Policy Engineer Intern": [],
             "Credit Risk Intern": [],
             "Risk Analyst, Enterprise Risk Governance Intern": [],
+            "Information Archiving and Governance Intern": [],
+            "Proposal Standards & Governance Intern": [],
             "Software Engineering Intern": [],
+            "Supervision and Governance Co-op": [
+                prelaw_sources.LEGAL_CATEGORY,
+            ],
         }
         for title, expected in cases.items():
             with self.subTest(title=title):
