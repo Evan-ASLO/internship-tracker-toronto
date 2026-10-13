@@ -145,6 +145,36 @@ class PrelawEligibilityTests(unittest.TestCase):
         self.assertIn("Restricted qualification", note)
         self.assertIn("Law Clerk", note)
 
+    def test_corporate_communications_requires_specific_policy_duty(self):
+        title = "Corporate Communications Student"
+        self.assertEqual(
+            prelaw_sources.classify_prelaw(
+                title,
+                "The company monitors government regulation.",
+            ),
+            [],
+        )
+        supported = (
+            "The Corporate Communications Student will observe government "
+            "relations activities, including strategy and key message "
+            "development."
+        )
+        self.assertEqual(
+            prelaw_sources.classify_prelaw(title, supported),
+            [prelaw_sources.POLICY_CATEGORY],
+        )
+        self.assertEqual(
+            prelaw_sources.classification_evidence_note(
+                title,
+                supported,
+                [prelaw_sources.POLICY_CATEGORY],
+            ),
+            (
+                "Classification evidence: source duties include government "
+                "relations activities."
+            ),
+        )
+
 
 class GCJobsParserTests(unittest.TestCase):
     def test_nonposter_inventory_counts_for_completeness_but_is_not_ingested(self):
@@ -357,6 +387,60 @@ class OracleCollectorTests(unittest.TestCase):
         self.assertEqual(
             row["_prelaw_categories"],
             [prelaw_sources.POLICY_CATEGORY],
+        )
+
+    def test_oracle_retains_auditable_communications_policy_evidence(self):
+        listing = {
+            "items": [{
+                "TotalJobsCount": 1,
+                "requisitionList": [{
+                    "Id": "2425488",
+                    "Title": "Corporate Communications Student",
+                    "PostedDate": "2026-08-17",
+                    "PrimaryLocationCountry": "CA",
+                    "PrimaryLocation": "Calgary, AB, Canada",
+                }],
+            }]
+        }
+        detail = {
+            "items": [{
+                "Id": "2425488",
+                "Title": "Corporate Communications Student",
+                "PrimaryLocation": "Calgary, AB, Canada",
+                "ExternalPostedStartDate": "2026-08-17T11:00:00+00:00",
+                "ExternalPostedEndDate": None,
+                "ExternalDescriptionStr": (
+                    "<p>The Corporate Communications Student will observe "
+                    "government relations activities, including strategy and "
+                    "key message development.</p>"
+                    "<p>Currently enrolled in a Public Relations or "
+                    "Communications degree program.</p>"
+                ),
+            }]
+        }
+
+        def handler(url, kwargs):
+            if "requisitiondetails" in url.casefold():
+                return FakeResponse(data=detail, url=url)
+            return FakeResponse(data=listing, url=url)
+
+        result = prelaw_sources.collect_cnrl_oracle(
+            now=datetime(2026, 10, 1, tzinfo=timezone.utc),
+            session=FakeSession(handler),
+        )
+        self.assertTrue(result["complete"])
+        self.assertEqual(len(result["rows"]), 1)
+        row = result["rows"][0]
+        self.assertEqual(
+            row["_prelaw_categories"],
+            [prelaw_sources.POLICY_CATEGORY],
+        )
+        self.assertIn(
+            (
+                "Classification evidence: source duties include government "
+                "relations activities."
+            ),
+            row["content"],
         )
 
 

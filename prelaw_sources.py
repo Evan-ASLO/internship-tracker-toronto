@@ -88,6 +88,14 @@ POLICY_CONTENT_RE = re.compile(
     r"briefing notes?|parliamentary|justice policy|human rights policy)\b",
     re.I,
 )
+COMMUNICATIONS_ONLY_TITLE_RE = re.compile(
+    r"\bcorporate communications?\b",
+    re.I,
+)
+COMMUNICATIONS_POLICY_DUTY_RE = re.compile(
+    r"\bgovernment relations activities\b",
+    re.I,
+)
 FALSE_PRELAW_RE = re.compile(
     r"\b(data governance|sales systems? & data governance|driver compliance|"
     r"product compliance|environmental (?:regulatory )?compliance|"
@@ -214,6 +222,9 @@ def classify_prelaw(title, content=""):
     legal_title = bool(LEGAL_TITLE_RE.search(title) and not false_positive)
     policy_title = bool(POLICY_TITLE_RE.search(title) and not false_positive)
     content_can_establish = not TECHNICAL_TITLE_RE.search(title)
+    policy_content = POLICY_CONTENT_RE.search(text)
+    if COMMUNICATIONS_ONLY_TITLE_RE.search(title) and not policy_title:
+        policy_content = COMMUNICATIONS_POLICY_DUTY_RE.search(text)
     if (
         (
             legal_title
@@ -226,12 +237,25 @@ def classify_prelaw(title, content=""):
     if (
         (
             policy_title
-            or (content_can_establish and POLICY_CONTENT_RE.search(text))
+            or (content_can_establish and policy_content)
         )
         and not false_positive
     ):
         categories.append(POLICY_CATEGORY)
     return categories
+
+
+def classification_evidence_note(title, content, categories):
+    if (
+        POLICY_CATEGORY in categories
+        and COMMUNICATIONS_ONLY_TITLE_RE.search(title or "")
+        and COMMUNICATIONS_POLICY_DUTY_RE.search(html_text(content))
+    ):
+        return (
+            "Classification evidence: source duties include government "
+            "relations activities."
+        )
+    return None
 
 
 def prelaw_candidate_hint(title, program=""):
@@ -241,10 +265,18 @@ def prelaw_candidate_hint(title, program=""):
     )
 
 
-def _description(source_label, content, deadline=None, restricted_note=None):
+def _description(
+    source_label,
+    content,
+    deadline=None,
+    restricted_note=None,
+    classification_evidence=None,
+):
     parts = [f"Source: {source_label}."]
     if restricted_note:
         parts.append(restricted_note)
+    if classification_evidence:
+        parts.append(classification_evidence)
     education = next(
         (
             sentence
@@ -669,6 +701,11 @@ def collect_cnrl_oracle(*, now=None, session=requests):
                     continue
                 deadline = parsed_deadline.astimezone(timezone.utc).isoformat()
             restricted = restricted_program_note(title, content)
+            classification_evidence = classification_evidence_note(
+                title,
+                content,
+                categories,
+            )
             output.append(
                 {
                     "company": ORACLE_COMPANY,
@@ -684,6 +721,7 @@ def collect_cnrl_oracle(*, now=None, session=requests):
                         content,
                         deadline=deadline,
                         restricted_note=restricted,
+                        classification_evidence=classification_evidence,
                     ),
                     "_prelaw_categories": categories,
                     "_placement_evidence": True,

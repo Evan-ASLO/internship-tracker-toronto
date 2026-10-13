@@ -105,6 +105,11 @@ articling eligibility, bar/Law Society membership, or legal licensure excludes
 a newly added role from the pre-law categories. Preferred or “asset” language
 does not. Mandatory Law Clerk/Paralegal program restrictions are kept in the
 existing `description` field; no new normalized field is introduced.
+For a corporate-communications title, content alone establishes
+`Public Policy & Government Relations` only when the role duties explicitly
+include government-relations activities. The existing `description` field
+then retains a short factual classification-evidence note; no schema field is
+added and the full advertisement is not redistributed.
 
 Daily-source identities:
 
