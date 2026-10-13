@@ -108,7 +108,7 @@ jobs:
           # so the next run saw "no change" and skipped deploying forever -
           # the site could stay stale permanently. The live site is the only
           # honest source of truth for "does this need publishing".
-          KEY='import sys,json;d=json.load(sys.stdin);print(sorted((j["url"],j["title"],j.get("posted","")) for j in d["jobs"]))'
+          KEY='import sys,json;d=json.load(sys.stdin);print(sorted((j.get("src",""),j.get("external_id"),j.get("company",""),j.get("title",""),j.get("loc",""),j.get("geo",""),tuple(sorted(j.get("cats") or [])),j.get("url",""),j.get("posted",""),j.get("content",""),j.get("application_deadline")) for j in d["jobs"]))'
           LIVE_FILE="$RUNNER_TEMP/live-site-live_jobs.json"
 
           if curl -fsS --max-time 30 "$SITE_URL/live_jobs.json" -o "$LIVE_FILE" 2>/dev/null \

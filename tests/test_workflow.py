@@ -29,6 +29,9 @@ class RefreshWorkflowTests(unittest.TestCase):
         self.assertIn("inputs.force_deploy", WORKFLOW)
         self.assertIn("VERCEL_ORG_ID", WORKFLOW)
         self.assertIn("VERCEL_PROJECT_ID", WORKFLOW)
+        self.assertIn('tuple(sorted(j.get("cats") or []))', WORKFLOW)
+        self.assertIn('j.get("content","")', WORKFLOW)
+        self.assertNotIn('j.get("last_seen")', WORKFLOW)
 
     def test_adzuna_secrets_are_scoped_to_source_steps(self):
         scrape_step = WORKFLOW.index("- name: Scrape and verify postings")
