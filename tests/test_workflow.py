@@ -30,7 +30,9 @@ class RefreshWorkflowTests(unittest.TestCase):
         self.assertIn("VERCEL_ORG_ID", WORKFLOW)
         self.assertIn("VERCEL_PROJECT_ID", WORKFLOW)
         self.assertIn('tuple(sorted(j.get("cats") or []))', WORKFLOW)
-        self.assertIn('j.get("content","")', WORKFLOW)
+        self.assertIn('(j.get("external_id") or "")', WORKFLOW)
+        self.assertIn('(j.get("content") or "")', WORKFLOW)
+        self.assertIn('(j.get("application_deadline") or "")', WORKFLOW)
         self.assertNotIn('j.get("last_seen")', WORKFLOW)
 
     def test_adzuna_secrets_are_scoped_to_source_steps(self):
