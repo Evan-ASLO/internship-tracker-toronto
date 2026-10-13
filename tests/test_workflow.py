@@ -63,6 +63,17 @@ class RefreshWorkflowTests(unittest.TestCase):
         )
         self.assertIn('- cron: "0 * * * *"', WORKFLOW)
 
+    def test_daily_prelaw_sources_use_hourly_pipeline_with_force_control(self):
+        self.assertIn("force_pre_law_refresh:", WORKFLOW)
+        self.assertIn(
+            "PRELAW_FORCE_REFRESH: ${{ inputs.force_pre_law_refresh }}",
+            WORKFLOW,
+        )
+        self.assertIn(
+            "SOURCE_BASELINE_PATH: ${{ runner.temp }}/checked-in-live_jobs.json",
+            WORKFLOW,
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

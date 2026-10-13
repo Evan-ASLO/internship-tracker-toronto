@@ -84,6 +84,56 @@ French title evidence is supported for software, data/AI, IT, electrical,
 mechanical, civil, environmental, process/materials, industrial, aerospace,
 biomedical, mining/geological, and general engineering roles.
 
+### Daily pre-law sources
+
+Two additional schema-v1 career tracks cover student placements relevant
+before law school:
+
+- `Legal, Compliance & Governance`
+- `Public Policy & Government Relations`
+
+These tags require role or qualification evidence; they are not a blanket
+claim that every legal-sounding job is open to a pre-law student. Newly added
+roles are excluded when the source requires current JD/LLB/law-school
+enrolment, completed legal education, articling eligibility, Law Society/bar
+membership, or another legal licence. A preferred/asset mention alone does
+not exclude a role. Law Clerk or Paralegal student roles may be included only
+when the posting is a genuine placement; any mandatory specialized program or
+credential is stated at the start of the normalized description.
+
+`prelaw_sources.py` polls these official public sources:
+
+| Source | Access and provenance | Refresh behavior |
+|---|---|---|
+| Government of Canada GC Jobs (`source=gcjobs`) | Public Service Commission public search/detail pages, stable `poster` IDs, official organization/location and real Pacific closing dates. Canada.ca permits non-commercial reproduction with accuracy, title/author/URL attribution; the tracker republishes only minimal factual metadata and an official link. GC Jobs exposes no trustworthy posting date, so `postedAt` and `postedText` remain null. | Complete public search once every 24 hours; 72-hour last-good grace for delayed/missed GitHub runs. Complete zero eligible rows replaces the slice. |
+| Canadian Natural Oracle Campus (`source=oracle`) | Oracle's documented public Candidate Experience listing/detail API for the employer-owned CNRL Campus site. Stable ID is `CNRL-Campus:<Oracle Id>`; `ExternalPostedStartDate` is the posting date. “Until filled” remains a null deadline. | Same 24-hour interval and 72-hour grace. |
+
+The hourly workflow remains unchanged; these sources self-throttle using the
+captured snapshot's `source_state.daily_sources`. Off-cycle reuse keeps the
+original successful timestamp, and a failed poll never renews it. After 72
+hours without a complete poll, catalog guard blocks both publishers.
+`force_pre_law_refresh` forces a due poll for controlled validation. GitHub
+cron is best effort and may run late or miss an invocation.
+
+Current discovery constraints are explicit:
+
+- Job Bank's monthly archive is Open Government Licence–Canada but cannot
+  establish current vacancy liveness. Job Bank's current service terms
+  prohibit scripts, robots, screen scrapers, and automated query programs, so
+  it is not collected.
+- Ontario GOJobs advertises no public feed, presents a CAPTCHA to the release
+  network, and disallows its bulk jobs/PDF routes in `robots.txt`; the tracker
+  does not bypass those controls.
+- General FSWEP inventories, generic careers pages, future application
+  windows, and the Parliamentary Internship Programme before its announced
+  opening are discovery leads, not specific live vacancies.
+
+False positives such as generic credit/market risk, data or sales governance,
+driver/product/environmental compliance, scientific regulatory affairs,
+regulatory facilities, physical security, and software/AI “policy” roles do
+not receive pre-law tags without direct legal, public-policy, legislative, or
+government-relations evidence.
+
 ### Posting-date provenance
 
 Recent-date filters use only source-supplied publication timestamps. They never
@@ -100,6 +150,8 @@ substitute for the employer's posting date.
 | Adzuna | `created`, the Adzuna provider-listing timestamp returned with the job result. |
 | Workday | Relative `postedOn` text is retained as `postedText` only; `postedAt` remains unavailable. |
 | SuccessFactors | The list source has no reliable publication timestamp, so `postedAt` remains unavailable. |
+| GC Jobs | No trustworthy publication timestamp is exposed; real closing date is retained only as producer `application_deadline`. |
+| Oracle Candidate Experience | `ExternalPostedStartDate` from the official employer API. |
 
 Missing, invalid, or future source timestamps normalize to `postedAt: null`.
 Source text may still be retained in `postedText` for display, but cannot qualify

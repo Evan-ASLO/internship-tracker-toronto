@@ -89,6 +89,8 @@ Aerospace Engineering
 Biomedical Engineering
 Mining & Geological Engineering
 General Engineering
+Legal, Compliance & Governance
+Public Policy & Government Relations
 ```
 
 Categories describe role function, not employer industry. Bare
@@ -97,12 +99,33 @@ Engineering. Existing Finance, Marketing, Business Operations, and Consulting
 tags remain valid and may coexist with technical tags when the title
 independently supports both.
 
+Pre-law categories use full source qualification text where available.
+Mandatory current JD/LLB/law-school enrolment, completed law education,
+articling eligibility, bar/Law Society membership, or legal licensure excludes
+a newly added role from the pre-law categories. Preferred or “asset” language
+does not. Mandatory Law Clerk/Paralegal program restrictions are kept in the
+existing `description` field; no new normalized field is introduced.
+
+Daily-source identities:
+
+- GC Jobs uses `source=gcjobs` and the stable public `poster` ID.
+- Oracle Candidate Experience uses `source=oracle` and
+  `CNRL-Campus:<Oracle Id>`.
+
+GC Jobs supplies no reliable posting date, so both normalized date fields are
+null. Oracle uses the official `ExternalPostedStartDate`. Real GC closing
+dates and Oracle end dates remain producer-only `application_deadline`
+metadata and are applied before normalization.
+
 The scraper's `source_target`, `last_seen`, optional `application_deadline`,
-and `source_state.public_boards` are local/Vercel snapshot metadata. They are
-not added to the strict normalized job shape above. Cloudflare continues to
-receive the same schema-version-1 fields, source strings, and count/byte limits.
-Source completeness is checked before either publisher; stale failed-board
-caches and inconclusive URL verification cannot silently deactivate a slice.
+`source_state.public_boards`, and `source_state.daily_sources` are
+local/Vercel snapshot metadata. They are not added to the strict normalized
+job shape above. Cloudflare continues to receive the same schema-version-1
+fields, source strings, and count/byte limits. Source completeness is checked
+before either publisher; stale failed-board/daily caches and inconclusive URL
+verification cannot silently deactivate a slice. Daily GC Jobs and Oracle
+sources poll every 24 hours with a 72-hour last-good grace; their successful
+timestamp is never renewed by carry-forward.
 
 Cloudflare v1 field caps are enforced before publication:
 
