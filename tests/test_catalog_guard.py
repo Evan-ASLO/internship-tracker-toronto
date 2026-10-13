@@ -74,6 +74,26 @@ class CatalogDropGuardTests(unittest.TestCase):
                 self.assertEqual(result, 1)
                 self.assertIn("lever:waabi", output.getvalue())
 
+    def test_expired_daily_source_blocks_even_with_drop_override(self):
+        snapshot = {
+            "fetched_at": "2026-10-04T21:00:00Z",
+            "jobs": [],
+            "source_state": {"daily_sources": {
+                "gcjobs:public": {
+                    "status": "blocked",
+                    "complete": False,
+                }
+            }},
+        }
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / "snapshot.json"
+            path.write_text(json.dumps(snapshot), encoding="utf-8")
+            for extra in [[], ["--allow-drop"]]:
+                with redirect_stderr(io.StringIO()) as output:
+                    result = main(["--current", str(path), *extra])
+                self.assertEqual(result, 1)
+                self.assertIn("gcjobs:public", output.getvalue())
+
 
 if __name__ == "__main__":
     unittest.main()

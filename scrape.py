@@ -17,6 +17,19 @@ from threading import Lock, Semaphore
 from urllib.parse import parse_qs, parse_qsl, quote, unquote, urlencode, urlsplit, urlunsplit
 import requests
 
+from prelaw_sources import (
+    DAILY_GRACE_HOURS,
+    DAILY_REFRESH_INTERVAL_HOURS,
+    LEGAL_CATEGORY,
+    POLICY_CATEGORY,
+    PRELAW_CATEGORIES,
+    classify_prelaw,
+    collect_cnrl_oracle,
+    collect_gc_jobs,
+    html_text,
+    mandatory_legal_education_reason,
+    restricted_program_note,
+)
 from publish_snapshot import canonicalize_url
 
 TIMEOUT = 20
@@ -39,6 +52,7 @@ LEVER_MAX_PAGES = 20
 SMARTRECRUITERS_PAGE_SIZE = 100
 SMARTRECRUITERS_MAX_PAGES = 20
 GREENHOUSE_DETAIL_MAX_REQUESTS = 200
+PRELAW_DETAIL_MAX_REQUESTS = 60
 PUBLIC_BOARD_GRACE_HOURS = 6
 ADZUNA_RESULTS_PER_PAGE = 50
 ADZUNA_REQUESTS_PER_ACTIVE_RUN = 5
@@ -177,6 +191,8 @@ CATEGORIES = {
                            r"system of systems|nuclear)\b",
 }
 CATEGORIES = {k: re.compile(v, re.I) for k, v in CATEGORIES.items()}
+CATEGORIES[LEGAL_CATEGORY] = re.compile(r"(?!x)x")
+CATEGORIES[POLICY_CATEGORY] = re.compile(r"(?!x)x")
 BUSINESS_CATEGORY_NAMES = (
     "Finance",
     "Marketing",
@@ -369,7 +385,7 @@ def geo(loc):
     return None
 
 
-def categorize(title):
+def categorize(title, content=""):
     t = title or ""
     software_role = (
         SOFTWARE_ENGINEERING_RE.search(t)
@@ -405,6 +421,7 @@ def categorize(title):
         )
     ):
         selected.add(GENERAL_ENGINEERING_TRACK)
+    selected.update(classify_prelaw(t, content))
     return [category for category in CATEGORIES if category in selected]
 
 
@@ -620,7 +637,9 @@ def from_greenhouse(tok):
                      _greenhouse_board=tok,
                      application_deadline=j.get("application_deadline"),
                      posted=j.get("first_published", "") or "",
-                     content=re.sub("<[^>]+>", " ", j.get("content", "") or "")[:600]),
+                     content=clean_text(
+                         html_text(j.get("content", "") or "")
+                     )[:12000]),
                 key))
         set_coverage(key, source="greenhouse", target=tok, pages=1,
                      returned=len(jobs), records=len(out),
@@ -672,7 +691,7 @@ def from_ashby(tok):
                      external_id=source_id(j, "id"),
                      posted=j.get("publishedAt", "") or "",
                      content=clean_text(j.get("descriptionPlain") or re.sub(
-                         "<[^>]+>", " ", j.get("descriptionHtml", "") or ""))[:600]),
+                         "<[^>]+>", " ", j.get("descriptionHtml", "") or ""))[:12000]),
                 key))
         set_coverage(key, source="ashby", target=tok, pages=1,
                      returned=len(jobs), records=len(out),
@@ -818,7 +837,7 @@ def from_lever(tok):
                          loc=eligible_location, locations=locations,
                          url=canonicalize_url(job["hostedUrl"]),
                          external_id=external_id, posted=posted,
-                         content=clean_text(job.get("descriptionPlain") or "")[:600]),
+                         content=clean_text(job.get("descriptionPlain") or "")[:12000]),
                     key))
             if len(jobs) < LEVER_PAGE_SIZE:
                 exhausted = True
@@ -1008,10 +1027,13 @@ def reuse_last_good_source(key, source, target, now):
         age_hours = (
             (now - refreshed_at).total_seconds() / 3600 if refreshed_at else None
         )
-        prior_rows = [
-            with_coverage(dict(row), key) for row in baseline["jobs"]
-            if row.get("src") == source and row.get("source_target") == target
-        ]
+        prior_rows = []
+        for row in baseline["jobs"]:
+            if row.get("src") != source or row.get("source_target") != target:
+                continue
+            carried = dict(row)
+            carried["_carried_source_row"] = True
+            prior_rows.append(with_coverage(carried, key))
         if any(
             row.get("application_deadline")
             and _parse_timestamp(row["application_deadline"]) is None
@@ -1706,6 +1728,14 @@ EXPANSION_SOURCE_KEYS = {
     for source, adapter_spec, _ in RETAINED_SOURCES
 }
 RETAINED_SOURCE_KEYS = PUBLIC_BOARD_KEYS | EXPANSION_SOURCE_KEYS
+DAILY_PRELAW_SOURCES = (
+    ("gcjobs", "public", collect_gc_jobs),
+    ("oracle", "CNRL-Campus", collect_cnrl_oracle),
+)
+DAILY_SOURCE_KEYS = {
+    coverage_key(source, target)
+    for source, target, _ in DAILY_PRELAW_SOURCES
+}
 
 
 def retained_source_url_matches(source, adapter_spec, url):
@@ -1867,6 +1897,149 @@ def from_successfactors(spec):
     return out
 
 
+def load_daily_source_baseline(source, target, now):
+    baseline_path = os.environ.get("SOURCE_BASELINE_PATH", "live_jobs.json")
+    try:
+        with open(baseline_path, encoding="utf-8") as handle:
+            snapshot = json.load(handle)
+        jobs = snapshot.get("jobs")
+        states = (snapshot.get("source_state") or {}).get("daily_sources") or {}
+        state = states.get(coverage_key(source, target)) or {}
+        if (
+            not isinstance(jobs, list)
+            or not isinstance(states, dict)
+            or not isinstance(state, dict)
+        ):
+            raise ValueError("invalid daily-source baseline")
+        refreshed_at = _parse_timestamp(state.get("refreshed_at"))
+        if refreshed_at and refreshed_at > now:
+            refreshed_at = None
+        rows = [
+            dict(job) for job in jobs
+            if (
+                isinstance(job, dict)
+                and job.get("src") == source
+                and job.get("source_target") == target
+            )
+        ]
+        if any(
+            row.get("application_deadline")
+            and _parse_timestamp(row["application_deadline"]) is None
+            for row in rows
+        ):
+            raise ValueError("invalid cached application deadline")
+    except (OSError, json.JSONDecodeError, ValueError, TypeError, KeyError):
+        return {"rows": [], "refreshed_at": None, "age_hours": None}
+    age_hours = (
+        (now - refreshed_at).total_seconds() / 3600
+        if refreshed_at else None
+    )
+    return {
+        "rows": rows,
+        "refreshed_at": refreshed_at,
+        "age_hours": age_hours,
+    }
+
+
+def _daily_carried_rows(rows, key, now):
+    carried = []
+    for row in rows:
+        deadline = _parse_timestamp(row.get("application_deadline"))
+        if deadline and deadline <= now:
+            continue
+        copy = dict(row)
+        copy["_carried_source_row"] = True
+        carried.append(with_coverage(copy, key))
+    return carried
+
+
+def from_daily_prelaw_source(spec, now=None):
+    source, target, collector = spec
+    key = coverage_key(source, target)
+    now = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
+    baseline = load_daily_source_baseline(source, target, now)
+    due = (
+        _truthy_env("PRELAW_FORCE_REFRESH")
+        or baseline["age_hours"] is None
+        or baseline["age_hours"] >= DAILY_REFRESH_INTERVAL_HOURS
+    )
+    if not due:
+        rows = _daily_carried_rows(baseline["rows"], key, now)
+        set_coverage(
+            key,
+            source=source,
+            target=target,
+            query_total=None,
+            selected_total=len(rows),
+            pages=0,
+            returned=len(rows),
+            records=len(rows),
+            complete=True,
+            errors=[],
+            status="reused-fresh",
+            source_refreshed_at=baseline["refreshed_at"].isoformat(),
+            source_age_hours=baseline["age_hours"],
+            reused=len(rows),
+        )
+        return rows
+
+    result = collector(now=now)
+    if result["complete"]:
+        rows = []
+        for row in result["rows"]:
+            row["source_target"] = target
+            row["last_seen"] = now.isoformat()
+            rows.append(with_coverage(row, key))
+        set_coverage(
+            key,
+            source=source,
+            target=target,
+            query_total=result.get("query_total"),
+            selected_total=len(rows),
+            pages=result.get("pages", 0),
+            returned=result.get("returned", 0),
+            records=len(rows),
+            details=result.get("details", 0),
+            complete=True,
+            errors=[],
+            status="fresh",
+            source_refreshed_at=now.isoformat(),
+            source_age_hours=0.0,
+            reused=0,
+        )
+        return rows
+
+    can_reuse = (
+        baseline["age_hours"] is not None
+        and 0 <= baseline["age_hours"] <= DAILY_GRACE_HOURS
+    )
+    rows = (
+        _daily_carried_rows(baseline["rows"], key, now)
+        if can_reuse else []
+    )
+    set_coverage(
+        key,
+        source=source,
+        target=target,
+        query_total=result.get("query_total"),
+        selected_total=len(rows),
+        pages=result.get("pages", 0),
+        returned=result.get("returned", 0),
+        records=len(rows),
+        details=result.get("details", 0),
+        complete=False,
+        errors=result.get("errors", []),
+        status="reused-incomplete" if can_reuse else "blocked",
+        source_refreshed_at=(
+            baseline["refreshed_at"].isoformat()
+            if baseline["refreshed_at"] else None
+        ),
+        source_age_hours=baseline["age_hours"],
+        reused=len(rows),
+    )
+    return rows
+
+
 TASKS = (
     [(from_greenhouse, target, coverage_key("greenhouse", target))
      for target in GREENHOUSE]
@@ -1879,6 +2052,8 @@ TASKS = (
        for spec in SUCCESSFACTORS]
     + [(from_retained_source, spec, retained_source_key(spec[0], spec[1]))
        for spec in RETAINED_SOURCES]
+    + [(from_daily_prelaw_source, spec, coverage_key(spec[0], spec[1]))
+       for spec in DAILY_PRELAW_SOURCES]
     + [(from_amazon, "amazon", coverage_key("amazon", "amazon"))]
     + [(from_adzuna, "adzuna", coverage_key("adzuna", ADZUNA_COVERAGE_TARGET))]
     + [(from_public_board, spec, coverage_key(spec[0], spec[1]))
@@ -2158,6 +2333,10 @@ def source_state_payload():
             public_key: dict(COVERAGE[public_key])
             for public_key in sorted(RETAINED_SOURCE_KEYS) if public_key in COVERAGE
         }
+        daily_entries = {
+            daily_key: dict(COVERAGE[daily_key])
+            for daily_key in sorted(DAILY_SOURCE_KEYS) if daily_key in COVERAGE
+        }
     result = {}
     if entry:
         age_hours = entry.get("source_age_hours")
@@ -2181,6 +2360,20 @@ def source_state_payload():
             }
             for public_key, values in public_entries.items()
         }
+    if daily_entries:
+        result["daily_sources"] = {
+            daily_key: {
+                "status": values.get("status", "blocked"),
+                "refreshed_at": values.get("source_refreshed_at"),
+                "complete": values.get("complete", False),
+                "reused": values.get("reused", 0),
+                "age_seconds": (
+                    round(float(values["source_age_hours"]) * 3600)
+                    if values.get("source_age_hours") is not None else None
+                ),
+            }
+            for daily_key, values in daily_entries.items()
+        }
     return result
 
 
@@ -2195,22 +2388,160 @@ def mark_baseline_records(records):
     except (OSError, json.JSONDecodeError, ValueError, TypeError):
         return
     baseline_ids = {
-        (job.get("src"), str(job.get("external_id")))
+        (job.get("src"), str(job.get("external_id"))): job
         for job in baseline_jobs if job.get("src") and job.get("external_id")
     }
     baseline_urls = {
-        listing_url(job) for job in baseline_jobs if job.get("url")
+        listing_url(job): job for job in baseline_jobs if job.get("url")
     }
     for record in records:
         identity = (
             record.get("src"),
             str(record.get("external_id")),
         )
-        if (
-            identity in baseline_ids
-            or (record.get("url") and listing_url(record) in baseline_urls)
-        ):
+        baseline_job = baseline_ids.get(identity)
+        if baseline_job is None and record.get("url"):
+            baseline_job = baseline_urls.get(listing_url(record))
+        if baseline_job is not None:
             record["_baseline_existing"] = True
+            record["_baseline_categories"] = list(
+                baseline_job.get("cats") or []
+            )
+
+
+def _workday_detail_url(record):
+    parsed = urlsplit(record.get("url") or "")
+    host_parts = (parsed.hostname or "").split(".")
+    match = re.match(
+        r"^/(?:[a-z]{2}-[A-Z]{2}/)?([^/]+)(/job/.*)$",
+        parsed.path,
+    )
+    if len(host_parts) < 4 or not match:
+        return None
+    tenant = host_parts[0]
+    site, job_path = match.groups()
+    return (
+        f"{parsed.scheme}://{parsed.netloc}/wday/cxs/"
+        f"{tenant}/{site}{job_path}"
+    )
+
+
+def _smartrecruiters_detail_content(record):
+    board = clean_text(record.get("source_target"))
+    external_id = str(record.get("external_id") or "").rsplit(":", 1)[-1]
+    if not board or not external_id:
+        return None
+    response = g(
+        f"https://api.smartrecruiters.com/v1/companies/"
+        f"{quote(board, safe='')}/postings/{quote(external_id, safe='')}"
+    )
+    if response.status_code != 200:
+        raise ValueError(f"HTTP {response.status_code}")
+    data = response.json()
+    sections = ((data.get("jobAd") or {}).get("sections") or {})
+    content = [
+        (sections.get(name) or {}).get("text") or ""
+        for name in (
+            "jobDescription",
+            "qualifications",
+            "additionalInformation",
+        )
+    ]
+    return clean_text(" ".join(html_text(value) for value in content if value))
+
+
+def _workday_detail_content(record):
+    url = _workday_detail_url(record)
+    if not url:
+        return None
+    response = g(url)
+    if response.status_code != 200:
+        raise ValueError(f"HTTP {response.status_code}")
+    data = response.json()
+    info = data.get("jobPostingInfo") if isinstance(data, dict) else None
+    if not isinstance(info, dict):
+        raise ValueError("missing jobPostingInfo")
+    return clean_text(html_text(info.get("jobDescription") or ""))
+
+
+def _successfactors_detail_content(record):
+    response = g(record["url"])
+    if response.status_code != 200:
+        raise ValueError(f"HTTP {response.status_code}")
+    text = clean_text(html_text(response.text))
+    if re.search(r"not accepting any further applicants", text, re.I):
+        return None
+    return text
+
+
+def hydrate_prelaw_details(records):
+    errors = {}
+    hydrated = 0
+    grouped = {}
+    for record in records:
+        if (
+            record.get("content")
+            or (
+                not is_internship(record.get("title"))
+                and not record.get("_placement_evidence")
+            )
+            or not classify_prelaw(record.get("title"))
+        ):
+            continue
+        loader = {
+            "smartrecruiters": _smartrecruiters_detail_content,
+            "workday": _workday_detail_content,
+            "successfactors": _successfactors_detail_content,
+        }.get(record.get("src"))
+        if not loader:
+            continue
+        identity = (
+            record.get("src"),
+            record.get("url"),
+            record.get("external_id"),
+        )
+        grouped.setdefault(identity, {"loader": loader, "records": []})[
+            "records"
+        ].append(record)
+    identities = sorted(grouped, key=lambda value: tuple(str(x) for x in value))
+    capped = max(0, len(identities) - PRELAW_DETAIL_MAX_REQUESTS)
+    for identity in identities[PRELAW_DETAIL_MAX_REQUESTS:]:
+        for record in grouped[identity]["records"]:
+            record["_prelaw_detail_unavailable"] = True
+    for identity in identities[:PRELAW_DETAIL_MAX_REQUESTS]:
+        group = grouped[identity]
+        record = group["records"][0]
+        try:
+            content = group["loader"](record)
+            if content:
+                for current in group["records"]:
+                    current["content"] = content[:12000]
+                hydrated += len(group["records"])
+            else:
+                for current in group["records"]:
+                    current["_prelaw_detail_unavailable"] = True
+        except (requests.RequestException, ValueError, TypeError) as exc:
+            for current in group["records"]:
+                current["_prelaw_detail_unavailable"] = True
+                key = current.get("_coverage_key")
+                errors.setdefault(key, []).append(type(exc).__name__)
+    for key, values in errors.items():
+        if not key:
+            continue
+        with COVERAGE_LOCK:
+            current = COVERAGE.setdefault(key, {})
+            current["prelaw_detail_errors"] = len(values)
+            current["prelaw_detail_error_types"] = ",".join(sorted(set(values)))
+        print(
+            f"COVERAGE WARNING {key}: {len(values)} pre-law detail "
+            "lookup(s) unavailable"
+        )
+    if hydrated:
+        print(
+            "PRE-LAW DETAIL ENRICHMENT: "
+            f"requests={min(len(identities), PRELAW_DETAIL_MAX_REQUESTS)} "
+            f"hydrated_rows={hydrated} capped={capped}"
+        )
 
 
 def hydrate_greenhouse_posted_dates(records):
@@ -2291,7 +2622,10 @@ def filter_candidates(records):
         record["loc"] = clean_text(record.get("loc"))
         if not record["title"] or not record.get("url"):
             continue
-        if not is_internship(record["title"]):
+        if (
+            not is_internship(record["title"])
+            and not record.get("_placement_evidence")
+        ):
             continue
         if TALENT_POOL_RE.search(record["title"]):
             continue
@@ -2304,6 +2638,7 @@ def filter_candidates(records):
         if (
             record.get("source_target")
             and not PUBLIC_INTERNSHIP_RE.search(record["title"])
+            and not record.get("_placement_evidence")
         ):
             continue
         role_eligible += 1
@@ -2311,7 +2646,34 @@ def filter_candidates(records):
         if not region:
             continue
         record["geo"] = region
-        record["cats"] = categorize(record["title"])
+        content = record.get("content") or ""
+        categories = set(categorize(record["title"], content))
+        if not mandatory_legal_education_reason(content):
+            categories.update(record.get("_prelaw_categories") or [])
+        if record.get("_carried_source_row"):
+            categories.difference_update(PRELAW_CATEGORIES)
+            categories.update(
+                category
+                for category in (record.get("_baseline_categories") or [])
+                if category in PRELAW_CATEGORIES
+            )
+        elif record.get("_prelaw_detail_unavailable"):
+            categories.difference_update(PRELAW_CATEGORIES)
+            categories.update(
+                category
+                for category in (record.get("_baseline_categories") or [])
+                if category in PRELAW_CATEGORIES
+            )
+        record["cats"] = [
+            category for category in CATEGORIES if category in categories
+        ]
+        restriction = restricted_program_note(record["title"], content)
+        if restriction and any(
+            category in categories for category in PRELAW_CATEGORIES
+        ):
+            record["content"] = clean_text(
+                f"{restriction} {content}"
+            )[:12000]
         candidates.append(record)
         key = record.get("_coverage_key")
         counts[key] = counts.get(key, 0) + 1
@@ -2326,7 +2688,7 @@ def filter_candidates(records):
 def public_verification_failure(record, reason):
     key = coverage_key(record.get("src"), record.get("source_target"))
     if (
-        key not in RETAINED_SOURCE_KEYS
+        key not in (RETAINED_SOURCE_KEYS | DAILY_SOURCE_KEYS)
         or reason in {"HTTP 404", "HTTP 410", "closed text"}
     ):
         return
@@ -2368,11 +2730,16 @@ def main():
                     key, source=source, target=target, pages=0, returned=0,
                     query_total=None, selected_total=None, complete=False,
                     errors=[type(exc).__name__],
-                    status="blocked" if key in RETAINED_SOURCE_KEYS else "incomplete")
+                    status=(
+                        "blocked"
+                        if key in (RETAINED_SOURCE_KEYS | DAILY_SOURCE_KEYS)
+                        else "incomplete"
+                    ))
                 print(f"COVERAGE WARNING {key}: task failed with {type(exc).__name__}")
     print(f"pulled {len(raw)} raw postings in {time.time()-t0:.0f}s")
 
     mark_baseline_records(raw)
+    hydrate_prelaw_details(raw)
     cand, filtered_counts = filter_candidates(raw)
     hydrate_greenhouse_posted_dates(cand)
     print(

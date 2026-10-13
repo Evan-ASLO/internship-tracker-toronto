@@ -106,6 +106,19 @@ def main(argv: list[str] | None = None) -> int:
             raise CatalogDropError(
                 "Public source coverage blocks publication: " + ", ".join(blocked_sources)
             )
+        daily_states = (
+            (current_snapshot.get("source_state") or {}).get("daily_sources")
+            or {}
+        )
+        blocked_daily_sources = [
+            key for key, state in daily_states.items()
+            if state.get("status") == "blocked"
+        ]
+        if blocked_daily_sources:
+            raise CatalogDropError(
+                "Daily source coverage blocks publication: "
+                + ", ".join(blocked_daily_sources)
+            )
         adzuna_state = (
             (current_snapshot.get("source_state") or {}).get("adzuna") or {}
         )

@@ -22,6 +22,10 @@ on:
         description: "Force all Adzuna query families during this refresh"
         type: boolean
         default: false
+      force_pre_law_refresh:
+        description: "Force the daily GC Jobs and CNRL pre-law sources"
+        type: boolean
+        default: false
 
 # Prevent overlapping runs: a slow scrape must not race a new one.
 concurrency:
@@ -89,6 +93,7 @@ jobs:
           ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
           ADZUNA_BASELINE_PATH: ${{ runner.temp }}/checked-in-live_jobs.json
           ADZUNA_FORCE_REFRESH: ${{ inputs.force_adzuna_refresh }}
+          PRELAW_FORCE_REFRESH: ${{ inputs.force_pre_law_refresh }}
         run: |
           python scrape.py
           cp live_jobs.json site/live_jobs.json
