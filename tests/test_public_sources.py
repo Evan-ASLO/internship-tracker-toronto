@@ -753,6 +753,47 @@ class PublicCacheTests(unittest.TestCase):
         self.assertTrue(ok)
         self.assertEqual(reason, "202")
 
+    def test_public_greenhouse_403_requires_official_detail_confirmation(self):
+        page_response = type("Response", (), {
+            "status_code": 403,
+            "text": "",
+        })()
+        detail = FakeResponse({
+            "id": 123,
+            "internal_job_id": 456,
+            "title": "Software Developer Intern",
+            "absolute_url": (
+                "https://job-boards.greenhouse.io/"
+                "towerresearchcapital/jobs/123"
+            ),
+        })
+        record = {
+            "url": (
+                "https://job-boards.greenhouse.io/"
+                "towerresearchcapital/jobs/123"
+            ),
+            "src": "greenhouse",
+            "source_target": "towerresearchcapital",
+            "external_id": "towerresearchcapital:123",
+        }
+        with (
+            patch.object(scrape.requests, "get", return_value=page_response),
+            patch.object(scrape, "g", return_value=detail),
+        ):
+            _, ok, reason = scrape.verify(record)
+
+        self.assertTrue(ok)
+        self.assertEqual(reason, "API-verified 403")
+
+        with (
+            patch.object(scrape.requests, "get", return_value=page_response),
+            patch.object(scrape, "g", return_value=FakeResponse(status=404)),
+        ):
+            _, ok, reason = scrape.verify(record)
+
+        self.assertFalse(ok)
+        self.assertEqual(reason, "HTTP 404")
+
 
 class RetainedSourceCacheTests(unittest.TestCase):
     now = datetime(2026, 10, 4, 21, tzinfo=timezone.utc)
