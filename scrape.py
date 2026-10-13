@@ -2085,6 +2085,34 @@ def verify(rec):
         and rec.get("source_target") in PUBLIC_GREENHOUSE_BOARDS
     ):
         return rec, True, "202"
+    if (
+        r.status_code == 403
+        and rec.get("src") == "greenhouse"
+        and rec.get("source_target") in PUBLIC_GREENHOUSE_BOARDS
+    ):
+        board = rec["source_target"]
+        provider_id = str(rec.get("external_id") or "").rsplit(":", 1)[-1]
+        if provider_id:
+            try:
+                detail = g(
+                    f"https://boards-api.greenhouse.io/v1/boards/"
+                    f"{quote(board, safe='')}/jobs/"
+                    f"{quote(provider_id, safe='')}"
+                )
+                if detail.status_code == 404:
+                    return rec, False, "HTTP 404"
+                if detail.status_code == 200:
+                    job = detail.json()
+                    if (
+                        isinstance(job, dict)
+                        and str(job.get("id")) == provider_id
+                        and job.get("internal_job_id") is not None
+                        and job.get("title")
+                        and job.get("absolute_url")
+                    ):
+                        return rec, True, "API-verified 403"
+            except (requests.RequestException, ValueError, TypeError):
+                pass
     if r.status_code != 200:
         return rec, False, f"HTTP {r.status_code}"
     low = r.text.lower()
