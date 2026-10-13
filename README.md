@@ -100,6 +100,10 @@ membership, or another legal licence. A preferred/asset mention alone does
 not exclude a role. Law Clerk or Paralegal student roles may be included only
 when the posting is a genuine placement; any mandatory specialized program or
 credential is stated at the start of the normalized description.
+Content-only classification for a corporate-communications title requires an
+explicit source duty involving government-relations activities. The normalized
+description retains a short factual classification-evidence note rather than
+copying the advertisement.
 
 `prelaw_sources.py` polls these official public sources:
 
