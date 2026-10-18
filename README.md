@@ -174,6 +174,7 @@ closed job.
 | Path | Purpose |
 |---|---|
 | `scrape.py` | Pull + filter + liveness verification |
+| `source_names.json` | Names-only target inventory; unconfigured names remain pending |
 | `publish_snapshot.py` | Deterministic normalization, hashing, signing, and Cloudflare ingest |
 | `catalog_guard.py` | Normalized-count drop protection with explicit override |
 | `publication_gate.py` | Required Cloudflare/Vercel outcome validation |
@@ -343,6 +344,17 @@ empty result. SmartRecruiters uses its documented `country=ca`, `limit`, and
 visibility, and builds stable canonical job links from the public posting ID.
 Existing bounded network retries and concurrency limits apply.
 
+Lever's [API robots rules](https://api.lever.co/robots.txt) and
+[posting-site robots rules](https://jobs.lever.co/robots.txt) specify a
+one-second crawl delay. Shared GET transport enforces that minimum separately
+for each host across listing/detail collection, normal liveness verification,
+retries, redirects, and concurrent callers. A host lock is held through each
+send and the next request waits at least one second after its response or
+failed attempt. Waiting does not occupy the existing global request semaphore;
+its eight-request limit, retry counts, and source budgets are unchanged.
+Requests' native session/adapter handles redirects and cookies as before;
+there is no new dependency or alternate access path.
+
 The Workday registry also replaces stale site names with verified official
 sites for CIBC Campus, RBC Early Talent, Manulife Jobs, Sun Life Campus, and
 OMERS External. General RBC postings were deliberately not added because titles
@@ -360,6 +372,103 @@ may fall back to the public posting URL's `/job/{location}/...` segment only
 when that segment independently resolves to a recognized Canadian place.
 Generic multi-location labels can inherit a provider-issued Canadian facet;
 explicit foreign locations cannot.
+
+The first configured employer from the names-only follow-up is
+[SaskPower's official careers board](https://jobs.saskpower.com/), registered as
+`successfactors:saskpower` in `RETAINED_SOURCES`, not a new adapter. A bounded
+check on October 18, 2026 found three distinct Canadian summer-student postings:
+Administration, Engineering, and Labourer, for May-August 2027 with a December
+31, 2026 closing date. All three official posting pages returned HTTP 200 and
+identified SaskPower. All three survive the unchanged normal filtering,
+deduplication, liveness, and snapshot-normalization path. None overlapped the
+427-record [successful producer snapshot at `8c54578`](https://raw.githubusercontent.com/Evan-ASLO/internship-tracker-toronto/8c54578d6c7d0944643e3a2da9853d1e1c8df99a/live_jobs.json),
+fetched at `2026-10-18T02:18:32.802322+00:00`, or the public Vercel feed checked
+with the same timestamp/count, using the existing URL/listing deduplication.
+These are three competition postings, not a count of hiring seats or a promise
+of additional published jobs. Minimal observed title/URL/location fixtures are
+in `tests/fixtures/saskpower_source.json`; no job descriptions are copied.
+
+SaskPower's [robots rules](https://jobs.saskpower.com/robots.txt) do not disallow
+the public `/search/` and `/job/` paths or specify a crawl delay. The collector
+does not use the disallowed `/services/` RSS route, application, or
+talent-community paths. The public jobs site and
+[corporate privacy statement](https://www.saskpower.com/footer/how-we-do-business/privacy)
+were reviewed without authentication; the account-linked MySaskPower terms
+page is not treated as a job-content reuse licence. No account, special
+permission, or general redistribution right is inferred. These observations
+are dated prepublication checks. The standard SuccessFactors queries, filters,
+deduplication, six-hour cache expiry, source-specific publication block, and
+unknown posting-date handling remain unchanged. The student search reported
+three results on one page; out-of-range searches can recirculate recommendation
+links, which the existing collector deduplicates and reports as repeated terms.
+Configuration alone does not run the collector or update a published snapshot.
+
+The same bounded follow-up repairs one legacy Workday target:
+`workday:otpp.wd3/External` becomes
+`workday:otppb.wd3/OntarioTeachers_Careers`. Ontario Teachers' official
+[homepage](https://www.otpp.com/en-ca/) and
+[intern page](https://www.otpp.com/en-ca/careers/early-talent/interns/) both link
+that exact tenant/site. Its public search returned valid paginated job data
+without capped terms or errors, but **zero current eligible placements** in
+the October 18 check: internal-controls, senior, and other nonplacement search
+matches are not internships. This is a verified endpoint repair, not an
+additional job count or a new employer. It stays in the existing `WORKDAY`
+configuration/guard family; it is not presented as a measured-yield expansion.
+The exact `otppb` alias maps to the existing Ontario Teachers' Pension Plan
+name, alongside the legacy `otpp` alias, without fuzzy entity merging.
+
+The broader follow-up registers the following additional verified employer
+boards through the existing adapters and retention guards. These are new
+configured feeds, not repairs of existing employer targets:
+
+| Source key | Verified official board | Net-new eligible/live records in the October 18 check |
+|---|---|---:|
+| `successfactors:hatch` | [Hatch](https://jobs.hatch.com/) | 14 |
+| `successfactors:aecon` | [Aecon](https://jobs.aecon.com/) | 30 |
+| `successfactors:kiewit` | [Kiewit](https://kiewitcareers.kiewit.com/) | 15 |
+| `successfactors:cityofmississauga` | [City of Mississauga](https://jobs.mississauga.ca/) | 4 |
+| `successfactors:cityofottawa` | [City of Ottawa](https://jobs-emplois.ottawa.ca/city-jobs/) | 2 |
+| `successfactors:cityoftoronto` | [City of Toronto](https://jobs.toronto.ca/jobsatcity/) | 0 |
+| `workday:bb.wd3/Student` | [BlackBerry Student](https://bb.wd3.myworkdayjobs.com/Student) | 0 |
+| `lever:pointclickcare` | [PointClickCare](https://jobs.lever.co/pointclickcare/) | 0 |
+| `lever:caseware` | [Caseware](https://jobs.lever.co/caseware/) | 0 |
+| `lever:benchsci` | [BenchSci](https://jobs.lever.co/benchsci/) | 0 |
+
+The final bounded check invoked those actual registered `TASKS`, SaskPower,
+and the repaired Teachers task at `2026-10-18T18:49:56Z` through
+`2026-10-18T18:50:44Z`: 971 raw records, 71 role-eligible, 68 Canada-eligible,
+68 unique, 68 live, and 68 normalized records. All 68 remain net-new after
+combined cross-source and baseline deduplication against the
+[official public feed](https://internship-tracker-gamma-five.vercel.app/live_jobs.json)
+rechecked at `2026-10-18T18:50:45Z`: 437 records, fetched at
+`2026-10-18T12:21:43.743492+00:00`. There were no baseline overlaps, closed
+postings, source errors, or capped terms in this bounded batch. The total
+includes SaskPower's same three summer-student postings; the immutable
+427-record historical baseline also has zero overlaps. This is dated
+candidate evidence, not a predicted production total or publication.
+All 68 source publication dates remain unknown (`postedAt: null`).
+
+Toronto's 51 raw records, PointClickCare's 77, and Caseware's 45 contain no
+currently eligible placements. BenchSci returns a valid empty public list;
+BlackBerry's official
+[careers page](https://www.blackberry.com/en/careers) links the Student board,
+whose placement searches return valid zero-total Workday responses.
+These healthy zero-yield feeds remain configured for future automatic
+discovery but contribute **zero added jobs**. The Teachers repair also
+continues to yield zero eligible placements.
+
+Toronto and Ottawa use prefixed search bases and root-relative job links.
+SuccessFactors now joins those links with standard URL resolution instead
+of duplicating the prefix; root-level boards and Kiewit's separately
+prefixed Ganotec job links retain their official paths. Current robots rules
+were rechecked for every host, including both paced Lever hosts. Disallowed
+application, login, community, facet-refresh, and `/services/` routes are not
+collected; no access barrier or content-redistribution permission is inferred.
+Minimal observed English/French title, URL, and location fixtures are in
+`tests/fixtures/verified_employer_sources.json`, without job descriptions.
+No new adapter, dependency, filter, budget, workflow, or publication contract
+is introduced. The counts above describe dated prepublication validation,
+not a guaranteed production total.
 
 Workday and SuccessFactors searches include English and French placement terms
 (`intern`, `co-op`, `student`, `stagiaire`, and `étudiant`). The Amazon
@@ -399,8 +508,11 @@ checked-in snapshot; locally it defaults to `live_jobs.json`.
 To add a source, first follow a real employer careers link or verify a public
 ATS posting's employer identity, confirm its public API/terms and exact token,
 and check its current eligible listings. Add shared public-API boards to
-`PUBLIC_BOARDS`; add measured-yield Workday or SuccessFactors sites to
-`RETAINED_SOURCES`. Do not add a guessed slug, aggregator board, or duplicate
+`PUBLIC_BOARDS`; add verified Workday or SuccessFactors sites to
+`RETAINED_SOURCES`. A complete, valid current empty/nonplacement response is
+eligible for future discovery, but must be reported separately from actual
+added jobs; an unparsed landing page or failed request is not an empty feed.
+Do not add a guessed slug, aggregator board, or duplicate
 main-board entry. Separate employer-verified campus boards, such as Geotab's or
 BMO's, are allowed when their official posting content proves the employer
 identity and baseline-first deduplication preserves existing records.
@@ -413,10 +525,55 @@ Targeted tests (from the repository root):
 
 ```text
 python -m unittest discover -s tests -p "test_public_sources.py"
+python -m unittest discover -s tests -p "test_source_pacing.py"
 python -m unittest discover -s tests -p "test_adzuna_source.py"
 python -m unittest discover -s tests -p "test_catalog_guard.py"
 python -m unittest discover -s tests -p "test_publish_snapshot.py"
 ```
+
+### Names-only source inventory
+
+`source_names.json` contains the deduplicated company, named job-board/portal,
+and ATS-platform names from all 29 supplied numbered lists. The names-only
+fixture in `tests/fixtures/source_name_import.json` also checks the repeated
+recommendations: 616 name occurrences, 565 distinct spellings, and 556 canonical
+names. Slash-separated companies/divisions remain separate names; the official
+bilingual `CBC/Radio-Canada` name remains intact. No priorities, industries,
+approaches, example jobs, placeholder companies, or adapter identifiers are
+imported.
+
+`scrape.py` loads that file relative to its own location and joins the names to
+the existing `TASKS` registry using exact names and explicit aliases, not
+substring/fuzzy matching. Aliases include FSWEP, CBC, Intact/Intact Financial,
+Ontario Lottery and Gaming/OLG, Canadian Natural/Canadian Natural Resources,
+and the shortened board/platform recommendations. `MaRS` maps to
+`MaRS Discovery District`, never the unrelated employer `Mars`. RBC divisions
+and programs, HP/HPE, employer/university-portal names, Oracle/Oracle Recruiting
+Cloud, and Government of Canada Jobs/Job Bank Canada stay distinct.
+
+Inspect the complete maintained inventory **offline**, without requests,
+snapshot writes, or publication:
+
+```text
+python scrape.py --list-source-names
+python -m unittest discover -s tests -p "test_source_names.py"
+```
+
+Each entry reports `name`, `status`, and existing `source_keys`. `configured`
+means an existing task is registered, not that a source is currently live,
+complete, verified, or credential-enabled. Names without a configured target
+report `pending_configuration` and have no source keys. This includes generic
+ATS-platform names even when an adapter already exists: an adapter is not an
+approved employer tenant. Normal runs print the configured/pending summary.
+After this follow-up, 80 of the 556 requested names match registered
+targets and 476 remain pending. Of the original 178 task keys, 177 remain
+unchanged and the obsolete Ontario Teachers key is explicitly replaced by its
+verified official key above. Eleven employer feeds are additional, including
+SaskPower and the ten boards above; the maintained task count is 189.
+Pending names never create requests or enter source completeness/freshness
+gates. They require separate public-source/terms/access verification and exact
+configuration through the existing source-addition procedure above; no URLs,
+tenants, credentials, adapters, or permissions are inferred from a name.
 
 ## Moving browser data
 

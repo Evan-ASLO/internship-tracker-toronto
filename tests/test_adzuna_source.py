@@ -337,8 +337,8 @@ class AdzunaSourceTests(unittest.TestCase):
         budget = {"remaining": scrape.ADZUNA_REQUESTS_PER_ACTIVE_RUN}
         with (
             patch.object(
-                scrape.requests,
-                "get",
+                scrape,
+                "_source_get",
                 side_effect=requests.exceptions.SSLError("tls"),
             ) as get,
             patch.object(scrape.time, "sleep"),
@@ -366,8 +366,8 @@ class AdzunaSourceTests(unittest.TestCase):
                     clear=False,
                 ),
                 patch.object(
-                    scrape.requests,
-                    "get",
+                    scrape,
+                    "_source_get",
                     side_effect=requests.exceptions.SSLError("tls"),
                 ) as get,
                 patch.object(scrape.time, "sleep"),

@@ -1,0 +1,119 @@
+{
+  "observed_at": "2026-10-18T05:16:08.385389+00:00",
+  "successfactors": [
+    {
+      "label": "hatch",
+      "base": "https://jobs.hatch.com",
+      "company": "Hatch",
+      "rows": [
+        {
+          "path": "/job/Calgary-Tailings-Hydrotech-Co-Op-%28CGY%29-Winter-AB/1432234100/",
+          "title": "Tailings Hydrotech Co-Op (CGY)- Winter",
+          "location": "Calgary, Alberta, Canada",
+          "eligible": true
+        },
+        {
+          "path": "/job/Montreal-Stagiaire-en-structure-Trois-Rivi%C3%A8res_-QC/1415186000/",
+          "title": "Stagiaire en structure - Trois-Rivi\u00e8res.",
+          "location": "Montreal, Quebec, Canada",
+          "eligible": true
+        }
+      ]
+    },
+    {
+      "label": "aecon",
+      "base": "https://jobs.aecon.com",
+      "company": "Aecon",
+      "rows": [
+        {
+          "path": "/job/Mississauga-Co-op%2C-Estimator-ON/605815917/",
+          "title": "Co-op, Estimator",
+          "location": "Mississauga, Ontario, Canada",
+          "eligible": true
+        },
+        {
+          "path": "/job/Montreal-Stagiaire-en-construction-Automne-Qu%C3%A9b/606007417/",
+          "title": "Stagiaire en construction - Automne",
+          "location": "Montreal, Quebec, Canada",
+          "eligible": true
+        }
+      ]
+    },
+    {
+      "label": "kiewit",
+      "base": "https://kiewitcareers.kiewit.com",
+      "company": "Kiewit",
+      "rows": [
+        {
+          "path": "/job/Oakville-Field-CoordinatorEngineer-Intern-Eastern-Canada-District-Winter-2027-ON/1424900300/",
+          "title": "Field Coordinator/Engineer Intern - Eastern Canada District - Winter 2027",
+          "location": "Oakville, Ontario, Canada",
+          "eligible": true
+        },
+        {
+          "path": "/Ganotec/job/Montreal-CoordonnateurIng%C3%A9nieur-de-terrain-stagiaire-Ganotec-Hiver-2027-Queb/1428455600/",
+          "title": "Coordonnateur/Ing\u00e9nieur de terrain stagiaire - Ganotec - Hiver 2027",
+          "location": "Montreal, Quebec, Canada",
+          "eligible": true
+        }
+      ]
+    },
+    {
+      "label": "cityoftoronto",
+      "base": "https://jobs.toronto.ca/jobsatcity",
+      "company": "City of Toronto",
+      "rows": [
+        {
+          "path": "/jobsatcity/job/Toronto-CONSULTANT-CAMPUS-RECRUITMENT-ON-M/606974517/",
+          "title": "CONSULTANT CAMPUS RECRUITMENT",
+          "location": "Toronto, Ontario, Canada",
+          "eligible": false
+        }
+      ]
+    },
+    {
+      "label": "cityofmississauga",
+      "base": "https://jobs.mississauga.ca",
+      "company": "City of Mississauga",
+      "rows": [
+        {
+          "path": "/job/Mississauga-Co-Op-Student-Application-Developer-ON/606845117/",
+          "title": "Co-Op Student - Application Developer",
+          "location": "Mississauga, Ontario, Canada",
+          "eligible": true
+        },
+        {
+          "path": "/job/Mississauga-Co-op-student-Facilities-Maintenance-ON/606890717/",
+          "title": "Co-op student - Facilities Maintenance",
+          "location": "Mississauga, Ontario, Canada",
+          "eligible": true
+        }
+      ]
+    },
+    {
+      "label": "cityofottawa",
+      "base": "https://jobs-emplois.ottawa.ca/city-jobs",
+      "company": "City of Ottawa",
+      "rows": [
+        {
+          "path": "/city-jobs/job/Ottawa%2C-ON-COOP-Student%2C-Traffic-Engineering-ON-Ottawa%2C-ON/1291567647/",
+          "title": "COOP Student, Traffic Engineering",
+          "location": "Ottawa, Ontario, Canada",
+          "eligible": true
+        },
+        {
+          "path": "/city-jobs/job/Ottawa%2C-ON-COOP-Student%2C-Data-Sol-Developer-ON-Ottawa%2C-ON/1291645347/",
+          "title": "COOP Student, Data Sol Developer",
+          "location": "Ottawa, Ontario, Canada",
+          "eligible": true
+        }
+      ]
+    }
+  ],
+  "lever": [
+    ["lever", "pointclickcare", "PointClickCare"],
+    ["lever", "caseware", "Caseware"],
+    ["lever", "benchsci", "BenchSci"]
+  ],
+  "workday": ["workday", ["bb", "Student", "wd3"], "BlackBerry"]
+}
