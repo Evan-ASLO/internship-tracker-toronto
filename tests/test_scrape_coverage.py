@@ -183,6 +183,7 @@ class WorkdayCoverageTests(unittest.TestCase):
             ("manulife", "MFCJH_Jobs", "wd3"),
             ("sunlife", "Campus", "wd3"),
             ("omers", "OMERS_External", "wd3"),
+            ("otppb", "OntarioTeachers_Careers", "wd3"),
         }:
             self.assertIn(expected, specs)
         for stale in {
@@ -192,8 +193,48 @@ class WorkdayCoverageTests(unittest.TestCase):
             ("omers", "External", "wd3"),
             ("cibc", "search", "wd1"),
             ("sunlife", "Experienced-Jobs", "wd1"),
+            ("otpp", "External", "wd3"),
         }:
             self.assertNotIn(stale, specs)
+
+    def test_teachers_migration_does_not_count_nonplacement_search_matches(self):
+        spec = ("otppb", "OntarioTeachers_Careers", "wd3")
+        observed = [
+            {
+                "title": "Manager, Internal Controls",
+                "externalPath": "/job/Toronto-Canada/Manager--Internal-Controls_7221",
+                "locationsText": "Toronto, Canada",
+                "postedOn": "Posted 30+ Days Ago",
+            },
+            {
+                "title": "Director & Legal Counsel, Investment",
+                "externalPath": "/job/Singapore/Director---Legal-Counsel--Investment_7270",
+                "locationsText": "Singapore",
+                "postedOn": "Posted 22 Days Ago",
+            },
+        ]
+        with (
+            patch.object(scrape, "SEARCH_TERMS", ("intern",)),
+            patch.object(
+                scrape.requests, "post",
+                return_value=FakeResponse(json_value={
+                    "total": len(observed), "jobPostings": observed, "facets": [],
+                }),
+            ) as post,
+        ):
+            rows = scrape.from_workday(spec)
+        candidates, _ = scrape.filter_candidates(rows)
+
+        self.assertEqual(
+            post.call_args.args[0],
+            "https://otppb.wd3.myworkdayjobs.com/wday/cxs/"
+            "otppb/OntarioTeachers_Careers/jobs",
+        )
+        self.assertEqual(len(rows), 2)
+        self.assertEqual(candidates, [])
+        self.assertTrue(
+            scrape.COVERAGE["workday:otppb.wd3/OntarioTeachers_Careers"]["complete"]
+        )
 
     def test_expansion_registry_uses_measured_official_sites(self):
         sources = {
@@ -250,6 +291,50 @@ class SuccessFactorsCoverageTests(unittest.TestCase):
         self.fixture = json.loads(
             (FIXTURES / "successfactors_late_rows.json").read_text(encoding="utf-8")
         )
+
+    def test_root_relative_job_links_do_not_duplicate_search_base_prefix(self):
+        cases = [
+            (
+                "mississauga", "https://jobs.mississauga.ca",
+                "/job/Mississauga-Co-Op-Student-Application-Developer-ON/606845117/",
+                "Co-Op Student - Application Developer",
+            ),
+            (
+                "toronto", "https://jobs.toronto.ca/jobsatcity",
+                "/jobsatcity/job/Toronto-CONSULTANT-CAMPUS-RECRUITMENT-ON-M/606974517/",
+                "CONSULTANT CAMPUS RECRUITMENT",
+            ),
+            (
+                "ottawa", "https://jobs-emplois.ottawa.ca/city-jobs",
+                "/city-jobs/job/Ottawa%2C-ON-COOP-Student%2C-Traffic-Engineering-ON-Ottawa%2C-ON/1291567647/",
+                "COOP Student, Traffic Engineering",
+            ),
+        ]
+        for label, base, path, title in cases:
+            with self.subTest(label=label):
+                scrape.reset_coverage()
+                with (
+                    patch.object(scrape, "SEARCH_TERMS", ("student",)),
+                    patch.object(scrape, "g", side_effect=[
+                        FakeResponse(text=f'<a href="{path}">{title}</a>'),
+                        FakeResponse(text=""),
+                    ]) as get,
+                ):
+                    rows = scrape.from_successfactors((label, base, {}))
+                origin = base.split("/", 3)[:3]
+                self.assertEqual(len(rows), 1)
+                self.assertEqual(rows[0]["url"], "/".join(origin) + path)
+                self.assertEqual(rows[0]["title"], title)
+                self.assertTrue(scrape.retained_source_url_matches(
+                    "successfactors", (label, base, {}), rows[0]["url"]
+                ))
+                self.assertEqual(
+                    {call.args[0] for call in get.call_args_list},
+                    {base + "/search/"},
+                )
+                self.assertTrue(
+                    scrape.COVERAGE[f"successfactors:{label}"]["complete"]
+                )
 
     def test_recovers_row_after_start_seventy_five_and_stops_on_repeat(self):
         starts = []
@@ -339,8 +424,8 @@ class CoverageTelemetryTests(unittest.TestCase):
         record = {"url": "https://example.com/job"}
         with (
             patch.object(
-                scrape.requests,
-                "get",
+                scrape,
+                "_source_get",
                 side_effect=[
                     requests.exceptions.SSLError("tls"),
                     requests.exceptions.SSLError("tls"),
@@ -359,8 +444,8 @@ class CoverageTelemetryTests(unittest.TestCase):
         success = FakeResponse(text="ok", status_code=200)
         with (
             patch.object(
-                scrape.requests,
-                "get",
+                scrape,
+                "_source_get",
                 side_effect=[
                     requests.exceptions.SSLError("tls"),
                     requests.exceptions.SSLError("tls"),

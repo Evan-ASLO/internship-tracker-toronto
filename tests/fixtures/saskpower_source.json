@@ -1,0 +1,25 @@
+{
+  "observed_at": "2026-10-18T03:24:52.397424+00:00",
+  "company": "SaskPower",
+  "base_url": "https://jobs.saskpower.com",
+  "rows": [
+    {
+      "title": "Summer Student - Administration",
+      "path": "/job/MULTIPLE-Summer-Student-Administration-SK/606151117/",
+      "location": "Saskatchewan, Canada",
+      "categories": []
+    },
+    {
+      "title": "Summer Student - Engineering",
+      "path": "/job/MULTIPLE-Summer-Student-Engineering-SK/606151017/",
+      "location": "Saskatchewan, Canada",
+      "categories": ["General Engineering"]
+    },
+    {
+      "title": "Summer Student - Labourer",
+      "path": "/job/MULTIPLE-Summer-Student-Labourer-SK/606151317/",
+      "location": "Saskatchewan, Canada",
+      "categories": []
+    }
+  ]
+}

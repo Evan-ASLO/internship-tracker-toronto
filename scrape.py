@@ -10,17 +10,20 @@ Rules:
      Consulting, and Software Engineering.
 """
 
+import argparse
 import json, os, re, time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
+from pathlib import Path
 from threading import Lock, Semaphore
-from urllib.parse import parse_qs, parse_qsl, quote, unquote, urlencode, urlsplit, urlunsplit
+from urllib.parse import parse_qs, parse_qsl, quote, unquote, urlencode, urljoin, urlsplit, urlunsplit
 import requests
 
 from prelaw_sources import (
     DAILY_GRACE_HOURS,
     DAILY_REFRESH_INTERVAL_HOURS,
     LEGAL_CATEGORY,
+    ORACLE_COMPANY,
     POLICY_CATEGORY,
     PRELAW_CATEGORIES,
     classify_prelaw,
@@ -43,6 +46,12 @@ WORKDAY_RETRY_BASE_SECONDS = 0.5
 SOURCE_RETRIES = 3
 SOURCE_RETRY_BASE_SECONDS = 0.5
 SOURCE_REQUESTS = Semaphore(8)
+SOURCE_HOST_MIN_INTERVALS = {
+    "api.lever.co": 1.0,
+    "jobs.lever.co": 1.0,
+}
+SOURCE_HOST_LOCKS = {host: Lock() for host in SOURCE_HOST_MIN_INTERVALS}
+SOURCE_HOST_NEXT_REQUEST_AT = {host: 0.0 for host in SOURCE_HOST_MIN_INTERVALS}
 SUCCESSFACTORS_PAGE_SIZE = 25
 SUCCESSFACTORS_MAX_PAGES = 100
 VERIFY_RETRIES = 3
@@ -425,6 +434,40 @@ def categorize(title, content=""):
     return [category for category in CATEGORIES if category in selected]
 
 
+class _SourceHTTPAdapter(requests.adapters.HTTPAdapter):
+    def _send_complete(self, request, **kwargs):
+        with SOURCE_REQUESTS:
+            response = super().send(request, **kwargs)
+            if not kwargs.get("stream", False):
+                # Session would otherwise read the body after releasing this slot.
+                response.content
+            return response
+
+    def send(self, request, **kwargs):
+        host = urlsplit(request.url).hostname
+        interval = SOURCE_HOST_MIN_INTERVALS.get(host)
+        if interval is None:
+            return self._send_complete(request, **kwargs)
+        with SOURCE_HOST_LOCKS[host]:
+            while True:
+                delay = SOURCE_HOST_NEXT_REQUEST_AT[host] - time.monotonic()
+                if delay <= 0:
+                    break
+                time.sleep(delay)
+            try:
+                return self._send_complete(request, **kwargs)
+            finally:
+                SOURCE_HOST_NEXT_REQUEST_AT[host] = time.monotonic() + interval
+
+
+def _source_get(url, **kwargs):
+    # Session dispatch also paces each redirect, not just the initial URL.
+    with requests.Session() as session:
+        for scheme in ("http://", "https://"):
+            session.mount(scheme, _SourceHTTPAdapter())
+        return session.get(url, **kwargs)
+
+
 def g(url, request_budget=None, **kw):
     last_response = None
     last_error = None
@@ -434,8 +477,7 @@ def g(url, request_budget=None, **kw):
                 raise SourceRequestBudgetExceeded("request budget exhausted")
             request_budget["remaining"] -= 1
         try:
-            with SOURCE_REQUESTS:
-                response = requests.get(url, timeout=TIMEOUT, headers=UA, **kw)
+            response = _source_get(url, timeout=TIMEOUT, headers=UA, **kw)
             if response.status_code != 429 and response.status_code < 500:
                 return response
             last_response = response
@@ -555,6 +597,9 @@ PUBLIC_BOARDS = [
     ("lever", "univeris.com", "Univeris"),
     ("lever", "waremalcomb", "Ware Malcomb"),
     ("lever", "waabi", "Waabi"),
+    ("lever", "pointclickcare", "PointClickCare"),
+    ("lever", "caseware", "Caseware"),
+    ("lever", "benchsci", "BenchSci"),
     ("smartrecruiters", "gdmsi", "General Dynamics Mission Systems Canada"),
     ("smartrecruiters", "veoliaenvironnementsa", "Veolia"),
     ("smartrecruiters", "syngentagroup", "Syngenta"),
@@ -599,7 +644,8 @@ WORKDAY = [
     # contributed nothing. Confirmed from accenture.com/ca-en/careers.
     ("accenture", "AccentureCareers", "wd103"),
     ("deloittecanada", "External", "wd3"), ("kpmg", "External", "wd3"),
-    ("cpp", "CPPIB_Careers", "wd3"), ("otpp", "External", "wd3"),
+    ("cpp", "CPPIB_Careers", "wd3"),
+    ("otppb", "OntarioTeachers_Careers", "wd3"),
 ]
 
 
@@ -1660,6 +1706,30 @@ RETAINED_SOURCES = [
     ("successfactors", ("bell", "https://jobs.bce.ca", {}), "Bell"),
     ("successfactors", ("hydroone", "https://jobs.hydroone.com", {}), "Hydro One"),
     ("successfactors", ("fortisbc", "https://careers.fortisbc.com", {}), "FortisBC"),
+    ("successfactors", ("saskpower", "https://jobs.saskpower.com", {}), "SaskPower"),
+    ("successfactors", ("hatch", "https://jobs.hatch.com", {}), "Hatch"),
+    ("successfactors", ("aecon", "https://jobs.aecon.com", {}), "Aecon"),
+    (
+        "successfactors",
+        ("kiewit", "https://kiewitcareers.kiewit.com", {}),
+        "Kiewit",
+    ),
+    (
+        "successfactors",
+        ("cityoftoronto", "https://jobs.toronto.ca/jobsatcity", {}),
+        "City of Toronto",
+    ),
+    (
+        "successfactors",
+        ("cityofmississauga", "https://jobs.mississauga.ca", {}),
+        "City of Mississauga",
+    ),
+    (
+        "successfactors",
+        ("cityofottawa", "https://jobs-emplois.ottawa.ca/city-jobs", {}),
+        "City of Ottawa",
+    ),
+    ("workday", ("bb", "Student", "wd3"), "BlackBerry"),
     ("workday", ("autodesk", "uni", "wd1"), "Autodesk"),
     ("workday", ("cae", "career", "wd3"), "CAE"),
     (
@@ -1869,7 +1939,7 @@ def from_successfactors(spec):
             page_signatures.add(signature)
             new = 0
             for href, title in rows:
-                url = base + href
+                url = urljoin(base + "/", href)
                 if url in seen:
                     continue
                 seen.add(url); new += 1
@@ -2061,15 +2131,122 @@ TASKS = (
 )
 
 
+SOURCE_NAMES_PATH = Path(__file__).with_name("source_names.json")
+SOURCE_NAME_ALIASES = {
+    "Intact": "Intact Financial",
+    "Ontario Lottery and Gaming": "OLG",
+    "Canadian Natural": "Canadian Natural Resources",
+    "FSWEP": "Government of Canada FSWEP",
+    "CBC": "CBC/Radio-Canada",
+    "MaRS": "MaRS Discovery District",
+    "Government Job Bank": "Job Bank Canada",
+    "LinkedIn": "LinkedIn Jobs",
+    "Indeed": "Indeed Canada",
+    "Glassdoor": "Glassdoor Canada",
+    "ZipRecruiter": "ZipRecruiter Canada",
+    "SuccessFactors": "SAP SuccessFactors",
+    "cpp": "CPP Investments",
+    "otpp": "Ontario Teachers' Pension Plan",
+    "otppb": "Ontario Teachers' Pension Plan",
+    "sunlife": "Sun Life",
+    "deloittecanada": "Deloitte",
+}
+
+
+def load_source_names():
+    with SOURCE_NAMES_PATH.open(encoding="utf-8") as handle:
+        names = json.load(handle)
+    if (
+        not isinstance(names, list)
+        or not names
+        or any(
+            not isinstance(name, str) or not name or name != clean_text(name)
+            for name in names
+        )
+    ):
+        raise ValueError("source_names.json must contain a nonempty list of names")
+    if len(names) != len({name.casefold() for name in names}):
+        raise ValueError("source_names.json contains duplicate names")
+    return tuple(names)
+
+
+SOURCE_NAMES = load_source_names()
+_SOURCE_NAME_LOOKUP = {
+    name.casefold(): name
+    for name in (
+        [company for _, _, company in PUBLIC_BOARDS]
+        + [company for _, _, company in RETAINED_SOURCES]
+        + list(SOURCE_NAMES)
+    )
+}
+_SOURCE_ALIAS_LOOKUP = {
+    alias.casefold(): name for alias, name in SOURCE_NAME_ALIASES.items()
+}
+
+
+def canonical_source_name(value):
+    name = clean_text(value)
+    # Exact aliases go first: MaRS is the district, not the employer Mars.
+    name = SOURCE_NAME_ALIASES.get(name, name)
+    return _SOURCE_NAME_LOOKUP.get(
+        name.casefold(), _SOURCE_ALIAS_LOOKUP.get(name.casefold(), name)
+    )
+
+
+def source_name_inventory():
+    inventory = {
+        name.casefold(): {"name": name, "source_keys": []}
+        for name in SOURCE_NAMES
+    }
+    for collector, spec, key in TASKS:
+        if collector in (from_public_board, from_retained_source):
+            name = spec[2]
+        elif collector in (from_workday, from_successfactors):
+            name = spec[0]
+        elif collector is from_daily_prelaw_source:
+            name = {
+                "gcjobs": "Government of Canada Jobs",
+                "oracle": ORACLE_COMPANY,
+            }[spec[0]]
+        elif collector in (from_greenhouse, from_ashby, from_amazon, from_adzuna):
+            name = spec
+        else:
+            raise ValueError(f"No source inventory name for configured task {key}")
+        name = canonical_source_name(name)
+        entry = inventory.setdefault(
+            name.casefold(), {"name": name, "source_keys": []}
+        )
+        entry["source_keys"].append(key)
+    return [
+        {
+            "name": entry["name"],
+            "status": (
+                "configured" if entry["source_keys"] else "pending_configuration"
+            ),
+            "source_keys": sorted(set(entry["source_keys"])),
+        }
+        for _, entry in sorted(inventory.items())
+    ]
+
+
+def print_source_name_summary():
+    inventory = source_name_inventory()
+    configured = sum(entry["status"] == "configured" for entry in inventory)
+    print(
+        f"SOURCE NAMES: {configured} configured; "
+        f"{len(inventory) - configured} pending_configuration (not scheduled). "
+        "Use --list-source-names for the full inventory."
+    )
+
+
 def verify(rec):
     """Re-fetch the posting URL. Only keep it if the req is still open."""
     last_error = None
     r = None
     for attempt in range(VERIFY_RETRIES):
         try:
-            with SOURCE_REQUESTS:
-                r = requests.get(
-                    rec["url"], timeout=25, headers=UA, allow_redirects=True)
+            r = _source_get(
+                rec["url"], timeout=25, headers=UA, allow_redirects=True)
             if r.status_code != 429 and r.status_code < 500:
                 break
             last_error = f"HTTP {r.status_code}"
@@ -2744,6 +2921,7 @@ def snapshot_job(record):
 
 def main():
     t0 = time.time()
+    print_source_name_summary()
     reset_coverage()
     raw = []
     with ThreadPoolExecutor(max_workers=20) as ex:
@@ -2832,5 +3010,19 @@ def main():
     print(f"\nWrote live_jobs.json with {len(out)} VERIFIED postings")
 
 
+def cli(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--list-source-names",
+        action="store_true",
+        help="List configured and pending source names as JSON without scraping",
+    )
+    args = parser.parse_args(argv)
+    if args.list_source_names:
+        print(json.dumps(source_name_inventory(), indent=2))
+    else:
+        main()
+
+
 if __name__ == "__main__":
-    main()
+    cli()

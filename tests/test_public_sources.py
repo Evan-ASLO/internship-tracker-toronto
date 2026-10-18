@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 import tempfile
 import unittest
-from unittest.mock import patch
+from unittest.mock import mock_open, patch
 
 import requests
 
@@ -15,9 +15,10 @@ from publish_snapshot import SnapshotError, build_envelope, normalize_job
 
 
 class FakeResponse:
-    def __init__(self, data=None, status=200):
+    def __init__(self, data=None, status=200, text=""):
         self.status_code = status
         self.data = data
+        self.text = text
 
     def json(self):
         return self.data
@@ -747,7 +748,7 @@ class PublicCacheTests(unittest.TestCase):
             "src": "greenhouse",
             "source_target": "coveoen",
         }
-        with patch.object(scrape.requests, "get", return_value=response):
+        with patch.object(scrape, "_source_get", return_value=response):
             _, ok, reason = scrape.verify(record)
 
         self.assertTrue(ok)
@@ -777,7 +778,7 @@ class PublicCacheTests(unittest.TestCase):
             "external_id": "towerresearchcapital:123",
         }
         with (
-            patch.object(scrape.requests, "get", return_value=page_response),
+            patch.object(scrape, "_source_get", return_value=page_response),
             patch.object(scrape, "g", return_value=detail),
         ):
             _, ok, reason = scrape.verify(record)
@@ -786,7 +787,7 @@ class PublicCacheTests(unittest.TestCase):
         self.assertEqual(reason, "API-verified 403")
 
         with (
-            patch.object(scrape.requests, "get", return_value=page_response),
+            patch.object(scrape, "_source_get", return_value=page_response),
             patch.object(scrape, "g", return_value=FakeResponse(status=404)),
         ):
             _, ok, reason = scrape.verify(record)
@@ -880,6 +881,316 @@ class RetainedSourceCacheTests(unittest.TestCase):
                     scrape.COVERAGE[self.key]["status"],
                     "reused-incomplete" if expected else "blocked",
                 )
+
+
+class SaskPowerSourceTests(unittest.TestCase):
+    spec = (
+        "successfactors", ("saskpower", "https://jobs.saskpower.com", {}), "SaskPower"
+    )
+    key = "successfactors:saskpower"
+
+    def setUp(self):
+        scrape.reset_coverage()
+        self.fixture = json.loads(
+            (Path(__file__).parent / "fixtures" / "saskpower_source.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.now = datetime.fromisoformat(self.fixture["observed_at"])
+        self.html = "".join(
+            f'<a href="{row["path"]}">{row["title"]}</a>'
+            for row in self.fixture["rows"]
+        )
+
+    def search_page(self, url, params):
+        self.assertEqual(url, self.fixture["base_url"] + "/search/")
+        self.assertEqual(params["locationsearch"], "Canada")
+        body = (
+            self.html
+            if params["q"] == "student" and params["startrow"] == 0
+            else ""
+        )
+        return FakeResponse(text=body)
+
+    def test_source_is_registered_once_through_existing_retention(self):
+        self.assertIn(self.spec, scrape.RETAINED_SOURCES)
+        self.assertEqual(
+            [task for task in scrape.TASKS if task[2] == self.key],
+            [(scrape.from_retained_source, self.spec, self.key)],
+        )
+        self.assertIn(self.key, scrape.EXPANSION_SOURCE_KEYS)
+        self.assertIn(self.key, scrape.RETAINED_SOURCE_KEYS)
+        self.assertNotIn(self.key, scrape.DAILY_SOURCE_KEYS)
+
+    def test_observed_rows_survive_normal_pipeline_without_invented_dates(self):
+        with patch.object(scrape, "g", side_effect=self.search_page) as get:
+            rows = scrape.from_retained_source(self.spec, now=self.now)
+        with patch("builtins.open", mock_open(read_data='{"jobs": []}')):
+            scrape.mark_baseline_records(rows)
+        with redirect_stdout(io.StringIO()):
+            scrape.hydrate_prelaw_details(rows)
+            eligible, _ = scrape.filter_candidates(rows)
+            scrape.hydrate_greenhouse_posted_dates(eligible)
+        unique, _, _ = scrape.dedupe_candidates(eligible)
+        with patch.object(
+            scrape, "_source_get", return_value=FakeResponse(text=self.html)
+        ) as verify_get:
+            verified = [scrape.verify(row) for row in unique]
+        live = [row for row, ok, _ in verified if ok]
+
+        self.assertEqual(len(rows), 3)
+        self.assertEqual(len(unique), 3)
+        self.assertEqual(len(live), 3)
+        self.assertEqual(verify_get.call_count, 3)
+        self.assertEqual(
+            {call.kwargs["params"]["q"] for call in get.call_args_list},
+            set(scrape.SEARCH_TERMS),
+        )
+        self.assertEqual(
+            [call.kwargs["params"]["startrow"] for call in get.call_args_list
+             if call.kwargs["params"]["q"] == "student"],
+            [0, scrape.SUCCESSFACTORS_PAGE_SIZE],
+        )
+        by_title = {row["title"]: row for row in unique}
+        for expected in self.fixture["rows"]:
+            with self.subTest(title=expected["title"]):
+                row = by_title[expected["title"]]
+                self.assertEqual(row["company"], self.fixture["company"])
+                self.assertEqual(
+                    row["url"], self.fixture["base_url"] + expected["path"]
+                )
+                self.assertEqual(row["loc"], expected["location"])
+                self.assertEqual(row["cats"], expected["categories"])
+                self.assertEqual(row["source_target"], "saskpower")
+                self.assertEqual(row["posted"], "")
+                self.assertEqual(row["last_seen"], self.now.isoformat())
+                published = normalize_job(
+                    scrape.snapshot_job(row), generated_at=self.now.isoformat()
+                )
+                self.assertIsNone(published["postedAt"])
+                self.assertEqual(
+                    published["externalId"],
+                    "jobs.saskpower.com:" + expected["path"].rstrip("/").rsplit("/", 1)[1],
+                )
+        self.assertTrue(scrape.COVERAGE[self.key]["complete"])
+        self.assertEqual(scrape.COVERAGE[self.key]["status"], "fresh")
+        envelope, _ = build_envelope({
+            "fetched_at": self.now.isoformat(),
+            "jobs": [scrape.snapshot_job(row) for row in live],
+            "source_state": scrape.source_state_payload(),
+        })
+        self.assertEqual(len(envelope["jobs"]), 3)
+        self.assertEqual(len({job["id"] for job in envelope["jobs"]}), 3)
+        self.assertTrue(all(job["postedAt"] is None for job in envelope["jobs"]))
+
+    def test_recirculated_terminal_rows_and_search_terms_do_not_add_jobs(self):
+        with patch.object(
+            scrape, "g", return_value=FakeResponse(text=self.html)
+        ):
+            rows = scrape.from_retained_source(self.spec, now=self.now)
+
+        self.assertEqual(len(rows), 3)
+        self.assertEqual(scrape.COVERAGE[self.key]["repeated_terms"], 5)
+        self.assertEqual(
+            {row["url"] for row in rows},
+            {self.fixture["base_url"] + row["path"] for row in self.fixture["rows"]},
+        )
+
+    def test_complete_empty_does_not_load_last_good_jobs(self):
+        with (
+            patch.object(scrape, "g", return_value=FakeResponse()),
+            patch.object(scrape, "reuse_last_good_source") as reuse,
+        ):
+            rows = scrape.from_retained_source(self.spec, now=self.now)
+
+        self.assertEqual(rows, [])
+        reuse.assert_not_called()
+        self.assertTrue(scrape.COVERAGE[self.key]["complete"])
+        self.assertEqual(scrape.COVERAGE[self.key]["status"], "fresh")
+
+    def test_failed_fetch_preserves_existing_cache_expiry_and_source_block(self):
+        for age in (None, 2, 6.01):
+            with self.subTest(age=age), tempfile.TemporaryDirectory() as temp:
+                scrape.reset_coverage()
+                path = Path(temp) / "baseline.json"
+                refreshed = self.now - timedelta(hours=age or 0)
+                if age is not None:
+                    with patch.object(scrape, "g", side_effect=self.search_page):
+                        prior = scrape.from_retained_source(self.spec, now=refreshed)
+                    path.write_text(json.dumps({
+                        "fetched_at": refreshed.isoformat(),
+                        "jobs": prior,
+                        "source_state": scrape.source_state_payload(),
+                    }), encoding="utf-8")
+                scrape.reset_coverage()
+                with (
+                    patch.dict(os.environ, {"SOURCE_BASELINE_PATH": str(path)}),
+                    patch.object(scrape, "g", return_value=FakeResponse(status=503)),
+                    redirect_stdout(io.StringIO()),
+                ):
+                    rows = scrape.from_retained_source(self.spec, now=self.now)
+
+                reusable = age == 2
+                self.assertEqual(len(rows), 3 if reusable else 0)
+                self.assertFalse(scrape.COVERAGE[self.key]["complete"])
+                self.assertEqual(
+                    scrape.COVERAGE[self.key]["status"],
+                    "reused-incomplete" if reusable else "blocked",
+                )
+                self.assertEqual(
+                    scrape.source_state_payload()["public_boards"][self.key]["status"],
+                    "reused-incomplete" if reusable else "blocked",
+                )
+                for row in rows:
+                    self.assertEqual(row["last_seen"], refreshed.isoformat())
+
+
+class VerifiedEmployerSourceTests(unittest.TestCase):
+    def setUp(self):
+        scrape.reset_coverage()
+        self.fixture = json.loads(
+            (Path(__file__).parent / "fixtures" / "verified_employer_sources.json")
+            .read_text(encoding="utf-8")
+        )
+        self.now = datetime.fromisoformat(self.fixture["observed_at"])
+        self.tasks = {key: (collector, spec) for collector, spec, key in scrape.TASKS}
+
+    def test_verified_sources_are_registered_once_with_existing_guards(self):
+        public = [tuple(spec) for spec in self.fixture["lever"]]
+        retained = [
+            ("successfactors", (item["label"], item["base"], {}), item["company"])
+            for item in self.fixture["successfactors"]
+        ]
+        source, adapter_spec, company = self.fixture["workday"]
+        retained.append((source, tuple(adapter_spec), company))
+        for spec in public + retained:
+            with self.subTest(spec=spec):
+                is_public = spec in public
+                key = (
+                    scrape.coverage_key(spec[0], spec[1])
+                    if is_public else scrape.retained_source_key(spec[0], spec[1])
+                )
+                collector = (
+                    scrape.from_public_board
+                    if is_public else scrape.from_retained_source
+                )
+                self.assertEqual(
+                    [task for task in scrape.TASKS if task[2] == key],
+                    [(collector, spec, key)],
+                )
+                self.assertIn(key, scrape.RETAINED_SOURCE_KEYS)
+                self.assertNotIn(key, scrape.DAILY_SOURCE_KEYS)
+                self.assertIn(
+                    spec, scrape.PUBLIC_BOARDS if is_public else scrape.RETAINED_SOURCES
+                )
+
+    def test_observed_english_french_and_prefixed_rows_follow_normal_funnel(self):
+        raw = []
+        expected = {}
+        for source in self.fixture["successfactors"]:
+            key = "successfactors:" + source["label"]
+            collector, spec = self.tasks[key]
+            body = "".join(
+                f'<a href="{row["path"]}">{row["title"]}</a>'
+                for row in source["rows"]
+            )
+
+            def search(url, params):
+                self.assertEqual(url, source["base"] + "/search/")
+                self.assertEqual(params["locationsearch"], "Canada")
+                return FakeResponse(text=body if params["startrow"] == 0 else "")
+
+            with patch.object(scrape, "g", side_effect=search):
+                rows = collector(spec, now=self.now)
+            self.assertEqual(len(rows), len(source["rows"]))
+            self.assertTrue(scrape.COVERAGE[key]["complete"])
+            self.assertEqual(scrape.COVERAGE[key]["status"], "fresh")
+            origin = "/".join(source["base"].split("/", 3)[:3])
+            for row, observed in zip(rows, source["rows"]):
+                self.assertEqual(row["url"], origin + observed["path"])
+                self.assertEqual(row["title"], observed["title"])
+                self.assertEqual(row["loc"], observed["location"])
+                self.assertEqual(row["company"], source["company"])
+                self.assertEqual(row["source_target"], source["label"])
+                self.assertEqual(row["posted"], "")
+                expected[row["url"]] = observed["eligible"]
+            raw.extend(rows)
+
+        with patch("builtins.open", mock_open(read_data='{"jobs": []}')):
+            scrape.mark_baseline_records(raw)
+        with redirect_stdout(io.StringIO()):
+            scrape.hydrate_prelaw_details(raw)
+            eligible, _ = scrape.filter_candidates(raw)
+            scrape.hydrate_greenhouse_posted_dates(eligible)
+        unique, _, _ = scrape.dedupe_candidates(eligible)
+        with patch.object(
+            scrape, "_source_get", return_value=FakeResponse(text="<html>Open role</html>")
+        ):
+            verified = [scrape.verify(row) for row in unique]
+        live = [row for row, ok, _ in verified if ok]
+        self.assertEqual(
+            {row["url"] for row in live},
+            {url for url, accepted in expected.items() if accepted},
+        )
+        self.assertEqual(len(live), 10)
+        envelope, _ = build_envelope({
+            "fetched_at": self.now.isoformat(),
+            "jobs": [scrape.snapshot_job(row) for row in live],
+            "source_state": scrape.source_state_payload(),
+        })
+        self.assertEqual(len(envelope["jobs"]), len(live))
+        self.assertEqual(len({job["id"] for job in envelope["jobs"]}), len(live))
+        self.assertTrue(all(job["postedAt"] is None for job in envelope["jobs"]))
+        self.assertNotIn("City of Toronto", {row["company"] for row in live})
+
+    def test_healthy_empty_feeds_are_fresh_without_reusing_previous_vacancies(self):
+        keys = [
+            "lever:" + spec[1] for spec in self.fixture["lever"]
+        ] + ["workday:bb.wd3/Student"]
+        for key in keys:
+            with self.subTest(key=key):
+                scrape.reset_coverage()
+                collector, spec = self.tasks[key]
+                with (
+                    patch.object(scrape, "g", return_value=FakeResponse([])),
+                    patch.object(scrape.requests, "post", return_value=FakeResponse({
+                        "total": 0, "jobPostings": [], "facets": [],
+                    })),
+                    patch.object(scrape, "reuse_last_good_source") as reuse,
+                ):
+                    rows = collector(spec, now=self.now)
+                self.assertEqual(rows, [])
+                reuse.assert_not_called()
+                self.assertTrue(scrape.COVERAGE[key]["complete"])
+                self.assertEqual(scrape.COVERAGE[key]["status"], "fresh")
+                self.assertEqual(
+                    scrape.source_state_payload()["public_boards"][key]["status"],
+                    "fresh",
+                )
+
+    def test_new_feeds_do_not_treat_failed_fetches_as_successful_empty(self):
+        keys = [
+            "lever:" + spec[1] for spec in self.fixture["lever"]
+        ] + ["workday:bb.wd3/Student"]
+        for key in keys:
+            with self.subTest(key=key):
+                scrape.reset_coverage()
+                collector, spec = self.tasks[key]
+                with (
+                    patch.object(scrape, "g", side_effect=requests.Timeout("timeout")),
+                    patch.object(
+                        scrape.requests, "post", side_effect=requests.Timeout("timeout")
+                    ),
+                    patch.object(scrape.time, "sleep"),
+                    patch.object(scrape, "reuse_last_good_source", return_value=[]) as reuse,
+                ):
+                    self.assertEqual(collector(spec, now=self.now), [])
+                reuse.assert_called_once_with(key, spec[0], (
+                    spec[1] if spec[0] == "lever"
+                    else scrape.retained_source_target(spec[0], spec[1])
+                ), self.now)
+                self.assertFalse(scrape.COVERAGE[key]["complete"])
+                self.assertTrue(scrape.COVERAGE[key]["errors"])
 
 
 class PublicIdentityTests(unittest.TestCase):
