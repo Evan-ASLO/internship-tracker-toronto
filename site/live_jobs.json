@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-13T11:48:13.022708+00:00",
+  "fetched_at": "2026-11-13T19:02:49.148278+00:00",
   "categories": [
     "Finance",
     "Marketing",
@@ -39,21 +39,7 @@
       "external_id": "abb:JR00052657",
       "content": "",
       "source_target": "abb.wd3/external_career_page",
-      "last_seen": "2026-11-13T11:45:25.114766+00:00"
-    },
-    {
-      "company": "ABB",
-      "title": "ELDS Marketing Communications Intern-Winter 2027",
-      "loc": "Bas-Saint-Laurent, Qu\u00e9bec",
-      "geo": "Quebec",
-      "cats": [
-        "Marketing"
-      ],
-      "url": "https://www.adzuna.ca/details/5962880275?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-11-12T04:48:52Z",
-      "src": "adzuna",
-      "external_id": "5962880275",
-      "content": "At ABB, we help industries run leaner and cleaner-and every person here makes that happen. You'll be empowered to lead, supported to grow, and proud of the impact we create together. Join us and help run what runs the world. Support the Marketing Communications Lead in coordinating and executing marketing initiatives across various departments and channels. This internship provides exposure to cam"
+      "last_seen": "2026-11-13T18:59:07.732122+00:00"
     },
     {
       "company": "ABB",
@@ -69,7 +55,7 @@
       "external_id": "abb:JR00047128",
       "content": "",
       "source_target": "abb.wd3/external_career_page",
-      "last_seen": "2026-11-13T11:45:25.114766+00:00"
+      "last_seen": "2026-11-13T18:59:07.732122+00:00"
     },
     {
       "company": "ABB",
@@ -85,7 +71,7 @@
       "external_id": "abb:JR00052505",
       "content": "At ABB, we help industries run leaner and cleaner-and every person here makes that happen. You'll be empowered to lead, supported to grow, and proud of the impact we create together. Join us and help run what runs the world. In this role, you will gain practical experience in trade compliance through a temporary work placement within the Customs Compliance team of ABB Canada. You will support the ",
       "source_target": "abb.wd3/external_career_page",
-      "last_seen": "2026-11-13T11:45:25.114766+00:00"
+      "last_seen": "2026-11-13T18:59:07.732122+00:00"
     },
     {
       "company": "AECOM",
@@ -101,7 +87,7 @@
       "external_id": "aecom2:744000160975059",
       "content": "",
       "source_target": "aecom2",
-      "last_seen": "2026-11-13T11:45:59.436303+00:00"
+      "last_seen": "2026-11-13T18:59:46.744711+00:00"
     },
     {
       "company": "AECOM",
@@ -117,7 +103,7 @@
       "external_id": "aecom2:744000160975229",
       "content": "",
       "source_target": "aecom2",
-      "last_seen": "2026-11-13T11:45:59.436303+00:00"
+      "last_seen": "2026-11-13T18:59:46.744711+00:00"
     },
     {
       "company": "Acceldata",
@@ -133,7 +119,7 @@
       "external_id": "acceldata:d69a1a62-284c-47d1-b74f-ea02dffad32f",
       "content": "ABOUT US Acceldata is the market leader in Enterprise Data Observability. Founded in 2018, Silicon Valley-based Acceldata has developed the world's first Enterprise Data Observability Platform to help build and operate great data products. Enterprise Data Observability is at the intersection of today's hottest and most crucial technologies such as AI, LLMs, Analytics, and DataOps. Acceldata provid",
       "source_target": "acceldata",
-      "last_seen": "2026-11-13T11:45:55.713459+00:00"
+      "last_seen": "2026-11-13T18:59:38.137076+00:00"
     },
     {
       "company": "Acceldata",
@@ -149,7 +135,7 @@
       "external_id": "acceldata:ffd01330-b32f-4868-9390-3af135335ab0",
       "content": "ABOUT US Acceldata is the market leader in Enterprise Data Observability. Founded in 2018, Silicon Valley-based Acceldata has developed the world's first Enterprise Data Observability Platform to help build and operate great data products. Enterprise Data Observability is at the intersection of today's hottest and most crucial technologies such as AI, LLMs, Analytics, and DataOps. Acceldata provid",
       "source_target": "acceldata",
-      "last_seen": "2026-11-13T11:45:55.713459+00:00"
+      "last_seen": "2026-11-13T18:59:38.137076+00:00"
     },
     {
       "company": "Acceldata",
@@ -165,7 +151,7 @@
       "external_id": "acceldata:3b6d3dfe-5e49-41c9-98a5-f732fa63fdf4",
       "content": "ABOUT US Acceldata is the market leader in Enterprise Data Observability. Founded in 2018, Silicon Valley-based Acceldata has developed the world's first Enterprise Data Observability Platform to help build and operate great data products. Enterprise Data Observability is at the intersection of today's hottest and most crucial technologies such as AI, LLMs, Analytics, and DataOps. Acceldata provid",
       "source_target": "acceldata",
-      "last_seen": "2026-11-13T11:45:55.713459+00:00"
+      "last_seen": "2026-11-13T18:59:38.137076+00:00"
     },
     {
       "company": "Acumatica",
@@ -193,7 +179,7 @@
       "external_id": null,
       "content": "",
       "source_target": "aecon",
-      "last_seen": "2026-11-13T11:44:51.968576+00:00"
+      "last_seen": "2026-11-13T18:58:39.277342+00:00"
     },
     {
       "company": "Aecon",
@@ -209,7 +195,7 @@
       "external_id": null,
       "content": "",
       "source_target": "aecon",
-      "last_seen": "2026-11-13T11:44:51.968576+00:00"
+      "last_seen": "2026-11-13T18:58:39.277342+00:00"
     },
     {
       "company": "Aecon",
@@ -223,7 +209,7 @@
       "external_id": null,
       "content": "",
       "source_target": "aecon",
-      "last_seen": "2026-11-13T11:44:51.968576+00:00"
+      "last_seen": "2026-11-13T18:58:39.277342+00:00"
     },
     {
       "company": "Aecon",
@@ -239,7 +225,7 @@
       "external_id": null,
       "content": "",
       "source_target": "aecon",
-      "last_seen": "2026-11-13T11:44:51.968576+00:00"
+      "last_seen": "2026-11-13T18:58:39.277342+00:00"
     },
     {
       "company": "Aecon",
@@ -255,7 +241,7 @@
       "external_id": null,
       "content": "",
       "source_target": "aecon",
-      "last_seen": "2026-11-13T11:44:51.968576+00:00"
+      "last_seen": "2026-11-13T18:58:39.277342+00:00"
     },
     {
       "company": "Aecon",
@@ -269,7 +255,7 @@
       "external_id": null,
       "content": "",
       "source_target": "aecon",
-      "last_seen": "2026-11-13T11:44:51.968576+00:00"
+      "last_seen": "2026-11-13T18:58:39.277342+00:00"
     },
     {
       "company": "Aecon",
@@ -283,7 +269,7 @@
       "external_id": null,
       "content": "",
       "source_target": "aecon",
-      "last_seen": "2026-11-13T11:44:51.968576+00:00"
+      "last_seen": "2026-11-13T18:58:39.277342+00:00"
     },
     {
       "company": "Aecon",
@@ -297,7 +283,7 @@
       "external_id": null,
       "content": "",
       "source_target": "aecon",
-      "last_seen": "2026-11-13T11:44:51.968576+00:00"
+      "last_seen": "2026-11-13T18:58:39.277342+00:00"
     },
     {
       "company": "Aecon",
@@ -313,7 +299,7 @@
       "external_id": null,
       "content": "",
       "source_target": "aecon",
-      "last_seen": "2026-11-13T11:44:51.968576+00:00"
+      "last_seen": "2026-11-13T18:58:39.277342+00:00"
     },
     {
       "company": "Aecon",
@@ -329,7 +315,7 @@
       "external_id": null,
       "content": "",
       "source_target": "aecon",
-      "last_seen": "2026-11-13T11:44:51.968576+00:00"
+      "last_seen": "2026-11-13T18:58:39.277342+00:00"
     },
     {
       "company": "Aecon",
@@ -345,7 +331,7 @@
       "external_id": null,
       "content": "",
       "source_target": "aecon",
-      "last_seen": "2026-11-13T11:44:51.968576+00:00"
+      "last_seen": "2026-11-13T18:58:39.277342+00:00"
     },
     {
       "company": "Aecon",
@@ -361,7 +347,7 @@
       "external_id": null,
       "content": "",
       "source_target": "aecon",
-      "last_seen": "2026-11-13T11:44:51.968576+00:00"
+      "last_seen": "2026-11-13T18:58:39.277342+00:00"
     },
     {
       "company": "Aecon",
@@ -377,7 +363,7 @@
       "external_id": null,
       "content": "",
       "source_target": "aecon",
-      "last_seen": "2026-11-13T11:44:51.968576+00:00"
+      "last_seen": "2026-11-13T18:58:39.277342+00:00"
     },
     {
       "company": "Aecon",
@@ -393,7 +379,7 @@
       "external_id": null,
       "content": "",
       "source_target": "aecon",
-      "last_seen": "2026-11-13T11:44:51.968576+00:00"
+      "last_seen": "2026-11-13T18:58:39.277342+00:00"
     },
     {
       "company": "Aecon",
@@ -407,7 +393,7 @@
       "external_id": null,
       "content": "",
       "source_target": "aecon",
-      "last_seen": "2026-11-13T11:44:51.968576+00:00"
+      "last_seen": "2026-11-13T18:58:39.277342+00:00"
     },
     {
       "company": "Aecon",
@@ -421,7 +407,7 @@
       "external_id": null,
       "content": "",
       "source_target": "aecon",
-      "last_seen": "2026-11-13T11:44:51.968576+00:00"
+      "last_seen": "2026-11-13T18:58:39.277342+00:00"
     },
     {
       "company": "Aecon",
@@ -435,7 +421,7 @@
       "external_id": null,
       "content": "",
       "source_target": "aecon",
-      "last_seen": "2026-11-13T11:44:51.968576+00:00"
+      "last_seen": "2026-11-13T18:58:39.277342+00:00"
     },
     {
       "company": "Aecon",
@@ -451,7 +437,7 @@
       "external_id": null,
       "content": "",
       "source_target": "aecon",
-      "last_seen": "2026-11-13T11:44:51.968576+00:00"
+      "last_seen": "2026-11-13T18:58:39.277342+00:00"
     },
     {
       "company": "Aecon",
@@ -465,7 +451,7 @@
       "external_id": null,
       "content": "",
       "source_target": "aecon",
-      "last_seen": "2026-11-13T11:44:51.968576+00:00"
+      "last_seen": "2026-11-13T18:58:39.277342+00:00"
     },
     {
       "company": "Aecon",
@@ -479,7 +465,7 @@
       "external_id": null,
       "content": "",
       "source_target": "aecon",
-      "last_seen": "2026-11-13T11:44:51.968576+00:00"
+      "last_seen": "2026-11-13T18:58:39.277342+00:00"
     },
     {
       "company": "Alexion",
@@ -524,7 +510,21 @@
       "external_id": "aperaaiinc:5239440007",
       "content": "Apera is an innovative, Vancouver-based company at the forefront of robotics, AI, and machine vision - recognized with the 2025 Frost &amp; Sullivan Technology Innovation Leadership Award and the 2024 BC Tech \"Company of the Year, Growth\" award. We're on a mission to redefine AI-driven robotic vision. Apera AI helps manufacturers make their factories more flexible and productive. Robots enhanced w",
       "source_target": "aperaaiinc",
-      "last_seen": "2026-11-13T11:45:48.815863+00:00"
+      "last_seen": "2026-11-13T18:59:31.821465+00:00"
+    },
+    {
+      "company": "Aptiv",
+      "title": "Engineering Intern",
+      "loc": "Ottawa, Ottawa region",
+      "geo": "Ontario",
+      "cats": [
+        "General Engineering"
+      ],
+      "url": "https://www.adzuna.ca/details/5964819835?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-11-13T12:17:02Z",
+      "src": "adzuna",
+      "external_id": "5964819835",
+      "content": "Within the Wind River Cloud team, we work with large-scale projects including Kubernetes, Docker, OpenStack and fast-paced Open-Source technologies that are in high demand from our customers. Wind River Cloud has adopted these technologies into the core of our product, which is driving us to find experienced and high-performing individuals that can learn and contribute to these full software stack"
     },
     {
       "company": "Arc'teryx",
@@ -540,7 +540,7 @@
       "external_id": "arcteryx.com:80e79f4f-b725-4a9f-a332-05a5b797d035",
       "content": "Department: Distribution Centre - ARC'One Reports to: Senior Manager, Distribution Location: New Westminster, BC - This role is primarily based out of our New Westminster office, and is open to hybrid remote work Work Arrangement: Flexible, between in-office and home Pay Range: $44,700 - $55,100 per annum dependent on year of study and related experience Duration: Eight (8) months, Jan 04 2027 - A",
       "source_target": "arcteryx.com",
-      "last_seen": "2026-11-13T11:45:55.615697+00:00"
+      "last_seen": "2026-11-13T18:59:37.735805+00:00"
     },
     {
       "company": "BDO",
@@ -554,18 +554,6 @@
       "posted": "2026-11-12T04:57:43Z",
       "src": "adzuna",
       "external_id": "5962888586",
-      "content": "Putting people first, every day BDO is a firm built on a foundation of positive relationships with our people and our clients. Each day, our professionals provide exceptional service, helping clients with advice and insight they can trust. In turn, we offer an award-winning environment that fosters a people-first culture with a high priority on your personal and professional growth. Your Opportuni"
-    },
-    {
-      "company": "BDO",
-      "title": "Co-op or Intern, FR&I (Winter 2027)",
-      "loc": "Canada",
-      "geo": "Canada",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5962879620?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-11-12T04:48:12Z",
-      "src": "adzuna",
-      "external_id": "5962879620",
       "content": "Putting people first, every day BDO is a firm built on a foundation of positive relationships with our people and our clients. Each day, our professionals provide exceptional service, helping clients with advice and insight they can trust. In turn, we offer an award-winning environment that fosters a people-first culture with a high priority on your personal and professional growth. Your Opportuni"
     },
     {
@@ -596,7 +584,7 @@
       "external_id": "beumergroup1:744000152769273",
       "content": "",
       "source_target": "beumergroup1",
-      "last_seen": "2026-11-13T11:46:01.724224+00:00"
+      "last_seen": "2026-11-13T18:59:49.437674+00:00"
     },
     {
       "company": "BMO",
@@ -612,7 +600,7 @@
       "external_id": "bmo:R260026741-1",
       "content": "",
       "source_target": "bmo.wd3/Campus",
-      "last_seen": "2026-11-13T11:45:09.960560+00:00"
+      "last_seen": "2026-11-13T18:58:52.876443+00:00"
     },
     {
       "company": "BMO",
@@ -628,7 +616,7 @@
       "external_id": "bmo:R260026738-1",
       "content": "",
       "source_target": "bmo.wd3/Campus",
-      "last_seen": "2026-11-13T11:45:09.960560+00:00"
+      "last_seen": "2026-11-13T18:58:52.876443+00:00"
     },
     {
       "company": "Bank of Montreal",
@@ -668,7 +656,7 @@
       "external_id": null,
       "content": "",
       "source_target": "bell",
-      "last_seen": "2026-11-13T11:44:47.383907+00:00"
+      "last_seen": "2026-11-13T18:58:36.197706+00:00"
     },
     {
       "company": "Bosch",
@@ -682,7 +670,7 @@
       "external_id": "boschgroup:744000161349759",
       "content": "",
       "source_target": "boschgroup",
-      "last_seen": "2026-11-13T11:46:01.124742+00:00"
+      "last_seen": "2026-11-13T18:59:48.555855+00:00"
     },
     {
       "company": "Bosch",
@@ -698,7 +686,7 @@
       "external_id": "boschgroup:744000152918940",
       "content": "",
       "source_target": "boschgroup",
-      "last_seen": "2026-11-13T11:46:01.124742+00:00"
+      "last_seen": "2026-11-13T18:59:48.555855+00:00"
     },
     {
       "company": "Bosch",
@@ -714,7 +702,7 @@
       "external_id": "boschgroup:744000148229219",
       "content": "",
       "source_target": "boschgroup",
-      "last_seen": "2026-11-13T11:46:01.124742+00:00"
+      "last_seen": "2026-11-13T18:59:48.555855+00:00"
     },
     {
       "company": "Brave",
@@ -730,7 +718,7 @@
       "external_id": "brave:8360001",
       "content": "Software Development Interns - Waterloo University Remote - Winter Session About Brave Brave is on a mission to protect the human right to privacy online. We've built a free web browser that blocks creepy ads and trackers by default, a private search engine with a truly independent index, private AI assistant, latest privacy and security features, and a private ad network (opt-in!) that directly r",
       "source_target": "brave",
-      "last_seen": "2026-11-13T11:45:51.271381+00:00"
+      "last_seen": "2026-11-13T18:59:34.464692+00:00"
     },
     {
       "company": "Bree",
@@ -746,7 +734,7 @@
       "external_id": "bree:5e79b2fd-164c-4e72-91ef-1b8fd1c5518a",
       "content": "ABOUT BREE Bree is a consumer finance platform that brings better, faster, and cheaper financial services to over half the Canadian population who live paycheck to paycheck. We operate in a huge, but overlooked market in a country with the least amount of financial technology innovation in the developed world. Our first act is to become the cheapest and best provider of short-term credit to the 20",
       "source_target": "bree",
-      "last_seen": "2026-11-13T11:45:53.383991+00:00"
+      "last_seen": "2026-11-13T18:59:36.339987+00:00"
     },
     {
       "company": "Bree",
@@ -762,7 +750,7 @@
       "external_id": "bree:42fe78c1-e73f-4918-bf71-776b8142112b",
       "content": "ABOUT BREE Bree is a consumer finance platform that brings better, faster, and cheaper financial services to over half the Canadian population who live paycheck to paycheck. We operate in a huge, but overlooked market in a country with the least amount of financial technology innovation in the developed world. Our first act is to become the cheapest and best provider of short-term credit to the 20",
       "source_target": "bree",
-      "last_seen": "2026-11-13T11:45:53.383991+00:00"
+      "last_seen": "2026-11-13T18:59:36.339987+00:00"
     },
     {
       "company": "Bree",
@@ -778,7 +766,7 @@
       "external_id": "bree:17d8dd15-5f97-4003-8d6c-170dca13ff88",
       "content": "ABOUT BREE Bree is a consumer finance platform that brings better, faster, and cheaper financial services to over half the Canadian population who live paycheck to paycheck. We operate in a huge, but overlooked market in a country with the least amount of financial technology innovation in the developed world. Our first act is to become the cheapest and best provider of short-term credit to the 20",
       "source_target": "bree",
-      "last_seen": "2026-11-13T11:45:53.383991+00:00"
+      "last_seen": "2026-11-13T18:59:36.339987+00:00"
     },
     {
       "company": "CAE",
@@ -794,7 +782,7 @@
       "external_id": "cae:123658",
       "content": "",
       "source_target": "cae.wd3/career",
-      "last_seen": "2026-11-13T11:45:02.775186+00:00"
+      "last_seen": "2026-11-13T18:58:48.178040+00:00"
     },
     {
       "company": "CAE",
@@ -808,7 +796,7 @@
       "external_id": "cae:123800",
       "content": "",
       "source_target": "cae.wd3/career",
-      "last_seen": "2026-11-13T11:45:02.775186+00:00"
+      "last_seen": "2026-11-13T18:58:48.178040+00:00"
     },
     {
       "company": "CAE",
@@ -824,7 +812,7 @@
       "external_id": "cae:124200",
       "content": "",
       "source_target": "cae.wd3/career",
-      "last_seen": "2026-11-13T11:45:02.775186+00:00"
+      "last_seen": "2026-11-13T18:58:48.178040+00:00"
     },
     {
       "company": "CAE",
@@ -840,7 +828,7 @@
       "external_id": "cae:123907-1",
       "content": "",
       "source_target": "cae.wd3/career",
-      "last_seen": "2026-11-13T11:45:02.775186+00:00"
+      "last_seen": "2026-11-13T18:58:48.178040+00:00"
     },
     {
       "company": "CAE",
@@ -856,7 +844,7 @@
       "external_id": "cae:123650",
       "content": "",
       "source_target": "cae.wd3/career",
-      "last_seen": "2026-11-13T11:45:02.775186+00:00"
+      "last_seen": "2026-11-13T18:58:48.178040+00:00"
     },
     {
       "company": "CAE",
@@ -872,7 +860,7 @@
       "external_id": "cae:123902",
       "content": "",
       "source_target": "cae.wd3/career",
-      "last_seen": "2026-11-13T11:45:02.775186+00:00"
+      "last_seen": "2026-11-13T18:58:48.178040+00:00"
     },
     {
       "company": "CAE",
@@ -888,7 +876,7 @@
       "external_id": "cae:123901",
       "content": "",
       "source_target": "cae.wd3/career",
-      "last_seen": "2026-11-13T11:45:02.775186+00:00"
+      "last_seen": "2026-11-13T18:58:48.178040+00:00"
     },
     {
       "company": "CAE",
@@ -905,7 +893,7 @@
       "external_id": "cae:123991",
       "content": "",
       "source_target": "cae.wd3/career",
-      "last_seen": "2026-11-13T11:45:02.775186+00:00"
+      "last_seen": "2026-11-13T18:58:48.178040+00:00"
     },
     {
       "company": "CAE",
@@ -921,7 +909,7 @@
       "external_id": "cae:122070",
       "content": "",
       "source_target": "cae.wd3/career",
-      "last_seen": "2026-11-13T11:45:02.775186+00:00"
+      "last_seen": "2026-11-13T18:58:48.178040+00:00"
     },
     {
       "company": "CAE",
@@ -937,21 +925,7 @@
       "external_id": "cae:123941",
       "content": "",
       "source_target": "cae.wd3/career",
-      "last_seen": "2026-11-13T11:45:02.775186+00:00"
-    },
-    {
-      "company": "CDPQ Infra",
-      "title": "Intern, Construction",
-      "loc": "Montr\u00e9al, Qu\u00e9bec",
-      "geo": "Quebec",
-      "cats": [
-        "Civil & Structural Engineering"
-      ],
-      "url": "https://www.adzuna.ca/details/5962879329?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-11-12T04:47:56Z",
-      "src": "adzuna",
-      "external_id": "5962879329",
-      "content": "Filiale exclusive de la Caisse de d\u00e9p\u00f4t et placement du Qu\u00e9bec, CDPQ Infra agit \u00e0 titre de donneur d'ouvrage et de ma\u00eetre d'oeuvre pour de grands projets d'infrastructures publiques. Nous assumons la responsabilit\u00e9 de toutes les phases des projets : conception, planification, financement, d\u00e9veloppement de projet, strat\u00e9gie d'approvisionnement, r\u00e9alisation et exploitation. CDPQ Infra est notamment "
+      "last_seen": "2026-11-13T18:58:48.178040+00:00"
     },
     {
       "company": "CDPQ Infra",
@@ -993,7 +967,7 @@
       "external_id": "cima2:744000155626919",
       "content": "",
       "source_target": "cima2",
-      "last_seen": "2026-11-13T11:46:02.142909+00:00"
+      "last_seen": "2026-11-13T18:59:49.886257+00:00"
     },
     {
       "company": "CIMA+",
@@ -1009,7 +983,7 @@
       "external_id": "cima2:744000155626969",
       "content": "",
       "source_target": "cima2",
-      "last_seen": "2026-11-13T11:46:02.142909+00:00"
+      "last_seen": "2026-11-13T18:59:49.886257+00:00"
     },
     {
       "company": "CRB",
@@ -1025,7 +999,7 @@
       "external_id": "crb:744000149051330",
       "content": "",
       "source_target": "crb",
-      "last_seen": "2026-11-13T11:46:01.110696+00:00"
+      "last_seen": "2026-11-13T18:59:48.111919+00:00"
     },
     {
       "company": "CRB",
@@ -1041,7 +1015,7 @@
       "external_id": "crb:744000151401119",
       "content": "",
       "source_target": "crb",
-      "last_seen": "2026-11-13T11:46:01.110696+00:00"
+      "last_seen": "2026-11-13T18:59:48.111919+00:00"
     },
     {
       "company": "CRB",
@@ -1057,7 +1031,7 @@
       "external_id": "crb:744000139411025",
       "content": "",
       "source_target": "crb",
-      "last_seen": "2026-11-13T11:46:01.110696+00:00"
+      "last_seen": "2026-11-13T18:59:48.111919+00:00"
     },
     {
       "company": "Canadian Natural",
@@ -1074,7 +1048,7 @@
       "external_id": "CNRL-Campus:2425488",
       "content": "Source: Canadian Natural official careers. Classification evidence: source duties include government relations activities. Eligibility: Currently enrolled in your 3 rd or 4 th year of a degree program in Public Relations or Communications",
       "source_target": "CNRL-Campus",
-      "last_seen": "2026-11-12T17:27:17.025783+00:00"
+      "last_seen": "2026-11-13T18:59:19.571128+00:00"
     },
     {
       "company": "Canadian Natural",
@@ -1090,7 +1064,7 @@
       "external_id": "CNRL-Campus:2425493",
       "content": "Source: Canadian Natural official careers. Eligibility: Currently enrolled in a degree program with a specific focus on Public Policy, Political Science or related disciplines",
       "source_target": "CNRL-Campus",
-      "last_seen": "2026-11-12T17:27:17.025783+00:00"
+      "last_seen": "2026-11-13T18:59:19.571128+00:00"
     },
     {
       "company": "Canadian Security Intelligence Service",
@@ -1106,7 +1080,7 @@
       "external_id": "2473838",
       "content": "Source: Government of Canada, GC Jobs. Closing date: 2026-11-14.",
       "source_target": "public",
-      "last_seen": "2026-11-12T17:27:14.698894+00:00",
+      "last_seen": "2026-11-13T18:59:18.646055+00:00",
       "application_deadline": "2026-11-14T06:59:59+00:00"
     },
     {
@@ -1123,7 +1097,7 @@
       "external_id": "2473805",
       "content": "Source: Government of Canada, GC Jobs. Closing date: 2026-11-14.",
       "source_target": "public",
-      "last_seen": "2026-11-12T17:27:14.698894+00:00",
+      "last_seen": "2026-11-13T18:59:18.646055+00:00",
       "application_deadline": "2026-11-14T06:59:59+00:00"
     },
     {
@@ -1140,7 +1114,7 @@
       "external_id": "canadiantirecorporation:JR164928",
       "content": "",
       "source_target": "canadiantirecorporation.wd3/enterprise_external_careers_site",
-      "last_seen": "2026-11-13T11:45:03.733353+00:00"
+      "last_seen": "2026-11-13T18:58:48.264294+00:00"
     },
     {
       "company": "Canadian Tire",
@@ -1154,7 +1128,23 @@
       "external_id": "canadiantirecorporation:JR167669",
       "content": "",
       "source_target": "canadiantirecorporation.wd3/enterprise_external_careers_site",
-      "last_seen": "2026-11-13T11:45:03.733353+00:00"
+      "last_seen": "2026-11-13T18:58:48.264294+00:00"
+    },
+    {
+      "company": "Canadian Tire",
+      "title": "Programmer Analyst Intern (12 months) - Winter 2027",
+      "loc": "Mississauga, ON",
+      "geo": "Ontario",
+      "cats": [
+        "Software Engineering"
+      ],
+      "url": "https://canadiantirecorporation.wd3.myworkdayjobs.com/en-US/enterprise_external_careers_site/job/Mississauga-ON/Programmer-Analyst-Intern--12-months----Winter-2027_JR167748",
+      "posted": "Posted Today",
+      "src": "workday",
+      "external_id": "canadiantirecorporation:JR167748",
+      "content": "",
+      "source_target": "canadiantirecorporation.wd3/enterprise_external_careers_site",
+      "last_seen": "2026-11-13T18:58:48.264294+00:00"
     },
     {
       "company": "CaptiveAire",
@@ -1168,7 +1158,7 @@
       "external_id": "captiveaire:8734835002",
       "content": "Position Summary: The Sales engineering internship will focus on a variety of sales and customer related engineering tasks in a fast-paced environment. &nbsp; The ideal candidate is currently in a mechanical-or construction-oriented curriculum with expected graduation date of December 2026 or May 2027 and has an interest in being a Sales Engineer. &nbsp;The role will be part time in the fall.&nbsp",
       "source_target": "captiveaire",
-      "last_seen": "2026-11-13T11:45:51.632792+00:00"
+      "last_seen": "2026-11-13T18:59:34.990991+00:00"
     },
     {
       "company": "Ciena",
@@ -1185,7 +1175,7 @@
       "external_id": "ciena:R031664",
       "content": "",
       "source_target": "ciena.wd5/careers",
-      "last_seen": "2026-11-13T11:45:25.980715+00:00"
+      "last_seen": "2026-11-13T18:59:08.611821+00:00"
     },
     {
       "company": "Ciena",
@@ -1201,7 +1191,7 @@
       "external_id": "ciena:R032102",
       "content": "",
       "source_target": "ciena.wd5/careers",
-      "last_seen": "2026-11-13T11:45:25.980715+00:00"
+      "last_seen": "2026-11-13T18:59:08.611821+00:00"
     },
     {
       "company": "Ciena",
@@ -1217,7 +1207,7 @@
       "external_id": "ciena:R031750",
       "content": "",
       "source_target": "ciena.wd5/careers",
-      "last_seen": "2026-11-13T11:45:25.980715+00:00"
+      "last_seen": "2026-11-13T18:59:08.611821+00:00"
     },
     {
       "company": "Ciena",
@@ -1233,7 +1223,7 @@
       "external_id": "ciena:R031987",
       "content": "",
       "source_target": "ciena.wd5/careers",
-      "last_seen": "2026-11-13T11:45:25.980715+00:00"
+      "last_seen": "2026-11-13T18:59:08.611821+00:00"
     },
     {
       "company": "Ciena",
@@ -1250,7 +1240,24 @@
       "external_id": "ciena:R032005",
       "content": "",
       "source_target": "ciena.wd5/careers",
-      "last_seen": "2026-11-13T11:45:25.980715+00:00"
+      "last_seen": "2026-11-13T18:59:08.611821+00:00"
+    },
+    {
+      "company": "Ciena",
+      "title": "Hardware (PCBA) Design and Verification Intern (Winter 2027 - 4 Months)",
+      "loc": "Ottawa",
+      "geo": "Ontario",
+      "cats": [
+        "Quality & Test Engineering",
+        "Hardware & Embedded Systems"
+      ],
+      "url": "https://ciena.wd5.myworkdayjobs.com/en-US/careers/job/Ottawa/Hardware--PCBA--Design-and-Verification-Intern--Winter-2027---4-Months-_R031787",
+      "posted": "Posted Today",
+      "src": "workday",
+      "external_id": "ciena:R031787",
+      "content": "",
+      "source_target": "ciena.wd5/careers",
+      "last_seen": "2026-11-13T18:59:08.611821+00:00"
     },
     {
       "company": "Ciena",
@@ -1266,7 +1273,7 @@
       "external_id": "ciena:R032014",
       "content": "",
       "source_target": "ciena.wd5/careers",
-      "last_seen": "2026-11-13T11:45:25.980715+00:00"
+      "last_seen": "2026-11-13T18:59:08.611821+00:00"
     },
     {
       "company": "Ciena",
@@ -1282,7 +1289,7 @@
       "external_id": "ciena:R032054",
       "content": "",
       "source_target": "ciena.wd5/careers",
-      "last_seen": "2026-11-13T11:45:25.980715+00:00"
+      "last_seen": "2026-11-13T18:59:08.611821+00:00"
     },
     {
       "company": "Ciena",
@@ -1298,7 +1305,7 @@
       "external_id": "ciena:R031983-1",
       "content": "",
       "source_target": "ciena.wd5/careers",
-      "last_seen": "2026-11-13T11:45:25.980715+00:00"
+      "last_seen": "2026-11-13T18:59:08.611821+00:00"
     },
     {
       "company": "Ciena",
@@ -1314,7 +1321,7 @@
       "external_id": "ciena:R031845",
       "content": "",
       "source_target": "ciena.wd5/careers",
-      "last_seen": "2026-11-13T11:45:25.980715+00:00"
+      "last_seen": "2026-11-13T18:59:08.611821+00:00"
     },
     {
       "company": "Ciena",
@@ -1328,7 +1335,7 @@
       "external_id": "ciena:R032103",
       "content": "",
       "source_target": "ciena.wd5/careers",
-      "last_seen": "2026-11-13T11:45:25.980715+00:00"
+      "last_seen": "2026-11-13T18:59:08.611821+00:00"
     },
     {
       "company": "Ciena",
@@ -1344,7 +1351,7 @@
       "external_id": "ciena:R032040",
       "content": "",
       "source_target": "ciena.wd5/careers",
-      "last_seen": "2026-11-13T11:45:25.980715+00:00"
+      "last_seen": "2026-11-13T18:59:08.611821+00:00"
     },
     {
       "company": "Ciena",
@@ -1360,7 +1367,7 @@
       "external_id": "ciena:R031991",
       "content": "",
       "source_target": "ciena.wd5/careers",
-      "last_seen": "2026-11-13T11:45:25.980715+00:00"
+      "last_seen": "2026-11-13T18:59:08.611821+00:00"
     },
     {
       "company": "Ciena",
@@ -1376,7 +1383,7 @@
       "external_id": "ciena:R031851",
       "content": "",
       "source_target": "ciena.wd5/careers",
-      "last_seen": "2026-11-13T11:45:25.980715+00:00"
+      "last_seen": "2026-11-13T18:59:08.611821+00:00"
     },
     {
       "company": "Ciena",
@@ -1392,7 +1399,7 @@
       "external_id": "ciena:R031953-1",
       "content": "",
       "source_target": "ciena.wd5/careers",
-      "last_seen": "2026-11-13T11:45:25.980715+00:00"
+      "last_seen": "2026-11-13T18:59:08.611821+00:00"
     },
     {
       "company": "Ciena",
@@ -1408,19 +1415,7 @@
       "external_id": "ciena:R032046",
       "content": "",
       "source_target": "ciena.wd5/careers",
-      "last_seen": "2026-11-13T11:45:25.980715+00:00"
-    },
-    {
-      "company": "Ciena Government Solutions",
-      "title": "Layout Design Co-op (Winter 2027)",
-      "loc": "Canada",
-      "geo": "Canada",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5964348775?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-11-13T05:09:29Z",
-      "src": "adzuna",
-      "external_id": "5964348775",
-      "content": "As the global leader in high-speed connectivity, Ciena builds the critical infrastructure powering the AI era. We're a technology company shaping the future of networking, guided by innovation, integrity, and collaboration. Through development opportunities, meaningful work, and flexibility, Ciena supports growth and well-being-on and off the job. Connect with a career that matters. The opportunit"
+      "last_seen": "2026-11-13T18:59:08.611821+00:00"
     },
     {
       "company": "Cisco",
@@ -1437,7 +1432,7 @@
       "external_id": "cisco:2024111",
       "content": "",
       "source_target": "cisco.wd5/cisco_careers",
-      "last_seen": "2026-11-13T11:45:28.121694+00:00"
+      "last_seen": "2026-11-13T18:59:12.100222+00:00"
     },
     {
       "company": "Cisco",
@@ -1454,7 +1449,7 @@
       "external_id": "cisco:2024136",
       "content": "",
       "source_target": "cisco.wd5/cisco_careers",
-      "last_seen": "2026-11-13T11:45:28.121694+00:00"
+      "last_seen": "2026-11-13T18:59:12.100222+00:00"
     },
     {
       "company": "Cisco",
@@ -1470,7 +1465,7 @@
       "external_id": "cisco:2024208",
       "content": "",
       "source_target": "cisco.wd5/cisco_careers",
-      "last_seen": "2026-11-13T11:45:28.121694+00:00"
+      "last_seen": "2026-11-13T18:59:12.100222+00:00"
     },
     {
       "company": "City of Ottawa",
@@ -1486,7 +1481,7 @@
       "external_id": null,
       "content": "",
       "source_target": "cityofottawa",
-      "last_seen": "2026-11-13T11:44:59.652973+00:00"
+      "last_seen": "2026-11-13T18:58:46.598891+00:00"
     },
     {
       "company": "Clairvest",
@@ -1515,6 +1510,20 @@
       "content": "At Clark Builders, we're more than a construction company - we're purpose driven pa rtners committed to building stronger communities. Serving institutional, commercial, and industrial clients across Western and Northern Canada since 1974, we bring a relationship-based approach, deep expertise , and a commitment to safety, innovation, and sustainability to everything we do. As part of the Turner C"
     },
     {
+      "company": "Clean Harbors",
+      "title": "Environmental Field Chemist Intern - Summer 2027",
+      "loc": "Brampton, Peel region",
+      "geo": "Ontario",
+      "cats": [
+        "Environmental Engineering"
+      ],
+      "url": "https://www.adzuna.ca/details/5964475939?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-11-13T07:42:54Z",
+      "src": "adzuna",
+      "external_id": "5964475939",
+      "content": "Clean Harbors in Brampton, ON is seeking a reliable, safety-oriented, and team-focused student to join its growing team as an Environmental Field Chemist Intern (internally known as a CleanPack Chemis t) for Summer 2027 ! This is a great opportunity for students interested in gaining exposure to the industrial chemistry, chemical waste management, and environmental services industries. Accepting a"
+    },
+    {
       "company": "Colliers",
       "title": "Capital Markets Intern",
       "loc": "Toronto, Ontario, Canada",
@@ -1528,7 +1537,7 @@
       "external_id": "colliers:JR18677",
       "content": "",
       "source_target": "colliers.wd3/colliers-external-career-site",
-      "last_seen": "2026-11-13T11:45:07.761228+00:00"
+      "last_seen": "2026-11-13T18:58:52.120633+00:00"
     },
     {
       "company": "Colliers",
@@ -1542,19 +1551,7 @@
       "external_id": "colliers:JR18461",
       "content": "",
       "source_target": "colliers.wd3/colliers-external-career-site",
-      "last_seen": "2026-11-13T11:45:07.761228+00:00"
-    },
-    {
-      "company": "Connor, Clark & Lunn Private Capital",
-      "title": "Intern, Private Client Service",
-      "loc": "Toronto, Ontario",
-      "geo": "Ontario",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5962882474?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-11-12T04:51:15Z",
-      "src": "adzuna",
-      "external_id": "5962882474",
-      "content": "CC&L Private Capital Ltd. is seeking a Private Client Intern to join our Toronto-based Private Client Services Team for a 4-month term from January to April 2027. A dynamic, fast-paced work environment where opportunities for learning and growth are abound. You will be a member of a collaborative and client-focused team. This is an opportunity to support our associate and Wealth Advisor teams with"
+      "last_seen": "2026-11-13T18:58:52.120633+00:00"
     },
     {
       "company": "Coveo",
@@ -1570,7 +1567,7 @@
       "external_id": "coveoen:8827775002",
       "content": "What does it take to build the interfaces and tools that help people get more from Coveo? Are you curious about how frontend development can make complex technology easier to use? Coveo is looking for a Frontend Developer Intern to join our Developer Experience UI (DXUI) team within our Research &amp; Development department. You'll help developers build search experiences, work with experienced te",
       "source_target": "coveoen",
-      "last_seen": "2026-11-13T11:45:46.164006+00:00"
+      "last_seen": "2026-11-13T18:59:28.749979+00:00"
     },
     {
       "company": "Coveo",
@@ -1586,7 +1583,7 @@
       "external_id": "coveoen:8853969002",
       "content": "What does it take to build the interfaces and tools that help people get more from Coveo? Are you curious about how frontend development can make complex technology easier to use? Coveo is looking for a Frontend Developer Intern to join our Developer Experience UI (DXUI) team within our Research &amp; Development department. You'll help developers build search experiences, work with experienced te",
       "source_target": "coveoen",
-      "last_seen": "2026-11-13T11:45:46.164006+00:00"
+      "last_seen": "2026-11-13T18:59:28.749979+00:00"
     },
     {
       "company": "Coveo",
@@ -1602,7 +1599,7 @@
       "external_id": "coveoen:8846052002",
       "content": "Do you enjoy building tools and demos that help bring technical solutions to life? Coveo is looking for a Software Developer intern to join the Solutions Engineering team. Your mission? Build custom demo experiences and technical tools that help our sales engineers demonstrate the value of Coveo's commerce solutions. The Solution Engineering team supports our Go-To-Market teams throughout the sale",
       "source_target": "coveoen",
-      "last_seen": "2026-11-13T11:45:46.164006+00:00"
+      "last_seen": "2026-11-13T18:59:28.749979+00:00"
     },
     {
       "company": "DRW",
@@ -1618,7 +1615,7 @@
       "external_id": "drweng:7991196",
       "content": "Our formula for success is to hire exceptional people, encourage their ideas and reward their results. As a Software Developer Intern , you will join one of our development teams supporting our network development initiatives or trading businesses. Depending on the team you join, you will build advanced trading, analysis and risk applications, or advanced monitoring and automation systems leveragi",
       "source_target": "drweng",
-      "last_seen": "2026-11-13T11:45:50.511101+00:00"
+      "last_seen": "2026-11-13T18:59:33.144768+00:00"
     },
     {
       "company": "Data Science Intern chez TobogganLabs",
@@ -1649,6 +1646,20 @@
       "content": "Description YOUR NEXT CO-OP PLACEMENT Work term: Winter 2027 Work term length: 4-month From classroom to co-op to career, every step of your journey has an impact on your future. That's why it makes sense to choose a co-op placement with a company that offers truly rewarding work and real-life experience. At Definity\u00ae, your contributions, creativity, and energy will be put to good use, and you'll "
     },
     {
+      "company": "Definity",
+      "title": "Financial Analyst - Winter 2027 Co-op/Intern",
+      "loc": "Toronto, Ontario",
+      "geo": "Ontario",
+      "cats": [
+        "Finance"
+      ],
+      "url": "https://www.adzuna.ca/details/5964476417?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-11-13T07:42:56Z",
+      "src": "adzuna",
+      "external_id": "5964476417",
+      "content": "YOUR NEXT CO-OP PLACEMENT Work term: Winter 2027 Work term length: 4-month From classroom to co-op to career, every step of your journey has an impact on your future. That's why it makes sense to choose a co-op placement with a company that offers truly rewarding work and real-life experience. At Definity, your contributions, creativity, and energy will be put to good use, and you'll get to be inv"
+    },
+    {
       "company": "DoorDash",
       "title": "Software Engineer, Intern (Summer 2027) - TOR",
       "loc": "Toronto, ON",
@@ -1662,7 +1673,7 @@
       "external_id": "doordashcanada:8170944",
       "content": "About the Team DoorDash is building the world's most reliable on-demand logistics engine for delivery! We're looking for experienced engineers to join our fast-growing engineering team to help us develop a 24x7 global infrastructure system that powers DoorDash's three-sided marketplace of consumers, merchants, and dashers. About the Role At DoorDash, our product engineers implement and operate tec",
       "source_target": "doordashcanada",
-      "last_seen": "2026-11-13T11:45:50.432416+00:00"
+      "last_seen": "2026-11-13T18:59:32.923019+00:00"
     },
     {
       "company": "Drivewyze",
@@ -1678,7 +1689,7 @@
       "external_id": "bestpass:4713196006",
       "content": "Fleetworthy offers the only complete technology suite for fleet readiness, uniting safety and compliance, toll management, and weigh station bypass solutions. We help fleets streamline operations, control costs, an d&nbsp; opera te &nbsp;with confidence. &nbsp; &nbsp; Trusted by 75% of the top fleets in North America,&nbsp; Fleetworthy &nbsp;offers the most adopted toll management solution and lar",
       "source_target": "bestpass",
-      "last_seen": "2026-11-13T11:45:51.111670+00:00"
+      "last_seen": "2026-11-13T18:59:34.267451+00:00"
     },
     {
       "company": "EQ Bank",
@@ -1694,7 +1705,7 @@
       "external_id": "eqbank:2132199e-09af-4cf4-99b8-3e20744a0c8e",
       "content": "Join a Challenger At EQ, we're remaking banking so every Canadian gets ahead, every day. Serving nearly 4 million Canadians from coast to coast, we offer a wide variety of financial services from banking and lending, to trust and credit union solutions. We've been at this since 1970, challenging the conventions of traditional banking with smarter, faster, and more connected financial experiences. ",
       "source_target": "eqbank",
-      "last_seen": "2026-11-13T11:45:55.566468+00:00"
+      "last_seen": "2026-11-13T18:59:37.714204+00:00"
     },
     {
       "company": "EQ Bank",
@@ -1710,7 +1721,7 @@
       "external_id": "eqbank:3688d6b9-8f17-406c-a89e-4e49fb408793",
       "content": "Join a Challenger At EQ, we're remaking banking so every Canadian gets ahead, every day. Serving nearly 4 million Canadians from coast to coast, we offer a wide variety of financial services from banking and lending, to trust and credit union solutions. We've been at this since 1970, challenging the conventions of traditional banking with smarter, faster, and more connected financial experiences. ",
       "source_target": "eqbank",
-      "last_seen": "2026-11-13T11:45:55.566468+00:00"
+      "last_seen": "2026-11-13T18:59:37.714204+00:00"
     },
     {
       "company": "EQ Bank",
@@ -1726,7 +1737,7 @@
       "external_id": "eqbank:a1340690-3adc-4aae-9b91-26e474fe1958",
       "content": "Join a Challenger At EQ, we're remaking banking so every Canadian gets ahead, every day. Serving nearly 4 million Canadians from coast to coast, we offer a wide variety of financial services from banking and lending, to trust and credit union solutions. We've been at this since 1970, challenging the conventions of traditional banking with smarter, faster, and more connected financial experiences. ",
       "source_target": "eqbank",
-      "last_seen": "2026-11-13T11:45:55.566468+00:00"
+      "last_seen": "2026-11-13T18:59:37.714204+00:00"
     },
     {
       "company": "EQ Bank",
@@ -1742,35 +1753,7 @@
       "external_id": "eqbank:de711d74-f78a-4cdd-a4a1-fdaa6e6602c3",
       "content": "Join a Challenger At EQ, we're remaking banking so every Canadian gets ahead, every day. Serving nearly 4 million Canadians from coast to coast, we offer a wide variety of financial services from banking and lending, to trust and credit union solutions. We've been at this since 1970, challenging the conventions of traditional banking with smarter, faster, and more connected financial experiences. ",
       "source_target": "eqbank",
-      "last_seen": "2026-11-13T11:45:55.566468+00:00"
-    },
-    {
-      "company": "EQ Bank",
-      "title": "Intern - Modern Workplace Analyst, Winter 2027",
-      "loc": "Toronto",
-      "geo": "Ontario",
-      "cats": [],
-      "url": "https://jobs.lever.co/eqbank/53d0826c-baeb-4ba6-87e5-7d6d416c1da7",
-      "posted": "2026-09-14T18:54:18.977000+00:00",
-      "src": "lever",
-      "external_id": "eqbank:53d0826c-baeb-4ba6-87e5-7d6d416c1da7",
-      "content": "Join a Challenger At EQB, we're remaking banking so every Canadian gets ahead, every day. Serving nearly 4 million Canadians from coast to coast, we offer a wide variety of financial services from banking and lending, to trust and credit union solutions. We've been at this since 1970, challenging the conventions of traditional banking with smarter, faster, and more connected financial experiences.",
-      "source_target": "eqbank",
-      "last_seen": "2026-11-13T11:45:55.566468+00:00"
-    },
-    {
-      "company": "EQ Bank",
-      "title": "Intern - Office Experience and Facilities Winter 2027",
-      "loc": "Toronto",
-      "geo": "Ontario",
-      "cats": [],
-      "url": "https://jobs.lever.co/eqbank/a2cca7b8-e9a2-435d-a231-38a8b914933d",
-      "posted": "2026-09-18T14:48:48.050000+00:00",
-      "src": "lever",
-      "external_id": "eqbank:a2cca7b8-e9a2-435d-a231-38a8b914933d",
-      "content": "Join a Challenger At EQ, we're remaking banking so every Canadian gets ahead, every day. Serving nearly 4 million Canadians from coast to coast, we offer a wide variety of financial services from banking and lending, to trust and credit union solutions. We've been at this since 1970, challenging the conventions of traditional banking with smarter, faster, and more connected financial experiences. ",
-      "source_target": "eqbank",
-      "last_seen": "2026-11-13T11:45:55.566468+00:00"
+      "last_seen": "2026-11-13T18:59:37.714204+00:00"
     },
     {
       "company": "EQ Bank",
@@ -1784,7 +1767,7 @@
       "external_id": "eqbank:e4ed38f2-5de1-405f-a02d-c21f421bc7c1",
       "content": "Join a Challenger At EQ, we're remaking banking so every Canadian gets ahead, every day. Serving nearly 4 million Canadians from coast to coast, we offer a wide variety of financial services from banking and lending, to trust and credit union solutions. We've been at this since 1970, challenging the conventions of traditional banking with smarter, faster, and more connected financial experiences. ",
       "source_target": "eqbank",
-      "last_seen": "2026-11-13T11:45:55.566468+00:00"
+      "last_seen": "2026-11-13T18:59:37.714204+00:00"
     },
     {
       "company": "EQ Bank",
@@ -1800,7 +1783,7 @@
       "external_id": "eqbank:d2a1c83a-dc7a-4b4f-a159-98b21e6e0616",
       "content": "Join a Challenger At EQ, we're remaking banking so every Canadian gets ahead, every day. Serving nearly 4 million Canadians from coast to coast, we offer a wide variety of financial services from banking and lending, to trust and credit union solutions. We've been at this since 1970, challenging the conventions of traditional banking with smarter, faster, and more connected financial experiences. ",
       "source_target": "eqbank",
-      "last_seen": "2026-11-13T11:45:55.566468+00:00"
+      "last_seen": "2026-11-13T18:59:37.714204+00:00"
     },
     {
       "company": "EQ Bank",
@@ -1816,23 +1799,7 @@
       "external_id": "eqbank:4c22ff71-0543-4e3d-9cf9-79afc1d4e5a5",
       "content": "Join a Challenger At EQ, we're remaking banking so every Canadian gets ahead, every day. Serving nearly 4 million Canadians from coast to coast, we offer a wide variety of financial services from banking and lending, to trust and credit union solutions. We've been at this since 1970, challenging the conventions of traditional banking with smarter, faster, and more connected financial experiences. ",
       "source_target": "eqbank",
-      "last_seen": "2026-11-13T11:45:55.566468+00:00"
-    },
-    {
-      "company": "EQ Bank",
-      "title": "Intern - Risk Analyst, Enterprise Risk Governance & Transformation, Winter 2027",
-      "loc": "Toronto",
-      "geo": "Ontario",
-      "cats": [
-        "Consulting"
-      ],
-      "url": "https://jobs.lever.co/eqbank/eaa019f9-0c17-4020-8aeb-e0969a89117e",
-      "posted": "2026-09-15T19:49:20.442000+00:00",
-      "src": "lever",
-      "external_id": "eqbank:eaa019f9-0c17-4020-8aeb-e0969a89117e",
-      "content": "Join a Challenger At EQ, we're remaking banking so every Canadian gets ahead, every day. Serving nearly 4 million Canadians from coast to coast, we offer a wide variety of financial services from banking and lending, to trust and credit union solutions. We've been at this since 1970, challenging the conventions of traditional banking with smarter, faster, and more connected financial experiences. ",
-      "source_target": "eqbank",
-      "last_seen": "2026-11-13T11:45:55.566468+00:00"
+      "last_seen": "2026-11-13T18:59:37.714204+00:00"
     },
     {
       "company": "EQ Bank",
@@ -1849,7 +1816,7 @@
       "external_id": "eqbank:5d1f6afc-24f2-4591-8986-acc67037cae7",
       "content": "Join a Challenger At EQ, we're remaking banking so every Canadian gets ahead, every day. Serving nearly 4 million Canadians from coast to coast, we offer a wide variety of financial services from banking and lending, to trust and credit union solutions. We've been at this since 1970, challenging the conventions of traditional banking with smarter, faster, and more connected financial experiences. ",
       "source_target": "eqbank",
-      "last_seen": "2026-11-13T11:45:55.566468+00:00"
+      "last_seen": "2026-11-13T18:59:37.714204+00:00"
     },
     {
       "company": "EQ Bank",
@@ -1865,7 +1832,7 @@
       "external_id": "eqbank:c924506b-22ad-4906-aea5-61d9b79163f3",
       "content": "Join a Challenger At EQ, we're remaking banking so every Canadian gets ahead, every day. Serving nearly 4 million Canadians from coast to coast, we offer a wide variety of financial services from banking and lending, to trust and credit union solutions. We've been at this since 1970, challenging the conventions of traditional banking with smarter, faster, and more connected financial experiences. ",
       "source_target": "eqbank",
-      "last_seen": "2026-11-13T11:45:55.566468+00:00"
+      "last_seen": "2026-11-13T18:59:37.714204+00:00"
     },
     {
       "company": "EQ Bank",
@@ -1879,21 +1846,7 @@
       "external_id": "eqbank:46175add-4a8e-4427-b269-8c84517b2556",
       "content": "Join a Challenger At EQ, we're remaking banking so every Canadian gets ahead, every day. Serving nearly 4 million Canadians from coast to coast, we offer a wide variety of financial services from banking and lending, to trust and credit union solutions. We've been at this since 1970, challenging the conventions of traditional banking with smarter, faster, and more connected financial experiences. ",
       "source_target": "eqbank",
-      "last_seen": "2026-11-13T11:45:55.566468+00:00"
-    },
-    {
-      "company": "EQ Bank",
-      "title": "Intern - Technology Workplace Services, Winter 2027",
-      "loc": "Toronto",
-      "geo": "Ontario",
-      "cats": [],
-      "url": "https://jobs.lever.co/eqbank/50a9450b-42ce-4839-9b43-9e3402cf222d",
-      "posted": "2026-09-10T15:47:11.818000+00:00",
-      "src": "lever",
-      "external_id": "eqbank:50a9450b-42ce-4839-9b43-9e3402cf222d",
-      "content": "Join a Challenger At EQB, we're remaking banking so every Canadian gets ahead, every day. Serving nearly 4 million Canadians from coast to coast, we offer a wide variety of financial services from banking and lending, to trust and credit union solutions. We've been at this since 1970, challenging the conventions of traditional banking with smarter, faster, and more connected financial experiences.",
-      "source_target": "eqbank",
-      "last_seen": "2026-11-13T11:45:55.566468+00:00"
+      "last_seen": "2026-11-13T18:59:37.714204+00:00"
     },
     {
       "company": "EQ Bank",
@@ -1909,7 +1862,7 @@
       "external_id": "eqbank:d9af4fcc-f814-4eee-97c2-1f84aa12842b",
       "content": "Join a Challenger At EQ, we're remaking banking so every Canadian gets ahead, every day. Serving nearly 4 million Canadians from coast to coast, we offer a wide variety of financial services from banking and lending, to trust and credit union solutions. We've been at this since 1970, challenging the conventions of traditional banking with smarter, faster, and more connected financial experiences. ",
       "source_target": "eqbank",
-      "last_seen": "2026-11-13T11:45:55.566468+00:00"
+      "last_seen": "2026-11-13T18:59:37.714204+00:00"
     },
     {
       "company": "EQ Bank",
@@ -1923,7 +1876,7 @@
       "external_id": "eqbank:1411252b-9a78-428f-917e-05ba38fa2c26",
       "content": "Join a Challenger At EQ, we're remaking banking so every Canadian gets ahead, every day. Serving nearly 4 million Canadians from coast to coast, we offer a wide variety of financial services from banking and lending, to trust and credit union solutions. We've been at this since 1970, challenging the conventions of traditional banking with smarter, faster, and more connected financial experiences. ",
       "source_target": "eqbank",
-      "last_seen": "2026-11-13T11:45:55.566468+00:00"
+      "last_seen": "2026-11-13T18:59:37.714204+00:00"
     },
     {
       "company": "Eastwood & Cleef",
@@ -1940,7 +1893,48 @@
       "external_id": "eastwoodcleef:7554856d-d724-44bf-ab14-78fca0ee4c47",
       "content": "ENGAGEMENT: FT SUMMER INTERNSHIP Location: Toronto (Hybrid) with 1-2 days per week of in-person collaboration in Toronto, Canada, and Tampa, Florida ROLE OVERVIEW Eastwood & Cleef is seeking a Summer Intern to support AI enablement, strategy, and program execution across our healthcare portfolio. You'll work alongside consultants and operators at the intersection of applied AI, value-based care (V",
       "source_target": "eastwoodcleef",
-      "last_seen": "2026-11-13T11:45:54.578830+00:00"
+      "last_seen": "2026-11-13T18:59:36.601296+00:00"
+    },
+    {
+      "company": "Eaton",
+      "title": "Intern, Material Planner (12-month) - Milton, ON",
+      "loc": "Milton, Halton",
+      "geo": "Ontario",
+      "cats": [],
+      "url": "https://www.adzuna.ca/details/5964476102?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-11-13T07:42:54Z",
+      "src": "adzuna",
+      "external_id": "5964476102",
+      "content": "Eaton's ES AMER PCS division is currently seeking a Internship: Material Planner - (12-month) - Milton, ON, Canada. The hourly rate for this position is $20.00 - $25.00 per hour. Please note the salary information shown above is a general guideline only. Salaries are based upon candidate skills, experience, and qualifications, as well as market and business considerations. What You'll Do Position "
+    },
+    {
+      "company": "Exacare",
+      "title": "Data and Analytics Intern (Summer 2027)",
+      "loc": "Toronto, Ontario",
+      "geo": "Ontario",
+      "cats": [
+        "Data Science & AI"
+      ],
+      "url": "https://www.adzuna.ca/details/5964476573?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-11-13T07:42:57Z",
+      "src": "adzuna",
+      "external_id": "5964476573",
+      "content": "About the Role We're looking for a Data & Analytics Intern to join our Data team and help turn exacare ai's rich operational and clinical data into useful insights, reporting, and tools for customers and internal teams. You'll work closely with the Data Lead, Product, Sales, and BizOps to build customer-facing dashboards, answer important business questions, and help identify opportunities to make"
+    },
+    {
+      "company": "Exacare",
+      "title": "Sales Strategy and Operations Intern (Summer 2027)",
+      "loc": "Toronto, Ontario",
+      "geo": "Ontario",
+      "cats": [
+        "Business Operations",
+        "Consulting"
+      ],
+      "url": "https://www.adzuna.ca/details/5964476525?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-11-13T07:42:56Z",
+      "src": "adzuna",
+      "external_id": "5964476525",
+      "content": "About the Role We're looking for a Sales Strategy and Operations Intern to join our Sales team and help build the systems, processes, and reporting that power a high-performing sales organization. You'll work closely with Sales Leadership, Growth, Product, and Revenue Operations to improve how our team manages pipeline, uses data, and operates day to day. This role is a great fit for someone who w"
     },
     {
       "company": "Extreme Networks",
@@ -1956,7 +1950,7 @@
       "external_id": "extremenetworks:5cb8361e-6415-4fcd-a51c-73c73c7049db",
       "content": "Over 50,000 customers globally trust our end-to-end, cloud-driven networking solutions. They rely on our top-rated services and support to accelerate their digital transformation efforts and deliver unprecedented progress. With double-digit growth year over year, no provider is better positioned to deliver scalable outcomes than Extreme. Inclusion is one of our core values and in our DNA. We are c",
       "source_target": "extremenetworks",
-      "last_seen": "2026-11-13T11:45:56.077780+00:00"
+      "last_seen": "2026-11-13T18:59:38.286008+00:00"
     },
     {
       "company": "Extreme Networks Canada",
@@ -1986,7 +1980,7 @@
       "external_id": null,
       "content": "",
       "source_target": "fortisbc",
-      "last_seen": "2026-11-13T11:44:50.266964+00:00"
+      "last_seen": "2026-11-13T18:58:38.600604+00:00"
     },
     {
       "company": "FortisBC",
@@ -2002,7 +1996,7 @@
       "external_id": null,
       "content": "",
       "source_target": "fortisbc",
-      "last_seen": "2026-11-13T11:44:50.266964+00:00"
+      "last_seen": "2026-11-13T18:58:38.600604+00:00"
     },
     {
       "company": "FortisBC",
@@ -2018,7 +2012,7 @@
       "external_id": null,
       "content": "",
       "source_target": "fortisbc",
-      "last_seen": "2026-11-13T11:44:50.266964+00:00"
+      "last_seen": "2026-11-13T18:58:38.600604+00:00"
     },
     {
       "company": "FortisBC",
@@ -2034,7 +2028,7 @@
       "external_id": null,
       "content": "",
       "source_target": "fortisbc",
-      "last_seen": "2026-11-13T11:44:50.266964+00:00"
+      "last_seen": "2026-11-13T18:58:38.600604+00:00"
     },
     {
       "company": "FortisBC",
@@ -2050,7 +2044,7 @@
       "external_id": null,
       "content": "",
       "source_target": "fortisbc",
-      "last_seen": "2026-11-13T11:44:50.266964+00:00"
+      "last_seen": "2026-11-13T18:58:38.600604+00:00"
     },
     {
       "company": "FortisBC",
@@ -2066,7 +2060,7 @@
       "external_id": null,
       "content": "",
       "source_target": "fortisbc",
-      "last_seen": "2026-11-13T11:44:50.266964+00:00"
+      "last_seen": "2026-11-13T18:58:38.600604+00:00"
     },
     {
       "company": "FortisBC",
@@ -2082,7 +2076,7 @@
       "external_id": null,
       "content": "",
       "source_target": "fortisbc",
-      "last_seen": "2026-11-13T11:44:50.266964+00:00"
+      "last_seen": "2026-11-13T18:58:38.600604+00:00"
     },
     {
       "company": "FortisBC",
@@ -2096,7 +2090,7 @@
       "external_id": null,
       "content": "",
       "source_target": "fortisbc",
-      "last_seen": "2026-11-13T11:44:50.266964+00:00"
+      "last_seen": "2026-11-13T18:58:38.600604+00:00"
     },
     {
       "company": "FortisBC",
@@ -2112,7 +2106,7 @@
       "external_id": null,
       "content": "",
       "source_target": "fortisbc",
-      "last_seen": "2026-11-13T11:44:50.266964+00:00"
+      "last_seen": "2026-11-13T18:58:38.600604+00:00"
     },
     {
       "company": "GE Vernova",
@@ -2129,7 +2123,7 @@
       "external_id": "gevernova:R5025772-2",
       "content": "",
       "source_target": "gevernova.wd5/vernova_externalsite",
-      "last_seen": "2026-11-13T11:45:30.868047+00:00"
+      "last_seen": "2026-11-13T18:59:13.035531+00:00"
     },
     {
       "company": "GE Vernova",
@@ -2145,23 +2139,7 @@
       "external_id": "gevernova:R5054215-2",
       "content": "",
       "source_target": "gevernova.wd5/vernova_externalsite",
-      "last_seen": "2026-11-13T11:45:30.868047+00:00"
-    },
-    {
-      "company": "GE Vernova",
-      "title": "Nuclear - Engineering Interns",
-      "loc": "Markham",
-      "geo": "Ontario",
-      "cats": [
-        "General Engineering"
-      ],
-      "url": "https://gevernova.wd5.myworkdayjobs.com/en-US/vernova_externalsite/job/Markham/Nuclear----Engineering-Interns_R5052772-2",
-      "posted": "Posted 11 Days Ago",
-      "src": "workday",
-      "external_id": "gevernova:R5052772-2",
-      "content": "",
-      "source_target": "gevernova.wd5/vernova_externalsite",
-      "last_seen": "2026-11-13T11:45:30.868047+00:00"
+      "last_seen": "2026-11-13T18:59:13.035531+00:00"
     },
     {
       "company": "GSK",
@@ -2191,7 +2169,7 @@
       "external_id": "gdmsi:744000153772296",
       "content": "",
       "source_target": "gdmsi",
-      "last_seen": "2026-11-13T11:45:57.819693+00:00"
+      "last_seen": "2026-11-13T18:59:45.304898+00:00"
     },
     {
       "company": "General Dynamics Mission Systems Canada",
@@ -2207,7 +2185,7 @@
       "external_id": "gdmsi:744000147554134",
       "content": "",
       "source_target": "gdmsi",
-      "last_seen": "2026-11-13T11:45:57.819693+00:00"
+      "last_seen": "2026-11-13T18:59:45.304898+00:00"
     },
     {
       "company": "General Dynamics Mission Systems Canada",
@@ -2223,7 +2201,7 @@
       "external_id": "gdmsi:744000147511629",
       "content": "",
       "source_target": "gdmsi",
-      "last_seen": "2026-11-13T11:45:57.819693+00:00"
+      "last_seen": "2026-11-13T18:59:45.304898+00:00"
     },
     {
       "company": "General Dynamics Mission Systems Canada",
@@ -2239,7 +2217,7 @@
       "external_id": "gdmsi:744000151059868",
       "content": "",
       "source_target": "gdmsi",
-      "last_seen": "2026-11-13T11:45:57.819693+00:00"
+      "last_seen": "2026-11-13T18:59:45.304898+00:00"
     },
     {
       "company": "General Dynamics Mission Systems Canada",
@@ -2255,7 +2233,7 @@
       "external_id": "gdmsi:744000147561809",
       "content": "",
       "source_target": "gdmsi",
-      "last_seen": "2026-11-13T11:45:57.819693+00:00"
+      "last_seen": "2026-11-13T18:59:45.304898+00:00"
     },
     {
       "company": "General Dynamics Mission Systems Canada",
@@ -2272,7 +2250,7 @@
       "external_id": "gdmsi:744000149095849",
       "content": "",
       "source_target": "gdmsi",
-      "last_seen": "2026-11-13T11:45:57.819693+00:00"
+      "last_seen": "2026-11-13T18:59:45.304898+00:00"
     },
     {
       "company": "General Dynamics Mission Systems Canada",
@@ -2288,7 +2266,7 @@
       "external_id": "gdmsi:744000149042859",
       "content": "",
       "source_target": "gdmsi",
-      "last_seen": "2026-11-13T11:45:57.819693+00:00"
+      "last_seen": "2026-11-13T18:59:45.304898+00:00"
     },
     {
       "company": "General Dynamics Mission Systems Canada",
@@ -2304,7 +2282,7 @@
       "external_id": "gdmsi:744000149046839",
       "content": "",
       "source_target": "gdmsi",
-      "last_seen": "2026-11-13T11:45:57.819693+00:00"
+      "last_seen": "2026-11-13T18:59:45.304898+00:00"
     },
     {
       "company": "General Dynamics Mission Systems Canada",
@@ -2321,7 +2299,7 @@
       "external_id": "gdmsi:744000149100009",
       "content": "",
       "source_target": "gdmsi",
-      "last_seen": "2026-11-13T11:45:57.819693+00:00"
+      "last_seen": "2026-11-13T18:59:45.304898+00:00"
     },
     {
       "company": "General Dynamics Mission Systems Canada",
@@ -2337,7 +2315,7 @@
       "external_id": "gdmsi:744000153818219",
       "content": "",
       "source_target": "gdmsi",
-      "last_seen": "2026-11-13T11:45:57.819693+00:00"
+      "last_seen": "2026-11-13T18:59:45.304898+00:00"
     },
     {
       "company": "GeoComply",
@@ -2353,7 +2331,7 @@
       "external_id": "geocomply-2:0c7660a9-a200-4dd0-9452-f0b87c536fcd",
       "content": "About GeoComply We're GeoComply! We are at the forefront of geolocation, cybersecurity, and anti-fraud innovation, developing and delivering cutting-edge technologies to help ensure regulatory compliance, combat bad online actors, alleviate user friction, and protect businesses from fraud. Achieving significant business and revenue growth over the past three years and dubbed a tech \u201cUnicorn,\u201d GeoC",
       "source_target": "geocomply-2",
-      "last_seen": "2026-11-13T11:45:56.128094+00:00"
+      "last_seen": "2026-11-13T18:59:38.493787+00:00"
     },
     {
       "company": "Georgian",
@@ -2369,7 +2347,7 @@
       "external_id": "georgian:2ae71a4b-dd9d-4068-8ef2-81351ee74cab",
       "content": "ABOUT GEORGIAN Georgian is a Toronto-based venture capital firm that partners with high-growth technology companies across cybersecurity, AI software, robotics, defense. We manage about $6B in assets and we have invested in more than 80 companies that we support with capital and technical capability. Our in-house AI lab works directly with portfolio companies to provide a differentiated experience",
       "source_target": "georgian",
-      "last_seen": "2026-11-13T11:45:54.758008+00:00"
+      "last_seen": "2026-11-13T18:59:36.986807+00:00"
     },
     {
       "company": "Geotab",
@@ -2383,7 +2361,7 @@
       "external_id": "internshiplist2000:5455475008",
       "content": "Who we are: Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d We are a company of diverse and talented individuals who work together to help businesses grow and succeed, and increase the safety and sustainability of our communities. &nbsp; Geotab is advancing security, connecting commercial vehicles to the internet and providing web-based analyti",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-11-13T11:45:45.814994+00:00"
+      "last_seen": "2026-11-13T18:59:28.607330+00:00"
     },
     {
       "company": "Geotab",
@@ -2399,7 +2377,7 @@
       "external_id": "internshiplist2000:5309952008",
       "content": "Who we are: Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d We are a company of diverse and talented individuals who work together to help businesses grow and succeed, and increase the safety and sustainability of our communities. &nbsp; Geotab is advancing security, connecting commercial vehicles to the internet and providing web-based analyti",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-11-13T11:45:45.814994+00:00"
+      "last_seen": "2026-11-13T18:59:28.607330+00:00"
     },
     {
       "company": "Geotab",
@@ -2413,23 +2391,7 @@
       "external_id": "internshiplist2000:5452423008",
       "content": "Who we are: Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d We are a company of diverse and talented individuals who work together to help businesses grow and succeed, and increase the safety and sustainability of our communities. &nbsp; Geotab is advancing security, connecting commercial vehicles to the internet and providing web-based analyti",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-11-13T11:45:45.814994+00:00"
-    },
-    {
-      "company": "Geotab",
-      "title": "Integrated Marketing Intern (Winter/ January 2027, 8-12 Months)",
-      "loc": "Oakville, Ontario - Canada",
-      "geo": "Ontario",
-      "cats": [
-        "Marketing"
-      ],
-      "url": "https://job-boards.greenhouse.io/internshiplist2000/jobs/5368704008",
-      "posted": "2026-09-01T13:20:37-04:00",
-      "src": "greenhouse",
-      "external_id": "internshiplist2000:5368704008",
-      "content": "Who we are: Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d We are a company of diverse and talented individuals who work together to help businesses grow and succeed, and increase the safety and sustainability of our communities. &nbsp; Geotab is advancing security, connecting commercial vehicles to the internet and providing web-based analyti",
-      "source_target": "internshiplist2000",
-      "last_seen": "2026-11-13T11:45:45.814994+00:00"
+      "last_seen": "2026-11-13T18:59:28.607330+00:00"
     },
     {
       "company": "Geotab",
@@ -2445,7 +2407,7 @@
       "external_id": "internshiplist2000:5358560008",
       "content": "Who we are: Geotab \u00ae is a global leader in IoT and connected transportation and certified \u201cGreat Place to Work\u2122.\u201d We are a company of diverse and talented individuals who work together to help businesses grow and succeed, and increase the safety and sustainability of our communities. &nbsp; Geotab is advancing security, connecting commercial vehicles to the internet and providing web-based analyti",
       "source_target": "internshiplist2000",
-      "last_seen": "2026-11-13T11:45:45.814994+00:00"
+      "last_seen": "2026-11-13T18:59:28.607330+00:00"
     },
     {
       "company": "Global Relay",
@@ -2461,7 +2423,7 @@
       "external_id": "globalrelay:6241597004",
       "content": "Who we are: For over 25 years, Global Relay has set the standard in enterprise information archiving with industry-leading cloud archiving, surveillance, eDiscovery, and analytics solutions. We securely capture and preserve the communications data of the world's most highly regulated firms, giving them greater visibility and control over their information and ensuring compliance with stringent reg",
       "source_target": "globalrelay",
-      "last_seen": "2026-11-13T11:45:51.662546+00:00"
+      "last_seen": "2026-11-13T18:59:35.062049+00:00"
     },
     {
       "company": "Global Relay",
@@ -2477,7 +2439,7 @@
       "external_id": "globalrelay:6241593004",
       "content": "Who we are: For over 25 years, Global Relay has set the standard in enterprise information archiving with industry-leading cloud archiving, surveillance, eDiscovery, and analytics solutions. We securely capture and preserve the communications data of the world's most highly regulated firms, giving them greater visibility and control over their information and ensuring compliance with stringent reg",
       "source_target": "globalrelay",
-      "last_seen": "2026-11-13T11:45:51.662546+00:00"
+      "last_seen": "2026-11-13T18:59:35.062049+00:00"
     },
     {
       "company": "Global Relay",
@@ -2493,7 +2455,7 @@
       "external_id": "globalrelay:6241594004",
       "content": "Who we are: For over 25 years, Global Relay has set the standard in enterprise information archiving with industry-leading cloud archiving, surveillance, eDiscovery, and analytics solutions. We securely capture and preserve the communications data of the world's most highly regulated firms, giving them greater visibility and control over their information and ensuring compliance with stringent reg",
       "source_target": "globalrelay",
-      "last_seen": "2026-11-13T11:45:51.662546+00:00"
+      "last_seen": "2026-11-13T18:59:35.062049+00:00"
     },
     {
       "company": "Global Relay",
@@ -2510,7 +2472,7 @@
       "external_id": "globalrelay:6241595004",
       "content": "Who we are: For over 25 years, Global Relay has set the standard in enterprise information archiving with industry-leading cloud archiving, surveillance, eDiscovery, and analytics solutions. We securely capture and preserve the communications data of the world's most highly regulated firms, giving them greater visibility and control over their information and ensuring compliance with stringent reg",
       "source_target": "globalrelay",
-      "last_seen": "2026-11-13T11:45:51.662546+00:00"
+      "last_seen": "2026-11-13T18:59:35.062049+00:00"
     },
     {
       "company": "Global Relay",
@@ -2527,7 +2489,7 @@
       "external_id": "globalrelay:6241598004",
       "content": "Who we are: For over 25 years, Global Relay has set the standard in enterprise information archiving with industry-leading cloud archiving, surveillance, eDiscovery, and analytics solutions. We securely capture and preserve the communications data of the world's most highly regulated firms, giving them greater visibility and control over their information and ensuring compliance with stringent reg",
       "source_target": "globalrelay",
-      "last_seen": "2026-11-13T11:45:51.662546+00:00"
+      "last_seen": "2026-11-13T18:59:35.062049+00:00"
     },
     {
       "company": "GoMaterials",
@@ -2543,7 +2505,7 @@
       "external_id": "gomaterials:eeb48651-bf40-439e-8274-315afd1161fe",
       "content": "Who we are: GoMaterials is one of Canada's fastest-growing companies, recognized by Deloitte, the Globe & Mail, and the Lazaridis Scaleup Program. We're revolutionizing how landscape contractors source plant and hardscape materials through a B2B marketplace that simplifies procurement in a traditionally outdated industry. Since our inception, we have helped landscapers save time, money, and stress",
       "source_target": "gomaterials",
-      "last_seen": "2026-11-13T11:45:55.883921+00:00"
+      "last_seen": "2026-11-13T18:59:38.147210+00:00"
     },
     {
       "company": "Hatch",
@@ -2559,7 +2521,7 @@
       "external_id": null,
       "content": "",
       "source_target": "hatch",
-      "last_seen": "2026-11-13T11:44:51.670023+00:00"
+      "last_seen": "2026-11-13T18:58:39.261853+00:00"
     },
     {
       "company": "Hatch",
@@ -2573,7 +2535,7 @@
       "external_id": null,
       "content": "",
       "source_target": "hatch",
-      "last_seen": "2026-11-13T11:44:51.670023+00:00"
+      "last_seen": "2026-11-13T18:58:39.261853+00:00"
     },
     {
       "company": "Hatch",
@@ -2587,7 +2549,7 @@
       "external_id": null,
       "content": "",
       "source_target": "hatch",
-      "last_seen": "2026-11-13T11:44:51.670023+00:00"
+      "last_seen": "2026-11-13T18:58:39.261853+00:00"
     },
     {
       "company": "Hatch",
@@ -2615,7 +2577,7 @@
       "external_id": null,
       "content": "",
       "source_target": "hatch",
-      "last_seen": "2026-11-13T11:44:51.670023+00:00"
+      "last_seen": "2026-11-13T18:58:39.261853+00:00"
     },
     {
       "company": "Hatch",
@@ -2631,7 +2593,7 @@
       "external_id": null,
       "content": "",
       "source_target": "hatch",
-      "last_seen": "2026-11-13T11:44:51.670023+00:00"
+      "last_seen": "2026-11-13T18:58:39.261853+00:00"
     },
     {
       "company": "Hatch",
@@ -2647,7 +2609,7 @@
       "external_id": null,
       "content": "",
       "source_target": "hatch",
-      "last_seen": "2026-11-13T11:44:51.670023+00:00"
+      "last_seen": "2026-11-13T18:58:39.261853+00:00"
     },
     {
       "company": "Hatch",
@@ -2663,7 +2625,7 @@
       "external_id": null,
       "content": "",
       "source_target": "hatch",
-      "last_seen": "2026-11-13T11:44:51.670023+00:00"
+      "last_seen": "2026-11-13T18:58:39.261853+00:00"
     },
     {
       "company": "Hatch",
@@ -2677,7 +2639,7 @@
       "external_id": null,
       "content": "",
       "source_target": "hatch",
-      "last_seen": "2026-11-13T11:44:51.670023+00:00"
+      "last_seen": "2026-11-13T18:58:39.261853+00:00"
     },
     {
       "company": "Hatch",
@@ -2691,7 +2653,7 @@
       "external_id": null,
       "content": "",
       "source_target": "hatch",
-      "last_seen": "2026-11-13T11:44:51.670023+00:00"
+      "last_seen": "2026-11-13T18:58:39.261853+00:00"
     },
     {
       "company": "Hatch",
@@ -2705,7 +2667,7 @@
       "external_id": null,
       "content": "",
       "source_target": "hatch",
-      "last_seen": "2026-11-13T11:44:51.670023+00:00"
+      "last_seen": "2026-11-13T18:58:39.261853+00:00"
     },
     {
       "company": "Hatch",
@@ -2721,7 +2683,7 @@
       "external_id": null,
       "content": "",
       "source_target": "hatch",
-      "last_seen": "2026-11-13T11:44:51.670023+00:00"
+      "last_seen": "2026-11-13T18:58:39.261853+00:00"
     },
     {
       "company": "Hitachi",
@@ -2759,7 +2721,7 @@
       "external_id": "houseofcommonscanadachambredescommunescanada:744000101048091",
       "content": "",
       "source_target": "houseofcommonscanadachambredescommunescanada",
-      "last_seen": "2026-11-13T11:46:01.612020+00:00"
+      "last_seen": "2026-11-13T18:59:48.983032+00:00"
     },
     {
       "company": "House of Commons of Canada",
@@ -2773,7 +2735,7 @@
       "external_id": "houseofcommonscanadachambredescommunescanada:744000127508275",
       "content": "",
       "source_target": "houseofcommonscanadachambredescommunescanada",
-      "last_seen": "2026-11-13T11:46:01.612020+00:00"
+      "last_seen": "2026-11-13T18:59:48.983032+00:00"
     },
     {
       "company": "House of Commons of Canada",
@@ -2787,7 +2749,7 @@
       "external_id": "houseofcommonscanadachambredescommunescanada:744000127508759",
       "content": "",
       "source_target": "houseofcommonscanadachambredescommunescanada",
-      "last_seen": "2026-11-13T11:46:01.612020+00:00"
+      "last_seen": "2026-11-13T18:59:48.983032+00:00"
     },
     {
       "company": "House of Commons of Canada",
@@ -2801,7 +2763,7 @@
       "external_id": "houseofcommonscanadachambredescommunescanada:744000101048945",
       "content": "",
       "source_target": "houseofcommonscanadachambredescommunescanada",
-      "last_seen": "2026-11-13T11:46:01.612020+00:00"
+      "last_seen": "2026-11-13T18:59:48.983032+00:00"
     },
     {
       "company": "Human Computer Lab",
@@ -2818,7 +2780,7 @@
       "external_id": "human-computer-lab:3ceb956a-f231-4238-bb2e-365515b930a7",
       "content": "Human Computer Lab is a research lab building character robots that feel alive and responsive. Our first robot, LeLamp, explores a new category of consumer robotics where everyday objects become interactive and help us reshape our attachment to technology. Our goal is to push the frontier of human-robot interaction by making technology more legible, emotionally intuitive, and human-centered. We ar",
       "source_target": "human-computer-lab",
-      "last_seen": "2026-11-13T11:45:53.372359+00:00"
+      "last_seen": "2026-11-13T18:59:36.327073+00:00"
     },
     {
       "company": "Human Computer Lab",
@@ -2834,7 +2796,7 @@
       "external_id": "human-computer-lab:004ff3a2-7e38-4959-8bd7-48489cbc78f4",
       "content": "Human Computer Lab is a research lab building character robots that feel alive and responsive. Our first robot, LeLamp, explores a new category of consumer robotics where everyday objects become interactive and help us reshape our attachment to technology. Our goal is to push the frontier of human-robot interaction by making technology more legible, emotionally intuitive, and human-centered. We ar",
       "source_target": "human-computer-lab",
-      "last_seen": "2026-11-13T11:45:53.372359+00:00"
+      "last_seen": "2026-11-13T18:59:36.327073+00:00"
     },
     {
       "company": "Human Computer Lab",
@@ -2850,7 +2812,7 @@
       "external_id": "human-computer-lab:9aa0a361-9807-404b-a87e-1460699a296d",
       "content": "Human Computer Lab is a research lab building character robots that feel alive and responsive. Our first robot, LeLamp, explores a new category of consumer robotics where everyday objects become interactive and help us reshape our attachment to technology. Our goal is to push the frontier of human-robot interaction by making technology more legible, emotionally intuitive, and human-centered. We ar",
       "source_target": "human-computer-lab",
-      "last_seen": "2026-11-13T11:45:53.372359+00:00"
+      "last_seen": "2026-11-13T18:59:36.327073+00:00"
     },
     {
       "company": "Human Computer Lab",
@@ -2866,7 +2828,7 @@
       "external_id": "human-computer-lab:63a06836-54f4-4475-9e03-007ce5afc04c",
       "content": "Human Computer Lab is a research lab building character robots that feel alive and responsive. Our first robot, LeLamp, explores a new category of consumer robotics where everyday objects become interactive and help us reshape our attachment to technology. Our goal is to push the frontier of human-robot interaction by making technology more legible, emotionally intuitive, and human-centered. We ar",
       "source_target": "human-computer-lab",
-      "last_seen": "2026-11-13T11:45:53.372359+00:00"
+      "last_seen": "2026-11-13T18:59:36.327073+00:00"
     },
     {
       "company": "Human Computer Lab",
@@ -2883,7 +2845,7 @@
       "external_id": "human-computer-lab:1363a714-0195-4620-9fbd-bbf2e4fdf9ae",
       "content": "Human Computer Lab is a research lab building character robots that feel alive and responsive. Our first robot, LeLamp, explores a new category of consumer robotics where everyday objects become interactive and help us reshape our attachment to technology. Our goal is to push the frontier of human-robot interaction by making technology more legible, emotionally intuitive, and human-centered. We ar",
       "source_target": "human-computer-lab",
-      "last_seen": "2026-11-13T11:45:53.372359+00:00"
+      "last_seen": "2026-11-13T18:59:36.327073+00:00"
     },
     {
       "company": "Human Computer Lab",
@@ -2900,7 +2862,7 @@
       "external_id": "human-computer-lab:7d13ae27-1f02-4d9b-8d39-e3d9d67df705",
       "content": "Human Computer Lab is a research lab building character robots that feel alive and responsive. Our first robot, LeLamp, explores a new category of consumer robotics where everyday objects become interactive and help us reshape our attachment to technology. Our goal is to push the frontier of human-robot interaction by making technology more legible, emotionally intuitive, and human-centered. We ar",
       "source_target": "human-computer-lab",
-      "last_seen": "2026-11-13T11:45:53.372359+00:00"
+      "last_seen": "2026-11-13T18:59:36.327073+00:00"
     },
     {
       "company": "InstaLILY AI",
@@ -2916,7 +2878,7 @@
       "external_id": "instalilyai:4342089009",
       "content": "About InstaLILY InstaLILY is an AI products and infrastructure company that puts execution at the frontier of enterprise AI. That work begins with Lily\u2122 , the world's first AI Forward Deployed Engineer, which learns how a business works, builds the software it needs, and goes live in days. It does not leave when the work ships; it stays and keeps the software working as the business changes. Lily ",
       "source_target": "instalilyai",
-      "last_seen": "2026-11-13T11:45:52.447303+00:00"
+      "last_seen": "2026-11-13T18:59:35.157910+00:00"
     },
     {
       "company": "Intact Financial",
@@ -2932,21 +2894,7 @@
       "external_id": "intactfc:R156395",
       "content": "",
       "source_target": "intactfc.wd3/intactfc",
-      "last_seen": "2026-11-13T11:45:03.859733+00:00"
-    },
-    {
-      "company": "Intact Financial",
-      "title": "Articling Student",
-      "loc": "Montr\u00e9al, Quebec, CAN",
-      "geo": "Quebec",
-      "cats": [],
-      "url": "https://intactfc.wd3.myworkdayjobs.com/en-US/intactfc/job/Montral-Quebec-CAN/Stagiaire-en-Droit_R156020",
-      "posted": "Posted 28 Days Ago",
-      "src": "workday",
-      "external_id": "intactfc:R156020",
-      "content": "",
-      "source_target": "intactfc.wd3/intactfc",
-      "last_seen": "2026-11-13T11:45:03.859733+00:00"
+      "last_seen": "2026-11-13T18:58:50.001105+00:00"
     },
     {
       "company": "Intact Financial",
@@ -2962,7 +2910,7 @@
       "external_id": "intactfc:R156394",
       "content": "",
       "source_target": "intactfc.wd3/intactfc",
-      "last_seen": "2026-11-13T11:45:03.859733+00:00"
+      "last_seen": "2026-11-13T18:58:50.001105+00:00"
     },
     {
       "company": "Intact Financial",
@@ -2978,7 +2926,7 @@
       "external_id": "intactfc:R156596",
       "content": "Our employees are at the heart of everything we do. Together, we help people, businesses, and society prosper in good times and be resilient in bad times. Our employee promise represents Intact's commitment to you in exchange for living our Values, striving to do your best work, being open to change and investing in your career. In return, we promise to provide support, opportunities and performan",
       "source_target": "intactfc.wd3/intactfc",
-      "last_seen": "2026-11-13T11:45:03.859733+00:00"
+      "last_seen": "2026-11-13T18:58:50.001105+00:00"
     },
     {
       "company": "Intel",
@@ -2994,7 +2942,7 @@
       "external_id": "intel:JR0287933",
       "content": "",
       "source_target": "intel.wd1/external",
-      "last_seen": "2026-11-13T11:45:30.907723+00:00"
+      "last_seen": "2026-11-13T18:59:14.594483+00:00"
     },
     {
       "company": "Intel",
@@ -3010,7 +2958,7 @@
       "external_id": "intel:JR0287934",
       "content": "",
       "source_target": "intel.wd1/external",
-      "last_seen": "2026-11-13T11:45:30.907723+00:00"
+      "last_seen": "2026-11-13T18:59:14.594483+00:00"
     },
     {
       "company": "Jacobs",
@@ -3039,7 +2987,7 @@
       "external_id": "kepler:ccb93343-3e2f-485d-bccf-5e34512bf4cb",
       "content": "At Kepler Communications, we're not just imagining the future of on-demand space connectivity - we're leading it! Our mission is to provide real-time on-orbit connectivity for critical missions, enabling a new era of data-driven intelligence and innovation. With 33 satellites launched to date, Kepler operates the first commercial optical data relay constellation, enabling real-time, continuous spa",
       "source_target": "kepler",
-      "last_seen": "2026-11-13T11:45:56.129486+00:00"
+      "last_seen": "2026-11-13T18:59:38.662423+00:00"
     },
     {
       "company": "Kepler Communications",
@@ -3055,7 +3003,7 @@
       "external_id": "kepler:5514238a-8301-49f1-8116-26d38ea0900c",
       "content": "At Kepler Communications, we're not just imagining the future of on-demand space connectivity - we're leading it! Our mission is to provide real-time on-orbit connectivity for critical missions, enabling a new era of data-driven intelligence and innovation. With 33 satellites launched to date, Kepler operates the first commercial optical data relay constellation, enabling real-time, continuous spa",
       "source_target": "kepler",
-      "last_seen": "2026-11-13T11:45:56.129486+00:00"
+      "last_seen": "2026-11-13T18:59:38.662423+00:00"
     },
     {
       "company": "Kepler Communications",
@@ -3071,7 +3019,7 @@
       "external_id": "kepler:708c94ba-478f-4b2f-88dd-8fa808ca2866",
       "content": "At Kepler Communications, we're not just imagining the future of on-demand space connectivity - we're leading it! Our mission is to provide real-time on-orbit connectivity for critical missions, enabling a new era of data-driven intelligence and innovation. With 33 satellites launched to date, Kepler operates the first commercial optical data relay constellation, enabling real-time, continuous spa",
       "source_target": "kepler",
-      "last_seen": "2026-11-13T11:45:56.129486+00:00"
+      "last_seen": "2026-11-13T18:59:38.662423+00:00"
     },
     {
       "company": "Kiewit",
@@ -3087,7 +3035,7 @@
       "external_id": null,
       "content": "",
       "source_target": "kiewit",
-      "last_seen": "2026-11-13T11:44:53.166865+00:00"
+      "last_seen": "2026-11-13T18:58:39.916495+00:00"
     },
     {
       "company": "Kiewit",
@@ -3103,7 +3051,7 @@
       "external_id": null,
       "content": "",
       "source_target": "kiewit",
-      "last_seen": "2026-11-13T11:44:53.166865+00:00"
+      "last_seen": "2026-11-13T18:58:39.916495+00:00"
     },
     {
       "company": "Kiewit",
@@ -3119,7 +3067,7 @@
       "external_id": null,
       "content": "",
       "source_target": "kiewit",
-      "last_seen": "2026-11-13T11:44:53.166865+00:00"
+      "last_seen": "2026-11-13T18:58:39.916495+00:00"
     },
     {
       "company": "Kiewit",
@@ -3135,7 +3083,7 @@
       "external_id": null,
       "content": "",
       "source_target": "kiewit",
-      "last_seen": "2026-11-13T11:44:53.166865+00:00"
+      "last_seen": "2026-11-13T18:58:39.916495+00:00"
     },
     {
       "company": "Kiewit",
@@ -3149,7 +3097,7 @@
       "external_id": null,
       "content": "",
       "source_target": "kiewit",
-      "last_seen": "2026-11-13T11:44:53.166865+00:00"
+      "last_seen": "2026-11-13T18:58:39.916495+00:00"
     },
     {
       "company": "Kiewit",
@@ -3163,7 +3111,7 @@
       "external_id": null,
       "content": "",
       "source_target": "kiewit",
-      "last_seen": "2026-11-13T11:44:53.166865+00:00"
+      "last_seen": "2026-11-13T18:58:39.916495+00:00"
     },
     {
       "company": "Kiewit",
@@ -3179,7 +3127,7 @@
       "external_id": null,
       "content": "",
       "source_target": "kiewit",
-      "last_seen": "2026-11-13T11:44:53.166865+00:00"
+      "last_seen": "2026-11-13T18:58:39.916495+00:00"
     },
     {
       "company": "Kiewit",
@@ -3195,7 +3143,7 @@
       "external_id": null,
       "content": "",
       "source_target": "kiewit",
-      "last_seen": "2026-11-13T11:44:53.166865+00:00"
+      "last_seen": "2026-11-13T18:58:39.916495+00:00"
     },
     {
       "company": "Kiewit",
@@ -3209,7 +3157,7 @@
       "external_id": null,
       "content": "",
       "source_target": "kiewit",
-      "last_seen": "2026-11-13T11:44:53.166865+00:00"
+      "last_seen": "2026-11-13T18:58:39.916495+00:00"
     },
     {
       "company": "Kiewit",
@@ -3223,7 +3171,7 @@
       "external_id": null,
       "content": "",
       "source_target": "kiewit",
-      "last_seen": "2026-11-13T11:44:53.166865+00:00"
+      "last_seen": "2026-11-13T18:58:39.916495+00:00"
     },
     {
       "company": "Kiewit",
@@ -3237,7 +3185,7 @@
       "external_id": null,
       "content": "",
       "source_target": "kiewit",
-      "last_seen": "2026-11-13T11:44:53.166865+00:00"
+      "last_seen": "2026-11-13T18:58:39.916495+00:00"
     },
     {
       "company": "Kiewit",
@@ -3253,7 +3201,7 @@
       "external_id": null,
       "content": "",
       "source_target": "kiewit",
-      "last_seen": "2026-11-13T11:44:53.166865+00:00"
+      "last_seen": "2026-11-13T18:58:39.916495+00:00"
     },
     {
       "company": "Kiewit",
@@ -3269,7 +3217,7 @@
       "external_id": null,
       "content": "",
       "source_target": "kiewit",
-      "last_seen": "2026-11-13T11:44:53.166865+00:00"
+      "last_seen": "2026-11-13T18:58:39.916495+00:00"
     },
     {
       "company": "Kiewit",
@@ -3286,7 +3234,7 @@
       "external_id": null,
       "content": "",
       "source_target": "kiewit",
-      "last_seen": "2026-11-13T11:44:53.166865+00:00"
+      "last_seen": "2026-11-13T18:58:39.916495+00:00"
     },
     {
       "company": "Kiewit",
@@ -3302,7 +3250,7 @@
       "external_id": null,
       "content": "",
       "source_target": "kiewit",
-      "last_seen": "2026-11-13T11:44:53.166865+00:00"
+      "last_seen": "2026-11-13T18:58:39.916495+00:00"
     },
     {
       "company": "Kiewit",
@@ -3318,7 +3266,7 @@
       "external_id": null,
       "content": "",
       "source_target": "kiewit",
-      "last_seen": "2026-11-13T11:44:53.166865+00:00"
+      "last_seen": "2026-11-13T18:58:39.916495+00:00"
     },
     {
       "company": "Later",
@@ -3334,7 +3282,7 @@
       "external_id": "later:8604889002",
       "content": "Later is the world's most intelligent influencer marketing company, built to give brands the confidence to create unforgettable campaigns. By combining real creator relationships, trusted intelligence, and expert guidance, Later removes fear and guesswork from one of marketing's most visible investments. Built on a native, AI-powered platform and more than a decade of proprietary data-including bi",
       "source_target": "later",
-      "last_seen": "2026-11-13T11:45:52.611664+00:00"
+      "last_seen": "2026-11-13T18:59:35.401713+00:00"
     },
     {
       "company": "Later",
@@ -3350,7 +3298,7 @@
       "external_id": "later:8889650002",
       "content": "Later is the world's most intelligent influencer marketing company, built to give brands the confidence to create unforgettable campaigns. By combining real creator relationships, trusted intelligence, and expert guidance, Later removes fear and guesswork from one of marketing's most visible investments. Built on a native, AI-powered platform and more than a decade of proprietary data-including bi",
       "source_target": "later",
-      "last_seen": "2026-11-13T11:45:52.611664+00:00"
+      "last_seen": "2026-11-13T18:59:35.401713+00:00"
     },
     {
       "company": "MONTONI",
@@ -3364,7 +3312,7 @@
       "external_id": "groupemontoni:744000157831234",
       "content": "",
       "source_target": "groupemontoni",
-      "last_seen": "2026-11-13T11:46:02.314451+00:00"
+      "last_seen": "2026-11-13T18:59:52.707573+00:00"
     },
     {
       "company": "Mad Engine Global LLC",
@@ -3377,6 +3325,18 @@
       "src": "adzuna",
       "external_id": "5963212904",
       "content": "Job Description Job Description Position Summary The International Product Development Intern will support the Canada Product Development team with day-to-day coordination across the product creation process. Working closely with the Director of Product Development, the intern will help maintain product information, organize samples and materials, track development milestones, and communicate upda"
+    },
+    {
+      "company": "Mad Engine Global LLC",
+      "title": "International Production Intern",
+      "loc": "Toronto, Ontario",
+      "geo": "Ontario",
+      "cats": [],
+      "url": "https://www.adzuna.ca/details/5963136024?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-11-12T08:12:13Z",
+      "src": "adzuna",
+      "external_id": "5963136024",
+      "content": "Job Description Job Description Position Summary The International Production Intern will support the Canada Production team with day-to-day coordination, reporting, and follow-up across the product production cycle. Working closely with the Sourcing and Production Manager, the intern will help maintain accurate production information, organize samples and documents, monitor key milestones, and co"
     },
     {
       "company": "Manulife",
@@ -3407,7 +3367,7 @@
       "external_id": "marvell:2603862",
       "content": "",
       "source_target": "marvell.wd1/marvellcareers",
-      "last_seen": "2026-11-13T11:45:32.008766+00:00"
+      "last_seen": "2026-11-13T18:59:15.064570+00:00"
     },
     {
       "company": "Marvell",
@@ -3424,7 +3384,7 @@
       "external_id": "marvell:2502430-1",
       "content": "",
       "source_target": "marvell.wd1/marvellcareers",
-      "last_seen": "2026-11-13T11:45:32.008766+00:00"
+      "last_seen": "2026-11-13T18:59:15.064570+00:00"
     },
     {
       "company": "Marvell",
@@ -3441,7 +3401,7 @@
       "external_id": "marvell:2502426-1",
       "content": "",
       "source_target": "marvell.wd1/marvellcareers",
-      "last_seen": "2026-11-13T11:45:32.008766+00:00"
+      "last_seen": "2026-11-13T18:59:15.064570+00:00"
     },
     {
       "company": "Marvell",
@@ -3458,7 +3418,23 @@
       "external_id": "marvell:2502424-1",
       "content": "",
       "source_target": "marvell.wd1/marvellcareers",
-      "last_seen": "2026-11-13T11:45:32.008766+00:00"
+      "last_seen": "2026-11-13T18:59:15.064570+00:00"
+    },
+    {
+      "company": "Marvell",
+      "title": "Analog Layout Intern - BS/MS - 2027 Co-Op",
+      "loc": "Toronto, Canada",
+      "geo": "Ontario",
+      "cats": [
+        "Hardware & Embedded Systems"
+      ],
+      "url": "https://marvell.wd1.myworkdayjobs.com/en-US/marvellcareers/job/Toronto-Canada/Analog-Layout-Intern---BS-MS---2027-Co-Op_2604789",
+      "posted": "Posted Today",
+      "src": "workday",
+      "external_id": "marvell:2604789",
+      "content": "",
+      "source_target": "marvell.wd1/marvellcareers",
+      "last_seen": "2026-11-13T18:59:15.064570+00:00"
     },
     {
       "company": "Marvell",
@@ -3472,23 +3448,40 @@
       "external_id": "marvell:2604806-1",
       "content": "",
       "source_target": "marvell.wd1/marvellcareers",
-      "last_seen": "2026-11-13T11:45:32.008766+00:00"
+      "last_seen": "2026-11-13T18:59:15.064570+00:00"
     },
     {
       "company": "Marvell",
-      "title": "Firmware Engineer Intern - Winter 2027",
+      "title": "Data Center Silicon Hardware Engineering Intern - BS - 2027 Co-Op",
+      "loc": "2 Locations (approved Canada location)",
+      "geo": "Canada",
+      "cats": [
+        "IT & Infrastructure",
+        "Hardware & Embedded Systems"
+      ],
+      "url": "https://marvell.wd1.myworkdayjobs.com/en-US/marvellcareers/job/Ottawa-Canada/Data-Center-Silicon-Hardware-Engineering-Intern---BS---2027-Co-Op_2604525",
+      "posted": "Posted Today",
+      "src": "workday",
+      "external_id": "marvell:2604525",
+      "content": "",
+      "source_target": "marvell.wd1/marvellcareers",
+      "last_seen": "2026-11-13T18:59:15.064570+00:00"
+    },
+    {
+      "company": "Marvell",
+      "title": "Firmware Engineer Intern - Co-Op 2027",
       "loc": "Ottawa, Canada",
       "geo": "Ontario",
       "cats": [
         "Hardware & Embedded Systems"
       ],
       "url": "https://marvell.wd1.myworkdayjobs.com/en-US/marvellcareers/job/Ottawa-Canada/Firmware-Engineer-Intern---Winter-2027_2604738",
-      "posted": "Posted 30+ Days Ago",
+      "posted": "Posted Today",
       "src": "workday",
       "external_id": "marvell:2604738",
       "content": "",
       "source_target": "marvell.wd1/marvellcareers",
-      "last_seen": "2026-11-13T11:45:32.008766+00:00"
+      "last_seen": "2026-11-13T18:59:15.064570+00:00"
     },
     {
       "company": "Marvell",
@@ -3505,7 +3498,7 @@
       "external_id": "marvell:2603925",
       "content": "",
       "source_target": "marvell.wd1/marvellcareers",
-      "last_seen": "2026-11-13T11:45:32.008766+00:00"
+      "last_seen": "2026-11-13T18:59:15.064570+00:00"
     },
     {
       "company": "Marvell",
@@ -3522,7 +3515,7 @@
       "external_id": "marvell:2603755",
       "content": "",
       "source_target": "marvell.wd1/marvellcareers",
-      "last_seen": "2026-11-13T11:45:32.008766+00:00"
+      "last_seen": "2026-11-13T18:59:15.064570+00:00"
     },
     {
       "company": "Marvell",
@@ -3539,7 +3532,7 @@
       "external_id": "marvell:2502469-1",
       "content": "",
       "source_target": "marvell.wd1/marvellcareers",
-      "last_seen": "2026-11-13T11:45:32.008766+00:00"
+      "last_seen": "2026-11-13T18:59:15.064570+00:00"
     },
     {
       "company": "Moment Energy",
@@ -3555,7 +3548,7 @@
       "external_id": "momentenergy:4475608009",
       "content": "About Moment Energy Independent energy is here. Help us deploy it. Energy should be free.&nbsp; Free from aging grids, fragile supply chains, and unnecessary extraction. At Moment Energy, we're building a world where clean power is abundant, affordable, and uninterrupted for everyone. The world doesn't need another promise about energy; it needs proof that a freer future is possible. Moment Energy",
       "source_target": "momentenergy",
-      "last_seen": "2026-11-13T11:45:47.401408+00:00"
+      "last_seen": "2026-11-13T18:59:30.333214+00:00"
     },
     {
       "company": "Moment Energy",
@@ -3571,7 +3564,7 @@
       "external_id": "momentenergy:4421775009",
       "content": "About Moment Energy Independent energy is here. Help us deploy it. Energy should be free.&nbsp; Free from aging grids, fragile supply chains, and unnecessary extraction. At Moment Energy, we're building a world where clean power is abundant, affordable, and uninterrupted for everyone. The world doesn't need another promise about energy; it needs proof that a freer future is possible. Moment Energy",
       "source_target": "momentenergy",
-      "last_seen": "2026-11-13T11:45:47.401408+00:00"
+      "last_seen": "2026-11-13T18:59:30.333214+00:00"
     },
     {
       "company": "Moment Energy",
@@ -3587,7 +3580,7 @@
       "external_id": "momentenergy:4434560009",
       "content": "About Moment Energy Independent energy is here. Help us deploy it. Energy should be free.&nbsp; Free from aging grids, fragile supply chains, and unnecessary extraction. At Moment Energy, we're building a world where clean power is abundant, affordable, and uninterrupted for everyone. The world doesn't need another promise about energy; it needs proof that a freer future is possible. Moment Energy",
       "source_target": "momentenergy",
-      "last_seen": "2026-11-13T11:45:47.401408+00:00"
+      "last_seen": "2026-11-13T18:59:30.333214+00:00"
     },
     {
       "company": "Moment Energy",
@@ -3603,7 +3596,7 @@
       "external_id": "momentenergy:4434573009",
       "content": "About Moment Energy Independent energy is here. Help us deploy it. Energy should be free.&nbsp; Free from aging grids, fragile supply chains, and unnecessary extraction. At Moment Energy, we're building a world where clean power is abundant, affordable, and uninterrupted for everyone. The world doesn't need another promise about energy; it needs proof that a freer future is possible. Moment Energy",
       "source_target": "momentenergy",
-      "last_seen": "2026-11-13T11:45:47.401408+00:00"
+      "last_seen": "2026-11-13T18:59:30.333214+00:00"
     },
     {
       "company": "Moment Energy",
@@ -3619,7 +3612,7 @@
       "external_id": "momentenergy:4434577009",
       "content": "About Moment Energy Independent energy is here. Help us deploy it. Energy should be free.&nbsp; Free from aging grids, fragile supply chains, and unnecessary extraction. At Moment Energy, we're building a world where clean power is abundant, affordable, and uninterrupted for everyone. The world doesn't need another promise about energy; it needs proof that a freer future is possible. Moment Energy",
       "source_target": "momentenergy",
-      "last_seen": "2026-11-13T11:45:47.401408+00:00"
+      "last_seen": "2026-11-13T18:59:30.333214+00:00"
     },
     {
       "company": "Moment Energy",
@@ -3636,7 +3629,7 @@
       "external_id": "momentenergy:4455115009",
       "content": "About Moment Energy Independent energy is here. Help us deploy it. Energy should be free.&nbsp; Free from aging grids, fragile supply chains, and unnecessary extraction. At Moment Energy, we're building a world where clean power is abundant, affordable, and uninterrupted for everyone. The world doesn't need another promise about energy; it needs proof that a freer future is possible. Moment Energy",
       "source_target": "momentenergy",
-      "last_seen": "2026-11-13T11:45:47.401408+00:00"
+      "last_seen": "2026-11-13T18:59:30.333214+00:00"
     },
     {
       "company": "NVIDIA",
@@ -3653,7 +3646,7 @@
       "external_id": "nvidia:JR2027982",
       "content": "",
       "source_target": "nvidia.wd5/nvidiaexternalcareersite",
-      "last_seen": "2026-11-13T11:45:38.801059+00:00"
+      "last_seen": "2026-11-13T18:59:17.530785+00:00"
     },
     {
       "company": "NVIDIA",
@@ -3670,7 +3663,7 @@
       "external_id": "nvidia:JR2024997",
       "content": "",
       "source_target": "nvidia.wd5/nvidiaexternalcareersite",
-      "last_seen": "2026-11-13T11:45:38.801059+00:00"
+      "last_seen": "2026-11-13T18:59:17.530785+00:00"
     },
     {
       "company": "North America 2027",
@@ -3687,34 +3680,6 @@
       "content": "As an Analog/Mixed-Signal IC Design Engineer Intern, you will be part of a team developing high-performance analog and mixed-signal integrated circuits for connectivity applications. Responsibilities include the design, simulation, verification, and characterization of circuit blocks such as PLLs, DLLs, ADCs, regulators, amplifiers, clocking circuits, transmitters, and receivers using industry-sta"
     },
     {
-      "company": "North America 2027",
-      "title": "Platform Applications Engineer Intern/Co-op (Tools Development Engineer - COSMOS Platform Software)",
-      "loc": "Greater Vancouver, British Columbia",
-      "geo": "British Columbia",
-      "cats": [
-        "Software Engineering"
-      ],
-      "url": "https://www.adzuna.ca/details/5962880913?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-11-12T04:49:27Z",
-      "src": "adzuna",
-      "external_id": "5962880913",
-      "content": "Platform Applications Engineer Intern (Tools Development Engineer - COSMOS Platform Software) Location: Vancouver, B.C, Canada Employment type: Internship/Co-op About the role At Astera Labs, we design cutting-edge connectivity solutions that power the world's largest cloud service providers, server manufacturers, and networking OEMs. As a Tools Development Engineer Co-op, you will help shape COSM"
-    },
-    {
-      "company": "North America 2027",
-      "title": "Product Applications Engineer Intern (Scorpio)",
-      "loc": "Canada",
-      "geo": "Canada",
-      "cats": [
-        "General Engineering"
-      ],
-      "url": "https://www.adzuna.ca/details/5962881795?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-11-12T04:50:26Z",
-      "src": "adzuna",
-      "external_id": "5962881795",
-      "content": "Product Applications Engineer Intern (Scorpio) Location: Vancouver, British Columbia, Canada About the role Astera Labs is seeking a Product Applications Engineer Intern to join the Scorpio Product Applications team. You will gain hands-on experience helping customers and partners evaluate, integrate, validate, and use high-speed connectivity solutions in data-center and AI infrastructure systems."
-    },
-    {
       "company": "OLG",
       "title": "Analytics Engineering & Measurement Student",
       "loc": "2 Locations (approved Canada location)",
@@ -3728,7 +3693,7 @@
       "external_id": "olg:R26_00700",
       "content": "",
       "source_target": "olg.wd3/careers-students",
-      "last_seen": "2026-11-13T11:45:11.850477+00:00"
+      "last_seen": "2026-11-13T18:58:56.941459+00:00"
     },
     {
       "company": "Open Farm",
@@ -3744,7 +3709,7 @@
       "external_id": "openfarminc:5471290008",
       "content": "About Us &nbsp; At Open Farm we are transforming the way people feed their pets, with a focus on producing premium, healthy food and treats, all ethically sourced from farm-to-bowl. Headquartered in Toronto and with team members across the US, Open Farm is one of the fastest growing CPG companies in North America. We believe that the best foods are made with consciously sourced, top-quality ingred",
       "source_target": "openfarminc",
-      "last_seen": "2026-11-13T11:45:52.933256+00:00"
+      "last_seen": "2026-11-13T18:59:35.476320+00:00"
     },
     {
       "company": "Orennia",
@@ -3760,7 +3725,7 @@
       "external_id": "orennia:5277706008",
       "content": "Location: Calgary Headquarters Position Type: Internship (40 hours a week) Term Length: 8 or 12 months Reports to: Analyst&nbsp; About Orennia Orennia provides an all-in-one platform for accurate data, predictive analytics and actionable insights across the energy transition. We drive faster capital allocation decisions and help our clients maximize returns across the solar, wind, storage, power, ",
       "source_target": "orennia",
-      "last_seen": "2026-11-13T11:45:50.757907+00:00"
+      "last_seen": "2026-11-13T18:59:33.156833+00:00"
     },
     {
       "company": "Orennia",
@@ -3776,7 +3741,7 @@
       "external_id": "orennia:5448157008",
       "content": "Location: Calgary Headquarters &nbsp; Position Type: Full time, salaried (4-month term) &nbsp; Reports to: VP, Transmission About Orennia Orennia provides an all-in-one platform for accurate data, predictive analytics and actionable insights across the energy transition. We drive faster capital allocation decisions and help our clients maximize returns across the solar, wind, storage, power, RNG, ",
       "source_target": "orennia",
-      "last_seen": "2026-11-13T11:45:50.757907+00:00"
+      "last_seen": "2026-11-13T18:59:33.156833+00:00"
     },
     {
       "company": "Parrish & Heimbecker Limited",
@@ -3803,20 +3768,6 @@
       "src": "adzuna",
       "external_id": "5962884205",
       "content": "Benefits Intern Employment Type: Full Time, Contract (May - August) Division: Corporate Location: Winnipeg, MB Compensation: This internship is a paid position. Who We Are Parrish & Heimbecker, Limited (P&H) is a Canadian, family-owned company with over 115 years in agriculture. We operate across four divisions: Grain & Crop Inputs, Flour Milling, P&H Foods, and New-Life Mills, delivering trusted "
-    },
-    {
-      "company": "Parrish & Heimbecker Limited",
-      "title": "Operations Intern",
-      "loc": "Keoma, Calgary region",
-      "geo": "Alberta",
-      "cats": [
-        "Business Operations"
-      ],
-      "url": "https://www.adzuna.ca/details/5962882646?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-11-12T04:51:26Z",
-      "src": "adzuna",
-      "external_id": "5962882646",
-      "content": "Operations Intern Employment Type: Full Time, Contract (May - August) Division: Crop Inputs Location: Lyalta, AB Compensation: This internship is a paid position. Who We Are Parrish & Heimbecker, Limited (P&H) is a Canadian, family-owned company with over 115 years in agriculture. We operate across four divisions: Grain & Crop Inputs, Flour Milling, P&H Foods, and New-Life Mills, delivering truste"
     },
     {
       "company": "Pivotal Integrated HR Solutions",
@@ -3856,7 +3807,7 @@
       "external_id": "procogia:5448664008",
       "content": "About ProCogia: &nbsp; ProCogia is a data and AI consulting firm helping organizations turn complex technology challenges into measurable business outcomes. We work across highly regulated and high-stakes industries, including telecommunications, financial services, life sciences, healthcare, and the public sector, where security, governance, reliability, and performance are critical. Our teams br",
       "source_target": "procogia",
-      "last_seen": "2026-11-13T11:45:50.926074+00:00"
+      "last_seen": "2026-11-13T18:59:33.495821+00:00"
     },
     {
       "company": "Procogia",
@@ -3872,7 +3823,7 @@
       "external_id": "procogia:5455042008",
       "content": "About ProCogia: &nbsp; ProCogia is a data and AI consulting firm helping organizations turn complex technology challenges into measurable business outcomes. We work across highly regulated and high-stakes industries, including telecommunications, financial services, life sciences, healthcare, and the public sector, where security, governance, reliability, and performance are critical. Our teams br",
       "source_target": "procogia",
-      "last_seen": "2026-11-13T11:45:50.926074+00:00"
+      "last_seen": "2026-11-13T18:59:33.495821+00:00"
     },
     {
       "company": "Procogia",
@@ -3888,7 +3839,7 @@
       "external_id": "procogia:5448713008",
       "content": "About ProCogia: &nbsp; ProCogia is a data and AI consulting firm helping organizations turn complex technology challenges into measurable business outcomes. We work across highly regulated and high-stakes industries, including telecommunications, financial services, life sciences, healthcare, and the public sector, where security, governance, reliability, and performance are critical. Our teams br",
       "source_target": "procogia",
-      "last_seen": "2026-11-13T11:45:50.926074+00:00"
+      "last_seen": "2026-11-13T18:59:33.495821+00:00"
     },
     {
       "company": "Procogia",
@@ -3904,7 +3855,7 @@
       "external_id": "procogia:5453879008",
       "content": "About ProCogia: &nbsp; ProCogia is a data and AI consulting firm helping organizations turn complex technology challenges into measurable business outcomes. We work across highly regulated and high-stakes industries, including telecommunications, financial services, life sciences, healthcare, and the public sector, where security, governance, reliability, and performance are critical. Our teams br",
       "source_target": "procogia",
-      "last_seen": "2026-11-13T11:45:50.926074+00:00"
+      "last_seen": "2026-11-13T18:59:33.495821+00:00"
     },
     {
       "company": "Procogia",
@@ -3918,7 +3869,7 @@
       "external_id": "procogia:5448685008",
       "content": "About ProCogia: &nbsp; ProCogia is a data and AI consulting firm helping organizations turn complex technology challenges into measurable business outcomes. We work across highly regulated and high-stakes industries, including telecommunications, financial services, life sciences, healthcare, and the public sector, where security, governance, reliability, and performance are critical. Our teams br",
       "source_target": "procogia",
-      "last_seen": "2026-11-13T11:45:50.926074+00:00"
+      "last_seen": "2026-11-13T18:59:33.495821+00:00"
     },
     {
       "company": "Procogia",
@@ -3932,7 +3883,7 @@
       "external_id": "procogia:5433089008",
       "content": "About ProCogia: &nbsp; ProCogia is a data and AI consulting firm helping organizations turn complex technology challenges into measurable business outcomes. We work across highly regulated and high-stakes industries, including telecommunications, financial services, life sciences, healthcare, and the public sector, where security, governance, reliability, and performance are critical. Our teams br",
       "source_target": "procogia",
-      "last_seen": "2026-11-13T11:45:50.926074+00:00"
+      "last_seen": "2026-11-13T18:59:33.495821+00:00"
     },
     {
       "company": "Procogia",
@@ -3946,7 +3897,7 @@
       "external_id": "procogia:5449267008",
       "content": "About ProCogia: &nbsp; ProCogia is a data and AI consulting firm helping organizations turn complex technology challenges into measurable business outcomes. We work across highly regulated and high-stakes industries, including telecommunications, financial services, life sciences, healthcare, and the public sector, where security, governance, reliability, and performance are critical. Our teams br",
       "source_target": "procogia",
-      "last_seen": "2026-11-13T11:45:50.926074+00:00"
+      "last_seen": "2026-11-13T18:59:33.495821+00:00"
     },
     {
       "company": "Procogia",
@@ -3960,7 +3911,7 @@
       "external_id": "procogia:5265312008",
       "content": "About ProCogia: &nbsp; ProCogia is a data and AI consulting firm helping organizations turn complex technology challenges into measurable business outcomes. We work across highly regulated and high-stakes industries, including telecommunications, financial services, life sciences, healthcare, and the public sector, where security, governance, reliability, and performance are critical. Our teams br",
       "source_target": "procogia",
-      "last_seen": "2026-11-13T11:45:50.926074+00:00"
+      "last_seen": "2026-11-13T18:59:33.495821+00:00"
     },
     {
       "company": "QSL",
@@ -3974,7 +3925,19 @@
       "external_id": "qsl:744000156840989",
       "content": "",
       "source_target": "qsl",
-      "last_seen": "2026-11-13T11:46:03.216507+00:00"
+      "last_seen": "2026-11-13T18:59:53.603973+00:00"
+    },
+    {
+      "company": "RBC",
+      "title": "Relationship Manager Intern, Business Markets",
+      "loc": "Canada",
+      "geo": "Canada",
+      "cats": [],
+      "url": "https://www.adzuna.ca/details/5964820108?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-11-13T12:17:05Z",
+      "src": "adzuna",
+      "external_id": "5964820108",
+      "content": "What is the opportunity? You will provide business and financial advice and manage a portfolio of high value small business clients who need your help as they start, manage and grow their enterprises. You are RBC's ambassador to the local business market. Applying your mindset for external marketing and client acquisition, you will develop new business for RBC and deepen client relationships. Part"
     },
     {
       "company": "RPIA Careers Portal",
@@ -4004,20 +3967,6 @@
       "content": "At Raymond James, we develop, we collaborate, we decide, we deliver, and we improve together. Raymond James Ltd. is Canada's leading independent investment dealers offering high quality investment products and services to Canadians seeking customized solutions to their wealth management needs. Advisor Internship Program (AIP) How Does The Role Impact The Organization? Raymond James, Canada's leadi"
     },
     {
-      "company": "Resource Innovations Canada",
-      "title": "Energy Engineering Intern",
-      "loc": "Toronto, Ontario",
-      "geo": "Ontario",
-      "cats": [
-        "Electrical & Electronics Engineering"
-      ],
-      "url": "https://www.adzuna.ca/details/5962881133?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-11-12T04:49:41Z",
-      "src": "adzuna",
-      "external_id": "5962881133",
-      "content": "Job Description Resource Innovations is seeking an Energy Engineering Intern to join our growing team in Toronto, ON. We are seeking a highly skilled and motivated Energy Engineering Intern with a strong background in engineering analysis to join our dynamic team. As an Energy Engineering Intern, you will providing technical support in the evaluation of demand side management (DSM) programs by ana"
-    },
-    {
       "company": "Rivian and Volkswagen Group Technologies",
       "title": "Electromechanical Design Engineering Intern (Summer 2027)",
       "loc": "Vancouver, British Columbia",
@@ -4032,24 +3981,7 @@
       "external_id": "rivianvw.tech:d7645387-e536-453b-9b15-61f071a8135b",
       "content": "ABOUT US Rivian and Volkswagen Group Technologies is a joint venture between two industry leaders with a clear vision for automotive's next chapter. From operating systems to zonal controllers to cloud and connectivity solutions, we're addressing the challenges of electric vehicles through technology that will set the standards for software-defined vehicles around the world. The road to the future",
       "source_target": "rivianvw.tech",
-      "last_seen": "2026-11-13T11:45:54.801656+00:00"
-    },
-    {
-      "company": "Rivian and Volkswagen Group Technologies",
-      "title": "Mechatronics Lab Engineering Intern (January - August 2027)",
-      "loc": "Vancouver, British Columbia",
-      "geo": "British Columbia",
-      "cats": [
-        "Electrical & Electronics Engineering",
-        "Mechanical, Mechatronics & Robotics"
-      ],
-      "url": "https://jobs.ashbyhq.com/rivianvw.tech/e1647212-5d09-4877-a172-da50ae46dfe8",
-      "posted": "2026-11-06T14:45:19.659+00:00",
-      "src": "ashby",
-      "external_id": "rivianvw.tech:e1647212-5d09-4877-a172-da50ae46dfe8",
-      "content": "ABOUT US Rivian and Volkswagen Group Technologies is a joint venture between two industry leaders with a clear vision for automotive's next chapter. From operating systems to zonal controllers to cloud and connectivity solutions, we're addressing the challenges of electric vehicles through technology that will set the standards for software-defined vehicles around the world. The road to the future",
-      "source_target": "rivianvw.tech",
-      "last_seen": "2026-11-13T11:45:54.801656+00:00"
+      "last_seen": "2026-11-13T18:59:37.196859+00:00"
     },
     {
       "company": "Rivian and Volkswagen Group Technologies",
@@ -4065,7 +3997,7 @@
       "external_id": "rivianvw.tech:b142f138-e300-4e84-8aa5-50ed506d288b",
       "content": "ABOUT US Rivian and Volkswagen Group Technologies is a joint venture between two industry leaders with a clear vision for automotive's next chapter. From operating systems to zonal controllers to cloud and connectivity solutions, we're addressing the challenges of electric vehicles through technology that will set the standards for software-defined vehicles around the world. The road to the future",
       "source_target": "rivianvw.tech",
-      "last_seen": "2026-11-13T11:45:54.801656+00:00"
+      "last_seen": "2026-11-13T18:59:37.196859+00:00"
     },
     {
       "company": "Rivian and Volkswagen Group Technologies",
@@ -4081,7 +4013,7 @@
       "external_id": "rivianvw.tech:bc8e38eb-b68c-4234-a06a-99875df7d600",
       "content": "ABOUT US Rivian and Volkswagen Group Technologies is a joint venture between two industry leaders with a clear vision for automotive's next chapter. From operating systems to zonal controllers to cloud and connectivity solutions, we're addressing the challenges of electric vehicles through technology that will set the standards for software-defined vehicles around the world. The road to the future",
       "source_target": "rivianvw.tech",
-      "last_seen": "2026-11-13T11:45:54.801656+00:00"
+      "last_seen": "2026-11-13T18:59:37.196859+00:00"
     },
     {
       "company": "Rivian and Volkswagen Group Technologies",
@@ -4097,7 +4029,7 @@
       "external_id": "rivianvw.tech:eebfb0d2-b4d7-407b-941e-51f53f5412ec",
       "content": "ABOUT US Rivian and Volkswagen Group Technologies is a joint venture between two industry leaders with a clear vision for automotive's next chapter. From operating systems to zonal controllers to cloud and connectivity solutions, we're addressing the challenges of electric vehicles through technology that will set the standards for software-defined vehicles around the world. The road to the future",
       "source_target": "rivianvw.tech",
-      "last_seen": "2026-11-13T11:45:54.801656+00:00"
+      "last_seen": "2026-11-13T18:59:37.196859+00:00"
     },
     {
       "company": "Rivian and Volkswagen Group Technologies",
@@ -4114,7 +4046,7 @@
       "external_id": "rivianvw.tech:c6ae5fc4-ac16-450c-ac07-3efd6f0411a1",
       "content": "ABOUT US Rivian and Volkswagen Group Technologies is a joint venture between two industry leaders with a clear vision for automotive's next chapter. From operating systems to zonal controllers to cloud and connectivity solutions, we're addressing the challenges of electric vehicles through technology that will set the standards for software-defined vehicles around the world. The road to the future",
       "source_target": "rivianvw.tech",
-      "last_seen": "2026-11-13T11:45:54.801656+00:00"
+      "last_seen": "2026-11-13T18:59:37.196859+00:00"
     },
     {
       "company": "Rivian and Volkswagen Group Technologies",
@@ -4130,7 +4062,7 @@
       "external_id": "rivianvw.tech:e00c49b7-44c1-4f0c-af3c-2c7a7402185b",
       "content": "ABOUT US Rivian and Volkswagen Group Technologies is a joint venture between two industry leaders with a clear vision for automotive's next chapter. From operating systems to zonal controllers to cloud and connectivity solutions, we're addressing the challenges of electric vehicles through technology that will set the standards for software-defined vehicles around the world. The road to the future",
       "source_target": "rivianvw.tech",
-      "last_seen": "2026-11-13T11:45:54.801656+00:00"
+      "last_seen": "2026-11-13T18:59:37.196859+00:00"
     },
     {
       "company": "Rivian and Volkswagen Group Technologies",
@@ -4146,7 +4078,7 @@
       "external_id": "rivianvw.tech:a4e49f0a-7e3c-40b1-95a1-28fd907526d0",
       "content": "ABOUT US Rivian and Volkswagen Group Technologies is a joint venture between two industry leaders with a clear vision for automotive's next chapter. From operating systems to zonal controllers to cloud and connectivity solutions, we're addressing the challenges of electric vehicles through technology that will set the standards for software-defined vehicles around the world. The road to the future",
       "source_target": "rivianvw.tech",
-      "last_seen": "2026-11-13T11:45:54.801656+00:00"
+      "last_seen": "2026-11-13T18:59:37.196859+00:00"
     },
     {
       "company": "Rocket Lab",
@@ -4160,7 +4092,7 @@
       "external_id": "rocketlab:7993736003",
       "content": "ABOUT ROCKET LAB Rocket Lab is the end-to-end space company building rockets, spacecraft, and critical subsystems that keep the world connected, protected, expand humanity's reach to the Moon, Mars, and beyond. We move fast, build real hardware for meaningful missions, and make the impossible routine. Come shape the future with us. As a Business Development Intern based at Rocket Lab's site in Tor",
       "source_target": "rocketlab",
-      "last_seen": "2026-11-13T11:45:48.466941+00:00"
+      "last_seen": "2026-11-13T18:59:31.696866+00:00"
     },
     {
       "company": "Rocket Lab",
@@ -4174,7 +4106,7 @@
       "external_id": "rocketlab:7993738003",
       "content": "ABOUT ROCKET LAB Rocket Lab is the end-to-end space company building rockets, spacecraft, and critical subsystems that keep the world connected, protected, expand humanity's reach to the Moon, Mars, and beyond. We move fast, build real hardware for meaningful missions, and make the impossible routine. Come shape the future with us. As a Business&nbsp;Development&nbsp;Intern based at Rocket Lab's s",
       "source_target": "rocketlab",
-      "last_seen": "2026-11-13T11:45:48.466941+00:00"
+      "last_seen": "2026-11-13T18:59:31.696866+00:00"
     },
     {
       "company": "Rocket Lab",
@@ -4190,7 +4122,7 @@
       "external_id": "rocketlab:7990043003",
       "content": "ABOUT ROCKET LAB Rocket Lab is the end-to-end space company building rockets, spacecraft, and critical subsystems that keep the world connected, protected, expand humanity's reach to the Moon, Mars, and beyond. We move fast, build real hardware for meaningful missions, and make the impossible routine. Come shape the future with us. As&nbsp;a&nbsp;Electrical Engineering Intern based at Rocket Lab's",
       "source_target": "rocketlab",
-      "last_seen": "2026-11-13T11:45:48.466941+00:00"
+      "last_seen": "2026-11-13T18:59:31.696866+00:00"
     },
     {
       "company": "Rocket Lab",
@@ -4206,7 +4138,7 @@
       "external_id": "rocketlab:7991769003",
       "content": "ABOUT ROCKET LAB Rocket Lab is the end-to-end space company building rockets, spacecraft, and critical subsystems that keep the world connected, protected, expand humanity's reach to the Moon, Mars, and beyond. We move fast, build real hardware for meaningful missions, and make the impossible routine. Come shape the future with us. As a Mechanical Engineering Intern based at Rocket Lab's site in T",
       "source_target": "rocketlab",
-      "last_seen": "2026-11-13T11:45:48.466941+00:00"
+      "last_seen": "2026-11-13T18:59:31.696866+00:00"
     },
     {
       "company": "Rockwell Automation",
@@ -4220,7 +4152,7 @@
       "external_id": "rockwellautomation:R26-5039-1",
       "content": "",
       "source_target": "rockwellautomation.wd1/external-rockwell-automation-early-careers",
-      "last_seen": "2026-11-13T11:45:13.729787+00:00"
+      "last_seen": "2026-11-13T18:58:58.540860+00:00"
     },
     {
       "company": "Rockwell Automation",
@@ -4236,7 +4168,7 @@
       "external_id": "rockwellautomation:R26-8569-2",
       "content": "",
       "source_target": "rockwellautomation.wd1/external-rockwell-automation-early-careers",
-      "last_seen": "2026-11-13T11:45:13.729787+00:00"
+      "last_seen": "2026-11-13T18:58:58.540860+00:00"
     },
     {
       "company": "Rockwell Automation",
@@ -4252,7 +4184,7 @@
       "external_id": "rockwellautomation:R26-8236-2",
       "content": "",
       "source_target": "rockwellautomation.wd1/external-rockwell-automation-early-careers",
-      "last_seen": "2026-11-13T11:45:13.729787+00:00"
+      "last_seen": "2026-11-13T18:58:58.540860+00:00"
     },
     {
       "company": "Rockwell Automation",
@@ -4268,7 +4200,7 @@
       "external_id": "rockwellautomation:R26-5965-1",
       "content": "",
       "source_target": "rockwellautomation.wd1/external-rockwell-automation-early-careers",
-      "last_seen": "2026-11-13T11:45:13.729787+00:00"
+      "last_seen": "2026-11-13T18:58:58.540860+00:00"
     },
     {
       "company": "SDM Richmond & Carling",
@@ -4297,7 +4229,7 @@
       "external_id": "sgs:744000149952269",
       "content": "",
       "source_target": "sgs",
-      "last_seen": "2026-11-13T11:46:03.540213+00:00"
+      "last_seen": "2026-11-13T18:59:53.905220+00:00"
     },
     {
       "company": "SMS Equipment",
@@ -4354,32 +4286,6 @@
       "content": "At Saputo, we bring good to the table by making high-quality products, investing in our people, and supporting communities around the world . As a top 10 global dairy processor, we value contributions that matter and strive to foster an inclusive, growth-driven work environment. Ready to bring your best? Intern, Maintenance Technician/Engineer - Mount Pearl Saputo's people bring expertise, talent "
     },
     {
-      "company": "Saputo",
-      "title": "Intern, Supply Chain IT Analyst",
-      "loc": "Mississauga, Peel region",
-      "geo": "Ontario",
-      "cats": [
-        "Business Operations"
-      ],
-      "url": "https://www.adzuna.ca/details/5962878680?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-11-12T04:47:33Z",
-      "src": "adzuna",
-      "external_id": "5962878680",
-      "content": "At Saputo, we bring good to the table by making high-quality products, investing in our people, and supporting communities around the world . As a top 10 global dairy processor, we value contributions that matter and strive to foster an inclusive, growth-driven work environment. Ready to bring your best? About the role The Supply Chain IT Analyst Intern will support Project Gold / Argentina Carveo"
-    },
-    {
-      "company": "Saputo",
-      "title": "Intern, Transport and Fleet",
-      "loc": "Canada",
-      "geo": "Canada",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5962883098?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-11-12T04:51:54Z",
-      "src": "adzuna",
-      "external_id": "5962883098",
-      "content": "At Saputo, we bring good to the table by making high-quality products, investing in our people, and supporting communities around the world . As a top 10 global dairy processor, we value contributions that matter and strive to foster an inclusive, growth-driven work environment. Ready to bring your best? How you will make contributions that matter You are best suited for the role if you\u2026 We suppor"
-    },
-    {
       "company": "SaskPower",
       "title": "Summer Student - Administration",
       "loc": "Saskatchewan, Canada",
@@ -4391,7 +4297,7 @@
       "external_id": null,
       "content": "",
       "source_target": "saskpower",
-      "last_seen": "2026-11-13T11:44:50.900880+00:00"
+      "last_seen": "2026-11-13T18:58:38.680395+00:00"
     },
     {
       "company": "SaskPower",
@@ -4407,7 +4313,7 @@
       "external_id": null,
       "content": "",
       "source_target": "saskpower",
-      "last_seen": "2026-11-13T11:44:50.900880+00:00"
+      "last_seen": "2026-11-13T18:58:38.680395+00:00"
     },
     {
       "company": "SaskPower",
@@ -4421,7 +4327,7 @@
       "external_id": null,
       "content": "",
       "source_target": "saskpower",
-      "last_seen": "2026-11-13T11:44:50.900880+00:00"
+      "last_seen": "2026-11-13T18:58:38.680395+00:00"
     },
     {
       "company": "ShyftLabs",
@@ -4437,7 +4343,7 @@
       "external_id": "shyftlabs:4f389ea7-9b98-4ed0-99c2-b25ea8cc2dcd",
       "content": "",
       "source_target": "shyftlabs",
-      "last_seen": "2026-11-13T11:45:56.205902+00:00"
+      "last_seen": "2026-11-13T18:59:39.285925+00:00"
     },
     {
       "company": "ShyftLabs",
@@ -4451,7 +4357,7 @@
       "external_id": "shyftlabs:402f57f4-ef06-49e2-8ec6-07bc1ea7c4ba",
       "content": "About ShyftLabs ShyftLabs is a fast-growing data product and AI company founded in 2020. We partner with Fortune 500 companies across industries to build digital solutions that accelerate growth, with a focus on creating real value through innovation. The Role We're looking for a resourceful, curious Business Development Intern to join our Toronto team. You'll work directly with our SVP and Strate",
       "source_target": "shyftlabs",
-      "last_seen": "2026-11-13T11:45:56.205902+00:00"
+      "last_seen": "2026-11-13T18:59:39.285925+00:00"
     },
     {
       "company": "ShyftLabs",
@@ -4465,7 +4371,7 @@
       "external_id": "shyftlabs:b9de405d-1a6b-401e-b093-6a6f81d1ecde",
       "content": "About ShyftLabs ShyftLabs is a growing data product and AI company founded in 2020, working primarily with Fortune 500 companies to deliver digital solutions that help businesses grow. The Role We're looking for a creative and detail-oriented Graphic Design Intern to join our Toronto team. You'll work closely with our designers, including our UX/UI Designer, to create visuals and content that stre",
       "source_target": "shyftlabs",
-      "last_seen": "2026-11-13T11:45:56.205902+00:00"
+      "last_seen": "2026-11-13T18:59:39.285925+00:00"
     },
     {
       "company": "Spaceium",
@@ -4481,7 +4387,7 @@
       "external_id": "spaceium:4258525009",
       "content": "&nbsp; At Spaceium, we are building spacecraft systems designed to push the boundaries of what's possible in orbit. As an Electrical Intern, you will work alongside our electrical engineering team on real spacecraft hardware. This is a hands-on role where you will contribute directly to the design, testing, and integration of electrical and electronic systems for our missions. Responsibilities Sup",
       "source_target": "spaceium",
-      "last_seen": "2026-11-13T11:45:49.059909+00:00"
+      "last_seen": "2026-11-13T18:59:31.948201+00:00"
     },
     {
       "company": "Spaceium",
@@ -4497,7 +4403,7 @@
       "external_id": "spaceium:4475283009",
       "content": "&nbsp; At Spaceium, we are building spacecraft systems designed to push the boundaries of what's possible in orbit. As an Electrical Intern, you will work alongside our electrical engineering team on real spacecraft hardware. This is a hands-on role where you will contribute directly to the design, testing, and integration of electrical and electronic systems for our missions. Responsibilities Sup",
       "source_target": "spaceium",
-      "last_seen": "2026-11-13T11:45:49.059909+00:00"
+      "last_seen": "2026-11-13T18:59:31.948201+00:00"
     },
     {
       "company": "Spaceium",
@@ -4513,7 +4419,7 @@
       "external_id": "spaceium:4368438009",
       "content": "&nbsp; At Spaceium, we are building spacecraft systems designed to push the boundaries of what's possible in orbit. As an Electrical Intern, you will work alongside our electrical engineering team on real spacecraft hardware. This is a hands-on role where you will contribute directly to the design, testing, and integration of electrical and electronic systems for our missions. Responsibilities Sup",
       "source_target": "spaceium",
-      "last_seen": "2026-11-13T11:45:49.059909+00:00"
+      "last_seen": "2026-11-13T18:59:31.948201+00:00"
     },
     {
       "company": "Spaceium",
@@ -4529,7 +4435,7 @@
       "external_id": "spaceium:4475285009",
       "content": "At Spaceium, we are building spacecraft systems designed to push the boundaries of what's possible in orbit. As a Mechanical Intern, you will work alongside our mechanical engineering team on real spacecraft hardware. This is a hands-on role where you will contribute to the design, analysis, build, and testing of the mechanical structures, mechanisms, and assemblies critical to our missions. Respo",
       "source_target": "spaceium",
-      "last_seen": "2026-11-13T11:45:49.059909+00:00"
+      "last_seen": "2026-11-13T18:59:31.948201+00:00"
     },
     {
       "company": "Spaceium",
@@ -4545,7 +4451,7 @@
       "external_id": "spaceium:4368439009",
       "content": "At Spaceium, we are building spacecraft systems designed to push the boundaries of what's possible in orbit. As a Mechanical Intern, you will work alongside our mechanical engineering team on real spacecraft hardware. This is a hands-on role where you will contribute to the design, analysis, build, and testing of the mechanical structures, mechanisms, and assemblies critical to our missions. Respo",
       "source_target": "spaceium",
-      "last_seen": "2026-11-13T11:45:49.059909+00:00"
+      "last_seen": "2026-11-13T18:59:31.948201+00:00"
     },
     {
       "company": "StepStone Group",
@@ -4559,7 +4465,7 @@
       "external_id": "stepstone:8239658",
       "content": "We are global private markets specialists&nbsp;delivering tailored investment solutions,&nbsp;advisory services, and impactful, data driven&nbsp;insights to the world's investors.&nbsp;Leveraging the power of our platform and&nbsp;our peerless intelligence across sectors,&nbsp;strategies, and geographies, we help&nbsp;identify the advantages and the answers&nbsp;our clients need to succeed. The te",
       "source_target": "stepstone",
-      "last_seen": "2026-11-13T11:45:53.146880+00:00"
+      "last_seen": "2026-11-13T18:59:35.893015+00:00"
     },
     {
       "company": "Syngenta",
@@ -4573,7 +4479,7 @@
       "external_id": "syngentagroup:744000149633193",
       "content": "",
       "source_target": "syngentagroup",
-      "last_seen": "2026-11-13T11:45:58.802398+00:00"
+      "last_seen": "2026-11-13T18:59:46.313260+00:00"
     },
     {
       "company": "Syngenta",
@@ -4587,7 +4493,7 @@
       "external_id": "syngentagroup:744000149683318",
       "content": "",
       "source_target": "syngentagroup",
-      "last_seen": "2026-11-13T11:45:58.802398+00:00"
+      "last_seen": "2026-11-13T18:59:46.313260+00:00"
     },
     {
       "company": "Syngenta",
@@ -4601,7 +4507,7 @@
       "external_id": "syngentagroup:744000148244624",
       "content": "",
       "source_target": "syngentagroup",
-      "last_seen": "2026-11-13T11:45:58.802398+00:00"
+      "last_seen": "2026-11-13T18:59:46.313260+00:00"
     },
     {
       "company": "Syngenta",
@@ -4615,7 +4521,7 @@
       "external_id": "syngentagroup:744000151900597",
       "content": "",
       "source_target": "syngentagroup",
-      "last_seen": "2026-11-13T11:45:58.802398+00:00"
+      "last_seen": "2026-11-13T18:59:46.313260+00:00"
     },
     {
       "company": "Syngenta",
@@ -4629,7 +4535,7 @@
       "external_id": "syngentagroup:744000152167225",
       "content": "",
       "source_target": "syngentagroup",
-      "last_seen": "2026-11-13T11:45:58.802398+00:00"
+      "last_seen": "2026-11-13T18:59:46.313260+00:00"
     },
     {
       "company": "Syngenta",
@@ -4643,7 +4549,7 @@
       "external_id": "syngentagroup:744000152167334",
       "content": "",
       "source_target": "syngentagroup",
-      "last_seen": "2026-11-13T11:45:58.802398+00:00"
+      "last_seen": "2026-11-13T18:59:46.313260+00:00"
     },
     {
       "company": "TC Energy",
@@ -4659,7 +4565,7 @@
       "external_id": "tcenergy:JR-10970",
       "content": "",
       "source_target": "tcenergy.wd3/career_site_tc",
-      "last_seen": "2026-11-13T11:45:05.478602+00:00"
+      "last_seen": "2026-11-13T18:58:51.260542+00:00"
     },
     {
       "company": "TC Energy",
@@ -4675,7 +4581,7 @@
       "external_id": "tcenergy:JR-10972",
       "content": "",
       "source_target": "tcenergy.wd3/career_site_tc",
-      "last_seen": "2026-11-13T11:45:05.478602+00:00"
+      "last_seen": "2026-11-13T18:58:51.260542+00:00"
     },
     {
       "company": "TC Energy",
@@ -4691,7 +4597,7 @@
       "external_id": "tcenergy:JR-10865",
       "content": "",
       "source_target": "tcenergy.wd3/career_site_tc",
-      "last_seen": "2026-11-13T11:45:05.478602+00:00"
+      "last_seen": "2026-11-13T18:58:51.260542+00:00"
     },
     {
       "company": "TC Energy",
@@ -4707,7 +4613,7 @@
       "external_id": "tcenergy:JR-10851",
       "content": "",
       "source_target": "tcenergy.wd3/career_site_tc",
-      "last_seen": "2026-11-13T11:45:05.478602+00:00"
+      "last_seen": "2026-11-13T18:58:51.260542+00:00"
     },
     {
       "company": "TC Energy",
@@ -4723,7 +4629,7 @@
       "external_id": "tcenergy:JR-11276",
       "content": "",
       "source_target": "tcenergy.wd3/career_site_tc",
-      "last_seen": "2026-11-13T11:45:05.478602+00:00"
+      "last_seen": "2026-11-13T18:58:51.260542+00:00"
     },
     {
       "company": "TC Energy",
@@ -4737,7 +4643,7 @@
       "external_id": "tcenergy:JR-10995",
       "content": "",
       "source_target": "tcenergy.wd3/career_site_tc",
-      "last_seen": "2026-11-13T11:45:05.478602+00:00"
+      "last_seen": "2026-11-13T18:58:51.260542+00:00"
     },
     {
       "company": "TC Energy",
@@ -4753,7 +4659,7 @@
       "external_id": "tcenergy:JR-11004",
       "content": "",
       "source_target": "tcenergy.wd3/career_site_tc",
-      "last_seen": "2026-11-13T11:45:05.478602+00:00"
+      "last_seen": "2026-11-13T18:58:51.260542+00:00"
     },
     {
       "company": "TC Energy",
@@ -4767,7 +4673,7 @@
       "external_id": "tcenergy:JR-10952",
       "content": "",
       "source_target": "tcenergy.wd3/career_site_tc",
-      "last_seen": "2026-11-13T11:45:05.478602+00:00"
+      "last_seen": "2026-11-13T18:58:51.260542+00:00"
     },
     {
       "company": "TC Energy",
@@ -4783,7 +4689,7 @@
       "external_id": "tcenergy:JR-10863",
       "content": "",
       "source_target": "tcenergy.wd3/career_site_tc",
-      "last_seen": "2026-11-13T11:45:05.478602+00:00"
+      "last_seen": "2026-11-13T18:58:51.260542+00:00"
     },
     {
       "company": "TMX",
@@ -4868,7 +4774,7 @@
       "external_id": "tenstorrentuniversity:5259347007",
       "content": "Tenstorrent is leading the industry on cutting-edge AI technology, revolutionizing performance expectations, ease of use, and cost efficiency. With AI redefining the computing paradigm, solutions must evolve to unify innovations in software models, compilers, platforms, networking, and semiconductors. Our diverse team of technologists have developed a high performance RISC-V CPU from scratch, and ",
       "source_target": "tenstorrentuniversity",
-      "last_seen": "2026-11-13T11:45:49.374624+00:00"
+      "last_seen": "2026-11-13T18:59:32.165189+00:00"
     },
     {
       "company": "Tenstorrent",
@@ -4886,7 +4792,7 @@
       "external_id": "tenstorrentuniversity:5256579007",
       "content": "Tenstorrent is leading the industry on cutting-edge AI technology, revolutionizing performance expectations, ease of use, and cost efficiency. With AI redefining the computing paradigm, solutions must evolve to unify innovations in software models, compilers, platforms, networking, and semiconductors. Our diverse team of technologists have developed a high performance RISC-V CPU from scratch, and ",
       "source_target": "tenstorrentuniversity",
-      "last_seen": "2026-11-13T11:45:49.374624+00:00"
+      "last_seen": "2026-11-13T18:59:32.165189+00:00"
     },
     {
       "company": "Tenstorrent",
@@ -4902,7 +4808,7 @@
       "external_id": "tenstorrentuniversity:5271796007",
       "content": "Tenstorrent is leading the industry on cutting-edge AI technology, revolutionizing performance expectations, ease of use, and cost efficiency. With AI redefining the computing paradigm, solutions must evolve to unify innovations in software models, compilers, platforms, networking, and semiconductors. Our diverse team of technologists have developed a high performance RISC-V CPU from scratch, and ",
       "source_target": "tenstorrentuniversity",
-      "last_seen": "2026-11-13T11:45:49.374624+00:00"
+      "last_seen": "2026-11-13T18:59:32.165189+00:00"
     },
     {
       "company": "Tenstorrent",
@@ -4916,7 +4822,7 @@
       "external_id": "tenstorrentuniversity:5274249007",
       "content": "Tenstorrent is leading the industry on cutting-edge AI technology, revolutionizing performance expectations, ease of use, and cost efficiency. With AI redefining the computing paradigm, solutions must evolve to unify innovations in software models, compilers, platforms, networking, and semiconductors. Our diverse team of technologists have developed a high performance RISC-V CPU from scratch, and ",
       "source_target": "tenstorrentuniversity",
-      "last_seen": "2026-11-13T11:45:49.374624+00:00"
+      "last_seen": "2026-11-13T18:59:32.165189+00:00"
     },
     {
       "company": "Tenstorrent",
@@ -4933,7 +4839,7 @@
       "external_id": "tenstorrentuniversity:5256568007",
       "content": "Tenstorrent is leading the industry on cutting-edge AI technology, revolutionizing performance expectations, ease of use, and cost efficiency. With AI redefining the computing paradigm, solutions must evolve to unify innovations in software models, compilers, platforms, networking, and semiconductors. Our diverse team of technologists have developed a high performance RISC-V CPU from scratch, and ",
       "source_target": "tenstorrentuniversity",
-      "last_seen": "2026-11-13T11:45:49.374624+00:00"
+      "last_seen": "2026-11-13T18:59:32.165189+00:00"
     },
     {
       "company": "Tenstorrent",
@@ -4949,7 +4855,7 @@
       "external_id": "tenstorrentuniversity:5274169007",
       "content": "Tenstorrent is leading the industry on cutting-edge AI technology, revolutionizing performance expectations, ease of use, and cost efficiency. With AI redefining the computing paradigm, solutions must evolve to unify innovations in software models, compilers, platforms, networking, and semiconductors. Our diverse team of technologists have developed a high performance RISC-V CPU from scratch, and ",
       "source_target": "tenstorrentuniversity",
-      "last_seen": "2026-11-13T11:45:49.374624+00:00"
+      "last_seen": "2026-11-13T18:59:32.165189+00:00"
     },
     {
       "company": "Tenstorrent",
@@ -4965,7 +4871,7 @@
       "external_id": "tenstorrentuniversity:5264407007",
       "content": "Tenstorrent is leading the industry on cutting-edge AI technology, revolutionizing performance expectations, ease of use, and cost efficiency. With AI redefining the computing paradigm, solutions must evolve to unify innovations in software models, compilers, platforms, networking, and semiconductors. Our diverse team of technologists have developed a high performance RISC-V CPU from scratch, and ",
       "source_target": "tenstorrentuniversity",
-      "last_seen": "2026-11-13T11:45:49.374624+00:00"
+      "last_seen": "2026-11-13T18:59:32.165189+00:00"
     },
     {
       "company": "The Brattle Group",
@@ -4979,7 +4885,7 @@
       "external_id": "thebrattlegroup:4736066005",
       "content": "Please note that while we accept applications for our internship position starting in the fall, we will not begin actively contacting candidates for interviews until/after November 2026. Our Summer Internship Opportunity: This internship program will provide you with the opportunity to apply the economic concepts you're learning in the classroom in a professional services setting. It will also hel",
       "source_target": "thebrattlegroup",
-      "last_seen": "2026-11-13T11:45:53.225489+00:00"
+      "last_seen": "2026-11-13T18:59:36.026119+00:00"
     },
     {
       "company": "The Canadian Press",
@@ -5007,7 +4913,7 @@
       "external_id": "thomsonreuters:JREQ202812",
       "content": "",
       "source_target": "thomsonreuters.wd5/external_career_site",
-      "last_seen": "2026-11-13T11:45:08.866257+00:00"
+      "last_seen": "2026-11-13T18:58:52.595945+00:00"
     },
     {
       "company": "Torstar",
@@ -5021,7 +4927,7 @@
       "external_id": "torstar:744000144782150",
       "content": "",
       "source_target": "torstar",
-      "last_seen": "2026-11-13T11:46:03.695140+00:00"
+      "last_seen": "2026-11-13T18:59:53.945503+00:00"
     },
     {
       "company": "Tower Research Capital",
@@ -5037,7 +4943,7 @@
       "external_id": "towerresearchcapital:7077280",
       "content": "Tower Research Capital est une soci\u00e9t\u00e9 renomm\u00e9e de n\u00e9gociation quantitative fond\u00e9e en 1998. Tower a fond\u00e9 ses affaires en se basant sur une plateforme \u00e0 haute performance et sur des \u00e9quipes de n\u00e9gociation ind\u00e9pendantes. Nous avons plus de 25 ans d'exp\u00e9rience en innovation et une r\u00e9putation de d\u00e9couvrir des occasions uniques sur le march\u00e9. Tower abrite certains des meilleurs talents mondiaux en mat",
       "source_target": "towerresearchcapital",
-      "last_seen": "2026-11-13T11:45:50.963604+00:00"
+      "last_seen": "2026-11-13T18:59:34.101315+00:00"
     },
     {
       "company": "Tower Research Capital",
@@ -5053,7 +4959,7 @@
       "external_id": "towerresearchcapital:8212179",
       "content": "Tower Research Capital est une soci\u00e9t\u00e9 renomm\u00e9e de n\u00e9gociation quantitative fond\u00e9e en 1998. Tower a fond\u00e9 ses affaires en se basant sur une plateforme \u00e0 haute performance et sur des \u00e9quipes de n\u00e9gociation ind\u00e9pendantes. Nous avons plus de 25 ans d'exp\u00e9rience en innovation et une r\u00e9putation de d\u00e9couvrir des occasions uniques sur le march\u00e9. Tower abrite certains des meilleurs talents mondiaux en mat",
       "source_target": "towerresearchcapital",
-      "last_seen": "2026-11-13T11:45:50.963604+00:00"
+      "last_seen": "2026-11-13T18:59:34.101315+00:00"
     },
     {
       "company": "TribalScale",
@@ -5069,7 +4975,7 @@
       "external_id": "tribalscale:4687337006",
       "content": "Shape the Future with TribalScale TribalScale is a digital innovation firm that helps organizations adapt and thrive in a rapidly changing world. We partner with clients to build transformative digital products, modernize technology platforms, and apply emerging technologies-including artificial intelligence-to meaningful business challenges. Our teams work closely with clients from strategy throu",
       "source_target": "tribalscale",
-      "last_seen": "2026-11-13T11:45:53.307178+00:00"
+      "last_seen": "2026-11-13T18:59:36.226789+00:00"
     },
     {
       "company": "Veeda AI",
@@ -5083,7 +4989,7 @@
       "external_id": "veeda-ai:31d097db-83ac-4a6d-9520-8dc29a8dbe08",
       "content": "ABOUT US Veeda AI is building the next generation of multimodal foundation world models for Physical AI. We're a small, fast-moving team of engineers and researchers from leading AI labs, tackling some of the most challenging problems at the intersection of AI, robotics, and embodied intelligence. If you're excited about pushing the boundaries of what's possible with Physical AI, you'll have the o",
       "source_target": "veeda-ai",
-      "last_seen": "2026-11-13T11:45:54.988492+00:00"
+      "last_seen": "2026-11-13T18:59:37.225499+00:00"
     },
     {
       "company": "Veeda AI",
@@ -5099,7 +5005,7 @@
       "external_id": "veeda-ai:84dfad5c-d790-4c4a-9411-40b676b1abbb",
       "content": "ABOUT US Veeda AI is building the next generation of multimodal foundation world models for Physical AI. We're a small, fast-moving team of engineers and researchers from leading AI labs, tackling some of the most challenging problems at the intersection of AI, robotics, and embodied intelligence. If you're excited about pushing the boundaries of what's possible with Physical AI, you'll have the o",
       "source_target": "veeda-ai",
-      "last_seen": "2026-11-13T11:45:54.988492+00:00"
+      "last_seen": "2026-11-13T18:59:37.225499+00:00"
     },
     {
       "company": "Veolia",
@@ -5115,7 +5021,7 @@
       "external_id": "veoliaenvironnementsa:744000159205024",
       "content": "",
       "source_target": "veoliaenvironnementsa",
-      "last_seen": "2026-11-13T11:45:58.336856+00:00"
+      "last_seen": "2026-11-13T18:59:45.866400+00:00"
     },
     {
       "company": "Veolia",
@@ -5129,7 +5035,7 @@
       "external_id": "veoliaenvironnementsa:744000159723921",
       "content": "",
       "source_target": "veoliaenvironnementsa",
-      "last_seen": "2026-11-13T11:45:58.336856+00:00"
+      "last_seen": "2026-11-13T18:59:45.866400+00:00"
     },
     {
       "company": "Veolia",
@@ -5145,7 +5051,7 @@
       "external_id": "veoliaenvironnementsa:744000155369644",
       "content": "",
       "source_target": "veoliaenvironnementsa",
-      "last_seen": "2026-11-13T11:45:58.336856+00:00"
+      "last_seen": "2026-11-13T18:59:45.866400+00:00"
     },
     {
       "company": "Veolia",
@@ -5161,7 +5067,7 @@
       "external_id": "veoliaenvironnementsa:744000157394280",
       "content": "",
       "source_target": "veoliaenvironnementsa",
-      "last_seen": "2026-11-13T11:45:58.336856+00:00"
+      "last_seen": "2026-11-13T18:59:45.866400+00:00"
     },
     {
       "company": "Veolia",
@@ -5175,7 +5081,7 @@
       "external_id": "veoliaenvironnementsa:744000153674489",
       "content": "",
       "source_target": "veoliaenvironnementsa",
-      "last_seen": "2026-11-13T11:45:58.336856+00:00"
+      "last_seen": "2026-11-13T18:59:45.866400+00:00"
     },
     {
       "company": "Veolia",
@@ -5191,7 +5097,7 @@
       "external_id": "veoliaenvironnementsa:744000161390089",
       "content": "",
       "source_target": "veoliaenvironnementsa",
-      "last_seen": "2026-11-13T11:45:58.336856+00:00"
+      "last_seen": "2026-11-13T18:59:45.866400+00:00"
     },
     {
       "company": "Videotron",
@@ -5205,21 +5111,7 @@
       "external_id": "videotron:744000158062659",
       "content": "",
       "source_target": "videotron",
-      "last_seen": "2026-11-13T11:46:02.727386+00:00"
-    },
-    {
-      "company": "Videotron",
-      "title": "Stagiaire RH",
-      "loc": "Montr\u00e9al, QC, Canada",
-      "geo": "Quebec",
-      "cats": [],
-      "url": "https://jobs.smartrecruiters.com/Videotron/744000156870649",
-      "posted": "2026-10-21T18:27:49.333Z",
-      "src": "smartrecruiters",
-      "external_id": "videotron:744000156870649",
-      "content": "",
-      "source_target": "videotron",
-      "last_seen": "2026-11-13T11:46:02.727386+00:00"
+      "last_seen": "2026-11-13T18:59:53.029822+00:00"
     },
     {
       "company": "Videotron",
@@ -5235,7 +5127,7 @@
       "external_id": "videotron:744000143102378",
       "content": "",
       "source_target": "videotron",
-      "last_seen": "2026-11-13T11:46:02.727386+00:00"
+      "last_seen": "2026-11-13T18:59:53.029822+00:00"
     },
     {
       "company": "Videotron",
@@ -5251,7 +5143,7 @@
       "external_id": "videotron:744000161174496",
       "content": "",
       "source_target": "videotron",
-      "last_seen": "2026-11-13T11:46:02.727386+00:00"
+      "last_seen": "2026-11-13T18:59:53.029822+00:00"
     },
     {
       "company": "Viggle",
@@ -5265,19 +5157,7 @@
       "external_id": "viggle:1d3c72e6-2e2c-4c70-9483-95c25fad394b",
       "content": "About Viggle AI Backed by a16z, Viggle AI is building the world's most advanced controllable video and 3D generation technology, empowering game developers, content creators, filmmakers, and industry professionals to bring their visions to life. From building characters to building worlds, Viggle has reached over 40 million users worldwide with a small but mighty team. About the Role We're looking",
       "source_target": "viggle",
-      "last_seen": "2026-11-13T11:45:55.096151+00:00"
-    },
-    {
-      "company": "WMK Pharmacy",
-      "title": "Pharmacy Student, Hourly Part Time Flexible Shifts Greenlight Requisition",
-      "loc": "Canada",
-      "geo": "Canada",
-      "cats": [],
-      "url": "https://www.adzuna.ca/details/5964331026?utm_medium=api&utm_source=568ee426",
-      "posted": "2026-11-13T04:50:20Z",
-      "src": "adzuna",
-      "external_id": "5964331026",
-      "content": "Join a locally owned and operated store to help deliver health, beauty and convenience services in your community, and keep the customer at the centre of everything you do. Why this role is important? SUMMARY: Join a locally owned and operated store to help deliver health, beauty and convenience services in your community, and keep the customer at the centre of everything you do. DUTIES & RESPONSI"
+      "last_seen": "2026-11-13T18:59:37.303611+00:00"
     },
     {
       "company": "Waabi",
@@ -5291,7 +5171,7 @@
       "external_id": "waabi:62700386-b9db-4c78-aec3-5ef59cbe841e",
       "content": "Waabi, founded by AI visionary Raquel Urtasun, is the leader in Physical AI. With a world-class team, we're unlocking the next era of autonomous transportation with technology that's powering commercial autonomous trucks and robotaxis. Waabi is backed by and partners with world leaders in AI, automotive, logistics, and deep tech. With offices in Toronto, San Francisco, Dallas, and Pittsburgh, Waab",
       "source_target": "waabi",
-      "last_seen": "2026-11-13T11:45:56.601842+00:00"
+      "last_seen": "2026-11-13T18:59:41.679696+00:00"
     },
     {
       "company": "Waabi",
@@ -5305,7 +5185,7 @@
       "external_id": "waabi:0fd4e30b-9bd1-4b53-9043-6088457363cb",
       "content": "Waabi, founded by AI visionary Raquel Urtasun, is the leader in Physical AI. With a world-class team, we're unlocking the next era of autonomous transportation with technology that's powering commercial autonomous trucks and robotaxis. Waabi is backed by and partners with world leaders in AI, automotive, logistics, and deep tech. With offices in Toronto, San Francisco, Dallas, and Pittsburgh, Waab",
       "source_target": "waabi",
-      "last_seen": "2026-11-13T11:45:56.601842+00:00"
+      "last_seen": "2026-11-13T18:59:41.679696+00:00"
     },
     {
       "company": "Waabi",
@@ -5319,7 +5199,7 @@
       "external_id": "waabi:480d9d41-33d0-429a-8883-7f9ec305a30f",
       "content": "Waabi, founded by AI visionary Raquel Urtasun, is the leader in Physical AI. With a world-class team, we're unlocking the next era of autonomous transportation with technology that's powering commercial autonomous trucks and robotaxis. Waabi is backed by and partners with world leaders in AI, automotive, logistics, and deep tech. With offices in Toronto, San Francisco, Dallas, and Pittsburgh, Waab",
       "source_target": "waabi",
-      "last_seen": "2026-11-13T11:45:56.601842+00:00"
+      "last_seen": "2026-11-13T18:59:41.679696+00:00"
     },
     {
       "company": "Ware Malcomb",
@@ -5333,7 +5213,19 @@
       "external_id": "waremalcomb:b1a8c6c9-19c0-48b1-bc14-25913769ba47",
       "content": "Are you ready to join a growth-oriented team where creativity meets innovation? At Ware Malcomb, we are a dynamic and forward-thinking design firm committed to pushing the boundaries. Our team-oriented, collaborative approach ensures that every project is a blend of visionary design, seamless project delivery, and we are actively engaged with both the community and the industry. Discover our vibra",
       "source_target": "waremalcomb",
-      "last_seen": "2026-11-13T11:45:56.314446+00:00"
+      "last_seen": "2026-11-13T18:59:41.293845+00:00"
+    },
+    {
+      "company": "Western Pacific Enterprises LTD",
+      "title": "Co-Op Intern",
+      "loc": "Surrey, Greater Vancouver",
+      "geo": "British Columbia",
+      "cats": [],
+      "url": "https://www.adzuna.ca/details/5964476067?utm_medium=api&utm_source=568ee426",
+      "posted": "2026-11-13T07:42:54Z",
+      "src": "adzuna",
+      "external_id": "5964476067",
+      "content": "About The Role MYR Group and our subsidiary businesses strive to provide an opportunity for students to gain education in the electrical utility construction industry by providing a hands-on and inclusive internship program. The knowledge and experience gained through this program will directly apply to potential future employment opportunities. Company Summary Since our inception in 1973, Western"
     },
     {
       "company": "Yotta",
@@ -5349,7 +5241,7 @@
       "external_id": "yotta:09821a51-fbe6-42a7-a566-0d2b5d40fae3",
       "content": "Location: Remote (Global) Type: Internship Company: Yotta Labs Apply: careers@yottalabs.ai \ud83e\udde0 About Yotta Labs Yotta Labs is building the next generation multi-silicon AI cloud and runtime platform to power the world's most demanding AI workloads. We enable training and inference across NVIDIA GPUs, AMD GPUs, and AWS Trainium, helping AI companies achieve the best performance and economics across h",
       "source_target": "yotta",
-      "last_seen": "2026-11-13T11:45:55.214934+00:00"
+      "last_seen": "2026-11-13T18:59:37.389297+00:00"
     },
     {
       "company": "Zeno Group",
@@ -7081,7 +6973,7 @@
   "source_state": {
     "adzuna": {
       "status": "fresh",
-      "refreshed_at": "2026-11-13T11:45:44.769989+00:00",
+      "refreshed_at": "2026-11-13T18:59:27.255724+00:00",
       "age_seconds": 0,
       "requests": 5,
       "reused": 0
@@ -7089,673 +6981,673 @@
     "public_boards": {
       "ashby:Superhuman Platform Inc": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:54.018760+00:00",
+        "refreshed_at": "2026-11-13T18:59:36.442062+00:00",
         "complete": true,
         "reused": 0
       },
       "ashby:bree": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:53.383991+00:00",
+        "refreshed_at": "2026-11-13T18:59:36.339987+00:00",
         "complete": true,
         "reused": 0
       },
       "ashby:eastwoodcleef": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:54.578830+00:00",
+        "refreshed_at": "2026-11-13T18:59:36.601296+00:00",
         "complete": true,
         "reused": 0
       },
       "ashby:exegy": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:54.637024+00:00",
+        "refreshed_at": "2026-11-13T18:59:36.641944+00:00",
         "complete": true,
         "reused": 0
       },
       "ashby:fellowai": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:54.742428+00:00",
+        "refreshed_at": "2026-11-13T18:59:36.953248+00:00",
         "complete": true,
         "reused": 0
       },
       "ashby:georgian": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:54.758008+00:00",
+        "refreshed_at": "2026-11-13T18:59:36.986807+00:00",
         "complete": true,
         "reused": 0
       },
       "ashby:human-computer-lab": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:53.372359+00:00",
+        "refreshed_at": "2026-11-13T18:59:36.327073+00:00",
         "complete": true,
         "reused": 0
       },
       "ashby:quora": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:55.431868+00:00",
+        "refreshed_at": "2026-11-13T18:59:37.517118+00:00",
         "complete": true,
         "reused": 0
       },
       "ashby:remarcable-inc": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:54.796609+00:00",
+        "refreshed_at": "2026-11-13T18:59:37.085525+00:00",
         "complete": true,
         "reused": 0
       },
       "ashby:rivianvw.tech": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:54.801656+00:00",
+        "refreshed_at": "2026-11-13T18:59:37.196859+00:00",
         "complete": true,
         "reused": 0
       },
       "ashby:trulioo-coopandinterns": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:53.474001+00:00",
+        "refreshed_at": "2026-11-13T18:59:36.409838+00:00",
         "complete": true,
         "reused": 0
       },
       "ashby:uncountable": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:55.481791+00:00",
+        "refreshed_at": "2026-11-13T18:59:37.521612+00:00",
         "complete": true,
         "reused": 0
       },
       "ashby:veeda-ai": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:54.988492+00:00",
+        "refreshed_at": "2026-11-13T18:59:37.225499+00:00",
         "complete": true,
         "reused": 0
       },
       "ashby:viggle": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:55.096151+00:00",
+        "refreshed_at": "2026-11-13T18:59:37.303611+00:00",
         "complete": true,
         "reused": 0
       },
       "ashby:wealthsimple": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:55.519845+00:00",
+        "refreshed_at": "2026-11-13T18:59:37.617101+00:00",
         "complete": true,
         "reused": 0
       },
       "ashby:yotta": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:55.214934+00:00",
+        "refreshed_at": "2026-11-13T18:59:37.389297+00:00",
         "complete": true,
         "reused": 0
       },
       "ashby:zip": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:53.909804+00:00",
+        "refreshed_at": "2026-11-13T18:59:36.416859+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:aperaaiinc": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:48.815863+00:00",
+        "refreshed_at": "2026-11-13T18:59:31.821465+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:bestpass": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:51.111670+00:00",
+        "refreshed_at": "2026-11-13T18:59:34.267451+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:brave": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:51.271381+00:00",
+        "refreshed_at": "2026-11-13T18:59:34.464692+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:captiveaire": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:51.632792+00:00",
+        "refreshed_at": "2026-11-13T18:59:34.990991+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:coveoen": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:46.164006+00:00",
+        "refreshed_at": "2026-11-13T18:59:28.749979+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:cresta": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:47.519026+00:00",
+        "refreshed_at": "2026-11-13T18:59:30.362069+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:doordashcanada": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:50.432416+00:00",
+        "refreshed_at": "2026-11-13T18:59:32.923019+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:drweng": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:50.511101+00:00",
+        "refreshed_at": "2026-11-13T18:59:33.144768+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:globalrelay": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:51.662546+00:00",
+        "refreshed_at": "2026-11-13T18:59:35.062049+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:instalilyai": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:52.447303+00:00",
+        "refreshed_at": "2026-11-13T18:59:35.157910+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:internshiplist2000": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:45.814994+00:00",
+        "refreshed_at": "2026-11-13T18:59:28.607330+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:kao": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:52.576440+00:00",
+        "refreshed_at": "2026-11-13T18:59:35.279483+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:khanacademy": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:52.597651+00:00",
+        "refreshed_at": "2026-11-13T18:59:35.328089+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:later": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:52.611664+00:00",
+        "refreshed_at": "2026-11-13T18:59:35.401713+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:momentenergy": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:47.401408+00:00",
+        "refreshed_at": "2026-11-13T18:59:30.333214+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:openfarminc": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:52.933256+00:00",
+        "refreshed_at": "2026-11-13T18:59:35.476320+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:orennia": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:50.757907+00:00",
+        "refreshed_at": "2026-11-13T18:59:33.156833+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:procogia": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:50.926074+00:00",
+        "refreshed_at": "2026-11-13T18:59:33.495821+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:rivaltechnologies": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:53.103463+00:00",
+        "refreshed_at": "2026-11-13T18:59:35.486999+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:rocketlab": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:48.466941+00:00",
+        "refreshed_at": "2026-11-13T18:59:31.696866+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:sonyinteractiveentertainmentglobal": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:53.121100+00:00",
+        "refreshed_at": "2026-11-13T18:59:35.806901+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:spaceium": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:49.059909+00:00",
+        "refreshed_at": "2026-11-13T18:59:31.948201+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:stackadapt": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:50.944130+00:00",
+        "refreshed_at": "2026-11-13T18:59:33.981717+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:stepstone": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:53.146880+00:00",
+        "refreshed_at": "2026-11-13T18:59:35.893015+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:tenstorrentuniversity": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:49.374624+00:00",
+        "refreshed_at": "2026-11-13T18:59:32.165189+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:thebrattlegroup": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:53.225489+00:00",
+        "refreshed_at": "2026-11-13T18:59:36.026119+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:towerresearchcapital": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:50.963604+00:00",
+        "refreshed_at": "2026-11-13T18:59:34.101315+00:00",
         "complete": true,
         "reused": 0
       },
       "greenhouse:tribalscale": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:53.307178+00:00",
+        "refreshed_at": "2026-11-13T18:59:36.226789+00:00",
         "complete": true,
         "reused": 0
       },
       "lever:acceldata": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:55.713459+00:00",
+        "refreshed_at": "2026-11-13T18:59:38.137076+00:00",
         "complete": true,
         "reused": 0
       },
       "lever:arcteryx.com": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:55.615697+00:00",
+        "refreshed_at": "2026-11-13T18:59:37.735805+00:00",
         "complete": true,
         "reused": 0
       },
       "lever:benchsci": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:57.548087+00:00",
+        "refreshed_at": "2026-11-13T18:59:44.099804+00:00",
         "complete": true,
         "reused": 0
       },
       "lever:caseware": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:57.507023+00:00",
+        "refreshed_at": "2026-11-13T18:59:42.645795+00:00",
         "complete": true,
         "reused": 0
       },
       "lever:eqbank": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:55.566468+00:00",
+        "refreshed_at": "2026-11-13T18:59:37.714204+00:00",
         "complete": true,
         "reused": 0
       },
       "lever:extremenetworks": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:56.077780+00:00",
+        "refreshed_at": "2026-11-13T18:59:38.286008+00:00",
         "complete": true,
         "reused": 0
       },
       "lever:fullscript": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:56.125936+00:00",
+        "refreshed_at": "2026-11-13T18:59:38.383379+00:00",
         "complete": true,
         "reused": 0
       },
       "lever:geocomply-2": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:56.128094+00:00",
+        "refreshed_at": "2026-11-13T18:59:38.493787+00:00",
         "complete": true,
         "reused": 0
       },
       "lever:gomaterials": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:55.883921+00:00",
+        "refreshed_at": "2026-11-13T18:59:38.147210+00:00",
         "complete": true,
         "reused": 0
       },
       "lever:kepler": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:56.129486+00:00",
+        "refreshed_at": "2026-11-13T18:59:38.662423+00:00",
         "complete": true,
         "reused": 0
       },
       "lever:pointclickcare": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:57.268517+00:00",
+        "refreshed_at": "2026-11-13T18:59:42.148300+00:00",
         "complete": true,
         "reused": 0
       },
       "lever:shyftlabs": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:56.205902+00:00",
+        "refreshed_at": "2026-11-13T18:59:39.285925+00:00",
         "complete": true,
         "reused": 0
       },
       "lever:thinkingbox": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:55.959814+00:00",
+        "refreshed_at": "2026-11-13T18:59:38.210242+00:00",
         "complete": true,
         "reused": 0
       },
       "lever:univeris.com": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:56.225952+00:00",
+        "refreshed_at": "2026-11-13T18:59:39.319216+00:00",
         "complete": true,
         "reused": 0
       },
       "lever:waabi": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:56.601842+00:00",
+        "refreshed_at": "2026-11-13T18:59:41.679696+00:00",
         "complete": true,
         "reused": 0
       },
       "lever:waremalcomb": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:56.314446+00:00",
+        "refreshed_at": "2026-11-13T18:59:41.293845+00:00",
         "complete": true,
         "reused": 0
       },
       "smartrecruiters:aecom2": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:59.436303+00:00",
+        "refreshed_at": "2026-11-13T18:59:46.744711+00:00",
         "complete": true,
         "reused": 0
       },
       "smartrecruiters:beumergroup1": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:46:01.724224+00:00",
+        "refreshed_at": "2026-11-13T18:59:49.437674+00:00",
         "complete": true,
         "reused": 0
       },
       "smartrecruiters:boschgroup": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:46:01.124742+00:00",
+        "refreshed_at": "2026-11-13T18:59:48.555855+00:00",
         "complete": true,
         "reused": 0
       },
       "smartrecruiters:cima2": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:46:02.142909+00:00",
+        "refreshed_at": "2026-11-13T18:59:49.886257+00:00",
         "complete": true,
         "reused": 0
       },
       "smartrecruiters:crb": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:46:01.110696+00:00",
+        "refreshed_at": "2026-11-13T18:59:48.111919+00:00",
         "complete": true,
         "reused": 0
       },
       "smartrecruiters:gdmsi": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:57.819693+00:00",
+        "refreshed_at": "2026-11-13T18:59:45.304898+00:00",
         "complete": true,
         "reused": 0
       },
       "smartrecruiters:groupecanam": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:46:02.176061+00:00",
+        "refreshed_at": "2026-11-13T18:59:52.554218+00:00",
         "complete": true,
         "reused": 0
       },
       "smartrecruiters:groupemontoni": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:46:02.314451+00:00",
+        "refreshed_at": "2026-11-13T18:59:52.707573+00:00",
         "complete": true,
         "reused": 0
       },
       "smartrecruiters:houseofcommonscanadachambredescommunescanada": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:46:01.612020+00:00",
+        "refreshed_at": "2026-11-13T18:59:48.983032+00:00",
         "complete": true,
         "reused": 0
       },
       "smartrecruiters:louisdreyfuscompany": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:46:02.774468+00:00",
+        "refreshed_at": "2026-11-13T18:59:53.153699+00:00",
         "complete": true,
         "reused": 0
       },
       "smartrecruiters:qsl": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:46:03.216507+00:00",
+        "refreshed_at": "2026-11-13T18:59:53.603973+00:00",
         "complete": true,
         "reused": 0
       },
       "smartrecruiters:sgs": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:46:03.540213+00:00",
+        "refreshed_at": "2026-11-13T18:59:53.905220+00:00",
         "complete": true,
         "reused": 0
       },
       "smartrecruiters:syngentagroup": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:58.802398+00:00",
+        "refreshed_at": "2026-11-13T18:59:46.313260+00:00",
         "complete": true,
         "reused": 0
       },
       "smartrecruiters:torstar": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:46:03.695140+00:00",
+        "refreshed_at": "2026-11-13T18:59:53.945503+00:00",
         "complete": true,
         "reused": 0
       },
       "smartrecruiters:veoliaenvironnementsa": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:58.336856+00:00",
+        "refreshed_at": "2026-11-13T18:59:45.866400+00:00",
         "complete": true,
         "reused": 0
       },
       "smartrecruiters:videotron": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:46:02.727386+00:00",
+        "refreshed_at": "2026-11-13T18:59:53.029822+00:00",
         "complete": true,
         "reused": 0
       },
       "successfactors:aecon": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:44:51.968576+00:00",
+        "refreshed_at": "2026-11-13T18:58:39.277342+00:00",
         "complete": true,
         "reused": 0
       },
       "successfactors:bell": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:44:47.383907+00:00",
+        "refreshed_at": "2026-11-13T18:58:36.197706+00:00",
         "complete": true,
         "reused": 0
       },
       "successfactors:cityofmississauga": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:44:56.815060+00:00",
+        "refreshed_at": "2026-11-13T18:58:44.514027+00:00",
         "complete": true,
         "reused": 0
       },
       "successfactors:cityofottawa": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:44:59.652973+00:00",
+        "refreshed_at": "2026-11-13T18:58:46.598891+00:00",
         "complete": true,
         "reused": 0
       },
       "successfactors:cityoftoronto": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:44:53.256566+00:00",
+        "refreshed_at": "2026-11-13T18:58:41.316067+00:00",
         "complete": true,
         "reused": 0
       },
       "successfactors:fortisbc": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:44:50.266964+00:00",
+        "refreshed_at": "2026-11-13T18:58:38.600604+00:00",
         "complete": true,
         "reused": 0
       },
       "successfactors:hatch": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:44:51.670023+00:00",
+        "refreshed_at": "2026-11-13T18:58:39.261853+00:00",
         "complete": true,
         "reused": 0
       },
       "successfactors:hydroone": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:44:48.657521+00:00",
+        "refreshed_at": "2026-11-13T18:58:37.449713+00:00",
         "complete": true,
         "reused": 0
       },
       "successfactors:kiewit": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:44:53.166865+00:00",
+        "refreshed_at": "2026-11-13T18:58:39.916495+00:00",
         "complete": true,
         "reused": 0
       },
       "successfactors:saskpower": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:44:50.900880+00:00",
+        "refreshed_at": "2026-11-13T18:58:38.680395+00:00",
         "complete": true,
         "reused": 0
       },
       "workday:abb.wd3/external_career_page": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:25.114766+00:00",
+        "refreshed_at": "2026-11-13T18:59:07.732122+00:00",
         "complete": true,
         "reused": 0
       },
       "workday:autodesk.wd1/uni": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:00.960293+00:00",
+        "refreshed_at": "2026-11-13T18:58:47.712616+00:00",
         "complete": true,
         "reused": 0
       },
       "workday:bb.wd3/Student": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:44:59.910276+00:00",
+        "refreshed_at": "2026-11-13T18:58:47.036224+00:00",
         "complete": true,
         "reused": 0
       },
       "workday:bmo.wd3/Campus": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:09.960560+00:00",
+        "refreshed_at": "2026-11-13T18:58:52.876443+00:00",
         "complete": true,
         "reused": 0
       },
       "workday:cae.wd3/career": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:02.775186+00:00",
+        "refreshed_at": "2026-11-13T18:58:48.178040+00:00",
         "complete": true,
         "reused": 0
       },
       "workday:canadiantirecorporation.wd3/enterprise_external_careers_site": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:03.733353+00:00",
+        "refreshed_at": "2026-11-13T18:58:48.264294+00:00",
         "complete": true,
         "reused": 0
       },
       "workday:cenovus.wd3/careers": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:05.221337+00:00",
+        "refreshed_at": "2026-11-13T18:58:50.798668+00:00",
         "complete": true,
         "reused": 0
       },
       "workday:ciena.wd5/careers": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:25.980715+00:00",
+        "refreshed_at": "2026-11-13T18:59:08.611821+00:00",
         "complete": true,
         "reused": 0
       },
       "workday:cisco.wd5/cisco_careers": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:28.121694+00:00",
+        "refreshed_at": "2026-11-13T18:59:12.100222+00:00",
         "complete": true,
         "reused": 0
       },
       "workday:colliers.wd3/colliers-external-career-site": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:07.761228+00:00",
+        "refreshed_at": "2026-11-13T18:58:52.120633+00:00",
         "complete": true,
         "reused": 0
       },
       "workday:generalmotors.wd5/careers_gm": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:30.230721+00:00",
+        "refreshed_at": "2026-11-13T18:59:12.593452+00:00",
         "complete": true,
         "reused": 0
       },
       "workday:gevernova.wd5/vernova_externalsite": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:30.868047+00:00",
+        "refreshed_at": "2026-11-13T18:59:13.035531+00:00",
         "complete": true,
         "reused": 0
       },
       "workday:intactfc.wd3/intactfc": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:03.859733+00:00",
+        "refreshed_at": "2026-11-13T18:58:50.001105+00:00",
         "complete": true,
         "reused": 0
       },
       "workday:intel.wd1/external": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:30.907723+00:00",
+        "refreshed_at": "2026-11-13T18:59:14.594483+00:00",
         "complete": true,
         "reused": 0
       },
       "workday:marvell.wd1/marvellcareers": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:32.008766+00:00",
+        "refreshed_at": "2026-11-13T18:59:15.064570+00:00",
         "complete": true,
         "reused": 0
       },
       "workday:mastercard.wd1/campus": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:13.345596+00:00",
+        "refreshed_at": "2026-11-13T18:58:57.665600+00:00",
         "complete": true,
         "reused": 0
       },
       "workday:motorolasolutions.wd5/careers": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:33.211686+00:00",
+        "refreshed_at": "2026-11-13T18:59:16.543631+00:00",
         "complete": true,
         "reused": 0
       },
       "workday:nvidia.wd5/nvidiaexternalcareersite": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:38.801059+00:00",
+        "refreshed_at": "2026-11-13T18:59:17.530785+00:00",
         "complete": true,
         "reused": 0
       },
       "workday:olg.wd3/careers-students": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:11.850477+00:00",
+        "refreshed_at": "2026-11-13T18:58:56.941459+00:00",
         "complete": true,
         "reused": 0
       },
       "workday:rockwellautomation.wd1/external-rockwell-automation-early-careers": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:13.729787+00:00",
+        "refreshed_at": "2026-11-13T18:58:58.540860+00:00",
         "complete": true,
         "reused": 0
       },
       "workday:tcenergy.wd3/career_site_tc": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:05.478602+00:00",
+        "refreshed_at": "2026-11-13T18:58:51.260542+00:00",
         "complete": true,
         "reused": 0
       },
       "workday:thomsonreuters.wd5/external_career_site": {
         "status": "fresh",
-        "refreshed_at": "2026-11-13T11:45:08.866257+00:00",
+        "refreshed_at": "2026-11-13T18:58:52.595945+00:00",
         "complete": true,
         "reused": 0
       }
     },
     "daily_sources": {
       "gcjobs:public": {
-        "status": "reused-fresh",
-        "refreshed_at": "2026-11-12T17:27:14.698894+00:00",
+        "status": "fresh",
+        "refreshed_at": "2026-11-13T18:59:18.646055+00:00",
         "complete": true,
-        "reused": 2,
-        "age_seconds": 65909
+        "reused": 0,
+        "age_seconds": 0
       },
       "oracle:CNRL-Campus": {
-        "status": "reused-fresh",
-        "refreshed_at": "2026-11-12T17:27:17.025783+00:00",
+        "status": "fresh",
+        "refreshed_at": "2026-11-13T18:59:19.571128+00:00",
         "complete": true,
-        "reused": 2,
-        "age_seconds": 65907
+        "reused": 0,
+        "age_seconds": 0
       }
     }
   }
